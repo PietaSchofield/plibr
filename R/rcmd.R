@@ -8,4 +8,3 @@
 rcmd <- function(cmd, hostname="troodon.scicom.picr.man.ac.uk",username="pschofield"){
   system(paste0("ssh -Y ",username,"@",hostname," '",cmd,"'"),intern=T)
 }
-

@@ -5,7 +5,7 @@
 #' @param username currently works with ssh keys rather than password
 #' 
 #' @export
-rcmd <- function(cmd, hostname="troodon.scicom.picr.man.ac.uk",username="pschofield"){
+rsh <- function(cmd, hostname="troodon.scicom.picr.man.ac.uk",username="pschofield"){
   system(paste0("ssh -Y ",username,"@",hostname," '-l -c bash ",cmd,"'"),intern=T)
 }
 

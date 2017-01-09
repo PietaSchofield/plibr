@@ -4,7 +4,7 @@
 \alias{rb}
 \title{rebuild a package}
 \usage{
-rb(pkgName = "CRUKlib", baseDir = "/Users/pschofield/Code")
+rb(pkgName = "plib", baseDir = "/Users/pschofield/Code")
 }
 \arguments{
 \item{pkgname}{}

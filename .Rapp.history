@@ -1,0 +1,151 @@
+quit(save = "no")
+base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-639", print.eval=TRUE)
+with(ttsBAP1[which(ttsBAP1$kuclass!=0),], plot(K_logFC,U_logFC,pch=".",xlim=c(-10,10),ylim=c(-10,10),
+main="KIRC v UVM"))
+with(ttsBAP1[which(ttsBAP1$suclass!=0),], plot(S_logFC,U_logFC,pch=".",xlim=c(-10,10),ylim=c(-10,10),
+main="SKCM v UVM"))
+with(ttsBAP1[which(ttsBAP1$ksclass!=0),], plot(K_logFC,S_logFC,pch=".",xlim=c(-10,10),ylim=c(-10,10),
+main="KIRC v SKCM"))
+abline(0,1,col=2)
+abline(0,-1,col=2)
+corGenes <- ttsBAP1[which(ttsBAP1$kuclass>0 | ttsBAP1$ksclass>0 | ttsBAP1$suclass >0),]
+corDist <- 1-cor(cpm(dgeFull,log=T)[which(rownames(cpm(dgeFull))%in%rownames(corGenes)),])
+colnames(corDist) <- make.names(dgeFull$samples$set,unique=T)
+rownames(corDist) <- colnames(corDist)
+phylo <- as.phylo(hclust(as.dist(corDist)))
+pdf(file="/Users/pschofield/Projects/bap1met_fb/mutPhylo.pdf",height=50,width=20)
+zoom(phylo,lapply(c("mut"),grep,phylo$tip.label),subtree=F)
+dev.off()
+plot.phylo(phylo,edge.color=ifelse(grepl("mut",phylo$tip.label),5,7),rotate.tree=90,
+show.tip.label=F)
+save.image("bap1.RData")
+getwd()
+locRoot <- "/Users/pschofield"
+stub1 <- "geneCountsBS1"
+stub2 <- "geneCountsBS1"
+unlink(file.path(locRoot,dir1,paste0(stub1,".*")))
+unlink(file.path(locRoot,diriR1,paste0(stub1,".*")))
+dirR1 <- "Projects/chirp_jb/RAPrun1/Analysis"
+dirR2 <- "Projects/chirp_jb/RAPrun2/Analysis"
+unlink(file.path(locRoot,dirR1,paste0(stub1,".*")))
+unlink(file.path(locRoot,dirR2,paste0(stub1,".*")))
+ecR1 <- CRUKlib::getFiles(filenames=c(stub1,
+paste0(stub1,".summary")),
+remDir="pschofield/Projects/chirp_jb/RAPrun1/Analysis")
+ec1 <- readFC(ecR1[1],exons=F)$counts
+ec1 <- pietalib::readFC(ecR1[1],exons=F)$counts
+ecR2 <- CRUKlib::getFiles(filenames=c(stub2,
+paste0(stub2,".summary")),
+remDir="pschofield/Projects/chirp_jb/RAPrun2/Analysis")
+ec2 <- readFC(ecR1[1],exons=F)$counts
+ec2 <- readFC(ecR2[1],exons=F)$counts
+ec2 <- pietalib::readFC(ecR2[1],exons=F)$counts
+tolower(gsub("CM48__[0-9]","R2",gsub("(_(J|j)ing_unique|[.]bam)","",colnames(ec2)))))
+ll colnames(ecFull)
+colnames(ec1)
+tolower(gsub("CM48__[0-9]","R2",gsub("(_(J|j)ing[.]bam)","",colnames(ec2)))))
+gsub("CM48__[0-9]","R2",gsub("(_jing|[.]bam)","",tolower(colnames(ec2)))))
+gsub("cm48__[0-9]","R2",gsub("(_jing|[.]bam)","",tolower(colnames(ec2)))))
+colnames(ec2)
+colnames(ecFull)
+require(edgeR)
+ec1 <- plib::readFC(ecR1[1],exons=F)$counts
+colnames(ec1) <- gsub("anti","antis",
+tolower(gsub("CM40.*4","R1",gsub("(_S_RNA|_RNA|[.]bam)","",colnames(ec1)))))
+ec2 <- plib::readFC(ecR2[1],exons=F)$counts
+colnames(ec2) <- gsub("antisense","antis",
+gsub("cm48__[0-9]","r2",gsub("(_jing|[.]bam)","",tolower(colnames(ec2)))))
+ecFull <- merge(ec1,ec2,by="row.names")
+rownames(ecFull) <- ecFull[,1]
+ecFull <- ecFull[,-1]
+ecUniq <- ecFull[,grep("unique",colnames(ecFull))]
+ecFull <- ecFull[,-grep("unique",colnames(ecFull))]
+sD <- plyr::ldply(strsplit(colnames(ecFull),"_"))
+rownames(sD) <- colnames(ecFull)
+sD
+sD$condition <- paste(sD$V2,sD$V3,sep="_")
+dge <- DGEList(ecFull[,grep("long",colnames(ecFull))],
+samples=sD[grep("long",rownames(sD)),])
+dge <- calcNormFactors(dge)
+des <- model.matrix(~dge$samples$condition -1)
+colnames(des) <- gsub("dge[$]samples[$]condition","",colnames(des))
+dge <- estimateDisp(dge,des)
+fit <- glmFit(dge,des)
+lrtAIF <- glmLRT(fit,contrast=c(1,0,-1,0,0,0))
+lrtSIF <- glmLRT(fit,contrast=c(0,0,-1,0,1,0))
+lrtSAF <- glmLRT(fit,contrast=c(-1,0,0,0,1,0))
+colnames(des)
+lrtAIF <- glmLRT(fit,contrast=c(1,-1,0))
+lrtSIF <- glmLRT(fit,contrast=c(0,1,-1))
+lrtSAF <- glmLRT(fit,contrast=c(-1,0,1))
+topTags(lrtAIF)
+topTags(lrtAIF,p.val=0.05)
+topTags(lrtAIF,p.val=0.05,n=200)
+topTags(lrtSIF,p.val=0.05,n=200)
+fqDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/fqs/fastqtrim"
+fqDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/fqs/fastqtrim"
+fqFiles <- CRUKlib::rcmd(paste0("ls ",file.path(fqDir,"*_paired*")))
+fqFiles
+fileInfo <- data.frame(
+cbind(path=dirname(fqFiles),
+file=basename(fqFiles)),
+stringsAsFactors=F)
+fileInfo$library <- gsub("_R(1|2)_.*$","",fileInfo$file)
+fileInfo$lane <- gsub("^.*_L","L",fileInfo$library)
+fileInfo$sampleId <- gsub("_L.*$","",gsub("^.*ing_","",fileInfo$library))
+fileInfo$sampleName <- gsub("_S[0-9].*$","",fileInfo$library)
+fileInfo$runName <- basename(dirname(fileInfo$path))
+projName="chirp_jb"
+refSeq <- "/scratch/pschofield/ref/star/GRCh37_pa"
+refGenome <- "/scratch/pschofield/ref/star/GRCh37_pa/Homo_sapiens.GRCh37.85.gtf"
+outLocal <- "RAPrun1/alignment/withCount"
+CRUKlib::runStarAlign(projName=projName,sampleID=sid,fqExt="paired.fastq",
+refGen <- "/scratch/pschofield/ref/star/GRCh37_pa/Homo_sapiens.GRCh37.85.gtf"
+lapply(unique(fileInfo$sampleId),function(sid){
+plib::runStarAlign(projName=projName,sampleID=sid,fqExt="paired.fastq",
+fileTable=fileInfo[grep(sid,fileInfo$sampleId),],
+refSequence=refSeq,refGenome=refGen,noSub=F,outName=outLocal,jm=F)
+})
+outLocal2 <- "RAPrun2/alignment/withCount"
+fq2Dir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/fqs/fastqtrim"
+askpass): No such file or directory> #
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password,hostbased).n
+ssh -Y pschofield@troodon.scicom.picr.man.ac.uk
+askpass): No such file or directory> #
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/sshn-askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password,hostbased).
+askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/sshn-askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password,hostbased).
+fq2Dir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/Data/fqs/fastqtrim"
+fq2Files <- plib::rcmd(paste0("ls ",file.path(fq2Dir,"*_paired*")))
+askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password,hostbased).
+rcmd()
+rcmd("ls ")
+askpass): No such file or directory#
+Permission denied, please try again.n#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied, please try again.#
+ssh_askpass: exec(/usr/X11R6/bin/ssh-askpass): No such file or directory#
+Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password,hostbased).
+system(paste0("ssh pschofield@troodon ls"),intern=T)
+rcmd
+plib::rcmd
+CRUKlib::rcmd
+rb("plib")
+q()

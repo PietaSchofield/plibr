@@ -10,13 +10,14 @@ runStarAlign <- function(projName,sampleID,fileTable,runName,
                          outName="Data/alignment/star",noSub=F,scpIt=T,
                          starMod = "apps/star/2.5.1b/gcc-5.1.0",
                          samtoolsMod =  "apps/samtools/0.1.19/gcc/4.4.7",
+                         refSequence= NULL,
                          refGenome = NULL, ncores=16, fqExt=".fq",pe=T,jm=F){
 
   # Set up the file names and paths
   sName <- unique(fileTable$sampleName)
   tmpDir <- file.path(outRoot,"tmp")
   bamDir <- file.path(outRoot,outName)
-  CRUKlib::rcmd(paste0("mkdir -p ",bamDir))
+  plib::rcmd(paste0("mkdir -p ",bamDir))
   mergedBAM = file.path(bamDir, paste(sName, ".bam", sep=""))
   uniqueBAM = file.path(bamDir, paste(sName, "_unique.bam", sep=""))
   inputFilelist = paste(file.path(bamDir, 
@@ -41,7 +42,10 @@ runStarAlign <- function(projName,sampleID,fileTable,runName,
         RG.LB <- lsn
         RG.PU <- parts[[2]]
         ReadGroup <- paste('ID:',RG.ID,'SM:',RG.SM,'PL:ILLUMINA","LB:',RG.LB,'PU:',RG.PU,sep=" ")
-        paste0("STAR --runThreadN ",ncores," --genomeDir ",refGenome,
+        paste0("STAR --runThreadN ",ncores," --genomeDir ",refSequence,
+               " -–sjdbGTFfile ",refGenome,
+               " --quantMode TranscriptomeSAM GeneCounts ",
+               " --quantTranscriptomeBan Singleend ",
                " --outFileNamePrefix ",file.path(bamDir,basename(lsn)),
                " --readFilesCommand zcat --outSAMstrandField intronMotif --outSAMattributes All ",
                " --outSAMunmapped Within KeepPairs --outWigType wiggle --outWigStrand Stranded ",
@@ -64,7 +68,7 @@ runStarAlign <- function(projName,sampleID,fileTable,runName,
       paste("samtools index ",mergedBAM)
     )
   }
-  CRUKlib::runScript(jname=paste0("star_",sName),jproj=projName,
+  plib::runScript(jname=paste0("star_",sName),jproj=projName,
                        jdesc=paste0("STAR align for project ",projName," on sample ", sName),
                        jscrp=script,noSub=noSub,nproc=ncores,scpIt=scpIt,mem="32Gb")
 }
