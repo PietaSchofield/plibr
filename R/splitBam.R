@@ -108,7 +108,7 @@ splitBAMS <- function(bamFiles,len=150,projName,outDir=NULL,stranded=1){
         paste0("sambamba index ",fnsht)
       )
     }
-    CRUKlib::runScript(jname=paste0("splitBams_",basename(fn)),jproj=projName,jscrp=script,
+    plib::runScript(jname=paste0("splitBams_",basename(fn)),jproj=projName,jscrp=script,
                      jdesc=paste0("Split strand specific bam files by fragment alignment"))
   })
 }

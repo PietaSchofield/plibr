@@ -6,7 +6,7 @@
 \usage{
 rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
   outDir = NULL, open = "html", rootDir = "/Users/pschofield/Projects",
-  codeDir = "/Users/pschofield/Code/CRUK", sourcecopy = F, toPDF = F,
+  codeDir = "/Users/pschofield/Projects", sourcecopy = F, toPDF = F,
   toDOCX = F, toHTML = T, GOD = F)
 }
 \arguments{

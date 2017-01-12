@@ -7,7 +7,7 @@
 wigToBigWig(inFile, samFile, outDir, projName,
   outRoot = file.path("/scratch/pschofield/Projects", projName),
   ucscMod = "apps/ucscsuite/20150630/linux-x86_64",
-  samtoolsMod = "apps/samtools/1.3.1/gcc-4.4.7")
+  samtoolsMod = "apps/samtools/1.3.1/gcc-4.4.7", noSub = F)
 }
 \arguments{
 \item{inFile}{input bam file}

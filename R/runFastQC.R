@@ -23,7 +23,7 @@ runFastQC <- function(projName,outRoot=file.path("/scratch/pschofield/Projects",
       paste("fastqc", inputFile, "-o", outputDir, "-f fastq", sep=" ")
     )
     # Submit the script
-    CRUKlib::runScript(jname=paste0("fastqc_",key),jproj=projName,
+    plib::runScript(jname=paste0("fastqc_",key),jproj=projName,
                        jdesc=paste0("FastQC run for project ",projName," on file ", pn),
                        jscrp=script,noSub=noSub,nproc=2,scpIt=scpIt)
   })

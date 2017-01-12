@@ -7,7 +7,7 @@
 #' @export
 summariseSTAR <- function(projName,fileList, locDir="/Users/pschofield/.tmp"){
   ret <- lapply(fileList,function(fn){
-    tmpFile <- CRUKlib::getFiles(filenames=basename(fn),
+    tmpFile <- plib::getFiles(filenames=basename(fn),
                                  remDir=gsub("/scratch/","",dirname(fn)),
                                  locDir=gsub("/Users/","",locDir))
     res <- read.delim(file.path(locDir,basename(fn)),sep="\t",head=F,row.names=1,stringsAsFactors=F)

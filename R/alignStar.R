@@ -14,16 +14,19 @@
                          outName="Data/alignment/star",noSub=F,scpIt=T,
                          starMod = "apps/star/2.5.1b/gcc-5.1.0",
                          samtoolsMod =  "apps/samtools/0.1.19/gcc/4.4.7",
-                         refSequence= NULL,
-                         refGenome = NULL, ncores=16, fqExt=".fastq",pe=T){
+                         refSequence= NULL, refGenome = NULL, ncores=16, fqExt=".fastq",pe=T){
   # Set up the file names and paths
+  outStub <- paste0(sampleID,"_")
   tmpDir <- file.path(outRoot,"tmp")
   bamDir <- file.path(outRoot,outName)
-  outBAM <- file.path(bamDir,paste0(sampleID,"sortedByCoord.out.bam"))
-  uniqueBAM <- file.path(bamDir,paste0(sampleID,"unique.bam"))
+  starBAM <- file.path(bamDir,paste0(outStub,"Aligned.sortedByCoord.out.bam"))
+  niceBAM <- file.path(bamDir,paste0(outStub,"full.bam"))
+  uniqueBAM <- file.path(bamDir,paste0(outStub,"unique.bam"))
+  tsBAM <- file.path(bamDir,paste0(outStub,"Aligned.toTranscriptome.out.bam"))
+  niceTsBAM <- file.path(bamDir,paste0(outStub,"transcriptome.bam"))
   inputFastq1 <- file.path(inputPath,paste0(sampleID, "_R1",fqExt,".gz", sep=""))
   if(pe){
-    inputFastq2 <- gsub("_R1_","_R2_",inputFastq1)
+    inputFastq2 <- gsub("_R1","_R2",inputFastq1)
   }else{
     inputFastq2 <- " "
   }
@@ -40,17 +43,20 @@
     paste0("module load ",samtoolsMod),
     paste0("mkdir -p ",bamDir),
     paste0("STAR --runThreadN ",ncores," --genomeDir ",refSequence,
-           " -–sjdbGTFfile ",refGenome,
+           " --sjdbGTFfile ",refGenome,
            " --quantMode TranscriptomeSAM GeneCounts ",
            " --quantTranscriptomeBan Singleend ",
-           " --outFileNamePrefix ",file.path(bamDir,sampleID),
+           " --outFileNamePrefix ",file.path(bamDir,outStub),
+           " --outFilterScoreMinOverLread 0 --outFilterMatchNminOverLread 0 --outFilterMatchNmin 40 ",
            " --readFilesCommand zcat --outSAMstrandField intronMotif --outSAMattributes All ",
            " --outSAMunmapped Within KeepPairs --outWigType wiggle --outWigStrand Stranded ",
            " --outSAMattrRGline ",ReadGroup," --outSAMtype BAM SortedByCoordinate ",
            " --readFilesIn ",inputFastq1," ",inputFastq2),
-    paste("samtools view -b -q 10 -f 2 -F 780 -o", uniqueBAM, outBAM, sep=" "),
-    paste("samtools index ",uniqueBAM),
-    paste("samtools index ",outBAM)
+    paste("mv ",starBAM," ",niceBAM),
+    paste("samtools index ",niceBAM),
+    paste("mv ",tsBAM," ",niceTsBAM)
+    #paste("samtools view -b -q 10 -f 2 -F 780 -o", uniqueBAM, niceBAM, sep=" "),
+    #paste("samtools index ",uniqueBAM),
   )
   plib::runScript(jname=paste0("star_",sampleID),jproj=projName,
                        jdesc=paste0("STAR align for project ",projName," on sample ", sampleID),

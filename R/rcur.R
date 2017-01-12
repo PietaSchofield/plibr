@@ -22,27 +22,21 @@
 rcur <- function(fileName=.curFile,projDir=.curProj,
                  inDir=NULL, outDir=NULL,open="html",
                  rootDir="/Users/pschofield/Projects",
-                 codeDir="/Users/pschofield/Code/CRUK",
+                 codeDir="/Users/pschofield/Projects",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,GOD=F){
   if(GOD){
     infile=file.path("/Users/pschofield/Code/god",paste0(fileName,".Rmd"))
     outpath=file.path("/Volumes/pietame/public_html")
   }else{
-    if(is.null(outDir)){
-      infile <- file.path(codeDir,projDir,paste0(fileName,".Rmd"))
+    if(is.null(outDir) & is.null(inDir)){
+      infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
       outpath <- file.path(rootDir,projDir,"Notes")
-    }else{
-      infile <- file.path(codeDir,inDir,paste0(fileName,".Rmd"))
+    }else if(!is.null(outDir) & !is.null(inDir)){
+      infile <- file.path(inDir,paste0(fileName,".Rmd"))
       outpath <- file.path(outDir)
-    }
-  }
-  infile <- file.path(codeDir,projDir,paste0(fileName,".Rmd"))
-  outpath <- file.path(rootDir,projDir,"Notes")
-  if(!is.null(inDir)){
-    infile <- file.path(inDir,paste0(fileName,".Rmd"))
-  }
-  if(!is.null(outDir)){
-    outpath <- file.path(outDir)
+    }else{
+      stop("either use default project paths or specify both in and out directories")
+    } 
   }
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
