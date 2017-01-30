@@ -4,7 +4,7 @@
 #' @param outBAM name of sorted file if NULL inBAM is overwritten
 #'
 #' @export
-sortBAM <- function(inBAM,outSuf=NULL,projName,noSub=F){
+sortBAM <- function(inBAM,outSuf=NULL,projName,noSub=F,ncores=16){
   bamDIR <- dirname(inBAM)
   bamStub <- gsub("[.]bam","",basename(inBAM))
   unsortedBAM <- file.path(bamDIR,paste0(bamStub,"_unsorted.bam"))

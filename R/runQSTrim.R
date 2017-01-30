@@ -46,7 +46,7 @@ runQSTrim <- function(projName,outRoot=file.path("/scratch/pschofield/Projects",
             " | fqtrim -l 20 -p 16 -o ", finalTrimmedFq, " - ")
     ) 
     # Submit the script
-    CRUKlib::runScript(jname=paste0("trim_",key),jproj=projName,
+    plib::runScript(jname=paste0("trim_",key),jproj=projName,
                        jdesc=paste0("Trim with bbduk and fqtrim for project ",projName," on file ", pn),
                        jscrp=script,noSub=noSub,mem="48Gb",nproc=16) 
   })

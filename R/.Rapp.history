@@ -1,6 +1,4 @@
 quit(save = "no")
-require(pietalib)
-require(CRUKlib)
-help(rb)
-rb("pietalib")
 q()
+require(plib)
+plib::rb()

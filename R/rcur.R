@@ -20,24 +20,19 @@
 #'
 #' @export
 rcur <- function(fileName=.curFile,projDir=.curProj,
-                 inDir=NULL, outDir=NULL,open="html",
+                 inDir=NULL, outDir=NULL,open="html",godPath=NULL,
                  rootDir="/Users/pschofield/Projects",
                  codeDir="/Users/pschofield/Projects",
-                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,GOD=F){
-  if(GOD){
-    infile=file.path("/Users/pschofield/Code/god",paste0(fileName,".Rmd"))
-    outpath=file.path("/Volumes/pietame/public_html")
+                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T){
+  if(is.null(outDir) & is.null(inDir)){
+    infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
+    outpath <- file.path(rootDir,projDir,"Notes")
+  }else if(!is.null(outDir) & !is.null(inDir)){
+    infile <- file.path(inDir,paste0(fileName,".Rmd"))
+    outpath <- file.path(outDir)
   }else{
-    if(is.null(outDir) & is.null(inDir)){
-      infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
-      outpath <- file.path(rootDir,projDir,"Notes")
-    }else if(!is.null(outDir) & !is.null(inDir)){
-      infile <- file.path(inDir,paste0(fileName,".Rmd"))
-      outpath <- file.path(outDir)
-    }else{
-      stop("either use default project paths or specify both in and out directories")
-    } 
-  }
+    stop("either use default project paths or specify both in and out directories")
+  } 
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
                                output_format="bookdown::word_document2")
@@ -53,6 +48,12 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
   if(sourcecopy){
     file.copy(infile,outpath,overwrite=T)
   }
+  if(toGOD){
+    if(is.null(godPath)){
+      godPath <- paste0("/work/Projects/",projDir,"/")
+    }
+    system(paste0("scp ",htmlFile," pieta@pieta.me:public_html",godPath))
+  }
   if(!is.null(open)){
     switch(open,
       pdf=if(toPDF){
@@ -62,7 +63,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
         system(paste0("open ",docxFile))
       },
       if(GOD){
-        system(paste0("open http://pieta.me/",basename(htmlFile)))
+        system(paste0("open http://pieta.me",godPath,basename(htmlFile)))
       }else{
         system(paste0("open ",htmlFile))
       }

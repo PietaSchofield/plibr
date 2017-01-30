@@ -1,100 +1,28 @@
 quit(save = "no")
-plib::rcur(fileName="cover",projDir="notes_pgs",open="html")
-plib::rcur(fileName="cover",projDir="notes_ps",open="html")
-fqDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/fqs/merged"
-fqFiles <- plib::rcmd(paste0("ls ",file.path(fqDir,paste0("*",fastq,".gz"))))
-fqFiles <- plib::rcmd(paste0("ls ",file.path(fqDir,paste0("*",fqExt,".gz"))))
-refGenome=refGen,noSub=F,outName=outSJ1)
-refGenome=refSR,noSub=F,outName=outSJ1,itype=0)
-outST1 <- "RAPrun1/alignment/trimmed_star"
-outST1 <- "RAPrun1/alignment/merged_star"
-plib::alignStar(projName="chirp_jb",sampleID=sid,inputPath=fq1Dir,fqExt=fqExt,
-refGenome=refGen,refSequence=refSeq,noSub=F,outName=outST1)
-fq2Dir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/Data/fqs/merged"
-fq2Files <- plib::rcmd(paste0("ls ",file.path(fq2Dir,paste0("*",fqExt,".gz"))))
-fq2Files
-fileInfo2 <- data.frame( cbind(path=dirname(fq2Files), file=basename(fq2Files)), stringsAsFactors=F)
-fileInfo2$library <- gsub("_R(1|2)_.*$","",fileInfo2$file)
-fileInfo2$sampleId <- gsub("_R(1|2).*$","",fileInfo2$file)
-outSJ2 <- "RAPrun2/alignment/merged_subj"
-plib::alignSubjunc(projName="chirp_jb",sampleID=sid,inputPath=fq2Dir,fqExt=fqExt,
-refGenome=refSR,noSub=F,outName=outSJ2)
-outSR2 <- "RAPrun2/alignment/merged_subr"
-plib::alignSubread(projName="chirp_jb",sampleID=sid,inputPath=fq2Dir,fqExt=fqExt,
-refGenome=refSR,noSub=F,outName=outSR2,itype=0)
-outST2 <- "RAPrun2/alignment/merged_star"
-refSeq <- "/scratch/pschofield/ref/star/GRCh37_pa"
-refGen <- "/scratch/pschofield/ref/star/GRCh37_pa/Homo_sapiens.GRCh37.85.gtf"
-lapply(unique(fileInfo2$sampleId),function(sid){
-plib::alignStar(projName="chirp_jb",sampleID=sid,inputPath=fq2Dir,fqExt=fqExt,
-refGenome=refGen,refSequence=refSeq,noSub=F,outName=outST2)
-.fileName <- "201701"
-.projName <- "etb1_vu"
-plib::rcur(fileName=.fileName,projDir=projName,open="html")
-plib::rcur(fileName=.fileName,projDir=.projName,open="html")
-projName="chirp_jb"
-refSR <- "/scratch/pschofield/ref/subread/GRCh37_pa/grch37_85"
-fq1Dir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/fqs/merged"
-fqExt <- ".fastq"
-fq1Files <- plib::rcmd(paste0("ls ",file.path(fq1Dir,paste0("*",fqExt,".gz"))))
-fileInfo1 <- data.frame( cbind(path=dirname(fq1Files), file=basename(fq1Files)), stringsAsFactors=F)
-fileInfo1$sampleId <- gsub("_R(1|2).*$","",fileInfo1$file)
-outSJ1 <- "RAPrun1/alignment/merged_subj"
-plib::alignSubjunc(projName="chirp_jb",sampleID=sid,inputPath=fq1Dir,fqExt=fqExt,
-refGenome=refSR,noSub=F,outName=outSJ1)
-outSR1 <- "RAPrun1/alignment/merged_subr"
-lapply(unique(fileInfo1$sampleId),function(sid){
-plib::alignSubread(projName="chirp_jb",sampleID=sid,inputPath=fq1Dir,fqExt=fqExt,
-refGenome=refSR,noSub=F,outName=outSR1,itype=0)
-bamDir <- "RAPrun1/alignment/merged_star"
-wigFiles
-sapply(wigFiles,plib::wigToBigWig,samFile=bamFile,projName="chirp_jb",outDir=outDir,noSub=F)
-bamDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/alignment/merged_star"
-outDir <- "RAPrun1/Data/BW/merged_star"
-bamFile <- plib::rcmd(paste0("ls ",file.path(bamDir,"*full.bam")))[1]
-wigFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,"*.out.wig")))
-unname(sapply(wigFiles,plib::wigToBigWig,samFile=bamFile,projName="chirp_jb",outDir=outDir,noSub=F))
-bamDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/alignment/merged_split_star"
-outDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/BW/merged_split_star"
-projDir <- "/scratch/pschofield/Projects/chirp_jb"
-bamDir <- "RAPrun1/alignment/merged_subr"
-outDir <- "Projects/chirp_jb/RAPrun1/alignment/merged_split_subr"
-ncores <- 16
-nproc=ncores,mem="32Gb")
-runScript(jname=paste0("sort_",outBAM),jdesc="sort and index bamfile",jproj="chirp_jb",
-paste0("sambamba sort --threads ",ncores," -o ",sortBAM," ",outBAM),
-lapply(bamFiles,function(outBAM){
-sortBAM <- gsub("_full[.]bam","_sort.bam",outBAM)
-script <- c(
-paste0("sambamba sort --nthreads ",ncores," -o ",sortBAM," ",outBAM),
-paste0("sambamba index ",sortBAM)
+require(edgeR)
+require(pvclust)
+locRoot <- "/Users/pschofield"
+dirRes <- "pschofield/Projects/etb1_vu/Analysis"
+subRres <- "subRead_FCresults.txt"
+gcFiles <- plib::getFiles(filenames=c(subRres,paste0(subRres,".summary")),remDir=dirRes)
+gcSubR <- plib::readFC(gcFiles[1],exon=F)$counts
+dgeSR <- DGEList(gcSubR[rowSums(dgeSR)>0,])
+dgeSR <- DGEList(gcSubR[rowSums(gcSubR)>0,])
+dgeSR <- calcNormFactors(dgeSR)
+require(EDASeq)
+limma::plotPCA(cpm(dgeSR))
+plotPCA(cpm(dgeSR))
+plotPCA(dgeSR)
+plotPCA(cpm(dgeSR,norm=F)
+plotMDS(cpm(dgeSR,norm=F)
 )
-runScript(jname=paste0("sort_",basename(outBAM)),jdesc="sort and index bamfile",jproj="chirp_jb",
-nproc=ncores,mem="32Gb",jscrp=script)
-})
-plib::rb()
-unsortedBAM <- file.path(bamDIR,paste0(bamStub,"_unsorted.bam"))
-lastLine <- paste0("mv ",unsortedBAM," ",inBAM)
-rb()
-lapply(bamFiles,plib::sortBAM,projName="chirp_jb",noSub=T)
-plib::splitBAMS(bamFiles=bamFiles,projName="chirp_jb",len=175,outDir=outDir,stranded=-1 )
-bamDir <- "RAPrun2/alignment/merged_subr"
-outDir <- "Projects/chirp_jb/RAPrun2/alignment/merged_split_subr"
-lapply(bamFiles,plib::sortBAM,projName="chirp_jb",noSub=F)
-help(plib)
-bamDir <- "RAPrun2/alignment/merged_star"
-outDir <- "Projects/chirp_jb/RAPrun2/alignment/merged_split_star"
-bamFiles <- plib::rcmd(paste0("ls ",file.path(projDir,bamDir,"*full.bam")))
-plib::splitBAMS(bamFiles=bamFiles,projName="chirp_jb",len=175,outDir=outDir,stranded=1 )
-bamDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/alignment/merged_split_subr"
-outDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun1/Data/BW/merged_split_subr"
-bamFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,"*full.bam")))
-bamDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/alignment/merged_split_star"
-outDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/Data/BW/merged_split_star"
+outDir <- "/scratch/pschofield/Projects/etb1_vu/Data/BW/subread"
 bamFiles
-bamDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/alignment/merged_split_subr"
-outDir <- "/scratch/pschofield/Projects/chirp_jb/RAPrun2/Data/BW/merged_split_subr"
-bamFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,"*.bam")))
-plib::genCovTracks(projName="chirp_jb",fileList=bamFiles,outPath=outDir)
-base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-2917", print.eval=TRUE)
+sampleNames
+bamDir <- "/scratch/pschofield/Projects/etb1_vu/Data/alignment/subread"
+outDir <- "/scratch/pschofield/Projects/etb1_vu/Data/alignment/merge_subread"
+bamFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,"*full.bam")))
+sampleNames <- unique(gsub("_L00.*$","",basename(bamFiles)))
+plib::rb()
+lapply(sampleNames,plib::mergeBAMS,bamDir=bamDir,outDir=outDir,projName="etb1_vu")
 q()

@@ -4,7 +4,7 @@
 \alias{sortBAM}
 \title{sort a bamfile}
 \usage{
-sortBAM(inBAM, outSuf = NULL, projName, noSub = F)
+sortBAM(inBAM, outSuf = NULL, projName, noSub = F, ncores = 16)
 }
 \arguments{
 \item{inBAM}{name of input file}

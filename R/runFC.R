@@ -35,5 +35,5 @@ runFC <- function(projName,bamDir,fileList,outFile,ncores=16,
     )
     jn <- paste0("featureCount_",projName)
     jd <- paste0("featureCount  ",projName," ",outFile)
-    CRUKlib::runScript(jname=jn,jproj=projName,jscrp=script, jdesc=jd,nproc=ncores)
+    plib::runScript(jname=jn,jproj=projName,jscrp=script, jdesc=jd,nproc=ncores)
 }

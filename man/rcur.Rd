@@ -5,9 +5,10 @@
 \title{render the current document}
 \usage{
 rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
-  outDir = NULL, open = "html", rootDir = "/Users/pschofield/Projects",
+  outDir = NULL, open = "html", godPath = NULL,
+  rootDir = "/Users/pschofield/Projects",
   codeDir = "/Users/pschofield/Projects", sourcecopy = F, toPDF = F,
-  toDOCX = F, toHTML = T, GOD = F)
+  toDOCX = F, toHTML = T, toGOD = T, GOD = T)
 }
 \arguments{
 \item{fileName}{file name}

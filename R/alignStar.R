@@ -25,39 +25,53 @@
   tsBAM <- file.path(bamDir,paste0(outStub,"Aligned.toTranscriptome.out.bam"))
   niceTsBAM <- file.path(bamDir,paste0(outStub,"transcriptome.bam"))
   inputFastq1 <- file.path(inputPath,paste0(sampleID, "_R1",fqExt,".gz", sep=""))
-  if(pe){
-    inputFastq2 <- gsub("_R1","_R2",inputFastq1)
-  }else{
-    inputFastq2 <- " "
-  }
-  parts <- unlist(strsplit(basename(sampleID),"_"))
+  parts <- unlist(strsplit(sampleID,"_"))
   RG.ID <- sampleID
   RG.SM <- parts[[1]]
   RG.LB <- sampleID
   RG.PU <- parts[[2]]
   ReadGroup <- paste('ID:',RG.ID,'SM:',RG.SM,'PL:ILLUMINA","LB:',RG.LB,'PU:',RG.PU,sep=" ")
-  # generate the script commands
-  script <- c(
-    paste0("# run ",basename(sampleID)),
-    paste0("module load ", starMod),
-    paste0("module load ",samtoolsMod),
-    paste0("mkdir -p ",bamDir),
-    paste0("STAR --runThreadN ",ncores," --genomeDir ",refSequence,
-           " --sjdbGTFfile ",refGenome,
-           " --quantMode TranscriptomeSAM GeneCounts ",
-           " --quantTranscriptomeBan Singleend ",
-           " --outFileNamePrefix ",file.path(bamDir,outStub),
-           " --outFilterScoreMinOverLread 0 --outFilterMatchNminOverLread 0 --outFilterMatchNmin 40 ",
-           " --readFilesCommand zcat --outSAMstrandField intronMotif --outSAMattributes All ",
-           " --outSAMunmapped Within KeepPairs --outWigType wiggle --outWigStrand Stranded ",
-           " --outSAMattrRGline ",ReadGroup," --outSAMtype BAM SortedByCoordinate ",
-           " --readFilesIn ",inputFastq1," ",inputFastq2),
-    paste("mv ",starBAM," ",niceBAM),
-    paste("samtools index ",niceBAM),
-    paste("mv ",tsBAM," ",niceTsBAM)
-    #paste("samtools view -b -q 10 -f 2 -F 780 -o", uniqueBAM, niceBAM, sep=" "),
-    #paste("samtools index ",uniqueBAM),
-  )
+  if(pe){
+    inputFastq2 <- gsub("_R1","_R2",inputFastq1)
+    # generate the script commands
+    script <- c(
+      paste0("# run ",sampleID),
+      paste0("module load ", starMod),
+      paste0("module load ",samtoolsMod),
+      paste0("mkdir -p ",bamDir),
+      paste0("STAR --runThreadN ",ncores," --genomeDir ",refSequence,
+             " --sjdbGTFfile ",refGenome,
+             " --quantMode TranscriptomeSAM GeneCounts ",
+             " --quantTranscriptomeBan Singleend ",
+             " --outFileNamePrefix ",file.path(bamDir,outStub),
+             " --outFilterScoreMinOverLread 0 --outFilterMatchNminOverLread 0 --outFilterMatchNmin 40 ",
+             " --readFilesCommand zcat --outSAMstrandField intronMotif --outSAMattributes All ",
+             " --outSAMunmapped Within KeepPairs --outWigType wiggle --outWigStrand Stranded ",
+             " --outSAMattrRGline ",ReadGroup," --outSAMtype BAM SortedByCoordinate ",
+             " --readFilesIn ",inputFastq1," ",inputFastq2),
+      paste("mv ",starBAM," ",niceBAM),
+      paste("samtools index ",niceBAM),
+      paste("mv ",tsBAM," ",niceTsBAM)
+    )
+  }else{
+    script <- c(
+      paste0("# run ",sampleID),
+      paste0("module load ", starMod),
+      paste0("module load ",samtoolsMod),
+      paste0("mkdir -p ",bamDir),
+      paste0("STAR --runThreadN ",ncores," --genomeDir ",refSequence,
+             " --sjdbGTFfile ",refGenome,
+             " --quantMode GeneCounts ",
+             " --outFileNamePrefix ",file.path(bamDir,outStub),
+             " --readFilesCommand zcat --outSAMstrandField intronMotif --outSAMattributes All ",
+             " --outWigType wiggle --outWigStrand Stranded ",
+             " --outSAMattrRGline ",ReadGroup," --outSAMtype BAM SortedByCoordinate ",
+             " --readFilesIn ",inputFastq1),
+      paste("mv ",starBAM," ",niceBAM),
+      paste("samtools index ",niceBAM),
+      paste("mv ",tsBAM," ",niceTsBAM)
+    )
+  }
   plib::runScript(jname=paste0("star_",sampleID),jproj=projName,
                        jdesc=paste0("STAR align for project ",projName," on sample ", sampleID),
                        jscrp=script,noSub=noSub,nproc=ncores,scpIt=scpIt,mem="32Gb")
