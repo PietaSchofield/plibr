@@ -17,13 +17,14 @@
 #' @param dataDir secondary location for copy 
 #' @param open view the output file
 #' @param locOnly write output to local hardrive rather than network share
+#' @param setWH sets this file as the home file in the work directory
 #'
 #' @export
 rcur <- function(fileName=.curFile,projDir=.curProj,
                  inDir=NULL, outDir=NULL,open="html",godPath=NULL,
                  rootDir="/Users/pschofield/Projects",
                  codeDir="/Users/pschofield/Projects",
-                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T){
+                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
   if(is.null(outDir) & is.null(inDir)){
     infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
     outpath <- file.path(rootDir,projDir,"Notes")
@@ -53,6 +54,9 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
       godPath <- paste0("/work/Projects/",projDir,"/")
     }
     system(paste0("scp ",htmlFile," pieta@pieta.me:public_html",godPath))
+    if(setWH){
+       system(paste0("scp ",htmlFile," pieta@pieta.me:public_html/work/home.html"))
+    }
   }
   if(!is.null(open)){
     switch(open,

@@ -47,7 +47,7 @@
              " -S ",stranded,
              " -r ",inputFastq1,
              " -R ",inputFastq2),
-      paste0("sambamba sort --threads ",ncores," -o ",sortBAM," ",outBAM),
+      paste0("sambamba sort --nthreads ",ncores," -o ",sortBAM," ",outBAM),
       paste0("sambamba index ",sortBAM)
     )
   }else{
@@ -63,7 +63,7 @@
              " --rg ",ReadGroup,
              " -S ",stranded,
              " -r ",inputFastq1),
-      paste0("sambamba sort --threads ",ncores," -o ",sortBAM," ",outBAM),
+      paste0("sambamba sort --nthreads ",ncores," -o ",sortBAM," ",outBAM),
       paste0("sambamba index ",sortBAM)
     )
   }

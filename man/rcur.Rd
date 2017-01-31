@@ -8,7 +8,7 @@ rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
   outDir = NULL, open = "html", godPath = NULL,
   rootDir = "/Users/pschofield/Projects",
   codeDir = "/Users/pschofield/Projects", sourcecopy = F, toPDF = F,
-  toDOCX = F, toHTML = T, toGOD = T, GOD = T)
+  toDOCX = F, toHTML = T, toGOD = T, GOD = T, setWH = F)
 }
 \arguments{
 \item{fileName}{file name}
@@ -24,6 +24,8 @@ rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
 \item{rootDir}{root of output tree}
 
 \item{codeDir}{code tree path}
+
+\item{setWH}{sets this file as the home file in the work directory}
 
 \item{sourceCopy}{copy source to the output location too}
 
