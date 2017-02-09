@@ -12,4 +12,3 @@ view(fileName)
 \description{
 very simple command possibly expand to take application as an argument
 }
-

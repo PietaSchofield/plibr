@@ -34,4 +34,3 @@ subFastQC(fastqDir, fastqPattern = "*.gz", outDir = "pre",
 \description{
 Submit a cluster job to fastQC a directory
 }
-

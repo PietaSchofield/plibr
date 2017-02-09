@@ -14,4 +14,3 @@ getWeek(startDate, endDate,
 \description{
 get the time_sheet data for a particular week
 }
-

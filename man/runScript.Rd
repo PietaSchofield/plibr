@@ -44,4 +44,3 @@ runScript(jname, jproj, jdesc, jscrp, remroot = "/scratch/pschofield",
 \description{
 generate and submit a batch job
 }
-

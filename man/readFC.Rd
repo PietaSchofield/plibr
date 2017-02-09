@@ -14,4 +14,3 @@ readFC(filename, exons = F)
 \description{
 readFC read a featureCount File
 }
-

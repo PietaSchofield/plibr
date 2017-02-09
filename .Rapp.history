@@ -1,46 +1,23 @@
 quit(save = "no")
-plib::rcur(fileName="cover",projDir="nkilsmm_sz2")
-plib::rcur(fileName="cover",projDir="quantseq_ps")
-plib::rcur(fileName="201701",projDir="notes_ps",open="html",setWH=T)
+plib::rcur(fileName="201702",projDir="notes_ps",open="html",setWH=T)
+base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-1337", print.eval=TRUE)
+fqFiles <- rlsFiles(file.path(unique(fileLocs$FASTQ.File.Path),"*_R1_*.gz"))
+fqFiles <- fqFiles[which(!grepl("Undetermined",fqFiles))]
+runId <- gsub("_",":",
+gsub("(.*MiSeqAnalysis[/]|[/]Data.*)","",dirname(unique(fileLocs$FASTQ.File.Path))))
+refGenome <- "/data/compbio/hsleong/Genome/gatk/hg19/Homo_sapiens_assembly19.fasta"
+lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome)
+lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runID=runId)
+plib:;rb()
+lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runId=runId)
+lapply(fqFiles,alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runId=runId)
+fileList
+fqFiles
+bamFiles <- rlsFiles(file.path(.remoteProj,"Data/alignment/bwa","*.bam"))
 bamFiles
-mergedFiles <- bamFiles[which(!grep("out",bamFiles))]
-grep("out",bamFiles)
-!grepl("out",bamFiles)
-,]
-script <- sapply(mergedFiles,function(mf){
-paste0("ln -s ",mf," /scratch/pschofield/Projects/quantseq_ps/Data/alignment/mmly6d_eb",
-gsub("_[.]","low.",basename(mf)))
-})
-paste0("ln -s ",mf," ",file.path(outDir, gsub("_[.]","low.",basename(mf))))
-plib::runScript(jname="linkbams",jproj="quantseq_ps",
-help(plib)
+lapply(bamFiles[1],dedupCNV,projName="dilute_cnv_sm",refGen=refGenome,ncores=2)
 rb()
 plib::rb()
-mergedFiles
-base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-2751", print.eval=TRUE)
-bamDir <- "Data/alignment/mmly6d_eb"
-bamDir <- "alignment/mmly6d_eb"
-bamFile <- rlsFiles(file.path(.remoteData,bamDir,"*.bam"))
-bamFile
-bamFiles <- rlsFiles(file.path(.remoteData,bamDir,"*.bam"))
-trFile <-
-trFile <- bamFiles[1]
-ctFile <- bamFiles[3]
-trFile
-ctFile
-outDir <- file.path(.remoteData,"MACS/mmly6d")
-name <- "HN7_SCA1hi_LY6D_PLUS_MINUS"
-runMACS2(trBam=trFile,ctBam=ctFile,outDir=outDir,name=name,projName="quantseq_ps")
-script
-mmly6dRoot <- "/scratch/pschofield/Projects/mmly6d_eb"
-bamDir <- "Data/alignment/star"
-outDir <- "/scratch/pschofield/Projects/quantseq_ps/Data/alignment/mmly6d_eb"
-bamFiles <- rlsFiles(file.path(mmly6dRoot,bamDir,"*.bam"))
-mergedFiles <- bamFiles[which(!grepl("out",bamFiles))]
-script <- unname(sapply(mergedFiles,function(mf){
-paste0("cp ",mf," ",file.path(outDir, gsub("_[.]","low.",basename(mf))))
-}))
-plib::runScript(jname="copybams",jproj="quantseq_ps",
-jdesc=paste0("create bamfile links for mmly6d merged star files"),
-jscrp=script,noSub=F,nproc=1,scpIt=T)
+lapply(bamFiles[1],dedupCNV,projName="dilute_cnv_sm",refGen=refGenome)
+mq
 q()

@@ -14,4 +14,3 @@ rb(pkgName = "plib_ps", baseDir = "/Users/pschofield/Code")
 \description{
 rebuild a package
 }
-

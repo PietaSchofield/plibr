@@ -15,4 +15,3 @@ returns a list with an array of statistic on each motif and an list of all the p
 \description{
 read in dreme results file
 }
-

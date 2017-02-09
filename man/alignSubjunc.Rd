@@ -24,4 +24,3 @@ This is a subjunc aligner that runs of single fastq files rather than individual
 the HiSeq. There maybe QC advantages of aligning the individual fastqc but sometimes it is just
 simpler to merge before the event.
 }
-

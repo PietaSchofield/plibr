@@ -18,4 +18,3 @@ custHMMsegment(cn, segmentationMu, outFile = NULL, long = FALSE, seqlen)
 \description{
 uses HMMcopy HMMsegment function but applys a custom segmentation mu string
 }
-

@@ -21,4 +21,3 @@ newProject(name = NULL, root = "/Users/pschofield/Code/", noidx = F,
 \description{
 create a new project
 }
-

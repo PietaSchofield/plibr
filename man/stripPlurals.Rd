@@ -12,4 +12,3 @@ stripPlurals(sentences)
 \description{
 rebuild a package
 }
-

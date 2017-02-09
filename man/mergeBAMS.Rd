@@ -16,4 +16,3 @@ mergeBAMS(sampleName, bamDir, outDir, projName, noSub = F, ncores = 16)
 \description{
 merge some bamfiles
 }
-

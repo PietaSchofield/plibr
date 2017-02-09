@@ -14,4 +14,3 @@ edt(filename, editor = "rs")
 \description{
 edit a file
 }
-

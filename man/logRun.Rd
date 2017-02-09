@@ -9,4 +9,3 @@ logRun()
 \description{
 output details of the current node and R environment for summitted job
 }
-

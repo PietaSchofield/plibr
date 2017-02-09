@@ -16,4 +16,3 @@ addCite(bib = NULL, packages = NULL, type = "T")
 \description{
 include citation for package in markdown
 }
-

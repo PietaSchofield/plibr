@@ -23,4 +23,3 @@ This is a simpler STAR aligner that runs of single fastq files rather than indiv
 the HiSeq. There maybe QC advantages of aligning the individual fastqc but sometimes it is just
 simpler to merge before the event.
 }
-

@@ -13,4 +13,3 @@ readGMT(fileName = "h.all.v5.2.symbols.gmt",
 \description{
 read in an MSigDB file with gene set
 }
-

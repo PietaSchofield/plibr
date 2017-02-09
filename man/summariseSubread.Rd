@@ -16,4 +16,3 @@ summariseSubread(projName, fileList, locDir = "/Users/pschofield/.tmp")
 \description{
 gather alignment statistic on a directory of star alignments
 }
-

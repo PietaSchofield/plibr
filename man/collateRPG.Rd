@@ -12,4 +12,3 @@ collateRPG(directoryName, locDir = NULL, strandedness = "US", force = F)
 \description{
 collate a directory of STAR .ReadsPerGene.out.tab files
 }
-

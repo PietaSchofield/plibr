@@ -16,4 +16,3 @@ applyQDNAFilter(rd, filterGR = filter150kb, outfile = NULL)
 \description{
 function to apply a filter to a HMMcopy RangedData object and return a filtered RangedData object
 }
-

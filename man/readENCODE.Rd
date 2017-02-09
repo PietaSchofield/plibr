@@ -12,4 +12,3 @@ readENCODE(filename)
 \description{
 readENCODE read broadPeak and narrowPeak formats and return a GRanges object
 }
-

@@ -17,4 +17,3 @@ rcmd(cmd, hostname = "troodon.scicom.picr.man.ac.uk",
 \description{
 execute a command remotely via ssh
 }
-

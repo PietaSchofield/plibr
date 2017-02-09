@@ -9,4 +9,3 @@ codeHook(before, options, envir)
 \description{
 simple knitr hook for code chunk referencing
 }
-

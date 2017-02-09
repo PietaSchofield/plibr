@@ -9,4 +9,3 @@ factorise(x)
 \description{
 find divisors of an integer
 }
-

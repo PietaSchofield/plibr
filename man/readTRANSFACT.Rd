@@ -12,4 +12,3 @@ readTRANSFACT(file)
 \description{
 read a transfact PWM file
 }
-

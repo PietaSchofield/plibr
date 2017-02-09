@@ -30,4 +30,3 @@ ll(name = NULL, pos = 1L, envir = as.environment(pos), allNames = FALSE,
 \description{
 This is a steal however it probably needs a rewrite in the plyr world
 }
-

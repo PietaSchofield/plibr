@@ -21,4 +21,3 @@ runStarAlign(projName, sampleID, fileTable, runName,
 \description{
 Submit a list of files associated with a project for bwa alignment and deduping
 }
-

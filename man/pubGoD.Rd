@@ -41,4 +41,3 @@ which is available from OSXFUSE. Default paths are configured for my code locati
 \details{
 Been making changes to this to use bookdown document styles
 }
-

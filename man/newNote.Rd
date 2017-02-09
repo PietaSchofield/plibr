@@ -14,4 +14,3 @@ newNote(name = NULL, root = "/Users/pschofield/Code/")
 \description{
 create a new notebook file
 }
-

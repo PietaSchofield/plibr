@@ -17,7 +17,7 @@
 #' @export
 genJobScript <- function(PBSscript, jobName="myrun", jobDescription="My analysis", 
   Nnodes=1, Nproc=16, Memory="32gb", Walltime="30:00:00",delayTil=NULL, environ=TRUE,
-  email="pieta.schofield@cruk.manchester.ac.uk",overwrite=FALSE,
+  email="pieta.schofield@cruk.manchester.ac.uk",overwrite=FALSE,emailMode="ae",
   log.dir="/lustre/scratch/pschofield/tmp", dirSet=T)
 {
   header <- c(
@@ -25,7 +25,7 @@ genJobScript <- function(PBSscript, jobName="myrun", jobDescription="My analysis
     paste('#', jobDescription, sep=" "),
     paste('#PBS -N', jobName, sep=" "),
     paste('#PBS -l nodes=', Nnodes, ':ppn=', Nproc, ',mem=', Memory, sep=""),
-    '#PBS -m a',
+    paste('#PBS -m ',emailMode,sep=" "),
     paste('#PBS -M', email, sep=" "),
     paste('#PBS -o', log.dir, sep=" "),
     paste('#PBS -e', log.dir, sep=" "),

@@ -25,4 +25,3 @@ getFiles(filenames, remDir, locDir = remDir, remRoot = "/scratch",
 \description{
 get files from the cluster using scp to avoid using fuse for the moment
 }
-

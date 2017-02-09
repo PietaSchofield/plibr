@@ -13,4 +13,3 @@ delWeek(startDate, projDir = "/Users/pschofield/Projects/time_sheet/",
 \description{
 get the time_sheet data for a particular week
 }
-

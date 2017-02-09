@@ -29,4 +29,3 @@ getProject(filename, sumSheet = "Summary", fileSheet = "Files", ssCol = 1,
 \description{
 get information from project xlsx
 }
-

@@ -27,4 +27,3 @@ subJob(scriptfile, locRoot = "/Users", remRoot = "/scratch",
 \description{
 This functions submits a job in the form of a scriptfile to the cluster via ssh
 }
-

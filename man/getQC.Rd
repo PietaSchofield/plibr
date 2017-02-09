@@ -12,4 +12,3 @@ getQC(fileName, basicOnly = F)
 \description{
 get basic stats from fastQC html
 }
-

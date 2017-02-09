@@ -17,4 +17,3 @@ runQSTrim(projName, outRoot = file.path("/scratch/pschofield/Projects",
 \description{
 Submit a list of files associated with a project for  QC checking with fastQC file
 }
-

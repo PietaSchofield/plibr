@@ -16,4 +16,3 @@ sumForPlot(dfin, cols, val)
 \description{
 generate a summary for creating pretty boxplots for data with missing values
 }
-

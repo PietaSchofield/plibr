@@ -38,4 +38,3 @@ generateHeaders(PBSscript, jobName = "myrun",
 \description{
 Generate headers for running batch PBS jobs
 }
-

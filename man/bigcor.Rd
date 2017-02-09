@@ -16,4 +16,3 @@ bigcor(x, nblocks = 10, verbose = TRUE, absolute = F)
 \description{
 large correlation matrix with ff
 }
-

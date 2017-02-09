@@ -9,4 +9,3 @@ plotSubTree(phy, focus, subtree = FALSE, col = rainbow, ...)
 \description{
 plot a dendrogram borrowed from ape zoom with ammendments
 }
-

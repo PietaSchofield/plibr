@@ -10,4 +10,3 @@ anscore(x, y = NULL, fun = c("cor", "cov"), size = 2000, verbose = TRUE,
 \description{
 A N Spiess bigcore function
 }
-

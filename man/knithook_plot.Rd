@@ -9,4 +9,3 @@ knithook_plot(x, options)
 \description{
 kniter hook for figure numbering
 }
-

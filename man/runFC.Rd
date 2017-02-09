@@ -31,4 +31,3 @@ paths}
 \description{
 Run featureCounts on a set of bam files
 }
-

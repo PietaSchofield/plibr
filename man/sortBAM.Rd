@@ -14,4 +14,3 @@ sortBAM(inBAM, outSuf = NULL, projName, noSub = F, ncores = 16)
 \description{
 sort a bamfile
 }
-

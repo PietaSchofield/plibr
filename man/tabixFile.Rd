@@ -18,4 +18,3 @@ tabixFile(infile, outfile = NULL, outpath = NULL, form = NULL,
 A simple function to tabix bed and gtf files it might work for other files but I have not tried any so
 is likely that it will fail.
 }
-

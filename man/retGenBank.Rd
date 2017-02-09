@@ -12,4 +12,3 @@ retGenBank(gid, getfullseq = FALSE)
 \description{
 Retrieve GENBANK details
 }
-

@@ -31,4 +31,3 @@ pi   - Optimal state distribution
 loglik - The likelihood values of each EM algorithm iteration
 rho  - Posterior marginals (responsibilities) for each position and state
 }
-

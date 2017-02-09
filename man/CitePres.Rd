@@ -16,4 +16,3 @@ CitePres(bib = NULL, ckey = "", alim = 2)
 \description{
 A funtion to add citations in presentations without having to have a bibliography at the end
 }
-

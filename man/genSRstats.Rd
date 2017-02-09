@@ -15,4 +15,3 @@ genSRstats(fileName, projName, ncores = 2, noSub = F, mem = "8Gb",
 \description{
 generate stats files for subread / subjunc alignments for summarisation
 }
-

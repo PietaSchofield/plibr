@@ -15,4 +15,3 @@ genBibtex(packages, db = F, overwrite = TRUE,
 \description{
 genbibtex
 }
-

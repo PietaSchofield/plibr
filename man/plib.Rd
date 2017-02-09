@@ -11,4 +11,3 @@ I have been doing inparticular submitting and running processing jobs on the clu
 used to exist as two separate libraries, my original pietalib that I started at Dundee and a CRUKlib
 that I started at CRUK Manchester. However it makes more sense to combine these now.
 }
-

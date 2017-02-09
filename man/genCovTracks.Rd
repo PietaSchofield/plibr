@@ -16,4 +16,3 @@ genCovTracks(projName, fileList, outPath, paired = T)
 \description{
 generate some bigwig tracks from paired reads
 }
-

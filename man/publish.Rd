@@ -21,4 +21,3 @@ publish(rname = "/Users/pschofield/Code/", pname = NULL, fname = NULL,
 \description{
 Publish all relevant files from the local directory to my public_html tree
 }
-

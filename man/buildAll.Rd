@@ -27,4 +27,3 @@ It is a bit of a work in progress I am trying to keep it logical and not have to
 exceptions that need special cases. At the moment I have not sorted out index pages for 
 the private and public directories
 }
-

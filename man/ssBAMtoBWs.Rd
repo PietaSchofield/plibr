@@ -20,4 +20,3 @@ ssBAMtoBWs(inFile, outDir, projName,
 \description{
 create strand specific bigwigs from a standed bamfile
 }
-

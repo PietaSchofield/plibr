@@ -5,8 +5,8 @@
 \title{Submit a list of files associated with a project for  QC checking with fastQC file}
 \usage{
 runFastQC(projName, outRoot = file.path("/scratch/pschofield/Projects",
-  projName), fileList = NULL, outName = "Analysis/fastqc/raw", noSub = F,
-  scpIt = T)
+  projName), fileList = NULL, outName = "Analysis/fastqc",
+  fileFormat = "fastq", noSub = F, scpIt = T, fileExt = ".fastq.gz")
 }
 \arguments{
 \item{projName}{project name}
@@ -18,4 +18,3 @@ runFastQC(projName, outRoot = file.path("/scratch/pschofield/Projects",
 \description{
 Submit a list of files associated with a project for  QC checking with fastQC file
 }
-

@@ -14,4 +14,3 @@ getSpikeInNorm(expID = NULL, custom = NULL)
 \description{
 get results from nicks spike-in db
 }
-

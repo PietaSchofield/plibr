@@ -22,4 +22,3 @@ If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
 \details{
 ggplot objects can be passed in ..., or to plotlist (as a list of ggplot objects)
 }
-

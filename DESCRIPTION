@@ -3,7 +3,7 @@ Type: Package
 Title: P's repository of useful R functions
 Version: 0.1.0
 Author: Pieta Schofield
-Maintainer:  <pieta.schofield@cruk.manchester.ac.uk>
+Maintainer: <pieta.schofield@cruk.manchester.ac.uk>
 Description: A collection of useful functions for mainly NGS stuff on the troodon cluster at CRUK 
   Manchester institue
 License: CC0
@@ -23,4 +23,4 @@ Suggests:
     knitr
 VignetteBuilder: knitr
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

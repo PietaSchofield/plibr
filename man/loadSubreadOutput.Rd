@@ -14,4 +14,3 @@ Load Fcount output from : DEXSeq_after_Fcount.R into DEXSeq
  Copyright 2015 Vivek Bhardwaj (bhardwaj@ie-freiburg.mpg.de). Licence: GPLv3.
  Read Fcount output and convert to dxd
 }
-

@@ -13,4 +13,3 @@ readPrism(filename)
 This function is in no way a generic Prism reader it is specifically designed
 to read qRT_PCR results files from A Seifert
 }
-

@@ -32,4 +32,3 @@ runRScript(rscript, args = NULL, jname, jproj, jdesc,
 \description{
 generate and submit a batch job that runs an Rjob
 }
-

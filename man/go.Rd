@@ -21,4 +21,3 @@ go(pname = "notes", fname = NULL, tname = "git_tree",
 \description{
 edit most recent note
 }
-

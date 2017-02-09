@@ -12,4 +12,3 @@ rlsFiles(pattern)
 \description{
 list remote directory
 }
-

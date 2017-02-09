@@ -19,4 +19,3 @@ runSICER(projName, filePairs, bedDir, pyMod = "apps/python",
 \description{
 run SICER on a set of file pairs
 }
-

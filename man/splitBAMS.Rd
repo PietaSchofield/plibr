@@ -14,4 +14,3 @@ splitBAMS(bamFiles, len = 150, projName, outDir = NULL, stranded = 1)
 \description{
 a routine to split and filter by insert size strand specific bam files
 }
-

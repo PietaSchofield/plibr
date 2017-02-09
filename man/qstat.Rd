@@ -13,4 +13,3 @@ qstat(user = "pschofield")
 run qstat on the cluster remotely and return the results to an R session this is
 currently just a simple function which defaults to my user name
 }
-

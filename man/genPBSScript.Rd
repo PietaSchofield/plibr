@@ -38,4 +38,3 @@ genPBSScript(PBSscript, jobName = "myrun", jobDescription = "My analysis",
 \description{
 Generate headers for running batch PBS jobs
 }
-

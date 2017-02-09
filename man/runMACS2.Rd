@@ -21,4 +21,3 @@ runMACS2(trBam, ctBam, outDir, name, broad = T, pe = F, projName,
 \description{
 submit a MACS2 job on the the cluster
 }
-

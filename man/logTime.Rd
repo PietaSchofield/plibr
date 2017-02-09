@@ -21,4 +21,3 @@ Load data from OfficeTime export into my time recording DB
 Takes a file name and squirts the info into the time recording database. It will check if
 data already exists for the dates and stop rather than write duplicate entries.
 }
-

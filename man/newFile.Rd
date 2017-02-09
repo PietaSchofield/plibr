@@ -16,4 +16,3 @@ newFile(project = NULL, fname = NULL,
 \description{
 create a new notebook file
 }
-

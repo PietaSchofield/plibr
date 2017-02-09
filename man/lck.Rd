@@ -2,6 +2,7 @@
 % Please edit documentation in R/lck.R, R/listcitekeys.R
 \name{lck}
 \alias{lck}
+\alias{lck}
 \title{list the citation keys for a package}
 \usage{
 lck(packages, title = F)
@@ -18,4 +19,3 @@ list the citation keys for a package
 
 list the citation keys for a package
 }
-
