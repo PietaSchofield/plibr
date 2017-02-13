@@ -4,14 +4,14 @@
 \alias{custHMMsegment}
 \title{Custom CNV segmentation}
 \usage{
-custHMMsegment(cn, segmentationMu, outFile = NULL, long = FALSE, seqlen)
+custHMMsegment(cn, pl, outFile = NULL)
 }
 \arguments{
 \item{cn}{corrected copy number RangedData object}
 
-\item{segmentationMu}{comma separated string of values}
-
 \item{outFile}{if specified writes the segmentation out as a wig file}
+
+\item{segmentationMu}{comma separated string of values}
 
 \item{long}{if true performs adjustment to favour long segments}
 }

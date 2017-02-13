@@ -24,13 +24,13 @@
 #' @export
 plotCNV <- function(copyData,segData,paramList){
   pl <- paramList
-  ds <- reshape2::dcast(
-          plyr::ldply(lapply(copyData,function(c){ 
+  dsdf <- reshape2::dcast(
+          plyr::ldply(lapply(copyData,function(c){
             as(c,"data.frame")[,c("space","start","end","copy")]
           }),stringsAsFactors=F),space+start+end~.id,value.var="copy")
 
-  nsample <- ncol(ds)-3
-  yLimit <- range(apply(ds[,4:ncol(ds)],2,max,na.rm=T))
+  nsample <- ncol(dsdf)-3
+  yLimit <- range(apply(dsdf[,4:ncol(dsdf)],2,max,na.rm=T))
   maxCNVToPlot <- max(abs(yLimit))
   if( maxCNVToPlot > 3 ){
     yLimit <- c(-2.5,2.5)
@@ -38,24 +38,24 @@ plotCNV <- function(copyData,segData,paramList){
     yLimit <- c(-maxCNVToPlot, maxCNVToPlot)
   }
   ploidyNumberToShow <- c(0,1,2,3,4,5)
-  ratioPosition <- log2(as.numeric(unlist(strsplit(pl[["segmentationMu"]],",", fixed=TRUE)))/2)
+  ratioPosition <- log2(as.numeric(unlist(strsplit(pl[["segMu"]],",", fixed=TRUE)))/2)
 
 # Plot all CNV as individual track in one PDF
-  height.compactPlot <- ceiling((ncol(ds)-3) * pl[["plotHeightFactor"]])
+  height.compactPlot <- ceiling((ncol(dsdf)-3) * pl[["pltHFactor"]])
   width.compactPlot = 15
-  pdf(pl[["outputFile"]],height=height.compactPlot, width=width.compactPlot)
-    layout(matrix(1:(ncol(ds)-3), nrow=(ncol(ds)-3), ncol=1))
+  outFile <- file.path(pl[["outDir"]],paste0(pl[["analysisType"]],".pdf"))
+  pdf(outFile,height=height.compactPlot, width=width.compactPlot)
+    layout(matrix(1:(ncol(dsdf)-3), nrow=(ncol(dsdf)-3), ncol=1))
     par(oma=c(2,4,3,12), cex.axis=0.8)
-    for(p in 4:ncol(ds)){
-      sn <- colnames(ds)[p]
+    for(sn in pl[["plotOrder"]]){
       # Linearise the copy number positions for plotting
-      chrLength <- data.frame(pl[["chromosomeSize"]])
+      chrLength <- data.frame(pl[["seqLen"]])
       colnames(chrLength) <- c("size")
       chrLength$chr <- rownames(chrLength)
       chrLength$offset <- cumsum(c(0, chrLength$size[-nrow(chrLength)]))
-      gpos <- ds$start
+      gpos <- dsdf$start
       for(i in 1:nrow(chrLength)){
-        idx <- as.character(ds$space) == as.character(chrLength[i, "chr"])
+        idx <- as.character(dsdf$space) == as.character(chrLength[i, "chr"])
         gpos[idx] <- gpos[idx] + chrLength[i, "offset"]        
       }
       midpoint <- vector("numeric", nrow(chrLength))
@@ -78,7 +78,7 @@ plotCNV <- function(copyData,segData,paramList){
       segsToPlot <- data.frame(chrom=segs$chr, loc.start, loc.end, loc.mean=segs$median)
       # Plot the corrected copy number
       par(mar=c(2,0,0,0), cex.main=0.9, cex.axis=0.7, las=2)
-      plot(gpos, ds[,p], pch=".", xlab="", ylab="", main="", 
+      plot(gpos, dsdf[,sn], pch=".", xlab="", ylab="", main="", 
            ylim=yLimit, col="grey60", xaxt="n", xaxs="i")
       myColorPalette <- RColorBrewer::brewer.pal(n=11, name="RdBu")
       myStates <- segData[[sn]]$state
@@ -89,7 +89,7 @@ plotCNV <- function(copyData,segData,paramList){
       myCol[myStates == 4] <- myColorPalette[2]  # 3 copies, gain
       myCol[myStates == 5] <- "darkorange"     # 4 copies, amplification
       myCol[myStates == 6] <- myColorPalette[3]  # >= 5 copies, high-level of amplification
-      points(gpos, ds[,p], pch=".", col=myCol)
+      points(gpos, dsdf[,sn], pch=".", col=myCol)
       # Add estimated ploidy number
       axis(side=4, at=ratioPosition, labels=ploidyNumberToShow)
       # Add segmentation trend lines
@@ -109,9 +109,9 @@ plotCNV <- function(copyData,segData,paramList){
       # Add chromosome name
       par(las=0)
       axis(side=1, at=midpoint, labels=as.character(chrLength$chr), tick=FALSE, line=-1)
-      if(p == ncol(ds)){
+      if(grep(sn,pl[["plotOrder"]]) == ncol(dsdf)){
         par(las=0, cex.axis=0.8)
-        if(length(ds) > 3){
+        if(length(dsdf) > 3){
           mtext(expression(paste("Mappability and GC-corrected read counts (",
                     log[2], ")", sep="")), side=2, line=1.8, outer=TRUE)
         }else{
@@ -121,10 +121,10 @@ plotCNV <- function(copyData,segData,paramList){
         }
       }
 
-      if(p == 4 ){
+      if(grep(sn,pl[["plotOrder"]]) == 1 ){
         par(las=0) 
         mtext(paste("HMMcopy ", pl[["analysisType"]], " sample analysis (window size = ", 
-            windowSize, ")", sep=""), side=3, line=0.8, outer=TRUE)
+            paramList[["windowSize"]], ")", sep=""), side=3, line=0.8, outer=TRUE)
       }
     }
   dev.off()

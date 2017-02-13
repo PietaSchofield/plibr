@@ -1,23 +1,197 @@
-quit(save = "no")
-plib::rcur(fileName="201702",projDir="notes_ps",open="html",setWH=T)
-base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-1337", print.eval=TRUE)
-fqFiles <- rlsFiles(file.path(unique(fileLocs$FASTQ.File.Path),"*_R1_*.gz"))
-fqFiles <- fqFiles[which(!grepl("Undetermined",fqFiles))]
-runId <- gsub("_",":",
-gsub("(.*MiSeqAnalysis[/]|[/]Data.*)","",dirname(unique(fileLocs$FASTQ.File.Path))))
-refGenome <- "/data/compbio/hsleong/Genome/gatk/hg19/Homo_sapiens_assembly19.fasta"
-lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome)
-lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runID=runId)
-plib:;rb()
-lapply(fqFiles[1],alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runId=runId)
-lapply(fqFiles,alignBWA,projName="dilute_cnv_sm",refGen=refGenome,runId=runId)
-fileList
-fqFiles
-bamFiles <- rlsFiles(file.path(.remoteProj,"Data/alignment/bwa","*.bam"))
-bamFiles
-lapply(bamFiles[1],dedupCNV,projName="dilute_cnv_sm",refGen=refGenome,ncores=2)
-rb()
-plib::rb()
-lapply(bamFiles[1],dedupCNV,projName="dilute_cnv_sm",refGen=refGenome)
-mq
 q()
+plib::rcur(fileName="201702",projDir="notes_ps",open="html",setWH=T)
+rb(0)
+base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-590", print.eval=TRUE)
+require(GenomicRanges)
+geneAnnotationRdata=annoRdata,cytobandFile=cytoFile,mapFile=mapFile,gcFile=gcFile,
+warnings()
+if(!is.null(pairings)){
+paired <- T
+paramList[["analysisType"]] <- "paired"
+colnames(pairings) <- c("tumour","normal")
+paired <- F
+paramList[["analysisType"]] <- "single"
+outDir <- file.path(locRoot,projName,outDir)
+outDir <- file.path(outDir,paramList[["analysisType"]])
+dir.create(outDir,recursive=T,showWarning=FALSE)
+wigDir <- file.path(remRoot,projName,wigDir)
+wigFiles <- rlsFiles(file.path(wigDir,"*.*"))
+sampleFiles <- getFiles(filenames=basename(wigFiles),remDir=gsub("/scratch/","",wigDir))
+gcFile <- sampleFiles[grep(gcFile,sampleFiles)]
+mapFile <- sampleFiles[grep(mapFile,sampleFiles)]
+sampleFiles <- sampleFiles[!grepl(paste0("(",mapFile,"|",gcFile,")"),sampleFiles)]
+if(!paired)
+{
+ds <- lapply(sampleFiles,cnvCopyNumber, gcFile=gcFile, mapFile=mapFile, myChromosome=chrToPlot)
+names(ds) <- gsub(paste0("_w",paramList[["windowSize"]],".*$"),"",basename(sampleFiles))
+ds <- lapply(split(pairings,seq(nrow(pairings))),function(pair){
+pid <- rownames(pair)
+tumourFile = sampleFiles[grep(pair[1],sampleFiles)]
+normalFile = sampleFiles[grep(pair[2],sampleFiles)]
+cnvLogRatio(tumourFile=tumourFile, normalFile=normalFile, gcFile=gcFile, mapFile=mapFile,
+myChromosome=chrToPlot)
+names(ds) <- rownames(pairings)
+dsmat <- do.call('cbind', lapply(1:length(ds), function(n) return(ds[[n]]$copy) ))
+colnames(dsmat) <- names(ds)
+dsmat <- data.frame(chr=space(ds[[1]]), start=start(ds[[1]]), end=end(ds[[1]]), dsmat)
+segData
+ds[[1]]
+seqLen
+space(ds[[1]])
+segmentationMu <- paramList[["seqMu"]]
+segmentationMu
+segmentationMu <- paramList[["segMu"]]
+ratioPosition
+param$m <- param$mu
+long
+seqlengths(gr) <- seqlen[names(seqlengths(gr))]
+seqlen
+names(segData) <- names(ds)
+traceback()
+dev.off()
+GI.index = vector("numeric", length=length(ds))
+names(GI.index) <- names(ds)
+for(i in 1:length(ds)){
+sample.id = names(ds)[i]
+x <- ds[[i]]
+x <- x[!is.na(x$copy), ]
+workingRegion <- sum(as.numeric(width(x)))
+y <- segData[[sample.id]]$segs
+y <- y[which(y$state != 3), ]
+if(nrow(y) > 0){
+gr <- GRanges(seqnames = as.character(y$chr),
+range = IRanges(start=y$start, end=y$end),
+strand = "*"
+basesWithCNV <- sum(as.numeric(width(gr)))
+}else{
+basesWithCNV = 0
+GI.index[i] = basesWithCNV/workingRegion * 100
+load(cytobandFile)
+load(geneAnnotationRdata)
+:w
+plib::custHMMsegment(ds[[n]],paramList[["segMu"]],seqlen=paramList[["seqLen"]],
+outFile=file.path(outDir,paste0("Segs_",n,".bw")))
+length(ds)
+seqlen(names(seqlengths(gr)))
+seqlen=paramList[["seqLen"]]
+seqlen[names(seqlengths(gr))]
+seqlengths(gr)[names(seqlengths(gr))] <- seqlen[names(seqlengths(gr))]
+seqlengths(gr)
+names(seqlen)
+seqlengths(gr)[names(seqlengths(gr))] <- seqlen[seqlevels(gr))]
+seqlengths(gr)[seqlevels(gr)] <- seqlen[seqlevels(gr)]
+seqlevels(gr)
+seqlen[seqlevels(gr)]
+seqInfo(gr)
+seqinfo(gr)@seqlengths[seqinfo(gr)@seqnames]
+seqinfo(gr)@seqlengths[seqinfo(gr)@seqnames] <- seqlen[seqinfo(gr)@seqnames]
+seqinfo(gr)@seqlengths
+str(seqinfo(gr))
+is(seqinfo)
+seqlengths(gr) <- unname(seqlen[seqinfo(gr)@seqnames])
+seqinfo(gr)
+suppressMessages(seqlengths(gr) <- unname(seqlen[seqinfo(gr)@seqnames]))
+plotCNV(ds,segData,paramList)
+cat("Calculating genome instability index\n", sep="")
+annoRdata=annoRdata,cytFile=cytoFile,mapFile=mapFile,gcFile=gcFile,
+pairFile <- file.path(.localData,"z-Score_calculations.xlsx")
+pairings <- read.xlsx(pairFile,2,head=T,row.names=1,stringsAsFactors=F)
+plotOrder <- rownames(pairings)
+mapFile <- "DukeMappability35mer_w150000.wig"
+gcFile <- "GC_w150000.wig"
+dataDir <- "/Users/pschofield/Data/hmmcopy"
+remRoot <- "/scratch/pschofield/Projects"
+locRoot <- "/Users/pschofield/Projects"
+annoRdata <- file.path(dataDir,"Homo_sapiens_GRCh37_75.Rdata")
+chrSizeFile <- file.path(dataDir,"hg19.chrom.sizes.ensembl")
+seqLen <- read.delim(chrSizeFile,head=F,row.names=1)
+seqlen <- seqLen[,1]
+names(seqlen) <- rownames(seqLen)
+cytoFile <- file.path(dataDir,"hg19_cytoband.Rdata")
+projName <- "dilute_cnv_sm"
+wigDir <- "Analysis/wigs"
+vignette("HMMcopy")
+param$mu <- ratioPosition
+ratioPosition <- log2(as.numeric(unlist(strsplit(segmentationMu,",", fixed=TRUE)))/2)
+segs <- hmmsegs$segs
+gr <- as(segs,"GRanges")
+gr$score <- as.numeric(gr$state)
+gr$score[is.na(gr$score)] <- 0
+suppressWarnings(seqlengths(gr) <- unname(seqlen[seqinfo(gr)@seqnames]))
+if(!is.null(outFile)){
+rtracklayer::export(gr,outFile,"BigWig")
+hmmsegs
+param$e <- 0.8
+param$strength <- 1e6
+param$eta <- 1e6
+help(createWorkbook)
+hiFlex=TRUE,
+paramList[["seqlen"]]
+evalue=0.99999999,
+strength=0.9,
+evalue=9e-1,
+strength=1e8,
+evalue=(1-1e-6),
+pl<-paramList
+cn <- ds[[1]]
+pl
+outDir <- "/Users/pschofield/Projects/dilute_cnv_sm/"
+segData <- lapply(names(ds),function(n){
+plib::custHMMsegment(ds[[n]],paramList, outFile=file.path(outDir,paste0("Segs_",n,".bw")))
+})
+cn <- ds[[2]]
+if(pl[["hiFlex"]]){
+}
+runHMMcopy(projName=projName,pairings=pairings,wigDir=wigDir,outDir=outDir,
+hiFlex=T,
+cnData <- runHMMcopy(projName=projName,pairings=pairings,wigDir=wigDir,outDir=outDir,
+annoRdata=annoRdata,cytoFile=cytoFile,mapFile=mapFile,gcFile=gcFile,
+segData <- cnvSegment(cnData,pl=paramList,outFile=outFile)
+outFile=file.path(locRoot,projName,outDir,"paired/CNV_original.pdf")
+segData <- cnvSegment(cnData,pl=paramList,outDir=file.path(locRoot,projName,outDir,"paired"))
+cn <- cnData[[2]]
+ratioPosition <- log2(as.numeric(unlist(strsplit(pl[["segMu"]],",", fixed=TRUE)))/2)
+set.seed(123)
+param
+param$kappa <- param$kappa/sum(param$kappa)
+param <- HMMcopy::HMMsegment(cn, getparam=TRUE)
+param$m <- ratioPosition
+param$e <- pl[["evalue"]]
+param$strength <- pl[["strength"]]
+param$eta <- pl[["eta"]]
+hmmsegs <- HMMcopy::HMMsegment(cn, param)
+cnvAnnoGenes <- function(ds, segData,annoRdata,cytoFile,outDir){
+ls
+rb
+hiFlex=F,
+outDir=file.path(locRoot,projName,outDir,"paired")
+chrToPlot <- c(1:22,"X","Y")
+cnData
+segData <- cnvSegment(cnData[["cnList"]],pl=paramList)
+plib::rb()
+segGenes <- cnvAnnoSegs(segData,annoRdata=annoRdata,cytoFile=cytoFile,pl=paramList)
+GIidx <- cnvGIindex(ds=cnData[["cnList"]],segData=segData,pl=paramList)
+rb()
+finalCNVtable <- cnvAnnoGenes(segData,annoRdata=annoRdata,paramList)
+save(segData, segsGenes, cnData, GIidx, finalCNVtable,
+save(segData, segGenes, cnData, GIidx, finalCNVtable,
+file=file.path(paramList[["outDir"]], "hmmcopy_results.RData"))
+plotOrder <- paste0(fileLocs$`Patient.Number`,"_S",fileLocs$Index)
+outDir <- "Analysis/hmmcopy"
+paramList <- list(
+hiFlex=FALSE,
+evalue=(1-1e-7),
+strength=1e7,
+eta=1e5,
+plotOrder=plotOrder,
+windowSize=150000,
+segMu="1,1.5,2,2.5,3.5,4",
+pltHFactor=1.5,
+seqLen=seqlen,
+outFile=file.path(locRoot,projName,outDir,"single")
+)
+cnData <- runHMMcopy(projName=projName,pairings=pairings,wigDir,mapFile=mapFile,gcFile=gcFile,
+paramList=paramList,chrToPlot=chrToPlot)
+outDir
+paramList
+quit(save = "no")

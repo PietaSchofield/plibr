@@ -8,18 +8,20 @@
 #' @param long if true performs adjustment to favour long segments
 #'
 #' @export
-custHMMsegment <- function(cn,segmentationMu,outFile=NULL,long=FALSE,seqlen){
-  ratioPosition <- log2(as.numeric(unlist(strsplit(segmentationMu,",", fixed=TRUE)))/2)
+custHMMsegment <- function(cn,pl,outFile=NULL){
+  ratioPosition <- log2(as.numeric(unlist(strsplit(pl[["segMu"]],",", fixed=TRUE)))/2)
   set.seed(123) # To ensure results are reproducible
   # Retrieve default converged parameters obtained via EM
   param <- HMMcopy::HMMsegment(cn, getparam=TRUE)
   # This is good for analysis when matched control is not available
-  param$mu <- ratioPosition
-  param$m <- param$mu
+  param$m <- ratioPosition
   # Decrease the number of segments, i.e. prefer longer segments
-  if(long){
-    param$e <- 0.9999999999999
-    param$strength <- 1e8
+  if(pl[["hiFlex"]]){
+    param$e <- pl[["evalue"]]
+    param$strength <- pl[["strength"]]
+    param$eta <- pl[["eta"]] 
+  }else{
+    param$mu <- param$m
   }
   # Perform segmentation via Viterbi algorithm
   hmmsegs <- HMMcopy::HMMsegment(cn, param)
@@ -27,7 +29,7 @@ custHMMsegment <- function(cn,segmentationMu,outFile=NULL,long=FALSE,seqlen){
   gr <- as(segs,"GRanges")
   gr$score <- as.numeric(gr$state)
   gr$score[is.na(gr$score)] <- 0
-  seqlengths(gr) <- seqlen[names(seqlengths(gr))]
+  suppressWarnings(seqlengths(gr) <- unname(pl[["seqLen"]][seqinfo(gr)@seqnames]))
   if(!is.null(outFile)){
     rtracklayer::export(gr,outFile,"BigWig")
   }

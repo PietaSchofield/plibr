@@ -1,4 +1,2 @@
-quit(save = "no")
 q()
-require(plib)
-plib::rb()
+quit(save = "no")
