@@ -4,7 +4,7 @@
 \alias{runSICER}
 \title{run SICER on a set of file pairs}
 \usage{
-runSICER(projName, filePairs, bedDir, pyMod = "apps/python",
+runSICER(projName, filePairs, bedDir, noControl = F, pyMod = "apps/python",
   pyLib = "libs/python2sitepkgs",
   sicerPath = "/scratch/pschofield/local/SICER",
   outRoot = "/scratch/pschofield/Projects", outPath = "", winsize = 500,

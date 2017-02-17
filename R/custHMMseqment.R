@@ -26,11 +26,11 @@ custHMMsegment <- function(cn,pl,outFile=NULL){
   # Perform segmentation via Viterbi algorithm
   hmmsegs <- HMMcopy::HMMsegment(cn, param)
   segs <- hmmsegs$segs 
-  gr <- as(segs,"GRanges")
-  gr$score <- as.numeric(gr$state)
-  gr$score[is.na(gr$score)] <- 0
-  suppressWarnings(seqlengths(gr) <- unname(pl[["seqLen"]][seqinfo(gr)@seqnames]))
   if(!is.null(outFile)){
+    gr <- as(segs,"GRanges")
+    gr$score <- as.numeric(gr$state)
+    gr$score[is.na(gr$score)] <- 0
+    suppressWarnings(seqlengths(gr) <- unname(pl[["seqLen"]][seqinfo(gr)@seqnames]))
     rtracklayer::export(gr,outFile,"BigWig")
   }
   hmmsegs 

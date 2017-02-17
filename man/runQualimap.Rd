@@ -5,8 +5,8 @@
 \title{QC check using Qualimap}
 \usage{
 runQualimap(sampleID, projName, bamDir, bamExt = "_dedup_realn_recal.bam",
-  outDir = file.path("/scratch/pschofield/Projects", projName,
-  "Analysis/qualimap"), noSub = F, ncores = 1, scpIt = T, mem = "32Gb",
+  outDir = "Analysis/qualimap", remRoot = "/scratch/pschofield/Projects",
+  noSub = F, ncores = 1, scpIt = T, mem = "32Gb",
   qualimapMod = "apps/qualimap/2.2/linux-x86_64")
 }
 \arguments{

@@ -4,7 +4,7 @@
 \alias{summariseQualimap}
 \title{gather alignment statistic on a directory of star alignments}
 \usage{
-summariseQualimap(fileList, projName, locDir = "/Users/pschofield/.tmp")
+summariseQualimap(fileList, projName)
 }
 \arguments{
 \item{fileList}{list of log files}

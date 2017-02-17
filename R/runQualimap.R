@@ -4,10 +4,10 @@
 #'
 #' @export
 runQualimap <- function(sampleID,projName,bamDir,bamExt="_dedup_realn_recal.bam",
-                        outDir=file.path("/scratch/pschofield/Projects",projName,"Analysis/qualimap"),
+                        outDir="Analysis/qualimap",remRoot="/scratch/pschofield/Projects",
                         noSub=F,ncores=1,scpIt=T,mem="32Gb",
                         qualimapMod= "apps/qualimap/2.2/linux-x86_64"){
-  outDir <- file.path(outDir,sampleID)
+  outDir <- file.path("/scratch/pschofield/Projects",projName,"Analysis/qualimap",sampleID)
   alignedBAM <- file.path(bamDir, paste0(sampleID, bamExt))
   script <- c(
     paste0("mkdir -p ",outDir),

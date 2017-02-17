@@ -6,7 +6,10 @@
 #'
 #' @export 
 genCovTracks <- function(projName,fileList, outPath, paired=T){
-  lapply(basename(fileList),function(fname){ 
+  outDir <- file.path("/scratch/pschofield/Projects",projName,outPath) 
+  lapply(fileList,function(ffn){
+    fname <- basename(ffn)
+    bamDir <- dirname(ffn)
     fn <- gsub("[.]bam$","",fname)
     if(paired){
       rline <- paste0("frags <- readGAlignmentPairs('",file.path(bamDir,fname),"')")

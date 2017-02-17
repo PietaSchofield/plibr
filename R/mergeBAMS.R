@@ -5,8 +5,13 @@
 #' @param outDir where to put the merged files
 #' 
 #' @export
-mergeBAMS <- function(sampleName,bamDir,outDir,projName,noSub=F,ncores=16){
-  inFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,paste0(sampleName,"*.bam"))))
+mergeBAMS <- function(sampleName,inFiles=NULL,bamDir=NULL,projName,
+                      remRoot="/scratch/pschofield/Projects",
+                      outDir="Data/alignments/merge",noSub=F,ncores=16){
+  outDir <- file.path(remRoot,projName,outDir)
+  if(is.null(inFiles)){
+    inFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,paste0(sampleName,"*.bam"))))
+  }
   script <- c(
     paste0("mkdir -p ",outDir),
     paste0("sambamba merge -t ",ncores," ",outDir,"/",sampleName,".bam ",

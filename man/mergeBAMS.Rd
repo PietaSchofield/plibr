@@ -4,7 +4,9 @@
 \alias{mergeBAMS}
 \title{merge some bamfiles}
 \usage{
-mergeBAMS(sampleName, bamDir, outDir, projName, noSub = F, ncores = 16)
+mergeBAMS(sampleName, inFiles = NULL, bamDir = NULL, projName,
+  remRoot = "/scratch/pschofield/Projects",
+  outDir = "Data/alignments/merge", noSub = F, ncores = 16)
 }
 \arguments{
 \item{sampleName}{stub of the sample name}

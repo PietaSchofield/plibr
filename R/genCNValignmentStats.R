@@ -18,6 +18,7 @@ genCNValignmentStats <- function(sid,bamDir, fqsDir, projName,
   fqFiles <- rlsFiles(file.path(fqsDir,paste0(sid,"*_R1_*.gz")))
   script <- c(
     paste0("module load ",samtoolsMod),
+    paste0("mkdir -p ",outDir),
     paste0("rm ",resFile),
     paste0("echo 'total' >> ",resFile),
     unlist(lapply(fqFiles,function(fqf){

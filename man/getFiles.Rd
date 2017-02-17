@@ -4,12 +4,12 @@
 \alias{getFiles}
 \title{get files from the cluster using scp to avoid using fuse for the moment}
 \usage{
-getFiles(filenames, remDir, locDir = remDir, remRoot = "/scratch",
-  locRoot = "/Users", host = "troodon", user = "pschofield", force = F)
+getFiles(filenames, projName, locDir = NULL,
+  remRoot = "/scratch/pschofield/Projects",
+  locRoot = "/Users/pschofield/Projects", host = "troodon",
+  user = "pschofield", force = F, simple = T)
 }
 \arguments{
-\item{remDir}{remote directory path}
-
 \item{locDir}{local directory path}
 
 \item{remRoot}{remote root}
@@ -21,6 +21,8 @@ getFiles(filenames, remDir, locDir = remDir, remRoot = "/scratch",
 \item{user}{username}
 
 \item{filename}{base files}
+
+\item{remDir}{remote directory path}
 }
 \description{
 get files from the cluster using scp to avoid using fuse for the moment
