@@ -22,8 +22,8 @@
 #' @export
 rcur <- function(fileName=.curFile,projDir=.curProj,
                  inDir=NULL, outDir=NULL,open="html",godPath=NULL,
-                 rootDir="/Users/pschofield/Projects",
-                 codeDir="/Users/pschofield/Projects",
+                 rootDir=file.path(Sys.getenv("HOME"),"Projects"),
+                 codeDir=file.path(Sys.getenv("HOME"),"Projects"),
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
   if(is.null(outDir) & is.null(inDir)){
     infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
@@ -61,15 +61,15 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
   if(!is.null(open)){
     switch(open,
       pdf=if(toPDF){
-        system(paste0("open ",pdfFile))
+        system(paste0("evinc ",pdfFile))
       },
       docx=if(toDOCX){
-        system(paste0("open ",docxFile))
+        system(paste0("loffice ",docxFile))
       },
       if(GOD){
-        system(paste0("open http://pieta.me",godPath,basename(htmlFile)))
+        system(paste0("firefox http://pieta.me",godPath,basename(htmlFile)))
       }else{
-        system(paste0("open ",htmlFile))
+        system(paste0("firefox ",htmlFile))
       }
     )
   }

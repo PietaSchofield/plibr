@@ -17,7 +17,6 @@ Imports:
     ggplot2,
     reshape2,
     lubridate,
-    RMySQL
 Suggests:
     testthat,
     knitr
