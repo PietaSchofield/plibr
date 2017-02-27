@@ -4,9 +4,9 @@
 \alias{alignSubread}
 \title{Simple subread aligner}
 \usage{
-alignSubread(projName, sampleID, inputPath, outStub = NULL,
+alignSubread(fileName, projName, runId,
   outRoot = file.path("/scratch/pschofield/Projects", projName),
-  outName = "Data/alignment/star", noSub = F, scpIt = T,
+  outName = "Data/alignments/subread", noSub = F, scpIt = T,
   subreadMod = "apps/subread/1.5.0-p3/gcc-4.4.7",
   samtoolsMod = "apps/samtools/1.2/gcc/4.4.7", mem = "32Gb",
   stranded = "fr", nmap = "2", itype = 1, refGenome = NULL,

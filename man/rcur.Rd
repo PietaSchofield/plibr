@@ -6,9 +6,11 @@
 \usage{
 rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
   outDir = NULL, open = "html", godPath = NULL,
-  rootDir = "/Users/pschofield/Projects",
-  codeDir = "/Users/pschofield/Projects", sourcecopy = F, toPDF = F,
-  toDOCX = F, toHTML = T, toGOD = T, GOD = T, setWH = F)
+  rootDir = file.path(Sys.getenv("HOME"), "Projects"),
+  codeDir = file.path(Sys.getenv("HOME"), "Projects"),
+  sysId = Sys.info()["sysname"], htmlApp = "firefox", pdfApp = "evince",
+  wordApp = "loffice", sourcecopy = F, toPDF = F, toDOCX = F,
+  toHTML = T, toGOD = T, GOD = T, setWH = F)
 }
 \arguments{
 \item{fileName}{file name}

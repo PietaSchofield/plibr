@@ -6,7 +6,7 @@
 \usage{
 alignBWA(fileName, projName, runId,
   outRoot = file.path("/scratch/pschofield/Projects", projName),
-  outName = "Data/alignment/bwa", noSub = F, scpIt = T,
+  outName = "Data/alignments/bwa", noSub = F, scpIt = T,
   bwaMod = "apps/bwa/0.7.13/gcc-4.4.7",
   samtoolsMod = "apps/samtools/0.1.19/gcc/4.4.7", mem = "32Gb",
   refGenome = NULL, ncores = 8, fqExt = ".fastq", pe = T)

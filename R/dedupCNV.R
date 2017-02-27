@@ -3,7 +3,7 @@
 #' @param filename merged bam file
 #'
 #' @export
-dedupCNV <- function(inBAM,projName,refGenome,
+dedupCNV <- function(inBAM,projName,refGenome,gatkStep=T,
                      tmpDir=file.path("/scratch/pschofield/Projects",projName,"tmp"),
                      picardDir="/apps/modules/pkg/apps/picardtools/1.96/noarch",
                      gatkDir="/apps/modules/pkg/apps/gatk/3.1.1/noarch",
@@ -56,28 +56,32 @@ dedupCNV <- function(inBAM,projName,refGenome,
       " REMOVE_DUPLICATES=true ASSUME_SORTED=true", sep=""),
     paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
       " -jar ", file.path(picardDir, "BuildBamIndex.jar"), 
-      " INPUT=", rmdupBAM, sep=""),
-    paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
-      " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
-      " -T RealignerTargetCreator -R ", refGenome, 
-      " -I ", dedupBAM, " -known ",  MillsIndels, " -known ", Genome1000Indels,
-      " -o ", realnTargetIntervals, sep=""),
-    paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
-      " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
-      " -T IndelRealigner -R ", refGenome, 
-      " -I ", dedupBAM, " -known ", MillsIndels, " -known ", Genome1000Indels, 
-      " -targetIntervals ", realnTargetIntervals, " -o ", realnBAM, sep=""),
-    paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
-      " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
-      " -T BaseRecalibrator -R ", refGenome, 
-      " -I ", realnBAM, " -knownSites ", MillsIndels, 
-      " -knownSites ", Genome1000Indels, " -knownSites ", dbSNPs,
-      " -o ", recalTable, sep=""),
-    paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
-      " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
-      " -T PrintReads -R ", refGenome, " -I ", realnBAM, 
-      " -BQSR ", recalTable, " -o ", recalBAM, sep="")
-  )
+      " INPUT=", rmdupBAM, sep="")
+    )
+  if(gatkStep){
+    script <- c(script,
+      paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
+        " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
+        " -T RealignerTargetCreator -R ", refGenome, 
+        " -I ", dedupBAM, " -known ",  MillsIndels, " -known ", Genome1000Indels,
+        " -o ", realnTargetIntervals, sep=""),
+      paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
+        " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
+        " -T IndelRealigner -R ", refGenome, 
+        " -I ", dedupBAM, " -known ", MillsIndels, " -known ", Genome1000Indels, 
+        " -targetIntervals ", realnTargetIntervals, " -o ", realnBAM, sep=""),
+      paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
+        " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
+        " -T BaseRecalibrator -R ", refGenome, 
+        " -I ", realnBAM, " -knownSites ", MillsIndels, 
+        " -knownSites ", Genome1000Indels, " -knownSites ", dbSNPs,
+        " -o ", recalTable, sep=""),
+      paste("java -Xmx32g -Djava.io.tmpdir=", tmpDir,  
+        " -jar ", file.path(gatkDir, "GenomeAnalysisTK.jar"), 
+        " -T PrintReads -R ", refGenome, " -I ", realnBAM, 
+        " -BQSR ", recalTable, " -o ", recalBAM, sep="")
+    )
+  }
   plib::runScript(jname=paste0("dedup_",sampleName),jproj=projName,
                        jdesc=paste0("dedup  ",projName," on sample ", sampleName),
                        jscrp=script,noSub=noSub,nproc=ncores,scpIt=scpIt,mem="32Gb")

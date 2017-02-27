@@ -1,39 +1,153 @@
 quit(save = "no")
-q()
-m
-outDir <- file.path(.remoteProj,"Analysis/JAFFA",sampleID)
-outDir
-fqDir <- "/mnt/gpfs2/facilities/sequencers/seq.04/170103_NS500428_0217_AHKY7LBGXY/Unaligned"
-sampleId <- "VK16_9_"
-filePattern <- paste0(sampleId,"*.gz")
-sampleId <- "VK16_09"
-sampleNo <- 9
-sampleId
-filePattern
-lapply(c(10,11),function(sampleNo){
-runJAFFA(sampleId=sampleId,dataDir=fqDir,filePattern=filePattern,projName="ipsc_gf",outDir=outDir)
-lapply(c(9,10,11),function(sampleNo){
-sampleId <- sprintf("VK16_%2.2d",sampleNo)
-filePattern <- sprintf("VK16_%d_*.gz",sampleNo)
-outDir <- file.path(.remoteProj,"Analysis/JAFFA",sampleId)
-runJAFFA(sampleId=sampleId,dataDir=fqDir,filePattern=filePattern,projName="ipsc_gf",outDir=outDir,
-ncores=8)
-})
-plib::rcur(fileName="201702",projDir="ipsc_gf",open="html")
-help(runJAFFA)
-plib::rcur(fileName="201702",projDir="notes_ps",open="html",setWH=T)
-plib::rcur(fileName="201702",projDir="mt2_al_gl",open="html")
-.remoteProj
+586+2121+1710+476+1386+809+641
 base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-5940", print.eval=TRUE)
-bamDir <- file.path(.remoteDir,"Data/bam/*")
-bamDir <- file.path(.remoteProj,"Data/bam/*")
-bamFiles <- rlsFiles(file.path(bamFiles,"*.bam"))
-bamDir <- file.path(.remoteProj,"Data/bams/*")
-help(alignStar)
-bamDir <- file.path(.remoteProj,"Data/bams/chipSeq*")
-bamFiles <- rlsFiles(file.path(bamDir,"*.bam"))
-bamFiles
-outDir <- file.path(.remoteProj,"Data/beds")
-lapply(bamFiles, plib::bamToBed,outDir=outDir,projName="mt2_al_gl")
-rb(0)
+fqDir <- "/mnt/gpfs2/facilities/sequencers/seq.04/170103_NS500428_0217_AHKY7LBGXY/Unaligned"
+lapply(names(filePatterns,function(fpName){
+)()
+filePat <- sprintf("VK16_%s_*.gz",filePattern[[fpName]])
+filePat <- sprintf("VK16_%s_*.gz",filePatterns[[fpName]])
+filePatterns <- list(
+P320CDpos="CD19pos",
+P320CDneg="CD19neg",
+P240line1="line_1",
+P240line3="line_3",
+P240line4="line_4"
+)
+lapply(names(filePatterns),function(fpName){
+filePat <- sprintf("VK16_*%s_*.gz",filePatterns[[fpName]])
+outDir <- file.path(.remoteProj,"Analysis/JAFFA",fpName)
+runJAFFA(sampleId=fpName,dataDir=fqDir,filePattern=filePat,projName="ipsc_gf",outDir=outDir,
+ncores=8)
+trimmedList <- rlsFiles(file.path(.remoteProj,"Data/trimmedfqs","*.fq.gz"))
+trimmedList
+seqDir <- file.path(.remoteProj,"Data/trimmedfqs")
+fastqList <- trimmedList
+outStar <- "Data/alignment/star"
+refSeq <- "/scratch/pschofield/ref/star/mm38_pa"
+refGen <- "/scratch/pschofield/ref/star/mm38_pa/Mus_musculus.GRCm38.86.gtf"
+fqExt <- "_001.fq"
+fileInfo <- as.data.frame(cbind(
+filePath=dirname(fastqList),
+fileName=basename(fastqList),
+sampleId=gsub("_R1.*gz","",basename(fastqList))
+),stringsAsFactors=F)
+setwd("~/Projects/plib_ps/")
+devtools::load_all()
+file.path(Sys.getenv("${HOME}"),"Projects")
+help(Sys.getenv)
+Sys.getenv("HOME")
+devtools::install(reload=T)
+rb
+lapply(unique(fileInfo$sampleId),function(sid){
+plib::alignStar(projName="nkilsmm_sz2",sampleID=sid,inputPath=seqDir,fqExt=fqExt,
+refGenome=refGen,refSequence=refSeq,noSub=F,outName=outStar,pe=F)
+})
+system("fox")
+help(rcur)
+Sys.info()
+Sys.info()["sysname"]
+help(summariseSTAR)
+help(getFiles)
+knitr::kable(wbSum)
+knitr::kable(sumStar)
+t(sumStar)
+require(xlsx)
+sumFile <- file.path(.localData,"ProjectSummary.xlsx")
+if(file.exists(sumFile)){
+read.xlsx(sumFile,1,head=T,stringsAsFactors=F)
+}else{
+bamDir <- "Data/alignment/star"
+bamFiles <- rlsFiles(file.path(.remoteProj,bamDir,"*full.bam"))
+logFiles <- rlsFiles(file.path(.remoteProj,bamDir,"*final*"))
+sumStar <- summariseSTAR(projName="pge2mm_sz1",fileList=logFiles)
+wbSum <- createWorkbook(type="xlsx")
+starSht <- createSheet(wbSum,"Star alignment Summary")
+addDataFrame(sumStar,starSht)
+saveWorkbook(wbSum, file=sumFile)
+}
+knitr::kable(sumStar[,c(5,6,8,23,24)])
+sumSum <- sumStar[,c(5,6,8,9,23,24)])
+sumSum <- sumStar[,c(5,6,8,9,23,24)]
+colnames(sumSum) <- c("Total","length","Unique","UniquePercent","Multi","MultiPercent")
+knitr::kable(sumSum)
 rb()
+dgeST <- edgeR::DGEList(starSCounts[rowMeans(starSCounts)>100,])
+dgeST <- edgeR::calcNormFactors(dgeST)
+colnames(dgeST) <- gsub("SZ2_[0-9]*_[0-9]*_","",colnames(edgeR::cpm(dgeST)))
+group <- gsub("_S[0-9]*.*","",colnames(dgeST))
+res <- edgeR::cpm(dgeST)
+colnames(res) <- group
+EDASeq::plotPCA(res, col=as.numeric(as.factor(group)),pch=group, xlim=c(-0.5,0.2))
+legend(0.3,0.7,0.2,0.4,legend=levels(as.factor(group)),
+legend(0.2,0.7,0.2,0.4,legend=levels(as.factor(group)),
+EDASeq::plotPCA(res, col=as.numeric(as.factor(group)),pch=20,label=F, xlim=c(-0.5,0.5),
+ylim=c(-0.5,0.7))
+legend(-0.5,0.7,0.2,0.4,legend=levels(as.factor(group)),
+EDASeq::plotPCA(res, col=as.numeric(as.factor(group)),pch=20,label=F)
+xlim=c(-0.5,0.6))
+legend(0.4,0.7,0.2,0.4,legend=levels(as.factor(group)),
+dev.off()
+legend(0.4,0.7,0.0,0.3,legend=levels(as.factor(group)),
+legend(0.4,0.0,0.0,0.3,legend=levels(as.factor(group)),
+legend(0.3,0.3,0.0,0.3,legend=levels(as.factor(group)),
+EDASeq::plotPCA(res, col=as.numeric(as.factor(group)),pch=20,label=F,
+xlim=c(-0.5,0.8))
+legend(0.3,0.3,0.0,0.0,legend=levels(as.factor(group)),
+fill=seq(length(levels(as.factor(group)))))
+require(edgeR)
+starCountsFile <- file.path(.localData,"StarCounts.RData")
+sampleNames <- gsub("^SZ2_[0-9]*_[0-9]*_","",colnames(resALL))
+base::source("/var/folders/3_/wd2yvhb94j9gk0134m_cfx_wdbjmbv/T/Nvim-R-pschofield/Rsource-598", print.eval=TRUE)
+knitr::kable(sampleInfo)
+colnames(resALL) <- sampleNames
+sampleInfo <- ifelse(grepl("KO",sampleNames),"KO","WT")
+names(sampleInfo) <- sampleNames
+dgeST <- edgeR::DGEList(resALL[rowMeans(resALL)>10,],sample=as.data.frame(ampleInfo))
+dgeST <- edgeR::DGEList(resALL[rowMeans(resALL)>10,],sample=as.data.frame(sampleInfo))
+degST$samples
+dgeST$samples
+ltrST <- glmFit(fitST,contrast=c(1,-1))
+ltrST <- glmFit(fitST,contrasts=c(1,-1))
+fitST
+ltrST <- glmLTR(fitST,contrasts=c(1,-1))
+lrtST <- glmLRT(fitST,contrasts=c(1,-1))
+lrtST <- glmLRT(fitST,contrast=c(1,-1))
+knitr::kable(topTags(lrtST)$table)
+require(clusterProfiler)
+require(org.Mm.eg.db)
+knitr::kable(ttSig)
+load(starCountsFile)
+resALL <- starSCounts
+condition=gsub("(SZ2_[0-9]*_[0-9]*_|-|_L[0-9].*$)","",colnames(resALL))),
+sampleInfo
+dgeST$samples$group <- condition
+design
+sampleInfo <- data.frame(cbind(
+condition=gsub("(SZ2_[0-9]*_[0-9]*_|-|_S[0-9].*$)","",colnames(resALL))),
+stringsAsFactors=F)
+sampleInfo$cellType=ifelse(grepl("WT",sampleInfo$condition),"WT","KO")
+sampleInfo$CTR=ifelse(grepl("CTR",sampleInfo$condition),"Y","N")
+sampleInfo$IL12=ifelse(grepl("IL12",sampleInfo$condition),"Y","N")
+sampleInfo$IL15=ifelse(grepl("IL15",sampleInfo$condition),"Y","N")
+sampleInfo$IL18=ifelse(grepl("IL18",sampleInfo$condition),"Y","N")
+rownames(sampleInfo) <- colnames(resALL)
+dgeST <- edgeR::DGEList(resALL[rowMeans(resALL)>10,],sample=sampleInfo)
+dgeST$samples$group <- dgeST$samples$condition
+design <- model.matrix(~group-1,dgeST$samples)
+colnames(design) <- gsub("group","",colnames(design))
+dgeST <- calcNormFactors(dgeST)
+dgeST <- estimateDisp(dgeST,design)
+fitST <- glmFit(dgeST,design)
+colnames(design)
+lrtST <- glmLRT(fitST,contrast=c(1,0,0,0,-1,0,0,0))
+ttST <- topTags(lrtST)$table
+lrtST <- glmLRT(fitST,contrast=c(0,1,0,0,0,-1,0,0))
+ttST <- topTags(lrtST,n=5e5,p.value=5e-2)$table
+egSig <- clusterProfiler::bitr(rownames(ttST),fromType="ENSEMBL",toType=c("SYMBOL","ENTREZID"),
+OrgDb="org.Mm.eg.db")
+ttSig <- merge(egSig,ttST,by.x="ENSEMBL",by.y="row.names")
+knitr::kable(ttSig[order(ttSig$FDR),])
+plib::rcur(fileName="201702",projDir="nkilsmm_sz2",open="html")
+plib::rcur(fileName="201702",projDir="notes_ps",open="html",setWH=T)
+plib::rcur(fileName="201702",projDir="pge2mm_sz1",open="html")
+q()

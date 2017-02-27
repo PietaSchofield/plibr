@@ -5,7 +5,9 @@
 \title{submit a MACS2 job on the the cluster}
 \usage{
 runMACS2(trBam, ctBam, outDir, name, broad = T, pe = F, projName,
-  pyMod = "apps/python")
+  genome = "hs", bcutoff = 0.01, pyMod = "apps/python",
+  pyLib = "libs/python2sitepkgs", noMod = F,
+  remRoot = file.path("/scratch/pschofield/Projects", projName))
 }
 \arguments{
 \item{trBam}{treatment bam file}

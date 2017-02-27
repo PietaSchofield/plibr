@@ -22,7 +22,7 @@
 #' @param param list of initial parameter
 #'
 #' @export
-plotCNV <- function(copyData,segData,paramList){
+plotCNV <- function(copyData,segData,paramList,reduceCol=T){
   pl <- paramList
   dsdf <- reshape2::dcast(
           plyr::ldply(lapply(copyData,function(c){
@@ -83,12 +83,21 @@ plotCNV <- function(copyData,segData,paramList){
       myColorPalette <- RColorBrewer::brewer.pal(n=11, name="RdBu")
       myStates <- segData[[sn]]$state
       myCol <- rep("grey60", length(myStates))
-      myCol[myStates == 1] <- myColorPalette[9]  # 0 copies, homozogous deletion
-      myCol[myStates == 2] <- myColorPalette[10]  # 1 copy, heterozogous deletion
-      myCol[myStates == 3] <- "grey60"       # 2 copies, neutral
-      myCol[myStates == 4] <- myColorPalette[2]  # 3 copies, gain
-      myCol[myStates == 5] <- "darkorange"     # 4 copies, amplification
-      myCol[myStates == 6] <- myColorPalette[3]  # >= 5 copies, high-level of amplification
+      if(reduceCol){
+        myCol[myStates == 1] <- "mediumblue"   # 0 copies, homozogous deletion
+        myCol[myStates == 2] <- "mediumblue"   # 1 copy, heterozogous deletion
+        myCol[myStates == 3] <- "grey60"       # 2 copies, neutral
+        myCol[myStates == 4] <- "firebrick"    # 3 copies, gain
+        myCol[myStates == 5] <- "firebrick"    # 4 copies, amplification
+        myCol[myStates == 6] <- "firebrick"    # >= 5 copies, high-level of amplification
+      }else{
+        myCol[myStates == 1] <- myColorPalette[9]  # 0 copies, homozogous deletion
+        myCol[myStates == 2] <- myColorPalette[10]  # 1 copy, heterozogous deletion
+        myCol[myStates == 3] <- "grey60"       # 2 copies, neutral
+        myCol[myStates == 4] <- myColorPalette[2]  # 3 copies, gain
+        myCol[myStates == 5] <- "darkorange"     # 4 copies, amplification
+        myCol[myStates == 6] <- myColorPalette[3]  # >= 5 copies, high-level of amplification
+      }
       points(gpos, dsdf[,sn], pch=".", col=myCol)
       # Add estimated ploidy number
       axis(side=4, at=ratioPosition, labels=ploidyNumberToShow)

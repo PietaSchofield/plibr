@@ -11,7 +11,7 @@
 #' @export
  alignStar <- function(projName,sampleID,inputPath,
                          outRoot=file.path("/scratch/pschofield/Projects",projName),
-                         outName="Data/alignment/star",noSub=F,scpIt=T,
+                         outName="Data/alignments/star",noSub=F,scpIt=T,
                          starMod = "apps/star/2.5.1b/gcc-5.1.0",
                          samtoolsMod =  "apps/samtools/0.1.19/gcc/4.4.7",
                          refSequence= NULL, refGenome = NULL, ncores=16, fqExt=".fastq",pe=T){

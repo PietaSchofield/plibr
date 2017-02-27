@@ -4,7 +4,7 @@
 \alias{plotCNV}
 \title{Plot CNV profiles}
 \usage{
-plotCNV(copyData, segData, paramList)
+plotCNV(copyData, segData, paramList, reduceCol = T)
 }
 \arguments{
 \item{copyData}{list of RangedData Objects with copy number}

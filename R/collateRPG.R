@@ -3,12 +3,10 @@
 #' @param dirname directory name
 #'
 #' @export
-collateRPG <- function(directoryName,locDir=NULL,strandedness="US",force=F){
+collateRPG <- function(directoryName,projName,strandedness="US",force=F){
   files <- rlsFiles(file.path(directoryName,"*_ReadsPerGene.out.tab"))
   countList <- lapply(files,function(fn){
-    tmpFile <- plib::getFiles(filenames=basename(fn),
-                                 remDir=gsub("/scratch/","",dirname(fn)),
-                                 locDir=gsub("/Users/","",locDir),force=force)
+    tmpFile <- plib::getFiles(filenames=fn,projName=projName)
     tab <- read.delim(tmpFile,sep="\t",head=F,row.names=1)
     colnames(tab) <- c("US","FS","SS")
     ret <- tab[,strandedness]

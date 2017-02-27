@@ -24,7 +24,13 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
                  inDir=NULL, outDir=NULL,open="html",godPath=NULL,
                  rootDir=file.path(Sys.getenv("HOME"),"Projects"),
                  codeDir=file.path(Sys.getenv("HOME"),"Projects"),
+                 sysId=Sys.info()["sysname"],htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
+  if(sysId=="Darwin"){
+    htmlApp="open"
+    pdfApp="open"
+    wordApp="open"
+  }
   if(is.null(outDir) & is.null(inDir)){
     infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
     outpath <- file.path(rootDir,projDir,"Notes")
@@ -61,15 +67,15 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
   if(!is.null(open)){
     switch(open,
       pdf=if(toPDF){
-        system(paste0("evinc ",pdfFile))
+        system(paste0(pdfApp," ",pdfFile))
       },
       docx=if(toDOCX){
-        system(paste0("loffice ",docxFile))
+        system(paste0(wordApp," ",docxFile))
       },
       if(GOD){
-        system(paste0("firefox http://pieta.me",godPath,basename(htmlFile)))
+        system(paste0(htmlApp," http://pieta.me",godPath,basename(htmlFile)))
       }else{
-        system(paste0("firefox ",htmlFile))
+        system(paste0(htmlApp," ",htmlFile))
       }
     )
   }

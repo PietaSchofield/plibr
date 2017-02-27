@@ -4,7 +4,7 @@
 \alias{dedupCNV}
 \title{run the picard and GATK pre processing steps on bam alignments}
 \usage{
-dedupCNV(inBAM, projName, refGenome,
+dedupCNV(inBAM, projName, refGenome, gatkStep = T,
   tmpDir = file.path("/scratch/pschofield/Projects", projName, "tmp"),
   picardDir = "/apps/modules/pkg/apps/picardtools/1.96/noarch",
   gatkDir = "/apps/modules/pkg/apps/gatk/3.1.1/noarch",

@@ -9,32 +9,30 @@
 #' @param fileList list of fastq file
 #'
 #' @export
- alignSubread <- function(projName,sampleID,inputPath,outStub=NULL,
+ alignSubread <- function(fileName,projName,runId,
                          outRoot=file.path("/scratch/pschofield/Projects",projName),
-                         outName="Data/alignment/star",noSub=F,scpIt=T,
+                         outName="Data/alignments/subread",noSub=F,scpIt=T,
                          subreadMod = "apps/subread/1.5.0-p3/gcc-4.4.7",
                          samtoolsMod =  "apps/samtools/1.2/gcc/4.4.7",
                          mem="32Gb",stranded="fr",nmap="2",itype=1,
                          refGenome = NULL, ncores=16, fqExt=".fastq",pe=T){
   # Set up the file names and paths
-  if(is.null(outStub)) {outStub <- paste0(sampleID)}
-  tmpDir <- file.path(outRoot,"tmp")
   bamDir <- file.path(outRoot,outName)
-  outBAM <- file.path(bamDir,paste0(outStub,"_full.bam"))
-  sortBAM <- file.path(bamDir,paste0(outStub,".bam"))
-  uniqueBAM <- file.path(bamDir,paste0(outStub,"_unique.bam"))
-  inputFastq1 <- file.path(inputPath,paste0(sampleID, "_R1",fqExt,".gz", sep=""))
-  parts <- unlist(strsplit(basename(sampleID),"_"))
-  RG.ID <- sampleID
-  RG.SM <- parts[[1]]
-  RG.LB <- sampleID
-  RG.PU <- parts[[2]]
+  sampleName <- gsub("_R1.*","",basename(fileName))
+  outBAM <- file.path(bamDir,paste0(sampleName,"_a.bam"))
+  sortBAM <- file.path(bamDir,paste0(sampleName,".bam"))
+  inputFastq1 <- fileName
+  RG.ID <- runId
+  RG.LB <- sampleName
+  RG.SM <- gsub("(_L[0-4].*|_R1.*)","",sampleName)
+  lane <- gsub(paste0("(",RG.SM,"|_R1.*)"),"",sampleName)
+  RG.PU <- paste0(runId,".",lane,".",RG.SM) 
   ReadGroup <- paste('SM:',RG.SM,'PL:ILLUMINA","LB:',RG.LB,'PU:',RG.PU,sep=" ")
   # generate the script commands
   if(pe){
     inputFastq2 <- gsub("_R1","_R2",inputFastq1)
     script <- c(
-      paste0("# run ",basename(sampleID)),
+      paste0("# run ",basename(sampleName)),
       paste0("module load ", subreadMod),
       paste0("module load ",samtoolsMod),
       paste0("mkdir -p ",bamDir),
@@ -52,7 +50,7 @@
     )
   }else{
     script <- c(
-      paste0("# run ",basename(sampleID)),
+      paste0("# run ",basename(sampleName)),
       paste0("module load ", subreadMod),
       paste0("module load ",samtoolsMod),
       paste0("mkdir -p ",bamDir),
@@ -67,8 +65,8 @@
       paste0("sambamba index ",sortBAM)
     )
   }
-  plib::runScript(jname=paste0("subread_",sampleID),jproj=projName,
-                       jdesc=paste0("STAR align for project ",projName," on sample ", sampleID),
+  plib::runScript(jname=paste0("subread_",sampleName),jproj=projName,
+                       jdesc=paste0("Subread align for project ",projName," on sample ", sampleName),
                        jscrp=script,noSub=noSub,nproc=ncores,scpIt=scpIt,mem="32Gb")
 }
 

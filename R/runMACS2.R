@@ -7,12 +7,18 @@
 #' @param broad call broad peaks
 #'
 #' @export
-runMACS2 <- function(trBam,ctBam,outDir,name,broad=T,pe=F,projName,
-                     pyMod="apps/python"){
+runMACS2 <- function(trBam,ctBam,outDir,name,broad=T,pe=F,projName,genome="hs",bcutoff=0.01,
+                     pyMod="apps/python",pyLib="libs/python2sitepkgs",noMod=F,
+                     remRoot=file.path("/scratch/pschofield/Projects",projName)){
+  if(noMod){
+    nm <- "--nomodel"
+  }else{
+    nm <- ""
+  }
   if(broad){
-    bline <- "--nomodel --broad"
+    bline <- paste0(" ",nm," --broad --broad-cutoff ",bcutoff)
   } else {
-    bline <- " "
+    bline <- paste0(" ",nm," -q ",bcutoff)
   }
   if(pe){
     peline <- " -f BAMPE "
@@ -21,14 +27,15 @@ runMACS2 <- function(trBam,ctBam,outDir,name,broad=T,pe=F,projName,
   }
   script <- c(
     paste0("module load ",pyMod),
+    paste0("module load ",pyLib),
     paste0("mkdir -p ",outDir),
     paste0("macs2 callpeak ",
            " -t ", trBam,
            " -c ", ctBam,
            peline,
-           " -g hs ",
-           " --outdir ", outDir,
-           " --name ", name ,
+           " -g ",genome,
+           " --outdir ", file.path(remRoot,outDir),
+           " --name ", name ," ",
            bline )
     )
     jn <- paste0("macs2_",name,"_",projName)
