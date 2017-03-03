@@ -6,8 +6,8 @@
 \usage{
 getFiles(filenames, projName, locDir = NULL,
   remRoot = "/scratch/pschofield/Projects",
-  locRoot = "/Users/pschofield/Projects", host = "troodon",
-  user = "pschofield", force = F, simple = T)
+  locRoot = file.path(Sys.getenv("HOME"), "pschofield/Projects"),
+  host = "troodon", user = "pschofield", force = F, simple = T)
 }
 \arguments{
 \item{locDir}{local directory path}

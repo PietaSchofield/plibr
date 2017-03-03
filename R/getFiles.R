@@ -11,7 +11,7 @@
 #' @export
 getFiles <- function(filenames, projName, locDir=NULL, 
                      remRoot="/scratch/pschofield/Projects",
-                     locRoot="/Users/pschofield/Projects",
+                     locRoot=file.path(Sys.getenv("HOME"),"pschofield/Projects"),
                      host="troodon",user="pschofield",force=F,
                      simple=T){
   ret <- plyr::ldply(sapply(filenames,function(fn){
