@@ -5,7 +5,8 @@
 \title{use heatmap and tree cutting}
 \usage{
 hmAnalysis(exprMat, rowV = c("correlation", "mcquitty"),
-  colV = c("canberra", "average"), ncuts = 6, filename = NA)
+  colV = c("canberra", "average"), ncuts = 6, filename = NA,
+  mainTitle = "Heatmap")
 }
 \description{
 use heatmap and tree cutting
