@@ -8,7 +8,7 @@ runSICER(projName, filePairs, bedDir, noControl = F, pyMod = "apps/python",
   pyLib = "libs/python2sitepkgs",
   sicerPath = "/scratch/pschofield/local/SICER",
   outRoot = "/scratch/pschofield/Projects", outPath = "", winsize = 500,
-  gapsize = 4000, genome = "GRCh37", fdr = "1E-3", insize = 300,
+  gapsize = 4000, genome = "GRCh37", esize = "1E2", insize = 300,
   gencov = 0.8)
 }
 \arguments{
