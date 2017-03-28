@@ -5,7 +5,7 @@
 #' @param projName name of the project
 #' 
 #' @export
-wigToBigWig <- function(inFile,samFile, outDir,projName,
+sswigToBigWig <- function(inFile,samFile, outDir,projName,
                        outRoot=file.path("/scratch/pschofield/Projects", projName),
                        ucscMod="apps/ucscsuite/20150630/linux-x86_64",
                        samtoolsMod="apps/samtools/1.3.1/gcc-4.4.7",noSub=F){

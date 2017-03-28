@@ -1,2 +1,4 @@
-quit(save = "no")
 q()
+ls()
+q()
+quit(save = "no")
