@@ -72,7 +72,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
       docx=if(toDOCX){
         system(paste0(wordApp," ",docxFile))
       },
-      if(GOD){
+      html=if(GOD){
         system(paste0(htmlApp," http://pieta.me",godPath,basename(htmlFile)))
       }else{
         system(paste0(htmlApp," ",htmlFile))

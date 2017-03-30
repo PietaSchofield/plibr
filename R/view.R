@@ -5,6 +5,6 @@
 #' @param fileName
 #'
 #' @export
-view <- function(fileName){
+macOpen <- function(fileName){
   system(paste0("open ",fileName))
 }

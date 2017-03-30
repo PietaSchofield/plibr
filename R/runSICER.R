@@ -9,7 +9,7 @@ runSICER <- function(projName,filePairs,bedDir,noControl=F,
                      pyLib="libs/python2sitepkgs",
                      sicerPath="/scratch/pschofield/local/SICER",
                      outRoot="/scratch/pschofield/Projects",outPath="",
-                     winsize=500,gapsize=4000,genome="GRCh37",fdr="1E-3",
+                     winsize=500,gapsize=4000,genome="GRCh37",esize="1E2",
                      insize=300,gencov=0.8){
 
   outDir <- file.path(outRoot,projName,outPath)
@@ -28,7 +28,7 @@ runSICER <- function(projName,filePairs,bedDir,noControl=F,
       paste0("cd ",file.path(outDir,fpn)),
       paste0("sh ",sicerCmd," ", bedDir, " ", fileLine,
              file.path(outDir,fpn)," ", genome," 1 ",winsize," ",insize," ",
-             gencov," ", gapsize," ",fdr)
+             gencov," ", gapsize," ",esize)
     )
     plib::runScript(jname=paste0("SICER_",fpn),jproj=projName,jscrp=script,nproc=2,mem="16Gb",
               jdesc=paste0("Call peaks with SICER comparing ",
