@@ -5,7 +5,7 @@
 \title{merge some bamfiles}
 \usage{
 mergeBAMS(sampleName, inFiles = NULL, bamDir = NULL, projName,
-  remRoot = "/scratch/pschofield/Projects",
+  remRoot = "/scratch/pschofield/Projects", bamExt = "*.bam",
   outDir = "Data/alignments/merge", noSub = F, ncores = 16)
 }
 \arguments{

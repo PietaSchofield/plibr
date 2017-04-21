@@ -18,9 +18,13 @@ sumCNValignStats <- function(projName,remRoot=file.path("/scratch/pschofield/Pro
       ret <- t(sapply(seq(1,9,2), function(i) c(m[i, 1],m[i+1,1]))) 
       rownames(ret) <- ret[,1]
       as.numeric(ret[,-1])
+    }else{
+      ret <- t(c(m[c(2:5,7,9,11,13),1]))
+      ret <- as.numeric(ret)
+      c(sum(ret[1:4]),ret[5:8])
     }
   }))
-  rownames(res) <- gsub(asFilePat, "", basename(mapstatFiles))
+ rownames(res) <- gsub(asFilePat, "", basename(mapstatFiles))
   fragSizeFiles <- rlsFiles(file.path(remRoot,mapStatDir,paste0("*",fsFilePat)))
   tmpFiles <- plib::getFiles(filenames=fragSizeFiles,projName=projName,simple=T,force=T)
   # Combine the mapping statistics

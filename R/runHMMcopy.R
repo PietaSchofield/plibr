@@ -4,16 +4,21 @@
 #'
 #' @export
 runHMMcopy <- function( projName, pairings=NULL, wigDir,remRoot="/scratch/pschofield/Projects",
-                        mapFile,gcFile, paramList, chrToPlot=c(1:22,"X","Y")){
+                        mapFile,gcFile, paramList, chrToPlot=c(1:22,"X","Y"),
+                        localRoot=Sys.getenv("HOME"),getWigs=T){
   if(!is.null(pairings)){
     paired <- T
   }else{
     paired <- F
   }
   dir.create(paramList[["outDir"]],recursive=T,showWarning=FALSE)
-  wigDir <- file.path(remRoot,projName,wigDir)
-  wigFiles <- rlsFiles(file.path(wigDir,"*.*"))
-  sampleFiles <- getFiles(filenames=basename(wigFiles),remDir=gsub("/scratch/","",wigDir))
+  if(getWigs){
+    wigDir <- file.path(remRoot,projName,wigDir)
+    wigFiles <- rlsFiles(file.path(wigDir,"*.*"))
+    sampleFiles <- getFiles(filenames=wigFiles,projName=projName)
+  }else{
+    sampleFiles <- list.files(file.path(localRoot,projName,wigDir),pattern=".*wig",full=T)
+  }
   gcFile <- sampleFiles[grep(gcFile,sampleFiles)]
   mapFile <- sampleFiles[grep(mapFile,sampleFiles)]
   sampleFiles <- sampleFiles[!grepl(paste0("(",mapFile,"|",gcFile,")"),sampleFiles)]

@@ -7,7 +7,7 @@ genCNValignmentStats <- function(sid,bamDir, fqsDir, projName,
                                  remRoot=file.path("/scratch/pschofield/Projects",projName),
                                  outDir="Analysis/mapping_stats",
                                  noSub=F,ncores=1,scpIt=T,mem="32Gb",
-                                 samtoolsMod="apps/samtools/1.2/gcc-4.4.7",
+                                 samtoolsMod="apps/samtools/0.1.19/gcc/4.4.7",
                                  ufExt=".bam",mdExt="_dedup.bam",rdExt="_rmdup.bam"){
   outDir <- file.path(remRoot,outDir)
   resFile <- file.path(outDir,paste0(sid,"_align.stats"))

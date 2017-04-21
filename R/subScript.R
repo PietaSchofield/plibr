@@ -29,6 +29,7 @@ subScript <- function(scriptstub="pieta_qsub",script=c("#!/bin/bash","hostname")
   close(filecon)
   if(!nosub) subJob(scriptfile=batchJob,logdir=logdir,mcCores=cores,email=email,args=args,
                     queue=queue,ramSize = ramSize)
+
 }
 
 

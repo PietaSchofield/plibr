@@ -17,6 +17,7 @@ ssBAMtoBWs <- function(inFile, outDir,projName,
   minusBW <- file.path(outRoot,outDir,gsub("[.]bam","_minus.bw",basename(inFile)))
   chrSize <- file.path(outRoot,outDir,gsub("[.]bam","_chr.size",basename(inFile)))
   script <- c(
+    paste0("mkdir -p ",file.path(outRoot,outDir)),
     paste0("module load ",ucscMod),
     paste0("module load ",samtoolsMod),
     paste0("module load ",bedtoolsMod),
@@ -34,7 +35,7 @@ ssBAMtoBWs <- function(inFile, outDir,projName,
     paste0("rm ",minusBG),
     paste0("rm ",chrSize)
   )
-  CRUKlib::runScript(jproj=projName,jname=paste0("ssbam2bw_",basename(inFile)),
+  runScript(jproj=projName,jname=paste0("ssbam2bw_",basename(inFile)),
                      jdesc="strand specific bam to bigwigs",
                      nproc=1,mem="60Gb",jscrp=script)
 }

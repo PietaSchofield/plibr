@@ -22,7 +22,7 @@ runScript <- function(jname, jproj, jdesc, jscrp,
                       locroot=file.path(Sys.getenv("HOME")),
                       logdir = file.path(remroot,"Projects",jproj,"log"),
                       scrpdir = file.path(locroot,"Projects",jproj,"Scripts"),
-                      nnodes=1, nproc=8, mem="8Gb",wtime="1:00:00",
+                      nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",
                       overwrite=T,eviron=F,noSub=F,scpIt=T){
   qsubScript <- file.path(scrpdir, paste(jname, ".sh", sep=""))
   jobName <- paste(jname,jdesc, sep="_")

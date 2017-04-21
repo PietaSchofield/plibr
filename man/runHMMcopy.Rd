@@ -6,7 +6,8 @@
 \usage{
 runHMMcopy(projName, pairings = NULL, wigDir,
   remRoot = "/scratch/pschofield/Projects", mapFile, gcFile, paramList,
-  chrToPlot = c(1:22, "X", "Y"))
+  chrToPlot = c(1:22, "X", "Y"), localRoot = Sys.getenv("HOME"),
+  getWigs = T)
 }
 \description{
 adapted from a script created: 11 Aug 2016, LHS

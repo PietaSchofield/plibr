@@ -6,15 +6,15 @@
 #' 
 #' @export
 mergeBAMS <- function(sampleName,inFiles=NULL,bamDir=NULL,projName,
-                      remRoot="/scratch/pschofield/Projects",
+                      remRoot="/scratch/pschofield/Projects",bamExt="*.bam",
                       outDir="Data/alignments/merge",noSub=F,ncores=16){
-  outDir <- file.path(remRoot,projName,outDir)
+  outPath <- file.path(remRoot,projName,outDir)
   if(is.null(inFiles)){
-    inFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,paste0(sampleName,"*.bam"))))
+    inFiles <- plib::rcmd(paste0("ls ",file.path(bamDir,paste0(sampleName,bamExt))))
   }
   script <- c(
-    paste0("mkdir -p ",outDir),
-    paste0("sambamba merge -t ",ncores," ",outDir,"/",sampleName,".bam ",
+    paste0("mkdir -p ",outPath),
+    paste0("sambamba merge -t ",ncores," ",outPath,"/",sampleName,".bam ",
            paste0(inFiles,collapse=" "))
   )
   plib::runScript(jname=paste0("merge_",sampleName),jproj=projName,

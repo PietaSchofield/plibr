@@ -4,10 +4,10 @@
 \alias{alignBWA}
 \title{Simple subread aligner}
 \usage{
-alignBWA(fileName, projName, runId,
+alignBWA(fileName, projName, runId, sampleBC = NULL,
   outRoot = file.path("/scratch/pschofield/Projects", projName),
   outName = "Data/alignments/bwa", noSub = F, scpIt = T,
-  bwaMod = "apps/bwa/0.7.13/gcc-4.4.7",
+  bwaMod = "apps/bwa/0.7.13/gcc-4.4.7", debugRG = F,
   samtoolsMod = "apps/samtools/0.1.19/gcc/4.4.7", mem = "32Gb",
   refGenome = NULL, ncores = 8, fqExt = ".fastq", pe = T)
 }

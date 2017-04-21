@@ -16,17 +16,21 @@ tabixFile <- function(infile,outfile=NULL,outpath=NULL,form=NULL,sortstr=NULL){
   ext <- gsub("^.*[.]","",basename(infile))
   if(is.null(sortstr)){
     sortstr <- switch(ext,
-                      bed=paste0("-k1,1 -k2,2n"),
-                      gtf=paste0("-k1,1 -k4,4n"))
+      bed=paste0("-k1,1 -k2,2n"),
+      gtf=paste0("-k1,1 -k4,4n"),
+      gff=paste0("-k1,1 -k4,4n"))
   }
   if(is.null(outfile)){
-    outfile <- gsub("[.].*$","",basename(infile))
+    outfile <- gsub(paste0(ext,"$"),"",basename(infile))
   }
   outName <- file.path(outpath,paste0(outfile,".",ext,".gz"))
   tabixCmd <- paste0(
     '(grep ^"#" ',infile,'; grep -v ^"#" ',infile,') | sort ',sortstr,' | bgzip > ',outName
   )
   system(tabixCmd)
+  if(ext=="gtf"){
+    ext <- "gff"
+  }
   idxCmd <- paste0("tabix -p ",ext," ",outName)
   system(idxCmd)
 }
