@@ -8,7 +8,7 @@ rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
   outDir = NULL, open = "html", godPath = NULL,
   rootDir = file.path(Sys.getenv("HOME"), "Projects"),
   codeDir = file.path(Sys.getenv("HOME"), "Projects"),
-  sysId = Sys.info()["sysname"], htmlApp = "firefox", pdfApp = "evince",
+  sysId = Sys.info()["sysname"], htmlApp = "vivaldi", pdfApp = "evince",
   wordApp = "loffice", sourcecopy = F, toPDF = F, toDOCX = F,
   toHTML = T, toGOD = T, GOD = T, setWH = F)
 }
