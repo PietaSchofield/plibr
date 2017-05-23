@@ -21,10 +21,10 @@
 #'
 #' @export
 rcur <- function(fileName=.curFile,projDir=.curProj,
-                 inDir=NULL, outDir=NULL,open="html",godPath=NULL,
+                 inDir=NULL, outDir=NULL,open="html",godPath="work/Projects",
                  rootDir=file.path(Sys.getenv("HOME"),"Projects"),
                  codeDir=file.path(Sys.getenv("HOME"),"Projects"),
-                 sysId=Sys.info()["sysname"],htmlApp="vivaldi",pdfApp="evince",wordApp="loffice",
+                 sysId=Sys.info()["sysname"],htmlApp="chrome",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
   if(sysId=="Darwin"){
     htmlApp="open"
@@ -56,10 +56,8 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
     file.copy(infile,outpath,overwrite=T)
   }
   if(toGOD){
-    if(is.null(godPath)){
-      godPath <- paste0("/work/Projects/",projDir,"/")
-    }
-    system(paste0("scp ",htmlFile," pieta@pieta.me:public_html",godPath))
+    godPath <- file.path(godPath,projDir)
+    system(paste0("scp ",htmlFile," ",file.path("pieta@pieta.me:public_html",godPath),"/"))
     if(setWH){
        system(paste0("scp ",htmlFile," pieta@pieta.me:public_html/work/home.html"))
     }
@@ -73,7 +71,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
         system(paste0(wordApp," ",docxFile))
       },
       html=if(GOD){
-        system(paste0(htmlApp," http://pieta.me",godPath,basename(htmlFile)))
+        system(paste0(htmlApp," ",file.path("http://pieta.me",godPath,basename(htmlFile))))
       }else{
         system(paste0(htmlApp," ",htmlFile))
       }
