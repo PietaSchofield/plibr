@@ -24,7 +24,8 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
                  inDir=NULL, outDir=NULL,open="html",godPath="work/Projects",
                  rootDir=file.path(Sys.getenv("HOME"),"Projects"),
                  codeDir=file.path(Sys.getenv("HOME"),"Projects"),
-                 sysId=Sys.info()["sysname"],htmlApp="chrome",pdfApp="evince",wordApp="loffice",
+                 sysId=Sys.info()["sysname"],
+                 htmlApp="google-chrome",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
   if(sysId=="Darwin"){
     htmlApp="open"
