@@ -5,10 +5,10 @@
 \title{render the current document}
 \usage{
 rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
-  outDir = NULL, open = "html", godPath = "work/Projects",
+  outDir = NULL, open = "html", godPath = "public_html/work/Projects",
   rootDir = file.path(Sys.getenv("HOME"), "Projects"),
   codeDir = file.path(Sys.getenv("HOME"), "Projects"),
-  sysId = Sys.info()["sysname"], htmlApp = "google-chrome",
+  sysId = Sys.info()["sysname"], setGH = F, htmlApp = "google-chrome",
   pdfApp = "evince", wordApp = "loffice", sourcecopy = F, toPDF = F,
   toDOCX = F, toHTML = T, toGOD = T, GOD = T, setWH = F)
 }
