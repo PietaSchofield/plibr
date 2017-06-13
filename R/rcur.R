@@ -26,7 +26,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
                  codeDir=file.path(Sys.getenv("HOME"),"Projects"),
                  sysId=Sys.info()["sysname"],setGH=F,
                  htmlApp="google-chrome",pdfApp="evince",wordApp="loffice",
-                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,toGOD=T,GOD=T,setWH=F){
+                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F){
   if(sysId=="Darwin"){
     htmlApp="open"
     pdfApp="open"
@@ -56,7 +56,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
   if(sourcecopy){
     file.copy(infile,outpath,overwrite=T)
   }
-  if(toGOD){
+  if(upload){
     if(setGH){
       gotPath <- "public_html"
     }else{
@@ -75,7 +75,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
       docx=if(toDOCX){
         system(paste0(wordApp," ",docxFile))
       },
-      html=if(GOD){
+      html=if(upload){
         htmlPath <- gsub("public_html","",godPath)
         system(paste0(htmlApp," ",file.path("http://pieta.me",htmlPath,basename(htmlFile))))
       }else{
