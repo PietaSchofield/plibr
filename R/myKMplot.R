@@ -14,14 +14,19 @@ plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv"){
   fit <- survival::survfit(form,data=dat)
   cox <- survival::coxph(form,data=dat)
   pd <- plyr::ldply( lapply(c(2:6,9:11),function(x)fit[[x]]))
-  pd<- cbind(V0=c(0,fit$strata[1]+2,0,0,1,1,1,0.99),pd,VN=c(0,fit$strata[2]+2,0,0,1,1,1,0.99))
   pd <- t(pd)
   pd[!is.finite(pd)] <- 0
   pd <- as.data.frame(pd)
   colnames(pd) <- names(fit)[c(2:6,9:11)]
   pd$Class <- sub("^.*=","",unlist(lapply(seq(1,length(fit$strata)),function(x){
-                rep(names(fit$strata)[x],fit$strata[x]+1)
+                rep(names(fit$strata)[x],fit$strata[x])
               })))
+  zeros <- plyr::ldply(lapply(names(fit$strata),function(n){
+             c(0,fit$strata[n]+2,0,0,1,1,1,0.99,gsub(".*=","",n))
+           }))
+  colnames(zeros) <- colnames(pd)
+  pd <- rbind(pd,zeros)
+  pd[,1:8] <- apply(pd[,1:8],2,as.numeric)
   mt <- gridExtra::ttheme_default(
     core = list(fg_params=list(cex = 0.75)),
     colhead = list(fg_params=list(cex = 0.75)),
