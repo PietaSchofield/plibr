@@ -1,0 +1,38 @@
+#' plot Kaplan Myer curves
+#'
+#' @param fit result of survfit
+#' @param cox result of coxph
+#' @param alp alpha for transparancy of errors
+#' @param sfact survival value to plot
+#'
+#' @export
+plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv"){
+  require(ggplot2)
+  require(survival)
+  require(gridExtra)
+  form <- as.formula(formstr)
+  fit <- survival::survfit(form,data=dat)
+  cox <- survival::coxph(form,data=dat)
+  pd <- plyr::ldply( lapply(c(2:6,9:11),function(x)fit[[x]]))
+  pd<- cbind(V0=c(0,fit$strata[1]+2,0,0,1,1,1,0.99),pd,VN=c(0,fit$strata[2]+2,0,0,1,1,1,0.99))
+  pd <- t(pd)
+  pd[!is.finite(pd)] <- 0
+  pd <- as.data.frame(pd)
+  colnames(pd) <- names(fit)[c(2:6,9:11)]
+  pd$Class <- sub("^.*=","",unlist(lapply(seq(1,length(fit$strata)),function(x){
+                rep(names(fit$strata)[x],fit$strata[x]+1)
+              })))
+  mt <- gridExtra::ttheme_default(
+    core = list(fg_params=list(cex = 0.75)),
+    colhead = list(fg_params=list(cex = 0.75)),
+    rowhead = list(fg_params=list(cex = 0.75)))
+  tabkm <- apply(summary(fit)$table[,-c(2,3)],2,signif,3)
+  tabcox <- as.data.frame(t(signif(summary(cox)$sctest,3)))
+  rownames(tabcox) <- "Log Rank Test"
+  ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) + ylim(c(0,1.5)) +
+    geom_ribbon(aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
+    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) +
+    annotation_custom(tableGrob(tabcox, theme=mt), xmin=15, xmax=max(pd$time), ymin=1, ymax=1.2) + 
+    annotation_custom(tableGrob(tabkm, theme=mt), xmin=15, xmax=max(pd$time), ymin=1.2, ymax=1.4)+ 
+    theme_classic()
+}
