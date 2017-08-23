@@ -43,4 +43,3 @@ genJobScript <- function(PBSscript, jobName="myrun", jobDescription="My analysis
   }
   header
 }
-

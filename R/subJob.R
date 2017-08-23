@@ -36,5 +36,3 @@ subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofie
     list(jobid=system(sshString, intern=T), jobstring=sshString)
   }
 }
-
-
