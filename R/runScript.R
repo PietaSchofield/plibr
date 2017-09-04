@@ -35,7 +35,7 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
     noSub=T
     scpIt=T
     remroot="/home/camp/schofip"
-    scrpdir=file.path(locroot,"Projects",jproj,"Code/scripts")
+    scrpdir=file.path(locroot,"Projects",jproj,"Scripts")
     header <- genSlurmHead(jobName=jname,
                            jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem, 
                            Walltime=wtime, logDir=logdir )
@@ -52,6 +52,10 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
   on.exit(close(con))
   writeLines(c(header,jscrp), con=con)
 # Submit the script
-  subJob(qsubScript,noSub=noSub,scpIt=scpIt,db=db,pname=jproj)
+  if(db<0){
+    return(writeLines(c(header,jscrp)))
+  }else{
+    subJob(qsubScript,noSub=noSub,scpIt=scpIt,db=db,pname=jproj)
+  }
 }
 

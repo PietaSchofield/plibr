@@ -37,5 +37,5 @@ ssBAMtoBWs <- function(inFile, outDir,projName,
   )
   runScript(jproj=projName,jname=paste0("ssbam2bw_",basename(inFile)),
                      jdesc="strand specific bam to bigwigs",
-                     nproc=1,mem="60Gb",jscrp=script)
+                     nproc=1,mem="60Gb",jscrp=script,noSub=T)
 }

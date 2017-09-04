@@ -20,7 +20,7 @@ subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofie
     remRoot <- "/home/camp/schofip"
     noSub <- T
     qsubString <- "sub"
-    remScript <- file.path(remRoot,"Projects",pname,"Code/scripts",basename(scriptfile))
+    remScript <- file.path(remRoot,"Projects",pname,"Scripts",basename(scriptfile))
   }else{
     remScript <- gsub(locRoot,remRoot,scriptfile)
   }
