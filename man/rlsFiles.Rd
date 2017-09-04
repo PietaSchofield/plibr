@@ -4,7 +4,7 @@
 \alias{rlsFiles}
 \title{list remote directory}
 \usage{
-rlsFiles(pattern)
+rlsFiles(pattern, crick = F)
 }
 \arguments{
 \item{pattern}{file pattern}

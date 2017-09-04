@@ -13,15 +13,27 @@
 #' @export
 subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofield", 
                    host="troodon.scicom.picr.man.ac.uk",setDir="cd /scratch/pschofield;",
-                   qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=F )
-{
-  remScript <- gsub(locRoot,remRoot,scriptfile)
+                   qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=0, crick=T ,pname=NULL){
+  if(crick){
+    user <- "schofip"
+    host <- "login002.camp.thecrick.org"
+    remRoot <- "/home/camp/schofip"
+    noSub <- T
+    qsubString <- "sub"
+    remScript <- file.path(remRoot,"Projects",pname,"Code/scripts",basename(scriptfile))
+  }else{
+    remScript <- gsub(locRoot,remRoot,scriptfile)
+  }
+  if(db>1){
+    print(scriptfile)
+    print(remScript)
+  }
   if(scpIt){
     mkCmd <- paste0("ssh ",user,"@",host," 'mkdir -p ",dirname(remScript),"'")
-    system(mkCmd)
+    if(db<2) system(mkCmd)
     cpCmd <- paste0("scp ",scriptfile," ",user,"@",host,":",dirname(remScript))
-    system(cpCmd)
-    if(db){
+    if(db<2)system(cpCmd)
+    if(db>0){
       print(mkCmd)
       print(cpCmd)
     }
@@ -30,7 +42,7 @@ subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofie
   sshString <- paste0("ssh ",user,"@",host," ",jobString,"'")
   if(noSub){
     paste0(qsubString," ",remScript, " ",args," ")
-  } else if(db){
+  } else if(db>0){
     sshString
   }else{
     list(jobid=system(sshString, intern=T), jobstring=sshString)

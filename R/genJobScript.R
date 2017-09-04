@@ -15,7 +15,7 @@
 #' @param log.dir directory output logs
 #'
 #' @export
-genJobScript <- function(PBSscript, jobName="myrun", jobDescription="My analysis", 
+genJobHead <- function(PBSscript, jobName="myrun", jobDescription="My analysis", 
   Nnodes=1, Nproc=16, Memory="32gb", Walltime="1:00:00",delayTil=NULL, environ=TRUE,
   email="pieta.schofield@cruk.manchester.ac.uk",overwrite=FALSE,emailMode="ae",
   log.dir="/lustre/scratch/pschofield/tmp", dirSet=T)

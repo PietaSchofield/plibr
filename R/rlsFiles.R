@@ -3,6 +3,6 @@
 #' @param pattern file pattern
 #'
 #' @export
-rlsFiles <- function(pattern){
-  plib::rcmd(paste0("ls ",pattern))
+rlsFiles <- function(pattern,crick=F){
+  plib::rcmd(paste0("ls ",pattern),crick=crick)
 }

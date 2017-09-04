@@ -7,7 +7,7 @@
 subJob(scriptfile, locRoot = "/Users", remRoot = "/scratch",
   user = "pschofield", host = "troodon.scicom.picr.man.ac.uk",
   setDir = "cd /scratch/pschofield;", qsubString = "qsub", args = NULL,
-  noSub = T, scpIt = F, db = F)
+  noSub = T, scpIt = F, db = 0, crick = T, pname = NULL)
 }
 \arguments{
 \item{user}{a string with the user name of the person making the ssh connection}
