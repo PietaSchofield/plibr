@@ -6,7 +6,7 @@
 expression values}
 \usage{
 survFit(survData = NULL, exprData = NULL, geneData = NULL,
-  survTime = "time", survStatus = "status", mcores = 4)
+  survTime = "time", survStatus = "status", mcores = 4, verbose = F)
 }
 \arguments{
 \item{survData}{survival data must contain a time and status}

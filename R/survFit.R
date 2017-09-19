@@ -28,7 +28,7 @@
 #'
 #' @export
 survFit <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time", 
-                    survStatus="status",mcores=4){
+                    survStatus="status",mcores=4,verbose=F){
   require(survival)
   # Filter by samples in sample data just incase
   exprSamples <- colnames(exprData)
@@ -43,8 +43,8 @@ survFit <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     warning(paste0("The samples in ",survSamples," potentially have more than one expression",
                    " sample"))
   }
-  rownames(exprData) <- gsub("(-|[.]|[/])","_",rownames(exprData))
-  geneData <- gsub("(-|[.]|[/])","_",geneData)
+  rownames(exprData) <- gsub("(-|[.]|[/]|_)","x",rownames(exprData))
+  geneData <- gsub("(-|[.]|[/]|_)","x",geneData)
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
   # filter out genes not expressed in percentage of samples
   exprData <- as.matrix(exprData)
@@ -56,15 +56,23 @@ survFit <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     form <- paste0("Surv( ",survTime,",",survStatus,") ~ ",geneid)
     # fit cox proportional hazards (non-parametric) survival model
     coxfit <- survival::coxph(as.formula(form),data=survData2)
-    list(surv=c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"]))
+    if(verbose){
+      coxfit
+    }else{
+      list(surv=c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"]))
+    }
   }, BPPARAM=mcParam)
-  names(resList) <- geneData
-  # convert results to data frame
-  resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
-  rownames(resSurv) <- resSurv[,1]
-  resSurv <- resSurv[,-1]
-  colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
-  return(resSurv)
+  if(verbose){
+    return(resList)
+  }else{
+    names(resList) <- geneData
+    # convert results to data frame
+    resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
+    rownames(resSurv) <- resSurv[,1]
+    resSurv <- resSurv[,-1]
+    colnames(resSurv) <- c("exp(coef)","exp(-coef)","lower95CI","upper95CI","pvalue")
+    return(resSurv)
+  }
 }
 
 
