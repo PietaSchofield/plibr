@@ -16,6 +16,6 @@ summariseSTAR <- function(projName,fileList){
   })
   names(ret) <- gsub("Log[.]final[.]out$","",basename(fileList))
   ret <- plyr::ldply(ret)
-  rownames(ret) <- ret[,1]
+  rownames(ret) <- make.names(ret[,1],unique=T)
   ret[,-1]
 }
