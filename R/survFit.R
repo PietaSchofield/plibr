@@ -27,8 +27,8 @@
 #'               analysisName=analysisName,exprSep=exprSep)
 #'
 #' @export
-survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time", 
-                     exprRange=0.33, survStatus="status",mcores=4){
+survFit <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time", 
+                    survStatus="status",mcores=4,verbose=F){
   require(survival)
   # Filter by samples in sample data just incase
   exprSamples <- colnames(exprData)
@@ -43,38 +43,36 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     warning(paste0("The samples in ",survSamples," potentially have more than one expression",
                    " sample"))
   }
-
+  rownames(exprData) <- gsub("(-|[.]|[/]|_)","x",rownames(exprData))
+  geneData <- gsub("(-|[.]|[/]|_)","x",geneData)
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
   # filter out genes not expressed in percentage of samples
   exprData <- as.matrix(exprData)
+  survData2 <- merge(survData[,c(survTime,survStatus)],
+                     t(exprData[which(rownames(exprData)%in%geneData),]),by="row.names")
   # run cox proportional hazard on all expressed genes
   resList <- BiocParallel::bplapply(geneData,function(geneid){
-    # get Hi samples expression >= n centile 
-    hlim <- as.numeric(quantile(exprData[geneid,],1-exprRange))
-    hi <- survData[names(which(exprData[geneid,]>=hlim)),]
-    hi$Class <- "high"
-    # get Lo samples expression <= 1-n centile
-    llim <- as.numeric(quantile(exprData[geneid,],exprRange))
-    lo <- survData[names(which(exprData[geneid,]<=llim)),]
-    lo$Class <- "low"
-    # make survival data frame
-    survData2 <- rbind(hi,lo)
-    # set expression class
-    survData2$Class <- as.factor(survData2$Class)
-    # get max of either days to death or days to last follow up for time
     # Censor the time data to generate survival data
-    form <- paste0("Surv( ",survTime,",",survStatus,") ~ Class")
+    form <- paste0("Surv( ",survTime,",",survStatus,") ~ ",geneid)
     # fit cox proportional hazards (non-parametric) survival model
     coxfit <- survival::coxph(as.formula(form),data=survData2)
-    c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
+    if(verbose){
+      coxfit
+    }else{
+      list(surv=c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"]))
+    }
   }, BPPARAM=mcParam)
-  names(resList) <- geneData
-  # convert results to data frame
-  resSurv<- plyr::ldply(resList)
-  rownames(resSurv) <- resSurv[,1]
-  resSurv <- resSurv[,-1]
-  colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
-  return(resSurv)
+  if(verbose){
+    return(resList)
+  }else{
+    names(resList) <- geneData
+    # convert results to data frame
+    resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
+    rownames(resSurv) <- resSurv[,1]
+    resSurv <- resSurv[,-1]
+    colnames(resSurv) <- c("exp(coef)","exp(-coef)","lower95CI","upper95CI","pvalue")
+    return(resSurv)
+  }
 }
 
 
