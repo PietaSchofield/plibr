@@ -41,12 +41,21 @@ survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
   # call the fit
   fit <- survClust(survData=pdata,exprData=eipSig,geneData=gd)
   # normalise the data to nice output
-  eipPlot <- apply(eipSig,2,function(x){
-    y<-x
-    y[which(x>quantile(x,(1-trim)))] <- quantile(x,(1-trim))
-    y[which(x<quantile(x,trim))] <- quantile(x,trim)
-    y
-  })
+  if(trim<1){
+    eipPlot <- apply(eipSig,2,function(x){
+      y<-x
+      y[which(x>quantile(x,(1-trim)))] <- quantile(x,(1-trim))
+      y[which(x<quantile(x,trim))] <- quantile(x,trim)
+      y
+    })
+  }else{
+    eipPlot <- apply(eipSig,2,function(x){
+      y <- x
+      y[which(x>trim)] <- trim
+      y[which(x< -trim)] <- -trim
+      y
+    })
+  }
   # generate heatmap
   hm=NMF::aheatmap(t(eipPlot),Colv=rowC,Rowv=colC,scale=scale,
                    treeheight=th,annRow=sClust,annCol=gClust)
