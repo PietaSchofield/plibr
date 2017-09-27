@@ -31,8 +31,8 @@
 #'               analysisName=analysisName,exprSep=exprSep)
 #'
 #' @export
-survFit2 <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time", 
-                    survStatus="status",mcores=4){
+survClust <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time", cox=F,plotIt=F,
+                    survStatus="status",mcores=4, clustCol="sampleCl",verbose=FALSE){
   require(survival)
   # Filter by samples in sample data just incase
   exprSamples <- colnames(exprData)
@@ -48,26 +48,23 @@ survFit2 <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
                    " sample"))
   }
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
-  exprData[!is.finite(exprData)] <- min(exprData[is.finite(exprData)])
+  exprData[which(!is.finite(exprData))] <- min(exprData[which(is.finite(exprData))])
   exprData2 <- t(exprData[which(rownames(exprData)%in%geneData),])
-  survData2 <- merge(survData[,c(survTime,survStatus)],
+  survData2 <- merge(survData[,c(survTime,survStatus,clustCol)],
                      exprData2,by="row.names") 
+  rownames(survData2) <- survData2[,1]
+  survData2[,clustCol] <- as.factor(survData2[,clustCol])
   # filter out genes not expressed in percentage of samples
   # run cox proportional hazard on all expressed genes
-  resList <- BiocParallel::bplapply(geneData,function(geneid){
-    # get max of either days to death or days to last follow up for time
-    # Censor the time data to generate survival data
-    form <- paste0("Surv( ",survTime,",",survStatus,") ~ ",geneid)
-    # fit cox proportional hazards (non-parametric) survival model
-    coxfit <- survival::coxph(as.formula(form),data=survData2)
-    ld <-   list(surv=c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"]))
-  }, BPPARAM=mcParam)
-  names(resList) <- geneData
-  # convert results to data frame
-  resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
-  rownames(resSurv) <- resSurv[,1]
-  resSurv <- resSurv[,-1]
-  colnames(resSurv) <- c("log(coef)","log(1/coef)","lower95CI","upper95CI","pvalue")
-  return(resSurv)
+  # get max of either days to death or days to last follow up for time
+  # Censor the time data to generate survival data
+  form <- paste0("Surv( ",survTime,",",survStatus,") ~ ",clustCol," -1")
+  # fit cox proportional hazards (non-parametric) survival model
+  if(cox){
+    fit <- survival::coxph(as.formula(form),data=survData2)
+  }else{
+    fit <- survival::survfit(as.formula(form),data=survData2)
+  }
+  return(list(fit=fit,kmplot=plotKM(as.formula(form),dat=survData2)))
 }
 

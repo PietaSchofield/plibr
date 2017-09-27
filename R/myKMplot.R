@@ -34,10 +34,8 @@ plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv"){
   tabkm <- apply(summary(fit)$table[,-c(2,3)],2,signif,3)
   tabcox <- as.data.frame(t(signif(summary(cox)$sctest,3)))
   rownames(tabcox) <- "Log Rank Test"
-  ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) + ylim(c(0,1.5)) +
+  gp <- ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) + ylim(c(0,1.1)) +
     geom_ribbon(aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
-    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) +
-    annotation_custom(tableGrob(tabcox, theme=mt), xmin=15, xmax=max(pd$time), ymin=1, ymax=1.2) + 
-    annotation_custom(tableGrob(tabkm, theme=mt), xmin=15, xmax=max(pd$time), ymin=1.2, ymax=1.4)+ 
-    theme_classic()
+    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) 
+  return(list(graph=gp,tabkm=tabkm,tabcox=tabcox))
 }
