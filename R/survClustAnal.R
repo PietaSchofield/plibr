@@ -37,7 +37,7 @@ survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
   colnames(gClust) <- "geneCl"
   gClust$geneCl <- as.factor(gClust$geneCl)
   # filter genes of interest
-  gid <- intersect(gd,rownames(eip))
+  gid <- intersect(gd,rownames(eipSig))
   # call the fit
   fit <- survClust(survData=pdata,exprData=eipSig,geneData=gd)
   # normalise the data to nice output

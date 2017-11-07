@@ -15,12 +15,11 @@ subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofie
                    host="troodon.scicom.picr.man.ac.uk",setDir="cd /scratch/pschofield;",
                    qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=0, crick=T ,pname=NULL){
   if(crick){
-    user <- "schofip"
-    host <- "login002.camp.thecrick.org"
-    remRoot <- "/home/camp/schofip"
+    scpIt <- F
+    remRoot <- "/home/camp/schofip/Projects"
     noSub <- T
     qsubString <- "sub"
-    remScript <- file.path(remRoot,"Projects",pname,"Scripts",basename(scriptfile))
+    remScript <- file.path(remRoot,pname,"Scripts",basename(scriptfile))
   }else{
     remScript <- gsub(locRoot,remRoot,scriptfile)
   }
