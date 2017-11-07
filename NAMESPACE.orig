@@ -94,10 +94,12 @@ export(summariseSTAR)
 export(summariseSubread)
 export(survAnal)
 <<<<<<< HEAD
+=======
+export(survClust)
+export(survClustAnal)
+>>>>>>> f63ce8737ededf415b7cac83adbadeeea7d4e1ac
+export(survFit)
 export(survFit2)
 export(survFit3)
-=======
-export(survFit)
->>>>>>> 79a108b220b74b2a07f6c2ff0001ebc5c48a54e6
 export(tabixFile)
 import(GenomicRanges)
