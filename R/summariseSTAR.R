@@ -5,9 +5,13 @@
 #' @param locDir location for (temporary) local storage of log files
 #' 
 #' @export
-summariseSTAR <- function(projName,fileList){
+summariseSTAR <- function(projName,fileList,localDir=T){
   ret <- lapply(fileList,function(fn){
-    tmpFile <- plib::getFiles(filenames=fn,projName=projName)
+    if(!localDir){
+      tmpFile <- plib::getFiles(filenames=fn,projName=projName)
+    }else{
+      tmpFile <- fn
+    }
     res <- read.delim(tmpFile,sep="\t",head=F,row.names=1,stringsAsFactors=F)
     rownames(res) <- gsub("[%]","Percent",gsub("[|]","",gdata::trim(rownames(res))))
     rownames(res) <- gdata::trim(gsub("[|]","",rownames(res)))

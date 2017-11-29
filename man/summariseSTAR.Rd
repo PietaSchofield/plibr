@@ -4,7 +4,7 @@
 \alias{summariseSTAR}
 \title{gather alignment statistic on a directory of star alignments}
 \usage{
-summariseSTAR(projName, fileList)
+summariseSTAR(projName, fileList, localDir = T)
 }
 \arguments{
 \item{projName}{project names}

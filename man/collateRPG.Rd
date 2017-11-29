@@ -4,7 +4,8 @@
 \alias{collateRPG}
 \title{collate a directory of STAR .ReadsPerGene.out.tab files}
 \usage{
-collateRPG(directoryName, projName, strandedness = "US", force = F)
+collateRPG(directoryName, projName, strandedness = "US", force = F,
+  loc = T)
 }
 \arguments{
 \item{dirname}{directory name}

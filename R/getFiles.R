@@ -12,11 +12,11 @@
 getFiles <- function(filenames, projName, locDir=NULL, 
                      remRoot="/scratch/pschofield/Projects",
                      locRoot=file.path(Sys.getenv("HOME"),"Projects"),
-                     host="troodon",user="pschofield",force=F,
+                     host="camp",user="schofip",force=F,
                      simple=T){
   ret <- plyr::ldply(sapply(filenames,function(fn){
     if(!is.null(locDir)){
-      toDir=file.path(locRoot,projName,locDir)
+      toDir=file.path(locRoot,projName,locDir,dirname(fn))
     }else{
       toDir=gsub(remRoot,locRoot,dirname(fn))
     }
