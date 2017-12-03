@@ -1,14 +1,70 @@
-q()
+quit(save = "no")
+.fileName <- "201711"
+plib::rcur(fileName=.fileName,projDir=.projName,open="html",upload=T,setWH=T)
+fileNames <- rlsFiles("cbsdata/Projects/sz3")
+fileNames <- rlsFiles("cbsdata/sz3/fqs/*")
+sampleFiles <- as.data.frame(cbind(
+location=dirname(fileNames),
+filename=basename(fileNames)
+))
+rownames(sampleFiles) <- gsub("_R1.*","",sampleFiles$filename)
+fullSplit <- plyr::ldply(strsplit(rownames(sampleFiles),"_"))
+fullSplit
+rownames(fullSplit) <- rownames(sampleFiles)
+sampleInfo <- merge(fullSplit,sampleFiles,by="row.names")
+sampleInfo
+sampleData <- unique(sampleInfo[,c(5:7)])
+kable(unique(sampleInfo[,c(5:7)]))
+nSamples <- nrows(sampleFiles)
+nSamples
+nSamples <- nrow(sampleFiles)
+sampleInfoFile <- "~Projects/sz3/Data/sampleFiles.txt"
+paste0("#$ 1-",nSamples),
+paste0("SAMPLESFILE=",sampleInfoFile),
+paste0('SAMPLEID=$(awk "NR==${SGE_TASK_ISD}" $SAMPLEFILES)'),
+paste0("module load apps/fastqc/0.11.3/noarch"),
+paste0("fastqc -o ~/cbsdata/sz3/qc -f fastq ${SAMPLEFILE}")
+runScript(jname=paste0("fastqcSZ3"),jproj="sz3",jscrp=script,host="dpsf",noSub=T,
+scrpdir=file.path("/Users/pschofield/Projects/sz3/Scripts"),
+jdesc=paste0("QC sequqnce files "),nnodes=1,nproc=1,mem="16G",db=dbset)
+plib::rb()
+.projName <- "sz3"
+plib::rcur(fileName=.fileName,projDir=.projName,open="html")
+.fileName <- "201712"
+.projName <- "notes_ps"
+plib::rcur(fileName=.fileName,projDir=.projName,open="html",setWH=T)
 ls()
-q()
-setwd("~/Projects/plib_ps/")
-devtools::install(rebuild=T)
-BiocInstaller::biocLite(c("GenomicRanges","edgeR","HMMcopy","RTCGAToolbox"))
-devtools::install(rebuild=T)
-biocLite()
-BiocInstaller::biocLite()
-BiocInstaller::biocLite("Gviz")
-BiocInstaller::biocLite("org.Hs.eg.db")
-BiocInstaller::biocLite("data.tables")
-BiocInstaller::biocLite("org.Mm.eg.db")
+sampleFiles
+sampleNames <- gsub("_L00.*",rownames(sampleInfo))
+sampleNames <- gsub("_L00.*",rownames(sampleFiles))
+fileNames
+sampleNames
+sampleNames <- unique(gsub("_L00.*","",rownames(sampleFiles)))
+lapply(sampleNames,function(sn){
+mgdir <- "${HOME}/scratch/sz3/merge"
+tmdir <- "${HOME}/scratch/sz3/trim"
+fqDir <- "${HOME}/cbsdata/sz3/fqs"
+inFastq <- file.path(fqDir,sn)
+tmFastq <- file.path(tmDir,paste0(sn,"_trim.fastq"))
+bbmapres <- "${HOME}/cbsshared/resources/bbmap"
+script <- c(
+paste0("module load apps/bbmap/36.32/gcc-4.8.5"),
+paste0("module load cutadapt/1.8/gcc-4.8.5+python-2.7.8"),
+paste0("module load apps/samtools/1.4/gcc-4.8.5"),
+paste0("mkdir -p ",mgdir),
+paste0("mkdir -p ",tmdir),
+paste0("cat ",paste(sn,"_L00",seq(1:4),"_R1_001.fastq.gz ",inFastq,".fastq.gz")),
+paste0("gunzip ",inFastq,".fastq..gz"),
+paste0("bbduk.sh in=", inFastq, " out=", tmFastq," overwrite=t",
+"ref=",file.path(bbmapres,"polyA.fa.gz"),",",file.path(bbmapres,"truseq.fa.gz"),
+" k=13 ktrim=r forcetrimleft=11 useshortkmers=t mink=5 qtrim=t trimq=10 minlength=20",
+" stats=",file.path(outRoot,"log",paste0(key,"_trim.stats"))
+)
+plib::runScript(jname=paste0("trim_",sn),jproj=projName,
+jdesc=paste0("Trim with bbduk and fqtrim for project ",projName," on file ", pn),
+jscrp=script,noSub=noSub,mem="48Gb",nproc=16)
+})
+.projName
+rb()
+base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-7729", print.eval=TRUE)
 q()

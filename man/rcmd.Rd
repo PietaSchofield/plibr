@@ -4,7 +4,7 @@
 \alias{rcmd}
 \title{execute a command remotely via ssh}
 \usage{
-rcmd(cmd = "", crick = F, hostname = NULL, username = NULL, Xfwd = "")
+rcmd(cmd = "", hostname = NULL, username = NULL, Xfwd = "")
 }
 \arguments{
 \item{cmd}{the command to execute}

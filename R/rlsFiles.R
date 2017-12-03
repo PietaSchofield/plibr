@@ -3,6 +3,6 @@
 #' @param pattern file pattern
 #'
 #' @export
-rlsFiles <- function(pattern,crick=F){
-  plib::rcmd(paste0("ls ",pattern),crick=crick)
+rlsFiles <- function(pattern,hostname="rds-ssh"){
+  plib::rcmd(paste0("ls ",pattern),hostname=hostname)
 }

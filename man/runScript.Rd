@@ -4,12 +4,11 @@
 \alias{runScript}
 \title{generate and submit a batch job}
 \usage{
-runScript(jname, jproj, jdesc, jscrp, db = 0,
-  remroot = "/scratch/pschofield", locroot = file.path(Sys.getenv("HOME")),
-  logdir = file.path(remroot, "Projects", jproj, "logs"),
-  scrpdir = file.path(locroot, "Projects", jproj, "Scripts"), nnodes = 1,
-  nproc = 8, mem = "8Gb", wtime = "24:00:00", overwrite = T,
-  eviron = F, noSub = F, scpIt = T, crick = T)
+runScript(jname, jproj, jdesc, jscrp, db = 0, remroot = "~/cbsdata",
+  locroot = file.path(Sys.getenv("HOME")), logdir = file.path(remroot,
+  jproj, "logs"), scrpdir = file.path(locroot, "Projects", jproj, "Scripts"),
+  nnodes = 1, nproc = 8, mem = "8Gb", wtime = "24:00:00",
+  xoverwrite = T, eviron = F, noSub = T, scpIt = T, host = "dpsf")
 }
 \arguments{
 \item{jname}{job name}
@@ -36,13 +35,13 @@ runScript(jname, jproj, jdesc, jscrp, db = 0,
 
 \item{wtime}{wall time requested}
 
-\item{overwrite}{overwrite existing script file if it exists}
-
 \item{noSub}{return script rather than running it for debug purposes}
 
-\item{crick}{boolean to generate jobscript for slurm an save in script directory}
+\item{overwrite}{overwrite existing script file if it exists}
 
 \item{environ}{take environment variables of submitting process (not relevant for remote jobs)}
+
+\item{crick}{boolean to generate jobscript for slurm an save in script directory}
 }
 \description{
 generate and submit a batch job
