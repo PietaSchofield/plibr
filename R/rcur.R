@@ -64,7 +64,8 @@ rcur <- function(fileName=.curFile,projDir=.curProj,
     }
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godPath),"/",basename(htmlFile)))
     if(setWH){
-       system(paste0("scp ",htmlFile," pieta@pieta.me:public_html/work/home.html"))
+       system(paste0("scp ",htmlFile,
+          " pieta@pieta.me:public_html/work/Projects/notes_ps/current.html"))
     }
   }
   if(!is.null(open)){
