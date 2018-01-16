@@ -6,7 +6,7 @@
 #' @param sfact survival value to plot
 #'
 #' @export
-plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv"){
+plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv",inclusive=F,y1=-0.5,y2=-1){
   require(ggplot2)
   require(survival)
   require(gridExtra)
@@ -34,8 +34,13 @@ plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv"){
   tabkm <- apply(summary(fit)$table[,-c(2,3)],2,signif,3)
   tabcox <- as.data.frame(t(signif(summary(cox)$sctest,3)))
   rownames(tabcox) <- "Log Rank Test"
-  gp <- ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) + ylim(c(0,1.1)) +
+  gp <- ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) +
     geom_ribbon(aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
     geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) 
+  if(inclusive){
+    gp <- gp + ylim(-1,1) +
+      annotation_custom(tableGrob(tabcox),xmin=0,xmax=max(pd$time),ymin=y1,ymax=0) +
+      annotation_custom(tableGrob(tabkm),xmin=0,xmax=max(pd$time),ymin=y2,ymax=y1)
+  }
   return(list(graph=gp,tabkm=tabkm,tabcox=tabcox))
 }

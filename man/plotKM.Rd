@@ -4,7 +4,8 @@
 \alias{plotKM}
 \title{plot Kaplan Myer curves}
 \usage{
-plotKM(formstr, dat, alp = I(1/10), sfact = "surv")
+plotKM(formstr, dat, alp = I(1/10), sfact = "surv", inclusive = F,
+  y1 = -0.5, y2 = -1)
 }
 \arguments{
 \item{alp}{alpha for transparancy of errors}
