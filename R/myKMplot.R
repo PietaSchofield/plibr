@@ -6,13 +6,15 @@
 #' @param sfact survival value to plot
 #'
 #' @export
-plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv",inclusive=F,y1=-0.5,y2=-1){
+plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv",inclusive=F,y1=-0.5,y2=-1,
+                   titlestr=gsub(".*[~]","",formstr)){
   require(ggplot2)
   require(survival)
   require(gridExtra)
   form <- as.formula(formstr)
   fit <- survival::survfit(form,data=dat)
   cox <- survival::coxph(form,data=dat)
+  dif <- survival::survdiff(form,data=dat)
   pd <- plyr::ldply( lapply(c(2:6,9:11),function(x)fit[[x]]))
   pd <- t(pd)
   pd[!is.finite(pd)] <- 0
@@ -34,13 +36,15 @@ plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv",inclusive=F,y1=-0.5,y2=-
   tabkm <- apply(summary(fit)$table[,-c(2,3)],2,signif,3)
   tabcox <- as.data.frame(t(signif(summary(cox)$sctest,3)))
   rownames(tabcox) <- "Log Rank Test"
+  rownames(tabkm) <- gsub(".*[=]","",rownames(tabkm))
   gp <- ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) +
     geom_ribbon(aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
-    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) 
+    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) +
+    ggtitle(paste0(titlestr)) 
   if(inclusive){
     gp <- gp + ylim(-1,1) +
       annotation_custom(tableGrob(tabcox),xmin=0,xmax=max(pd$time),ymin=y1,ymax=0) +
       annotation_custom(tableGrob(tabkm),xmin=0,xmax=max(pd$time),ymin=y2,ymax=y1)
   }
-  return(list(graph=gp,tabkm=tabkm,tabcox=tabcox))
+  return(list(graph=gp,tabkm=tabkm,tabcox=tabcox,fits=list(fit,cox,dif)))
 }
