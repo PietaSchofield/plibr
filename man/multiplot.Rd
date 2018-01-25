@@ -4,7 +4,7 @@
 \alias{multiplot}
 \title{Multiple plot function}
 \usage{
-multiplot(..., plotlist = NULL, file, cols = 1, layout = NULL)
+multiplot(..., plotlist = NULL, file, cols = 1, lout = NULL)
 }
 \arguments{
 \item{cols:}{Number of columns in layout}
