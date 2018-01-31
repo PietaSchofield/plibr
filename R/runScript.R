@@ -19,7 +19,7 @@
 #'
 #' @export
 runScript <- function(jname, jproj, jdesc, jscrp,db=0,
-                      remroot="~/cbsdata",
+                      remroot="~/cbsdata/Projects",
                       locroot=file.path(Sys.getenv("HOME")),
                       logdir = file.path(remroot,jproj,"logs"),
                       scrpdir = file.path(locroot,"Projects",jproj,"Scripts"),
