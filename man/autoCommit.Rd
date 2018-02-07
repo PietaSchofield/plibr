@@ -9,6 +9,10 @@ autoCommit(projDir = "~/Projects", pat = "*",
 }
 \arguments{
 \item{projDir}{Project Root}
+
+\item{pat}{pattern for directory names}
+
+\item{subdir}{names of subdirectories that include code}
 }
 \description{
 currently my build of libgit is not coping with HTTPs protocol need to fix this at some point

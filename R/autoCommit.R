@@ -4,6 +4,8 @@
 #' until then dropping to system shell to push and pull
 #'
 #' @param projDir Project Root
+#' @param pat pattern for directory names
+#' @param subdir names of subdirectories that include code
 #'
 #' @export
 autoCommit <- function(projDir="~/Projects",pat="*",subdir="^(Code|R|package)$"){
