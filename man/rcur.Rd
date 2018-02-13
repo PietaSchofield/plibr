@@ -4,10 +4,11 @@
 \alias{rcur}
 \title{render the current document}
 \usage{
-rcur(fileName = .curFile, projDir = .curProj, inDir = NULL,
-  outDir = NULL, open = "html", godPath = "public_html/work/Projects",
-  rootDir = file.path(Sys.getenv("HOME"), "Projects"),
-  codeDir = file.path(Sys.getenv("HOME"), "Projects"),
+rcur(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
+  inDir = NULL, outDir = NULL, open = "html",
+  godPath = "public_html/work/Projects",
+  rootDir = file.path(Sys.getenv("HOME"), dirStatus),
+  codeDir = file.path(Sys.getenv("HOME"), dirStatus),
   sysId = Sys.info()["sysname"], setGH = F, htmlApp = "google-chrome",
   pdfApp = "evince", wordApp = "loffice", sourcecopy = F, toPDF = F,
   toDOCX = F, toHTML = T, upload = T, setWH = F)
