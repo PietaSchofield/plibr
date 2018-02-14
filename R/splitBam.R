@@ -4,14 +4,14 @@
 #' @param len length of insert to split by
 #'
 #' @export 
-splitBAMS <- function(bamFiles,len=150,projName,outDir=NULL,stranded=1){
+splitBAMS <- function(bamFiles,len=150,projName,outDir=NULL,stranded="*"){
   lapply(bamFiles,function(fn){
     if(!is.null(outDir)){
       ofn <- gsub(dirname(fn),outDir,fn)
     }else{
       ofn <- fn
     }
-    if(stranded>0){
+    if(stranded=="+"){
       fw1lng <- gsub("[.]bam$","_fw1_long.bam",ofn)
       fw2lng <- gsub("[.]bam$","_fw2_long.bam",ofn)
       rv1lng <- gsub("[.]bam$","_rv1_long.bam",ofn)
@@ -53,7 +53,7 @@ splitBAMS <- function(bamFiles,len=150,projName,outDir=NULL,stranded=1){
         paste0("rm ",fw1lng," ",fw2lng," ",rv1lng," ",rv2lng),
         paste0("rm ",fw1sht," ",fw2sht," ",rv1sht," ",rv2sht)
       )
-    }else if(stranded<0){
+    }else if(stranded=="-"){
       fw1lng <- gsub("[.]bam$","_fw1_long.bam",ofn)
       fw2lng <- gsub("[.]bam$","_fw2_long.bam",ofn)
       rv1lng <- gsub("[.]bam$","_rv1_long.bam",ofn)
@@ -103,7 +103,7 @@ splitBAMS <- function(bamFiles,len=150,projName,outDir=NULL,stranded=1){
         paste0('sambamba view -F "(template_length > ',len,' or template_length < ',-len,') ',
                ' " -f bam ',fn,' -o ',fnlng),
         paste0('sambamba view -F "(template_length <= ',len,' and template_length >= ',-len,') ',
-               ' " -f bam ',fn,' -o ',fnsht),
+               ' " -f b=="-" ',fn,' -o ',fnsht),
         paste0("sambamba index ",fnlng),
         paste0("sambamba index ",fnsht)
       )
