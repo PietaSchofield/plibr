@@ -1,127 +1,67 @@
-cc <- 4
-plyr::ldply(mvalue)
-plyr::ldply(pvalue)
-cc <- catCols[3]
-ret <- na.omit(ret)
-ret <- reshape2::melt(pairwise.wilcox.test(dat$value,dat[,colname],p.adjust="BH")$p.value)
-cc <- catCols[4]
-ret()
-res <- merge(as.data.frame(plyr::ldply(mvalue)),as.data.frame(plyr::ldply(pvalue)),
-by="row.names")
-rownames(res) <- res[,1]
-res <- res[,-c(1,2)]
-kable(res)
-colnames(numData)[catCols]
-cc <- catCols[5]
-colname <- colnames(numData)[cc]
-numMelt <- reshape2::melt(numData[,c(1,cc,numCols)],c("SampleID",colname))
-gplist <- lapply(unique(numMelt$variable),function(v2){
-dat <- numMelt[which(numMelt$variable==v2),]
-ggplot(dat,aes_string(y="value",x=colname,fill=colname)) + geom_boxplot() + ylab(v2) +
-theme(axis.text.x = element_text(angle = 90), strip.text.x = element_text(angle = 0))
-multiplot(plotlist=gplist,cols=3)
-mvalue <- lapply(unique(numMelt$variable),function(v){
-mv <- reshape2::melt(ddply(dat,colname,summarise,
-mean=mean(value),length(value)),colname)
-mv$col <- paste0(mv[,colname],".",mv$variable)
-reshape2::dcast(mv,.~col)
-names(mvalue) <- unique(numMelt$variable)
-ret2 <- ret$value
-names(ret2) <- paste0(ret$Var1,"_",ret$Var2)
-ret2
-pvalues
-ret <- ret[which(ret$Var1>ret$Var2),]
-names(pvalue) <- unique(numMelt$variable)
-ret <- ret[which(as.factor(ret$Var1)>as.factor(ret$Var2)),]
-pvalue <- lapply(unique(numMelt$variable),function(v){
-dat <- na.omit(numMelt[which(numMelt$variable==v),])
-dat <- dat[order(dat$value),]
-ret <- pairwise.wilcox.test(dat$value,dat[,colname],p.adjust="BH")$p.value
-ret <- reshape2::melt(ret)
-ret <- ret[which(as.numeric(as.factor(ret$Var1))>as.numeric(as.factor(ret$Var2))),]
-ret
-pvalue
-colnames(numData)
-qlib::rcur(fileName="20180118_survival",projDir="dilute_cnv_sm",open="html",upload=T)
-dim(numData)
-write.csv(numData,"~/checkdata.csv")
-require(KMsurv)
-help(coxph)
-plib::rb()
-res
-res[[2]]
-res[[3]]
-numCols <- c(params$ColNo[which(params$DataType=="n")],57,58)
-strat <- c("FirstLineChemo","M")
-fits <- lapply(numCols,function(dsno){
-dsn <- colnames(numData)[dsno]
-fit <- coxph(as.formula(paste0("Surv(OS.baseline.days,survival.status) ~ ",dsn)),numData)
-fitStrat <- coxph(as.formula(paste0("Surv(OS.baseline.days,survival.status) ~ ",
-"strata(",strat,") * ",dsn)), numData)
-zph <- cox.zph(fit)
-zphCat <- cox.zph(fitStrat)
-list(all=fit,strata=fitStrat,zph=zph,zpc=zphCat)
-lapply(fits,function(ft) ft[[2]])
-names(fits) <- colnames(numData)[ numCols]
-res <- plyr::ldply(lapply(fits,function(ft) {
-c(all=summary(ft[["all"]])$sctest["pvalue"],
-stf=summary(ft[["strata"]])$sctest["pvalue"],
-unstratified=ft[["zph"]]$table[,"p"],
-stratified=ft[["zpc"]]$table[,"p"])
-}))
-colnames(res) <- c("Param","all","stratified","all-zph", "stratified-zph")
-kable(res,row.names=F)
-fits
-base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-900", print.eval=TRUE)
-inclusive=T,titlestr"Has Met Site")
-inclusive=T,titlestr="Has Met Site")
-rb()
-kmmet <- plotKM(formstr="Surv(OS.baseline.days,survival.status)~I(MetSites>0)",dat=numData,
-inclusive=T,titlestr="MetSites > 0")
-plot(kmmet$graph)
-plotKM(formstr=paste0("Surv(OS.baseline.days,survival.status)~",pn),dat=numData,
-inclusive=T)
-names(res) <- colnames(numData)[catCols]
-lapply(res,function(km) plot(km$graph))
-plib::rcur(fileName="20180118_survival",projDir="dilute_cnv_sm",open="html",upload=T)
+BiocInstaller::biocLite("scater")
 ls()
-kmmet
-kmmet$graph
-str(kmmet$graph)
-ggplot(kmmet$graph)
-help(ggplot2)
-print(kmmet$graph)
-lapply(res,function(km) print(km$graph))
-install_github("survMisc", "dardisco")
-BiocInstaller::biocLite("GGally")
-BiocInstaller::biocLite("survminer")
-BiocInstaller::biocLite("RTCGA.clinical")
-BiocInstaller::biocLite("survMisc")
-survminer::ggsurvplot(survfit(Surv(OS.baseline.days,survival.status)~I(MetSites>0),numData))
-conf.int=T)
-conf.int=T,pval=T)
-survminer::ggsurvplot(survfit(Surv(OS.baseline.days,survival.status)~I(MetSites>0),numData),
-numData$HasMet <- numData$MetSites>0
-survminer::ggsurvplot(survfit(Surv(OS.baseline.days,survival.status)~HasMet,numData),
-conf.int=T,pval=T,risk.table=T)
-survminer::ggsurvplot(survfit(as.formula(paste0("Surv(OS.baseline.days,survival.status)~",pn),
-dat=numData), conf.int=T,pval=T,risk.table=T))
-survminer::ggsurvplot(survfit(as.formula(paste0("Surv(OS.baseline.days,survival.status)~",pn)),
-numData), conf.int=T,pval=T,risk.table=T)
-catCols <- c(params$ColNo[grep("^(c|b)",params$DataType)],43:54,56)
-sv <- survfit(as.formula(paste0("Surv(OS.baseline.days,survival.status)~",pn)), numDat)
-sv <- survfit(as.formula(paste0("Surv(OS.baseline.days,survival.status)~",pn)), numData)
-survminer::ggsurvplot(sv,data=numData, conf.int=T,pval=T,risk.table=T)
-catCols
-sv <- survfit(as.formula(paste0("Surv(OS.baseline.days,survival.status) ~ ",pn)), numData)
-sv
-sv[[1]]
-res <- lapply(catCols,function(pno){
-pn <- colnames(numData)[pno]
-str <- paste0("Surv(OS.baseline.days,survival.status) ~ ",pn)
-form <- as.formula(str)
-survfit(form,numData)
-})
-res[[1]]
-help(ggsurvplot)
+combn(12,2)
+length(combn(12,2))
+Surf3d
+require(plot3d)
+require(plot3D
+)
+help(surf3D)
+example(surf3D)
+spheresurf3D(bty = "b", ticktype = "detailed", phi = 50)
+surf3D(x, y, z, colvar = y, colkey = FALSE, box = FALSE, #
+        theta = 60, border = "black", xlim = range(x)*0.8, #
+        ylim = range(y)*0.8, zlim = range(z)*0.8)
+surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
+        theta = 60, border = "black", xlim = range(x)*0.8, #
+        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed")
+surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
+        theta = 60, border = "black", xlim = range(x)*0.8, #
+        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed",axes=T)
+surf3D(x, y, z, colvar = y, axes=T)
+surf3D(x, y, z, colvar = y, axes=TRUE)
+plib::autoCommit()
+library(Gviz)
+library(biomaRt)
+dataTrack = DataTrack(hypeFile,  chromosome=myChr, importFunction=strandedBamImport,
+myChr
+options(ucscChromosomeNames=FALSE)
+libType = "fr-firststrand"
+rb()
+plib::rb()
+base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-6602", print.eval=TRUE)
+mart = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org",
+path="/biomart/martservice", dataset="hsapiens_gene_ensembl")
+hypeFile = file.path(.localData,"MergedBams","Hypoxia_sictrl.bam")
+normFile = file.path(.localData,"MergedBams","Normoxia_sictrl.bam")
+libType = "fr-secondstrand"
+dataTrack = DataTrack(hypeFile,genome="hg19", chromosome=myChr, importFunction=strandedBamImport,
+stream=TRUE, legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
+myChr   = 19
+myStart = 41807492
+myEnd   = 41859816
+biomTrack = BiomartGeneRegionTrack(genome="hg19", biomart=mart,
+biomTrack
+help(BiomartGeneRegionTrack)
+biomTrack = BiomartGeneRegionTrack( biomart=mart,
+chromosome=myChr, start=myStart, end=myEnd, showId=T, geneSymbols=T, rotate.title=TRUE,
+col.line=NULL, col="orange", fill="orange", filters=list(biotype="protein_coding"),
+collapseTranscripts=FALSE )
+plotTracks(list(biomTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
+plotTracks(list(biomTracki,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
+plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
+cex.title=1, cex.axis=1, title.width=1.2)
+plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=("hist","sashimi"),
+plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
+alTrack  <- AlignmentTrack(hypeFile,isPaired=T)
+alTrack  <- AlignmentsTrack(hypeFile,isPaired=T)
+plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
+plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd,
+type=c("coverage","sashimi"),
+plotTracks(list(biomTrack,alTrack), from = myStart, to = myEnd,
+type=c("coverage","sashimi"),sashimiFilter = introns,
+col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
+help(splitBAMS)
+splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0)
+splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0,projName="lncrna_mg6")
 q()
