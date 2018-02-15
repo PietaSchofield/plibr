@@ -1,5 +1,4 @@
 BiocInstaller::biocLite("scater")
-ls()
 combn(12,2)
 length(combn(12,2))
 Surf3d
@@ -21,47 +20,88 @@ surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
 surf3D(x, y, z, colvar = y, axes=T)
 surf3D(x, y, z, colvar = y, axes=TRUE)
 plib::autoCommit()
-library(Gviz)
-library(biomaRt)
-dataTrack = DataTrack(hypeFile,  chromosome=myChr, importFunction=strandedBamImport,
-myChr
-options(ucscChromosomeNames=FALSE)
-libType = "fr-firststrand"
-rb()
-plib::rb()
-base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-6602", print.eval=TRUE)
-mart = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org",
-path="/biomart/martservice", dataset="hsapiens_gene_ensembl")
-hypeFile = file.path(.localData,"MergedBams","Hypoxia_sictrl.bam")
-normFile = file.path(.localData,"MergedBams","Normoxia_sictrl.bam")
-libType = "fr-secondstrand"
-dataTrack = DataTrack(hypeFile,genome="hg19", chromosome=myChr, importFunction=strandedBamImport,
+type=c("coverage","sashimi"),importFunction=strandedBa
 stream=TRUE, legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
-myChr   = 19
-myStart = 41807492
-myEnd   = 41859816
-biomTrack = BiomartGeneRegionTrack(genome="hg19", biomart=mart,
-biomTrack
-help(BiomartGeneRegionTrack)
+scanBamWhat()
+res <- scanBamWhat()
+res
+is(res)
+sbw <- scanBamWhat()
+plib::rb()
+sbw <- as.character(scanBamWhat())
+:w
+strandedBamImport
+sbw
+is(sbw)
+rb()
+alTrack  <- AlignmentsTrack(hypeFile,isPaired=T,importFunction=strandedBamImport,
+plotTracks(list(biomTrack,alTrack), from = myStart, to = myEnd,
+type=c("coverage","sashimi"),
+alTrack  <- DataTrack(hypeFile,isPaired=T,importFunction=strandedBamImport,
+chromosome=myChr, start=myStart, end=myEnd,
+legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
+dataTrack = DataTrack(hypeFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
+alTrack  <- DataTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd)
+plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd,
+type=c("hist","sashimi"),
+col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
+help(AlignmentTrack)
+sashimiHeight=20)
+minSashimiHeight=20)
+minSashimiHeight=10,sashimiHeight=0.01)
+plotTracks(list(biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
+plotTracks(list(gTrack,biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
+minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand=1)
+head(anno)
+anno[grep("HIF1A",anno$external_gene_name),]
+anno$start_position[grep("HIF1A",anno$external_gene_name),]
+anno$start_position[grep("HIF1A",anno$external_gene_name)]
+anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)]
+min(anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
+myChr   =  min(anno$chromosoma_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
+myChr   =  min(anno$chromosome_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
+myStart =  min(anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
+myEnd   =  max(anno$end_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
 biomTrack = BiomartGeneRegionTrack( biomart=mart,
 chromosome=myChr, start=myStart, end=myEnd, showId=T, geneSymbols=T, rotate.title=TRUE,
 col.line=NULL, col="orange", fill="orange", filters=list(biotype="protein_coding"),
 collapseTranscripts=FALSE )
-plotTracks(list(biomTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-plotTracks(list(biomTracki,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-cex.title=1, cex.axis=1, title.width=1.2)
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=("hist","sashimi"),
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
-alTrack  <- AlignmentTrack(hypeFile,isPaired=T)
-alTrack  <- AlignmentsTrack(hypeFile,isPaired=T)
-plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
-plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd,
-type=c("coverage","sashimi"),
-plotTracks(list(biomTrack,alTrack), from = myStart, to = myEnd,
-type=c("coverage","sashimi"),sashimiFilter = introns,
-col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
-help(splitBAMS)
-splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0)
-splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0,projName="lncrna_mg6")
+gtrack = GenomeAxisTrack()
+hypeFile = file.path(.localData,"MergedBams","Hypoxia_sictrl.bam")
+normFile = file.path(.localData,"MergedBams","Normoxia_sictrl.bam")
+libType = "fr-secondstrand"
+hypeTrack = DataTrack(hypeFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
+normTrack = DataTrack(normFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
+legend=TRUE, col=c("cornflowerblue","purple"),
+groups=c("Forward","Reverse"))
+alTrack  <- AlignmentsTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd)
+minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand=0)
+help(plotTracks)
+help(AlignmentsTracks)
+help(AlignmentsTrack)
+example(AlignmentsTrack)
+DisplayPars()
+availableDisplayPars("AlignmentsTrack")
+availableDisplayPars("AlignedReadTrack")
+availableDisplayPars("StackedTrack")
+minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand="+")
+type=c("hist","sashimi"), col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
+sashimiStrand="-")
+minSashimiHeight=10,sashimiHeight=0.01,strand="+")
+quartz()
+alTrack  <- AlignmentsTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd,
+minSashimiHeight=10,sashimiHeight=0.01,strand="-")
+plotTracks(list(gtrack,biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
+type=c("hist","sashimi"), col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2,
+sashimiStrand="+")
+require(GenomicAlignments)
+summarizeJunctions()
+summarizeJunctions
+help(summarizeJunctions)
+ls()
+head(WTonlyGene)
+head(WTonlyTrans)
+ncores <- 1
+base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-23056", print.eval=TRUE)
+autoCommit()
 q()
