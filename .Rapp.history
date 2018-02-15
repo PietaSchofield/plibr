@@ -1,67 +1,120 @@
-BiocInstaller::biocLite("scater")
-ls()
-combn(12,2)
-length(combn(12,2))
-Surf3d
-require(plot3d)
-require(plot3D
-)
-help(surf3D)
-example(surf3D)
-spheresurf3D(bty = "b", ticktype = "detailed", phi = 50)
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = FALSE, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8)
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed")
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed",axes=T)
-surf3D(x, y, z, colvar = y, axes=T)
-surf3D(x, y, z, colvar = y, axes=TRUE)
-plib::autoCommit()
-library(Gviz)
-library(biomaRt)
-dataTrack = DataTrack(hypeFile,  chromosome=myChr, importFunction=strandedBamImport,
-myChr
-options(ucscChromosomeNames=FALSE)
-libType = "fr-firststrand"
+BiocInstaller::biocLite("bvenn")
 rb()
 plib::rb()
-base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-6602", print.eval=TRUE)
+splitStandedBAMS(bamfiles)
+splitStandedBam(bamfiles)
+splitStandedBams(bamfiles)
+splitStrandedBams(bamfiles)
+splitStrandedBam(bamfiles)
+bamfiles <- list.files(file.path(.localData,"MergedBams"),pattern=".*bam$",full=T,recurs=T)
+splitStrandedBAM(bamfiles)
+res <- splitStrandedBAM(bamfiles)
+library(Gviz)
+library(biomaRt)
+options(ucscChromosomeNames=FALSE)
 mart = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org",
 path="/biomart/martservice", dataset="hsapiens_gene_ensembl")
-hypeFile = file.path(.localData,"MergedBams","Hypoxia_sictrl.bam")
-normFile = file.path(.localData,"MergedBams","Normoxia_sictrl.bam")
-libType = "fr-secondstrand"
-dataTrack = DataTrack(hypeFile,genome="hg19", chromosome=myChr, importFunction=strandedBamImport,
-stream=TRUE, legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
-myChr   = 19
-myStart = 41807492
-myEnd   = 41859816
-biomTrack = BiomartGeneRegionTrack(genome="hg19", biomart=mart,
-biomTrack
-help(BiomartGeneRegionTrack)
-biomTrack = BiomartGeneRegionTrack( biomart=mart,
-chromosome=myChr, start=myStart, end=myEnd, showId=T, geneSymbols=T, rotate.title=TRUE,
-col.line=NULL, col="orange", fill="orange", filters=list(biotype="protein_coding"),
-collapseTranscripts=FALSE )
-plotTracks(list(biomTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-plotTracks(list(biomTracki,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type="hist", col.histogram=NA,
-cex.title=1, cex.axis=1, title.width=1.2)
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=("hist","sashimi"),
-plotTracks(list(biomTrack,dataTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
-alTrack  <- AlignmentTrack(hypeFile,isPaired=T)
-alTrack  <- AlignmentsTrack(hypeFile,isPaired=T)
-plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd, type=c("hist","sashimi"),
-plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd,
-type=c("coverage","sashimi"),
-plotTracks(list(biomTrack,alTrack), from = myStart, to = myEnd,
-type=c("coverage","sashimi"),sashimiFilter = introns,
-col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
-help(splitBAMS)
-splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0)
-splitBAMS("~/Projects/lncrna_mg6/Data/MergedBams/Hypoxia_sictrl.bam",len=0,projName="lncrna_mg6")
+myChr   =  min(anno$chromosome_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
+s2c
+require(sleuth)
+baseDir <- file.path(.localData)
+sid <- list.files(file.path(.localData,"kallisto"),pattern=".*",full=T)
+s2c <- plyr::ldply(strsplit(gsub("siRNA_","siRNA",basename(sid)),"_"))
+s2c$sample <- gsub("siRNA_","siRNA",basename(sid))
+colnames(s2c)[1:4] <- c("treatment","condition","sample","sampleName")
+s2c$path <-  sid
+kable(s2c[,1:4],row.names=F)
+res <- enrichPathway(geneids,organ="human")
+head(finalRMATS)
+colnames(wtTrans)
+require(biomaRt)
+grch37 <- useEnsembl(biomart="ensembl",GRCh=37,dataset="hsapiens_gene_ensembl",version=90)
+anno <- getBM(attributes=c("ensembl_gene_id","ensembl_transcript_id","external_gene_name",
+"description","chromosome_name","start_position","end_position",
+"ensembl_peptide_id","gene_biotype","entrezgene"),
+mart=grch37)
+anno$description <- gsub("[[].*","",anno$description)
+save(anno,file=grch37AnnoFile)
+wtTrans <- merge(anno,sigWT,by="ensembl_transcript_id")
+kable(head(wtTrans[order(wtTrans$qval),c(3:4,11,13)],15),row.names=F)
+kable(head(wtTrans[grep("HIF",wtTrans$external_gene_name),c(3:4,1,11,13)],15),row.names=F)
+koTrans <- merge(anno,sigKO,by="ensembl_transcript_id")
+kable(head(koTrans[order(koTrans$qval),c(3:4,11,13)],15),row.names=F)
+kable(head(koTrans[grep("HIF",koTrans$external_gene_name),c(3:4,1,11,13)],15),row.names=F)
+load(file.path(.localData,"Read_counts_star2pass.Rdata"))
+sampleInfo <- plyr::ldply(strsplit(colnames(counts.star),"_"))
+rownames(sampleInfo) <- colnames(counts.star)
+colnames(sampleInfo) <- c("project","sampleNo","condition","filler","treatment")
+kable(sampleInfo)
+dge <- DGEList(counts.star[rowMeans(counts.star)>10,],samples=sampleInfo)
+dge <- calcNormFactors(dge)
+dge$samples$group <- with(dge$samples,paste0(condition,"_",treatment))
+modMat <- model.matrix(~group-1,dge$samples)
+colnames(modMat) <- gsub("group","",colnames(modMat))
+dge <- estimateDisp(dge,modMat)
+fit <- glmFit(dge,modMat)
+lrtsiCtrl <- glmLRT(fit,contrast=c(1,0,-1,0))
+lrtsiHIF <- glmLRT(fit,contrast=c(0,1,0,-1))
+ttsiCtrl <- topTags(lrtsiCtrl,n=1e6)$table
+ttsiHIF <- topTags(lrtsiHIF,n=1e6)$table
+geneAnno <- unique(anno[,c(1,3,4)])
+head(geneAnno)
+colnames(anno)
+geneAnno <- unique(anno[,c(1,3,10)])
+table(ttsiCtrl$FDR <= 1e-9)
+wtGene <- merge(geneAnno,ttsiCtrl[which(ttsiCtrl$FDR<=1e-9),],
+kable(head(wtGene[order(wtGene$FDR),],10),row.names=F)
+table(ttsiHIF$FDR <= 1e-9)
+koGene <- merge(geneAnno,ttsiHIF[which(ttsiHIF$FDR<=1e-9),],
+by.x="ensembl_gene_id",by.y="row.names")
+kable(head(koGene[order(koGene$FDR),],10),row.names=F)
+wtTrans <- wtTrans[which(wtTrans$qval<=1e-5),]
+koTrans <- koTrans[which(koTrans$qval<=1e-5),]
+WTonlyTrans <- wtTrans[which(!wtTrans$ensembl_gene_id%in%koTrans$ensembl_gene_id),]
+WTonlyGene <- wtGene[which(!wtGene$ensembl_gene_id%in%koGene$ensembl_gene_id),]
+dim(WTonlyGene)
+kable(head(WTonlyGene[order(WTonlyGene$FDR),],10),row.names=F)
+dim(WTonlyTrans)
+kable(head(WTonlyTrans[order(WTonlyTrans$qval),c(2,3,4,11,12,13)],10),row.names=F)
+kable(head(WTonlyTrans[order(WTonlyTrans$qval),c(2,3,11,12,13)],10),row.names=F)
+transHi <- WTonlyTrans[which(!WTonlyTrans$external_gene_name%in%WTonlyGene$external_gene_name),]
+kable(head(transHi[order(transHi$qval),c(3,4,11,12,13)],10),row.names=F)
+kable(head(transHi[order(transHi$qval),c(2,3,11,12,13)],10),row.names=F)
+nrow(transHi)
+genesHi <- WTonlyGene[which(!WTonlyGene$external_gene_name%in%WTonlyTrans$external_gene_name),]
+kable(head(genesHi[order(genesHi$FDR),],10),row.names=F)
+nrow(genesHi)
+bothHi <- WTonlyTrans[which(WTonlyTrans$external_gene_name%in%WTonlyGene$external_gene_name),]
+kable(head(bothHi[order(bothHi$qval),c(3,4,11,12,13)],10),row.names=F)
+kable(head(bothHi[order(bothHi$qval),c(2,3,11,12,13)],10),row.names=F)
+base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-21285", print.eval=TRUE)
+highConEvents <- lapply(names(sigHitsRMATS[sigHitsRMATS>0]),function(vn){
+rmatsRes[[vn]][which(rmatsRes[[vn]]$PValue<=0.05),]
+})
+names(highConEvents) <- paste0(basename(dirname(names(sigHitsRMATS[sigHitsRMATS>0]))),"_",
+gsub("([.]|txt|MATS)","",basename(names(sigHitsRMATS[sigHitsRMATS>0]))))
+finalRMATS <- plyr::ldply(lapply(highConEvents,function(hce){
+ret<- hce[,c(2:7,grep("(PV|FDR)",colnames(hce)))]
+colnames(ret) <- c("GeneID","GeneSymbol","Chr","Strand","Exon_start","Exon_end","PV","FDR")
+ret
+}))
+finalRMATS
+annoRMATS <- merge(anno,finalRMATS,by.x="ensembl_gene_id",by.y="GeneID")
+entrezids <- anno$entrezgene[which(anno$external_gene_name%in%geneids)]
+geneids
+entrezids <- anno$entrezgene[which(anno$ensembl_gene_id%in%geneids)]
+entrezids
+entrezids <- unique(anno$entrezgene[which(anno$ensembl_gene_id%in%geneids)])
+require(ReactomePA)
+res <- enrichPathway(entrezid,organ="human")
+res <- enrichPathway(entrezids,organ="human")
+res <- enrichGO(entrezids,organ="human")
+res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db)
+res
+help(enrichGO)
+res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db,ont="BP")
+res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db,ont="BP",universe=unique(anno$entregene))
+as.data.frame(res)
+auotCommit()
+autoCommit()
 q()
