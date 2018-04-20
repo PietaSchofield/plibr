@@ -46,7 +46,7 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
   if(db<0){
     return(writeLines(c(header,jscrp)))
   }else{
-    subJob(qsubScript,noSub=noSub,scpIt=scpIt,db=db,pname=jproj)
+    subJob(qsubScript,noSub=noSub,scpIt=scpIt,db=db,pname=jproj,host=host)
   }
 }
 

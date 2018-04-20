@@ -4,23 +4,22 @@
 \alias{subJob}
 \title{Submit a job to the cluster}
 \usage{
-subJob(scriptfile, locRoot = "/Users", remRoot = "/scratch",
-  user = "pschofield", host = "troodon.scicom.picr.man.ac.uk",
+subJob(scriptfile, locRoot = "/Users/pschofield", remRoot = "~",
   setDir = "cd /scratch/pschofield;", qsubString = "qsub", args = NULL,
-  noSub = T, scpIt = F, db = 0, crick = T, pname = NULL)
+  noSub = T, scpIt = F, db = 0, host = "dpsf", pname = NULL)
 }
 \arguments{
-\item{user}{a string with the user name of the person making the ssh connection}
-
-\item{host}{a string with the name of the login host for the cluster}
-
 \item{args}{any arguments to add to the job submission string}
 
 \item{noSub}{unless set to false will merely display the command rather than submit it.}
 
 \item{scpIt}{copy to remote using scp before submit when not using FUSE}
 
+\item{host}{a string with the name of the login host for the cluster}
+
 \item{batchFile}{a string representing the name of the script file to be submitted}
+
+\item{user}{a string with the user name of the person making the ssh connection}
 
 \item{qsubstring}{the submission string for the torque system}
 }

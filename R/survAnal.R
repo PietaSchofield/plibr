@@ -57,7 +57,7 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     survData2$Class <- as.factor(survData2$Class)
     # get max of either days to death or days to last follow up for time
     # Censor the time data to generate survival data
-    form <- paste0("Surv( ",survTime,",",survStatus,") ~ Class")
+    form <- paste0("survival::Surv( ",survTime,",",survStatus,") ~ Class")
     # fit cox proportional hazards (non-parametric) survival model
     coxfit <- survival::coxph(as.formula(form),data=survData2)
     if(summarise){

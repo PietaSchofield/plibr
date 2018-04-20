@@ -11,10 +11,10 @@
 #' @param scpIt copy to remote using scp before submit when not using FUSE
 #'
 #' @export
-subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofield", 
-                   host="troodon.scicom.picr.man.ac.uk",setDir="cd /scratch/pschofield;",
-                   qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=0, crick=T ,pname=NULL){
-  if(crick){
+subJob <- function(scriptfile,locRoot="/Users/pschofield",remRoot="~", 
+                   setDir="cd /scratch/pschofield;",
+                   qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=0, host="dpsf" ,pname=NULL){
+  if(host=="camp"){
     scpIt <- F
     remRoot <- "/home/camp/schofip/Projects"
     noSub <- T
@@ -27,23 +27,7 @@ subJob <- function(scriptfile,locRoot="/Users",remRoot="/scratch",user="pschofie
     print(scriptfile)
     print(remScript)
   }
-  if(scpIt){
-    mkCmd <- paste0("ssh ",user,"@",host," 'mkdir -p ",dirname(remScript),"'")
-    if(db<2) system(mkCmd)
-    cpCmd <- paste0("scp ",scriptfile," ",user,"@",host,":",dirname(remScript))
-    if(db<2)system(cpCmd)
-    if(db>0){
-      print(mkCmd)
-      print(cpCmd)
-    }
-  }
-  jobString <- paste0("'source /etc/bashrc;",setDir , qsubString," ",remScript, " ",args," ")
-  sshString <- paste0("ssh ",user,"@",host," ",jobString,"'")
   if(noSub){
     paste0(qsubString," ",remScript, " ",args," ")
-  } else if(db>0){
-    sshString
-  }else{
-    list(jobid=system(sshString, intern=T), jobstring=sshString)
-  }
+  } 
 }

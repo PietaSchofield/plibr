@@ -3,20 +3,20 @@
 #' @export
 survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
                           dRow="canberra",cRow="average",scaleIt=T,
-                          cCol="complete",dCol="correlation",
+                          cCol="complete",dCol="correlation",st="time",ss="status",
                           rowA=NULL,rcuts=(nrow(pd)/10),ccuts=(length(gd)/10)){
   # fix gene names this shouldn't be necessary as rownames should be unique!
   rownames(ed) <- make.names(rownames(ed),unique=T)
 
   # select just genes of interest and antilog? (why antilog)
-  if(min(rowMins(ed))<0){
+  if(min(apply(ed,2,min))<0){
     eipSig <- as.matrix(exp(ed[which(rownames(ed)%in%gd),]))
   }else{
     eipSig <- as.matrix(ed[which(rownames(ed)%in%gd),])
   }
 
   if(scaleIt){
-    eipSig <- apply(eipSig,2,scale)
+    eipSig <- t(scale(t(eipSig)))
   }
 
   # generate clusters
@@ -54,7 +54,8 @@ survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
   gid <- intersect(gd,rownames(eipSig))
   
   # call the fit
-  fit <- survClust(survData=pdata,exprData=eipSig,geneData=gd)
+  fit <- survClust(survData=pdata,exprData=eipSig,geneData=gd,survStatus=ss,survTime=st,
+                   clustCol="sampleCl")
   
   # normalise the data to nice output
   if(trim<1){

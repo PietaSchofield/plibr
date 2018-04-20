@@ -5,9 +5,9 @@
 \title{survival analysis of expression profile clustered data}
 \usage{
 survClustAnal(ed, gd, pd, trim = 0.25, scale = "col", th = 50,
-  dRow = "canberra", cRow = "average", cCol = "complete",
-  dCol = "correlation", rowA = NULL, rcuts = (nrow(pd)/10),
-  ccuts = (length(gd)/10))
+  dRow = "canberra", cRow = "average", scaleIt = T, cCol = "complete",
+  dCol = "correlation", st = "time", ss = "status", rowA = NULL,
+  rcuts = (nrow(pd)/10), ccuts = (length(gd)/10))
 }
 \description{
 survival analysis of expression profile clustered data
