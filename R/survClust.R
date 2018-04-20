@@ -50,8 +50,7 @@ survClust <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time"
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
   exprData[which(!is.finite(exprData))] <- min(exprData[which(is.finite(exprData))])
   exprData2 <- t(exprData[which(rownames(exprData)%in%geneData),])
-  survData2 <- merge(survData[,c(survTime,survStatus,clustCol)],
-                     exprData2,by="row.names") 
+  survData2 <- merge(survData[,c(survTime,survStatus,clustCol)], exprData2,by="row.names") 
   rownames(survData2) <- survData2[,1]
   survData2[,clustCol] <- as.factor(survData2[,clustCol])
   # filter out genes not expressed in percentage of samples

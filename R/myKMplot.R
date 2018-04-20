@@ -37,14 +37,18 @@ plotKM <- function(formstr,dat,alp=I(1/10),sfact="surv",inclusive=F,y1=-0.5,y2=-
   tabcox <- as.data.frame(t(signif(summary(cox)$sctest,3)))
   rownames(tabcox) <- "Log Rank Test"
   rownames(tabkm) <- gsub(".*[=]","",rownames(tabkm))
-  gp <- ggplot(pd) + geom_line(aes_string(x="time",y=sfact,colour="Class")) +
-    geom_ribbon(aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
-    geom_point(aes_string(x="time",y=sfact,colour="Class"),data=pd[which(pd$n.censor!=0),]) +
-    ggtitle(paste0(titlestr)) 
+  gp <- ggplot2::ggplot(pd) + ggplot2::geom_line(ggplot2::aes_string(x="time",y=sfact,
+                                                                     colour="Class")) +
+    ggplot2::geom_ribbon(ggplot2::aes(x=time,ymin=lower,ymax=upper,fill=Class),alpha=I(1/10)) +
+    ggplot2::geom_point(aes_string(x="time",y=sfact,colour="Class"),
+                        data=pd[which(pd$n.censor!=0),]) +
+    ggplot2::ggtitle(paste0(titlestr)) 
   if(inclusive){
     gp <- gp + ylim(-1,1) +
-      annotation_custom(tableGrob(tabcox),xmin=0,xmax=max(pd$time),ymin=y1,ymax=0) +
-      annotation_custom(tableGrob(tabkm),xmin=0,xmax=max(pd$time),ymin=y2,ymax=y1)
+      ggplot2::annotation_custom(tableGrob(tabcox),xmin=0,xmax=max(pd$time),
+                                 ymin=y1,ymax=0) +
+      ggplot2::annotation_custom(tableGrob(tabkm),xmin=0,xmax=max(pd$time),
+                                 ymin=y2,ymax=y1)
   }
   return(list(graph=gp,tabkm=tabkm,tabcox=tabcox,fits=list(fit,cox,dif)))
 }

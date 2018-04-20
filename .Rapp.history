@@ -1,225 +1,170 @@
-<<<<<<< HEAD
-BiocInstaller::biocLite("bvenn")
-rb()
-plib::rb()
-splitStandedBAMS(bamfiles)
-splitStandedBam(bamfiles)
-splitStandedBams(bamfiles)
-splitStrandedBams(bamfiles)
-splitStrandedBam(bamfiles)
-bamfiles <- list.files(file.path(.localData,"MergedBams"),pattern=".*bam$",full=T,recurs=T)
-splitStrandedBAM(bamfiles)
-res <- splitStrandedBAM(bamfiles)
-library(Gviz)
-library(biomaRt)
-options(ucscChromosomeNames=FALSE)
-mart = useMart(biomart="ENSEMBL_MART_ENSEMBL", host="grch37.ensembl.org",
-path="/biomart/martservice", dataset="hsapiens_gene_ensembl")
-myChr   =  min(anno$chromosome_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-s2c
-require(sleuth)
-baseDir <- file.path(.localData)
-sid <- list.files(file.path(.localData,"kallisto"),pattern=".*",full=T)
-s2c <- plyr::ldply(strsplit(gsub("siRNA_","siRNA",basename(sid)),"_"))
-s2c$sample <- gsub("siRNA_","siRNA",basename(sid))
-colnames(s2c)[1:4] <- c("treatment","condition","sample","sampleName")
-s2c$path <-  sid
-kable(s2c[,1:4],row.names=F)
-res <- enrichPathway(geneids,organ="human")
-head(finalRMATS)
-colnames(wtTrans)
-require(biomaRt)
-grch37 <- useEnsembl(biomart="ensembl",GRCh=37,dataset="hsapiens_gene_ensembl",version=90)
-anno <- getBM(attributes=c("ensembl_gene_id","ensembl_transcript_id","external_gene_name",
-"description","chromosome_name","start_position","end_position",
-"ensembl_peptide_id","gene_biotype","entrezgene"),
-mart=grch37)
-anno$description <- gsub("[[].*","",anno$description)
-save(anno,file=grch37AnnoFile)
-wtTrans <- merge(anno,sigWT,by="ensembl_transcript_id")
-kable(head(wtTrans[order(wtTrans$qval),c(3:4,11,13)],15),row.names=F)
-kable(head(wtTrans[grep("HIF",wtTrans$external_gene_name),c(3:4,1,11,13)],15),row.names=F)
-koTrans <- merge(anno,sigKO,by="ensembl_transcript_id")
-kable(head(koTrans[order(koTrans$qval),c(3:4,11,13)],15),row.names=F)
-kable(head(koTrans[grep("HIF",koTrans$external_gene_name),c(3:4,1,11,13)],15),row.names=F)
-load(file.path(.localData,"Read_counts_star2pass.Rdata"))
-sampleInfo <- plyr::ldply(strsplit(colnames(counts.star),"_"))
-rownames(sampleInfo) <- colnames(counts.star)
-colnames(sampleInfo) <- c("project","sampleNo","condition","filler","treatment")
-kable(sampleInfo)
-dge <- DGEList(counts.star[rowMeans(counts.star)>10,],samples=sampleInfo)
-dge <- calcNormFactors(dge)
-dge$samples$group <- with(dge$samples,paste0(condition,"_",treatment))
-modMat <- model.matrix(~group-1,dge$samples)
-colnames(modMat) <- gsub("group","",colnames(modMat))
-dge <- estimateDisp(dge,modMat)
-fit <- glmFit(dge,modMat)
-lrtsiCtrl <- glmLRT(fit,contrast=c(1,0,-1,0))
-lrtsiHIF <- glmLRT(fit,contrast=c(0,1,0,-1))
-ttsiCtrl <- topTags(lrtsiCtrl,n=1e6)$table
-ttsiHIF <- topTags(lrtsiHIF,n=1e6)$table
-geneAnno <- unique(anno[,c(1,3,4)])
-head(geneAnno)
-colnames(anno)
-geneAnno <- unique(anno[,c(1,3,10)])
-table(ttsiCtrl$FDR <= 1e-9)
-wtGene <- merge(geneAnno,ttsiCtrl[which(ttsiCtrl$FDR<=1e-9),],
-kable(head(wtGene[order(wtGene$FDR),],10),row.names=F)
-table(ttsiHIF$FDR <= 1e-9)
-koGene <- merge(geneAnno,ttsiHIF[which(ttsiHIF$FDR<=1e-9),],
-by.x="ensembl_gene_id",by.y="row.names")
-kable(head(koGene[order(koGene$FDR),],10),row.names=F)
-wtTrans <- wtTrans[which(wtTrans$qval<=1e-5),]
-koTrans <- koTrans[which(koTrans$qval<=1e-5),]
-WTonlyTrans <- wtTrans[which(!wtTrans$ensembl_gene_id%in%koTrans$ensembl_gene_id),]
-WTonlyGene <- wtGene[which(!wtGene$ensembl_gene_id%in%koGene$ensembl_gene_id),]
-dim(WTonlyGene)
-kable(head(WTonlyGene[order(WTonlyGene$FDR),],10),row.names=F)
-dim(WTonlyTrans)
-kable(head(WTonlyTrans[order(WTonlyTrans$qval),c(2,3,4,11,12,13)],10),row.names=F)
-kable(head(WTonlyTrans[order(WTonlyTrans$qval),c(2,3,11,12,13)],10),row.names=F)
-transHi <- WTonlyTrans[which(!WTonlyTrans$external_gene_name%in%WTonlyGene$external_gene_name),]
-kable(head(transHi[order(transHi$qval),c(3,4,11,12,13)],10),row.names=F)
-kable(head(transHi[order(transHi$qval),c(2,3,11,12,13)],10),row.names=F)
-nrow(transHi)
-genesHi <- WTonlyGene[which(!WTonlyGene$external_gene_name%in%WTonlyTrans$external_gene_name),]
-kable(head(genesHi[order(genesHi$FDR),],10),row.names=F)
-nrow(genesHi)
-bothHi <- WTonlyTrans[which(WTonlyTrans$external_gene_name%in%WTonlyGene$external_gene_name),]
-kable(head(bothHi[order(bothHi$qval),c(3,4,11,12,13)],10),row.names=F)
-kable(head(bothHi[order(bothHi$qval),c(2,3,11,12,13)],10),row.names=F)
-base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-21285", print.eval=TRUE)
-highConEvents <- lapply(names(sigHitsRMATS[sigHitsRMATS>0]),function(vn){
-rmatsRes[[vn]][which(rmatsRes[[vn]]$PValue<=0.05),]
-})
-names(highConEvents) <- paste0(basename(dirname(names(sigHitsRMATS[sigHitsRMATS>0]))),"_",
-gsub("([.]|txt|MATS)","",basename(names(sigHitsRMATS[sigHitsRMATS>0]))))
-finalRMATS <- plyr::ldply(lapply(highConEvents,function(hce){
-ret<- hce[,c(2:7,grep("(PV|FDR)",colnames(hce)))]
-colnames(ret) <- c("GeneID","GeneSymbol","Chr","Strand","Exon_start","Exon_end","PV","FDR")
-ret
-}))
-finalRMATS
-annoRMATS <- merge(anno,finalRMATS,by.x="ensembl_gene_id",by.y="GeneID")
-entrezids <- anno$entrezgene[which(anno$external_gene_name%in%geneids)]
-geneids
-entrezids <- anno$entrezgene[which(anno$ensembl_gene_id%in%geneids)]
-entrezids
-entrezids <- unique(anno$entrezgene[which(anno$ensembl_gene_id%in%geneids)])
-require(ReactomePA)
-res <- enrichPathway(entrezid,organ="human")
-res <- enrichPathway(entrezids,organ="human")
-res <- enrichGO(entrezids,organ="human")
-res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db)
-res
-help(enrichGO)
-res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db,ont="BP")
-res <- enrichGO(entrezids,OrgDb=org.Hs.eg.db,ont="BP",universe=unique(anno$entregene))
-as.data.frame(res)
-auotCommit()
-=======
-BiocInstaller::biocLite("scater")
-combn(12,2)
-length(combn(12,2))
-Surf3d
-require(plot3d)
-require(plot3D
-)
-help(surf3D)
-example(surf3D)
-spheresurf3D(bty = "b", ticktype = "detailed", phi = 50)
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = FALSE, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8)
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed")
-surf3D(x, y, z, colvar = y, colkey = FALSE, box = T, #
-        theta = 60, border = "black", xlim = range(x)*0.8, #
-        ylim = range(y)*0.8, zlim = range(z)*0.8,ticktype="detailed",axes=T)
-surf3D(x, y, z, colvar = y, axes=T)
-surf3D(x, y, z, colvar = y, axes=TRUE)
+BiocInstaller::biocLite("ggplot2")
 plib::autoCommit()
-type=c("coverage","sashimi"),importFunction=strandedBa
-stream=TRUE, legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
-scanBamWhat()
-res <- scanBamWhat()
-res
-is(res)
-sbw <- scanBamWhat()
-plib::rb()
-sbw <- as.character(scanBamWhat())
-:w
-strandedBamImport
-sbw
-is(sbw)
+edit(rownames(dfsData))
+edit
+res <- edit(rownames(dfsData))
+colnames(pdata)
+clinExtFile <- file.path(.localData,"prad_tcga/data_CNA.txt")
+etv1cna <- as.data.frame(t(clinext[grep("ETV1",clinext$Hugo_Symbol),-c(1,2)]))
+clinExtFile <- file.path(.localData,"prad_tcga/data_mutations_extended.txt")
+clinext <- read.delim(clinExtFile)
+etv1mut <- clinext[grep("ETV1",clinext$Hugo_Symbol),c(1,9,17)]
+muts <- gsub("-",".",etv1mut[,3])
+colnames(etv1cna)[1] <- "cnv"
+etv1cna$cnv <- as.factor(etv1cna$cnv)
+etv1cna$mut <- ifelse(rownames(etv1cna)%in%muts,"Yes","No")
+survPDataFile <-file.path(.localData,"prad_tcga/data_bcr_clinical_data_patient.txt")
+survPData <- read.delim(survPDataFile,skip=4)
+survSDataFile <-file.path(.localData,"prad_tcga/data_bcr_clinical_data_sample.txt")
+survSData <- read.delim(survSDataFile)
+save(rnaSeq,etv1cna,survSData,survPData,file=pradSaveFile)
+rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%pdata$PATIENT_ID
+)]
+edit(pdClin)
+rowname(dfsData)
+rowname(pdata)
+edit(pdata)
+help(survAnal)
+rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%pdata$PATIENT_ID)]
+rownames(rnaSeq) <- gsub("[.]01$","",rownames(rnaSeq))
+colnames(rnaSeq)
+rnaSeqFile <- file.path(.localData,"prad_tcga/data_RNA_Seq_v2_expression_median.txt")
+rnaSeq <- read.delim(rnaSeqFile)
+rnaSeq <- rnaSeq[,-2]
+rnaSeqM <- reshape2::melt(rnaSeq,"Hugo_Symbol")
+rnaSeq <- reshape2::dcast(rnaSeqM,Hugo_Symbol~variable,fun.agg=mean)
+rownames(rnaSeq) <- make.names(rnaSeq[,1])
+rnaSeq <- rnaSeq[,-1]
+rownames(pdata) <- gsub("[.]01$","",rownames(pdata))
+dgePRAD <- DGEList(rnaSeq)
+res <- survAnal(survData=dfsData,exprData=expData,geneData=upAll,survStatus="censor")
+rownames(dfsData)
+colnames(expData)
+rownames(pdClin)
+pdClin <- pcClin[,-1]
+pdClin <- merge(dfsData,pdata,by.x="row.names",by.y="PATIENT_ID")
+rownames(pdata) <- gsub("[.]01$","",pdata$PATIENT_ID)
+rownames(pdata)
+rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%rownames(pdata))]
+pdClin
+dim(pdClin)
+dim(rnaSeq)
+load(pradSaveFile)
+dfsData <- na.omit(dfsData)
+pdClin <- merge(dfsData,pdata,by="row.names")
+rownames(rnaSeq)
+upAkk
+upAll
+rb()_
+res <- survAnal(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor")
+traceback
+survStatus="status"
+survData=pdClin
+exprData=expData
+geneData=upAll
+survTime="time"
+exprRange=0.33
+survStatus="censor"
+mcores=4
+summarise=TRUE){
+summarise=TRUE
+exprData <- as.matrix(exprData)
+geneid=geneData[1]
+geneid=geneData[3]
+geneid=geneData[2]
+resList <- BiocParallel::bplapply(geneData,function(geneid){
+geneRun <- geneData[which(geneData%in%rownames(exprData))]
+geneRun
+geneData
+resList <- BiocParallel::bplapply(geneRun,function(geneid){
+hlim <- as.numeric(quantile(exprData[geneid,],1-exprRange))
+hi <- survData[names(which(exprData[geneid,]>=hlim)),]
+hi$Class <- "high"
+llim <- as.numeric(quantile(exprData[geneid,],exprRange))
+lo <- survData[names(which(exprData[geneid,]<=llim)),]
+lo$Class <- "low"
+survData2 <- rbind(hi,lo)
+survData2$Class <- as.factor(survData2$Class)
+form <- paste0("Surv( ",survTime,",",survStatus,") ~ Class")
+coxfit <- survival::coxph(as.formula(form),data=survData2)
+c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
+}, BPPARAM=mcParam)
+names(resList) <- geneData
+names(resList) <- geneRun
+if(summarise){
+resSurv<- plyr::ldply(resList)
+rownames(resSurv) <- resSurv[,1]
+resSurv <- resSurv[,-1]
+colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
+resSurv
+}else{
+resList
+plot(res[[1]])
+plot(survfit(res[[1]]))
+plot(res[[1]][[1]]
+res[[1]]$cph
+survplot(res[[1]]$cph()
+)
+survplot(res[[1]]$cph)
+plot(res[[1]]$cph)
+summaru(res[[1]]$cph)
+summary(res[[1]]$cph)
+plot(res[[1]]$kmf)
+traceback*
+()
+require(gridExtra)
+help(tableGrob)
+traceback()
 rb()
-alTrack  <- AlignmentsTrack(hypeFile,isPaired=T,importFunction=strandedBamImport,
-plotTracks(list(biomTrack,alTrack), from = myStart, to = myEnd,
-type=c("coverage","sashimi"),
-alTrack  <- DataTrack(hypeFile,isPaired=T,importFunction=strandedBamImport,
-chromosome=myChr, start=myStart, end=myEnd,
-legend=TRUE, col=c("cornflowerblue","purple"), groups=c("Forward","Reverse"))
-dataTrack = DataTrack(hypeFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
-alTrack  <- DataTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd)
-plotTracks(list(biomTrack,dataTrack,alTrack), from = myStart, to = myEnd,
-type=c("hist","sashimi"),
-col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
-help(AlignmentTrack)
-sashimiHeight=20)
-minSashimiHeight=20)
-minSashimiHeight=10,sashimiHeight=0.01)
-plotTracks(list(biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
-plotTracks(list(gTrack,biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
-minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand=1)
-head(anno)
-anno[grep("HIF1A",anno$external_gene_name),]
-anno$start_position[grep("HIF1A",anno$external_gene_name),]
-anno$start_position[grep("HIF1A",anno$external_gene_name)]
-anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)]
-min(anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-myChr   =  min(anno$chromosoma_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-myChr   =  min(anno$chromosome_name[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-myStart =  min(anno$start_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-myEnd   =  max(anno$end_position[grep("HIF1A-AS[0-9]",anno$external_gene_name)])
-biomTrack = BiomartGeneRegionTrack( biomart=mart,
-chromosome=myChr, start=myStart, end=myEnd, showId=T, geneSymbols=T, rotate.title=TRUE,
-col.line=NULL, col="orange", fill="orange", filters=list(biotype="protein_coding"),
-collapseTranscripts=FALSE )
-gtrack = GenomeAxisTrack()
-hypeFile = file.path(.localData,"MergedBams","Hypoxia_sictrl.bam")
-normFile = file.path(.localData,"MergedBams","Normoxia_sictrl.bam")
-libType = "fr-secondstrand"
-hypeTrack = DataTrack(hypeFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
-normTrack = DataTrack(normFile, chromosome=myChr, importFunction=strandedBamImport, stream=TRUE,
-legend=TRUE, col=c("cornflowerblue","purple"),
-groups=c("Forward","Reverse"))
-alTrack  <- AlignmentsTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd)
-minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand=0)
-help(plotTracks)
-help(AlignmentsTracks)
-help(AlignmentsTrack)
-example(AlignmentsTrack)
-DisplayPars()
-availableDisplayPars("AlignmentsTrack")
-availableDisplayPars("AlignedReadTrack")
-availableDisplayPars("StackedTrack")
-minSashimiHeight=10,sashimiHeight=0.01,sashimiStrand="+")
-type=c("hist","sashimi"), col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2)
-sashimiStrand="-")
-minSashimiHeight=10,sashimiHeight=0.01,strand="+")
-quartz()
-alTrack  <- AlignmentsTrack(hypeFile,isPaired=T, chromosome=myChr, start=myStart, end=myEnd,
-minSashimiHeight=10,sashimiHeight=0.01,strand="-")
-plotTracks(list(gtrack,biomTrack,hypeTrack,alTrack,normTrack), from = myStart, to = myEnd,
-type=c("hist","sashimi"), col.histogram=NA, cex.title=1, cex.axis=1, title.width=1.2,
-sashimiStrand="+")
-require(GenomicAlignments)
-summarizeJunctions()
-summarizeJunctions
-help(summarizeJunctions)
-ls()
-head(WTonlyGene)
-head(WTonlyTrans)
-ncores <- 1
-base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-23056", print.eval=TRUE)
+summarise=F)
+res()
+res[[1]]
+res[[1]]$dif
+plot(res[[1]]$dif)
+summarise=F,exprRange=0.25)
+.fileName <- "201804"
+.projName <- "etb1_vu"
+plib::rcur(fileName=.fileName,projDir=.projName,open="html")
+edit(dfsData)
+base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-6495", print.eval=TRUE)
+dfsData$censor <- ifelse(dfsData$DFS_STATUS=="DiseaseFree",0,1)
+dfsSURV <- na.omit(dfsData)
+pdClin <- merge(dfsSURV,pdata,by="row.names")
+upAll <- c(upAll,"TRPM8")
+dfsData <- survPData[,c(2,32,35,70:73)]
+if(FALSE){
+dfsData <- edit(dfsData)
+dfsData$censor <- ifelse(grepl("P",dfsData$PATIENT_DEATH_REASON),0,1)
+dfsData$time <- as.numeric(dfsData$DFS_MONTHS)
+rownames(dfsData) <- gsub("[-]",".",dfsData[,1])
+osSURV <- na.omit(dfsData)
+colnames(rnaSeq) <- gsub("[.]01$","",colnames(rnaSeq))
+rownames(pdata) <- gsub("[-]",".",pdata$PATIENT_ID)
+pdClin <- merge(osSURV,pdata,by="row.names")
+rownames(pdClin) <- pdClin[,1]
+pdClin <- pdClin[,-1]
+rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%rownames(pdClin))]
+dgePRAD <- DGEList(rnaSeq,sample=pdClin)
+dgePRAD <- calcNormFactors(dgePRAD)
+expData <- cpm(dgePRAD,log=T)
+upAll <- unique(c(upAll,"TRPM8"))
+res <- survAnal(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor",
+summarise=T,exprRange=0.25)
+kable(res)
+help(scale)
+res <- survClust(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor")
+res
+exprSamples <- colnames(exprData)
+survSamples <- rownames(survData)
+if(!identical(unique(sort(exprSamples)), sort(survSamples))){
+stop(paste0("The samples in ",paste0(survSamples,collapse=",")," do not match those in the ",
+"expression and survival data files"))
+if(!identical(sort(exprSamples), sort(survSamples))){
+warning(paste0("The samples in ",survSamples," potentially have more than one expression",
+" sample"))
+}
+mcParam <- BiocParallel::MulticoreParam(workers=mcores)
+exprData[which(!is.finite(exprData))] <- min(exprData[which(is.finite(exprData))])
+exprData2 <- t(exprData[which(rownames(exprData)%in%geneData),])
+survData2 <- merge(survData[,c(survTime,survStatus,clustCol)], exprData2,by="row.names")
+q()

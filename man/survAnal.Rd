@@ -7,7 +7,7 @@ expression values}
 \usage{
 survAnal(survData = NULL, exprData = NULL, geneData = NULL,
   survTime = "time", exprRange = 0.33, survStatus = "status",
-  mcores = 4)
+  mcores = 4, summarise = TRUE)
 }
 \arguments{
 \item{survData}{survival data must contain a time and status}
@@ -30,17 +30,9 @@ results, a combined set of both results and a set of those genes for which the D
 significant at 0.05 FDR
 }
 \description{
-The runCPH function will process three separate file one with sample ids one with survival data
-and one with expression values. In test mode if a list of sample ids are supplied but not the
-other two files it assumes the ids are from the TCGA SKCM data set and uses a cached version of
-the normalised expression values from the TCGA SKCM data set and a currated set of survival
-data.
-}
-\examples{
-analysisName="test3"
-exprSep=","
-res <- runCPH(sampleDataFile=sampleDataFile,expressionDataFile=expressionDataFile,
-              survivalDataFile=survivalDataFile,
-              analysisName=analysisName,exprSep=exprSep)
-
+derived from the runCPH function will process three separate file one with sample ids one with
+survival data and one with expression values. In test mode if a list of sample ids are supplied
+but not the other two files it assumes the ids are from the TCGA SKCM data set and uses a
+cached version of the normalised expression values from the TCGA SKCM data set and a currated
+set of survival data.
 }

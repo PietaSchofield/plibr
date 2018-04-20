@@ -2,13 +2,23 @@
 #'
 #' @export
 survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
-                          dRow="canberra",cRow="average",
+                          dRow="canberra",cRow="average",scaleIt=T,
                           cCol="complete",dCol="correlation",
                           rowA=NULL,rcuts=(nrow(pd)/10),ccuts=(length(gd)/10)){
-  # fix gene names
+  # fix gene names this shouldn't be necessary as rownames should be unique!
   rownames(ed) <- make.names(rownames(ed),unique=T)
-  eipSig <- as.matrix(exp(ed[which(rownames(ed)%in%gd),]))
-  eipSig <- apply(eipSig,2,function(x)(x-rowMeans(eipSig))/rowMeans(eipSig))
+
+  # select just genes of interest and antilog? (why antilog)
+  if(min(rowMins(ed))<0){
+    eipSig <- as.matrix(exp(ed[which(rownames(ed)%in%gd),]))
+  }else{
+    eipSig <- as.matrix(ed[which(rownames(ed)%in%gd),])
+  }
+
+  if(scaleIt){
+    eipSig <- apply(eipSig,2,scale)
+  }
+
   # generate clusters
   if(dRow=="correlation"){
     rowC <- hclust(as.dist(1-cor(t(eipSig))),method=cRow)
@@ -24,22 +34,28 @@ survClustAnal <- function(ed,gd,pd,trim=0.25,scale="col",th=50,
   }else{
     colC <- hclust(dist(t(eipSig),dCol),method=cCol)
   }
+
   # cut samples by cluster
   sClust <- as.data.frame(cutree(colC,rcuts))
   colnames(sClust) <- "sampleCl"
   sClust$sampleCl <- as.factor(sClust$sampleCl)
+  
   # form sample data
   pdata <- merge(pd,sClust,by="row.names")
   rownames(pdata) <- pdata[,1]
   pdata <- pdata[,-1]
+  
   # cut gene clusters
   gClust <- as.data.frame(cutree(rowC,ccuts))
   colnames(gClust) <- "geneCl"
   gClust$geneCl <- as.factor(gClust$geneCl)
+  
   # filter genes of interest
   gid <- intersect(gd,rownames(eipSig))
+  
   # call the fit
   fit <- survClust(survData=pdata,exprData=eipSig,geneData=gd)
+  
   # normalise the data to nice output
   if(trim<1){
     eipPlot <- apply(eipSig,2,function(x){
