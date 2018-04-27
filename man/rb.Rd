@@ -4,7 +4,7 @@
 \alias{rb}
 \title{rebuild a package}
 \usage{
-rb(projName = "plib_ps", pkgName = "package",
+rb(wd = NULL, projName = "plib_ps", pkgName = "package",
   baseDir = file.path(Sys.getenv("HOME"), "Projects"))
 }
 \arguments{

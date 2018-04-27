@@ -5,13 +5,15 @@
 #' @param rstudio
 #'
 #' @export
-rb <- function(projName="plib_ps", pkgName="package", 
+rb <- function(wd=NULL,projName="plib_ps", pkgName="package", 
                baseDir=file.path(Sys.getenv("HOME"),"Projects")){
   curd <- getwd()
-  if(projName!="plib_ps"){
-    wd <- file.path(baseDir,projName,pkgName)
-  }else{
-    wd <- file.path(baseDir,projName)
+  if(is.null(wd)){
+    if(projName!="plib_ps"){
+      wd <- file.path(baseDir,projName,pkgName)
+    }else{
+      wd <- file.path(baseDir,projName)
+    }
   }
   print(wd)
   setwd(wd)
