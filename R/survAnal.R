@@ -42,7 +42,8 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
   exprData <- as.matrix(exprData)
   geneRun <- geneData[which(geneData%in%rownames(exprData))]
   # run cox proportional hazard on all expressed genes
-  resList <- BiocParallel::bplapply(geneRun,function(geneid){
+  #resList <- BiocParallel::bplapply(geneRun,function(geneid){
+  resList <- lapply(geneRun,function(geneid){
     # get Hi samples expression >= n centile 
     hlim <- as.numeric(quantile(exprData[geneid,],1-exprRange))
     hi <- survData[names(which(exprData[geneid,]>=hlim)),]
@@ -55,21 +56,21 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     survData2 <- rbind(hi,lo)
     # set expression class
     survData2$Class <- as.factor(survData2$Class)
+    survData2$survTime <- as.numeric(survData2[,survTime])
+    survData2$survStatus <- survData2[,survStatus]
     # get max of either days to death or days to last follow up for time
-    # Censor the time data to generate survival data
-    form <- paste0("survival::Surv( ",survTime,",",survStatus,") ~ Class")
     # fit cox proportional hazards (non-parametric) survival model
-    coxfit <- survival::coxph(as.formula(form),data=survData2)
+    coxfit <- survival::coxph(survival::Surv(survTime,survStatus)~Class, data=survData2)
     if(summarise){
       c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
     }else{
-      diffit <- survival::survdiff(as.formula(form),data=survData2)
-      surfit <- survival::survfit(as.formula(form),data=survData2)
-      #plt <- plotKM(as.formula(form),data=survData2)
-      plt <- NULL
+      diffit <- survival::survdiff(survival::Surv(survTime,survStatus)~Class, data=survData2)
+      surfit <- survival::survfit(survival::Surv(survTime,survStatus)~Class, data=survData2)
+      plt <- plotKM("survival::Surv(survTime,survStatus)~Class", dat=survData2)
+      #plt <- NULL
       list(cph=coxfit,dif=diffit,kmf=surfit,plt=plt)
     }
-  }, BPPARAM=mcParam)
+  })#, BPPARAM=mcParam)
   names(resList) <- geneRun
   # convert results to data frame
   if(summarise){
