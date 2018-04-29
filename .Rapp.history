@@ -1,170 +1,105 @@
 BiocInstaller::biocLite("ggplot2")
 plib::autoCommit()
-edit(rownames(dfsData))
-edit
-res <- edit(rownames(dfsData))
-colnames(pdata)
-clinExtFile <- file.path(.localData,"prad_tcga/data_CNA.txt")
-etv1cna <- as.data.frame(t(clinext[grep("ETV1",clinext$Hugo_Symbol),-c(1,2)]))
-clinExtFile <- file.path(.localData,"prad_tcga/data_mutations_extended.txt")
-clinext <- read.delim(clinExtFile)
-etv1mut <- clinext[grep("ETV1",clinext$Hugo_Symbol),c(1,9,17)]
-muts <- gsub("-",".",etv1mut[,3])
-colnames(etv1cna)[1] <- "cnv"
-etv1cna$cnv <- as.factor(etv1cna$cnv)
-etv1cna$mut <- ifelse(rownames(etv1cna)%in%muts,"Yes","No")
-survPDataFile <-file.path(.localData,"prad_tcga/data_bcr_clinical_data_patient.txt")
-survPData <- read.delim(survPDataFile,skip=4)
-survSDataFile <-file.path(.localData,"prad_tcga/data_bcr_clinical_data_sample.txt")
-survSData <- read.delim(survSDataFile)
-save(rnaSeq,etv1cna,survSData,survPData,file=pradSaveFile)
-rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%pdata$PATIENT_ID
-)]
-edit(pdClin)
-rowname(dfsData)
-rowname(pdata)
-edit(pdata)
-help(survAnal)
-rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%pdata$PATIENT_ID)]
-rownames(rnaSeq) <- gsub("[.]01$","",rownames(rnaSeq))
-colnames(rnaSeq)
-rnaSeqFile <- file.path(.localData,"prad_tcga/data_RNA_Seq_v2_expression_median.txt")
-rnaSeq <- read.delim(rnaSeqFile)
-rnaSeq <- rnaSeq[,-2]
-rnaSeqM <- reshape2::melt(rnaSeq,"Hugo_Symbol")
-rnaSeq <- reshape2::dcast(rnaSeqM,Hugo_Symbol~variable,fun.agg=mean)
-rownames(rnaSeq) <- make.names(rnaSeq[,1])
-rnaSeq <- rnaSeq[,-1]
-rownames(pdata) <- gsub("[.]01$","",rownames(pdata))
-dgePRAD <- DGEList(rnaSeq)
-res <- survAnal(survData=dfsData,exprData=expData,geneData=upAll,survStatus="censor")
-rownames(dfsData)
-colnames(expData)
-rownames(pdClin)
-pdClin <- pcClin[,-1]
-pdClin <- merge(dfsData,pdata,by.x="row.names",by.y="PATIENT_ID")
-rownames(pdata) <- gsub("[.]01$","",pdata$PATIENT_ID)
-rownames(pdata)
-rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%rownames(pdata))]
-pdClin
-dim(pdClin)
-dim(rnaSeq)
-load(pradSaveFile)
-dfsData <- na.omit(dfsData)
-pdClin <- merge(dfsData,pdata,by="row.names")
-rownames(rnaSeq)
-upAkk
-upAll
-rb()_
-res <- survAnal(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor")
-traceback
-survStatus="status"
-survData=pdClin
-exprData=expData
-geneData=upAll
-survTime="time"
-exprRange=0.33
-survStatus="censor"
-mcores=4
-summarise=TRUE){
-summarise=TRUE
-exprData <- as.matrix(exprData)
-geneid=geneData[1]
-geneid=geneData[3]
-geneid=geneData[2]
-resList <- BiocParallel::bplapply(geneData,function(geneid){
-geneRun <- geneData[which(geneData%in%rownames(exprData))]
-geneRun
-geneData
-resList <- BiocParallel::bplapply(geneRun,function(geneid){
-hlim <- as.numeric(quantile(exprData[geneid,],1-exprRange))
-hi <- survData[names(which(exprData[geneid,]>=hlim)),]
-hi$Class <- "high"
-llim <- as.numeric(quantile(exprData[geneid,],exprRange))
-lo <- survData[names(which(exprData[geneid,]<=llim)),]
-lo$Class <- "low"
-survData2 <- rbind(hi,lo)
-survData2$Class <- as.factor(survData2$Class)
-form <- paste0("Surv( ",survTime,",",survStatus,") ~ Class")
-coxfit <- survival::coxph(as.formula(form),data=survData2)
-c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
-}, BPPARAM=mcParam)
-names(resList) <- geneData
-names(resList) <- geneRun
-if(summarise){
-resSurv<- plyr::ldply(resList)
-rownames(resSurv) <- resSurv[,1]
-resSurv <- resSurv[,-1]
-colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
-resSurv
-}else{
-resList
-plot(res[[1]])
-plot(survfit(res[[1]]))
-plot(res[[1]][[1]]
-res[[1]]$cph
-survplot(res[[1]]$cph()
-)
-survplot(res[[1]]$cph)
-plot(res[[1]]$cph)
-summaru(res[[1]]$cph)
-summary(res[[1]]$cph)
-plot(res[[1]]$kmf)
-traceback*
-()
-require(gridExtra)
-help(tableGrob)
-traceback()
-rb()
-summarise=F)
-res()
-res[[1]]
-res[[1]]$dif
-plot(res[[1]]$dif)
-summarise=F,exprRange=0.25)
-.fileName <- "201804"
+.fileName <- "201804_survival"
 .projName <- "etb1_vu"
 plib::rcur(fileName=.fileName,projDir=.projName,open="html")
-edit(dfsData)
-base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-6495", print.eval=TRUE)
 dfsData$censor <- ifelse(dfsData$DFS_STATUS=="DiseaseFree",0,1)
-dfsSURV <- na.omit(dfsData)
-pdClin <- merge(dfsSURV,pdata,by="row.names")
-upAll <- c(upAll,"TRPM8")
 dfsData <- survPData[,c(2,32,35,70:73)]
-if(FALSE){
 dfsData <- edit(dfsData)
-dfsData$censor <- ifelse(grepl("P",dfsData$PATIENT_DEATH_REASON),0,1)
-dfsData$time <- as.numeric(dfsData$DFS_MONTHS)
-rownames(dfsData) <- gsub("[-]",".",dfsData[,1])
-osSURV <- na.omit(dfsData)
-colnames(rnaSeq) <- gsub("[.]01$","",colnames(rnaSeq))
-rownames(pdata) <- gsub("[-]",".",pdata$PATIENT_ID)
-pdClin <- merge(osSURV,pdata,by="row.names")
-rownames(pdClin) <- pdClin[,1]
-pdClin <- pdClin[,-1]
-rnaSeq <- rnaSeq[,which(colnames(rnaSeq)%in%rownames(pdClin))]
-dgePRAD <- DGEList(rnaSeq,sample=pdClin)
-dgePRAD <- calcNormFactors(dgePRAD)
-expData <- cpm(dgePRAD,log=T)
-upAll <- unique(c(upAll,"TRPM8"))
-res <- survAnal(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor",
-summarise=T,exprRange=0.25)
-kable(res)
-help(scale)
-res <- survClust(survData=pdClin,exprData=expData,geneData=upAll,survStatus="censor")
-res
-exprSamples <- colnames(exprData)
-survSamples <- rownames(survData)
-if(!identical(unique(sort(exprSamples)), sort(survSamples))){
-stop(paste0("The samples in ",paste0(survSamples,collapse=",")," do not match those in the ",
-"expression and survival data files"))
-if(!identical(sort(exprSamples), sort(survSamples))){
-warning(paste0("The samples in ",survSamples," potentially have more than one expression",
-" sample"))
-}
-mcParam <- BiocParallel::MulticoreParam(workers=mcores)
-exprData[which(!is.finite(exprData))] <- min(exprData[which(is.finite(exprData))])
-exprData2 <- t(exprData[which(rownames(exprData)%in%geneData),])
-survData2 <- merge(survData[,c(survTime,survStatus,clustCol)], exprData2,by="row.names")
+edit(pdata)
+head(prad.rnaseq)
+head(rnaSeq)
+rownames(prad.rnaseq)
+length(rownames(prad.rnaseq))
+length(rownames(rnaSeq))
+length(unique(rownames(prad.rnaseq)))
+(!)which(rownames(prad.rnaseq)%in%rownames(rnaSeq)))
+(!which(rownames(prad.rnaseq)%in%rownames(rnaSeq)))
+(which(!rownames(prad.rnaseq)%in%rownames(rnaSeq)))
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%rownames(rnaSeq)))]
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%rownames(rnaSeq))]
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))])
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq)))])
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))))])
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))))]
+rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq)))]
+ls()
+rm(list=ls())
+cat(paste(upAll,collapse=", "))
+upKey <- data.frame(read_xlsx(upSigFile, sheet = "key"))[,1]
+cat(paste(upKey,collapse=", "))
+cat(paste(paste(upKey,collapse=", "),"\n")
+cat(paste(paste(upAll,collapse=", "),"\n")
+cat(paste(paste(upAll,collapse=", "),"\n"))
+cat(paste(paste(upKey,collapse=", "),"\n"))
+colnames(prad.rnaseq) <- substr(colnames(prad.rnaseq),1,15)
+pdata$ETV1_status
+etv1HF <- pdata[which(pdata$ETV1_status != "none"),]
+length(etv1HF)
+rows(etv1HF)
+nrow(etv1HF)
+colanes(etv1HF)
+ls
+pradClin <- read.delim(file.path(.localRdata,"prad_tcga_clinical_data.tsv"))
+dim(pradClin)
+colnames(pradCLin)
+head(pradClin)
+which(pradClin$Sample.ID)
+which(pradClin$Sample.ID %in% etv1HF)
+which(pradClin$Sample.ID %in% etv1HF$SampleID)
+etv1HF$SampleID
+etv1HF
+which(pradClin$Sample.ID %in% etv1HF$Sample_ID)
+etv1HF$Sample_ID
+colnames(etv1HF)
+which(pradClin$Sample.ID %in% etv1HF$SAMPLE_ID)
+length(which(pradClin$Sample.ID %in% etv1HF$SAMPLE_ID))
+colnames(pradClin)
+pradClin[,75]
+pradClin[,67]
+etv1N <-  pdata[which(pdata$ETV1_status == "none"),]
+pradClin <
+<
+pradClin$Sample.ID
+etv1HF <- pdata$SAMPLE_ID[which(pdata$ETV1_status != "none")]
+etv1N <-  pdata$SAMPLE_ID[which(pdata$ETV1_status == "none")]
+clinData <- pradClin[which(pradCLin$Sample.ID %in%
+clinData <- pradClin[which(pradCLin$Sample.ID %in% c(etv1N,etv1HF)),]
+etv1N
+load(file.path(.localRdata,"PRAD_RNAseq_working_data.Rdata"))
+etv1HF <- as.character(pdata$SAMPLE_ID[which(pdata$ETV1_status != "none")])
+etv1N <-  as.character(pdata$SAMPLE_ID[which(pdata$ETV1_status == "none")])
+pradClin <- read.delim(file.path(.localRdata,"prad_tcga_clinical_data.tsv"),stringsAsFactors=F)
+clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),]
+dim(clinData)
+clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,6,7,21,22,49,50,75]
+clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,6,7,21,22,49,50,75)]
+clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,7,21,22,49,50,75)]
+colnames(clinData)
+clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,7,21,22,49,50)]
+colnames(clinData) <- c("SampleID","SampleType","CNV","DFMonths","DFStatus","OSMonths","OSStatus")
+clinData$etvStatus <- ifelse(clinData$SampleID%in$etv1N,"None","High/Fusion")
+clinData$etvStatus <- ifelse(clinData$SampleID%in%etv1N,"None","High/Fusion")
+clinData
+require(survival)
+help(Surv)
+clinData$time <- as.numeric(clinData$DFMonths)
+clinData$status <- ifelse(grepl("^R",clinData$DFStatus),1,0)
+base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-1887", print.eval=TRUE)
+l
+plotKM("survival::Surv(time,status)~etv1Status",dat=clinData,inclusive=T)
+rnaSeqFile <- file.path(.localData,"prad_tcga/data_RNA_Seq_v2_expression_median.txt")
+rnaSeq <- read.delim(rnaSeqFile)
+colnames(rnaSeq)
+rownames(clinData) <- gsub("-",".",clinData$SampleID)
+colnames(prad.rnaseq)
+exprData <- prad.rnaseq[,which(substr(colnames(prad.rnaseq),1,15)%in%rownames(clinData))]
+normExpr <- 2e7*t(t(exprData)/colSums(exprData))
+dim(expData)
+dim(exprData)
+require(AnalyseSurvival)
+help(runCHP)
+help(runCPH)
+rb()
+plib::rb()
 q()
