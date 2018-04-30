@@ -56,18 +56,21 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
     survData2 <- rbind(hi,lo)
     # set expression class
     survData2$Class <- as.factor(survData2$Class)
-    survData2$survTime <- as.numeric(survData2[,survTime])
-    survData2$survStatus <- survData2[,survStatus]
+    survData2$time <- as.numeric(survData2[,survTime])
+    survData2$status <- survData2[,survStatus]
+    survData2$survival <- with(survData2,survival::Surv(time,status))
     # get max of either days to death or days to last follow up for time
     # fit cox proportional hazards (non-parametric) survival model
-    coxfit <- survival::coxph(survival::Surv(survTime,survStatus)~Class, data=survData2)
+    coxfit <- survival::coxph(survival~Class, data=survData2)
     if(summarise){
       c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
     }else{
-      diffit <- survival::survdiff(survival::Surv(survTime,survStatus)~Class, data=survData2)
-      surfit <- survival::survfit(survival::Surv(survTime,survStatus)~Class, data=survData2)
-      plt <- plotKM("survival::Surv(survTime,survStatus)~Class", dat=survData2)
+      diffit <- survival::survdiff(survival~Class, data=survData2)
+      surfit <- survival::survfit(survival~Class, data=survData2)
+      #plt <- plotKM("survival::Surv(survTime,survStatus)~Class", dat=survData2)
       #plt <- NULL
+      plt <- survminer::ggsurvplot(survival::survfit(survival~Class,data=survData2),
+                                   data=survData2, pval=T,risk.table=T)
       list(cph=coxfit,dif=diffit,kmf=surfit,plt=plt)
     }
   })#, BPPARAM=mcParam)

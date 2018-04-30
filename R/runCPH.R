@@ -99,47 +99,30 @@ runCPH <- function(exprRange=0.33,percExpr=0.8,sep=";",exprSep=sep,outputDir=get
   names(resList) <- exprGenes
   if(simple){
     return(resList)
-  }
-  # convert results to data frame
-  resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
-  rownames(resSurv) <- resSurv[,1]
-  resSurv <- resSurv[,-1]
-  colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
-  if(!scan){
-    write.csv(resSurv,file=file.path(outputDir,paste0("HR_results_",analysisName,".csv")))
-  }
-  # perform differential expression check using limma
-  # between high and low samples for all expressed genes
-  resExpr<- plyr::ldply(lapply(resList,"[[","expr"))
-  rownames(resExpr) <- resExpr[,1]
-  resExpr <- resExpr[,-1]
-  design <- model.matrix(~as.factor(substr(colnames(resExpr),1,2)))
-  dgeExpr <- edgeR::DGEList(resExpr,group=substr(colnames(resExpr),1,2))
-  dgeExpr <- edgeR::calcNormFactors(dgeExpr)
-  logCPM <- edgeR::cpm(dgeExpr,log=T,prior.count=2)
-  fit <- limma::lmFit(logCPM,design)
-  fit <- limma::eBayes(fit)
-  tt <- limma::topTable(fit,n=2e5)
-  if(!scan){
-    write.csv(tt,file=file.path(outputDir,paste0("Statistics_high_vs_low_expression_",
-                                                 analysisName, ".csv")))
-  }
-  # combine HR and DGE analysis
-  res <- merge(tt,resSurv,by="row.names")
-  if(!scan){
-    write.csv(res,file=file.path(outputDir,paste0("Combined_statistics_HR_expression_",
-                                                  analysisName, ".csv")))
-  }
-
-  # calculate corrected p.values for only those genes with significant DGE
-  resHiCon <- res[which(res$adj.P.Val<=0.05),]
-  resHiCon$HR.adjpvalue <- p.adjust(resHiCon$pvalue)
-  if(!scan){
-    write.csv(resHiCon,file=file.path(outputDir,paste0("Significant_DGE_statistica_",
-                                                       analysisName, ".csv")))
-  }
-  if(!silent){
-    return(res)
+  }else{
+    # convert results to data frame
+    resSurv<- plyr::ldply(lapply(resList,"[[","surv"))
+    rownames(resSurv) <- resSurv[,1]
+    resSurv <- resSurv[,-1]
+    colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
+    # perform differential expression check using limma
+    # between high and low samples for all expressed genes
+    resExpr<- plyr::ldply(lapply(resList,"[[","expr"))
+    rownames(resExpr) <- resExpr[,1]
+    resExpr <- resExpr[,-1]
+    design <- model.matrix(~as.factor(substr(colnames(resExpr),1,2)))
+    dgeExpr <- edgeR::DGEList(resExpr,group=substr(colnames(resExpr),1,2))
+    dgeExpr <- edgeR::calcNormFactors(dgeExpr)
+    logCPM <- edgeR::cpm(dgeExpr,log=T,prior.count=2)
+    fit <- limma::lmFit(logCPM,design)
+    fit <- limma::eBayes(fit)
+    tt <- limma::topTable(fit,n=2e5)
+    # combine HR and DGE analysis
+    res <- merge(tt,resSurv,by="row.names")
+    # calculate corrected p.values for only those genes with significant DGE
+    resHiCon <- res[which(res$adj.P.Val<=0.05),]
+    resHiCon$HR.adjpvalue <- p.adjust(resHiCon$pvalue)
+    return(resHiCon)
   }
 }
 
