@@ -1,4 +1,5 @@
 plib::autoCommit()
+<<<<<<< HEAD
 install.packages("nvimcom")
 BiocInstaller::biocLite("nvimcom")
 wq
@@ -10,6 +11,34 @@ sessionInfo()
 libpaths()
 libPaths()
 .libPaths()
+=======
+setwd("~/Projects/plib_ps/")
+devtools::load_all()
+devtools::document()
+plib::rb()
+.fileName <- "201803_heatmaps"
+.projName <- "dilute_cnv_sm"
+plib::rcur(fileName=.fileName,projDir=.projName,open="html")
+rootDir <- "~/Projects/dilute_cnv_sm/Data"
+genomeDir <- file.path(rootDir,"Genome")
+codeDir <- "~/Projects/dilute_cnv_sm/Code/hslcode_dilution"
+working.dir <- file.path(rootDir,"Dilution/analysis/Downsampled_NOFLEX")
+sclc.dir <- file.path(rootDir,"SCLC/analysis")
+tag = "dilution_single"
+load(file.path(sclc.dir, "unfiltered", "processed_data", "Blacklisted_bins_w150000.Rdata"))
+dim(binAnnotation)
+load(file.path(sclc.dir,"unfiltered","processed_data","Zscores.Rdata"))
+load(file.path(working.dir,  "single", "hmmcopy_results.RData"))
+processedData.dir <- file.path(working.dir, tag, "processed_data")
+dir.create(processedData.dir,recur=T,showW=F)
+plots.dir <- file.path(working.dir, tag, "plots")
+dir.create(plots.dir,recur=T,showW=F)
+tables.dir <- file.path(working.dir, tag, "tables")
+dir.create(tables.dir,recur=T,showW=F)
+cat("Preprocessing\n", sep="")
+pdata <- read.delim(file=file.path(sclc.dir, "sample_description.txt"), sep="\t", header=TRUE)
+pdata$SampleID <- as.character(pdata$SampleID)
+>>>>>>> ac7d5d1615ea907a8ee15d545d68a56ac1ee9a28
 q()
 .fileName <- "201804"
 .projName <- "notes_ps"

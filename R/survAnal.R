@@ -33,8 +33,8 @@ survAnal <- function(survData=NULL, exprData=NULL,geneData=NULL,survTime="time",
                 "expression and survival data files"))
   }
   if(!identical(sort(exprSamples), sort(survSamples))){
-    warning(paste0("The samples in ",survSamples," potentially have more than one expression",
-                   " sample"))
+    warning(paste0("The samples in ",paste(survSamples,collapse=","),
+                   " potentially have more than one expression sample"))
   }
 
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
