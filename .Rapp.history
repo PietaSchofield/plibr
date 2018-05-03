@@ -1,105 +1,20 @@
-BiocInstaller::biocLite("ggplot2")
 plib::autoCommit()
-.fileName <- "201804_survival"
-.projName <- "etb1_vu"
-plib::rcur(fileName=.fileName,projDir=.projName,open="html")
-dfsData$censor <- ifelse(dfsData$DFS_STATUS=="DiseaseFree",0,1)
-dfsData <- survPData[,c(2,32,35,70:73)]
-dfsData <- edit(dfsData)
-edit(pdata)
-head(prad.rnaseq)
-head(rnaSeq)
-rownames(prad.rnaseq)
-length(rownames(prad.rnaseq))
-length(rownames(rnaSeq))
-length(unique(rownames(prad.rnaseq)))
-(!)which(rownames(prad.rnaseq)%in%rownames(rnaSeq)))
-(!which(rownames(prad.rnaseq)%in%rownames(rnaSeq)))
-(which(!rownames(prad.rnaseq)%in%rownames(rnaSeq)))
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%rownames(rnaSeq)))]
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%rownames(rnaSeq))]
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))])
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq)))])
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))))])
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq))))]
-rownames(prad.rnaseq)[which(!rownames(prad.rnaseq)%in%gsub("[.]","-",rownames(rnaSeq)))]
+install.packages("nvimcom")
+BiocInstaller::biocLite("nvimcom")
+wq
+require(nvimcom)
 ls()
-rm(list=ls())
-cat(paste(upAll,collapse=", "))
-upKey <- data.frame(read_xlsx(upSigFile, sheet = "key"))[,1]
-cat(paste(upKey,collapse=", "))
-cat(paste(paste(upKey,collapse=", "),"\n")
-cat(paste(paste(upAll,collapse=", "),"\n")
-cat(paste(paste(upAll,collapse=", "),"\n"))
-cat(paste(paste(upKey,collapse=", "),"\n"))
-colnames(prad.rnaseq) <- substr(colnames(prad.rnaseq),1,15)
-pdata$ETV1_status
-etv1HF <- pdata[which(pdata$ETV1_status != "none"),]
-length(etv1HF)
-rows(etv1HF)
-nrow(etv1HF)
-colanes(etv1HF)
-ls
-pradClin <- read.delim(file.path(.localRdata,"prad_tcga_clinical_data.tsv"))
-dim(pradClin)
-colnames(pradCLin)
-head(pradClin)
-which(pradClin$Sample.ID)
-which(pradClin$Sample.ID %in% etv1HF)
-which(pradClin$Sample.ID %in% etv1HF$SampleID)
-etv1HF$SampleID
-etv1HF
-which(pradClin$Sample.ID %in% etv1HF$Sample_ID)
-etv1HF$Sample_ID
-colnames(etv1HF)
-which(pradClin$Sample.ID %in% etv1HF$SAMPLE_ID)
-length(which(pradClin$Sample.ID %in% etv1HF$SAMPLE_ID))
-colnames(pradClin)
-pradClin[,75]
-pradClin[,67]
-etv1N <-  pdata[which(pdata$ETV1_status == "none"),]
-pradClin <
-<
-pradClin$Sample.ID
-etv1HF <- pdata$SAMPLE_ID[which(pdata$ETV1_status != "none")]
-etv1N <-  pdata$SAMPLE_ID[which(pdata$ETV1_status == "none")]
-clinData <- pradClin[which(pradCLin$Sample.ID %in%
-clinData <- pradClin[which(pradCLin$Sample.ID %in% c(etv1N,etv1HF)),]
-etv1N
-load(file.path(.localRdata,"PRAD_RNAseq_working_data.Rdata"))
-etv1HF <- as.character(pdata$SAMPLE_ID[which(pdata$ETV1_status != "none")])
-etv1N <-  as.character(pdata$SAMPLE_ID[which(pdata$ETV1_status == "none")])
-pradClin <- read.delim(file.path(.localRdata,"prad_tcga_clinical_data.tsv"),stringsAsFactors=F)
-clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),]
-dim(clinData)
-clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,6,7,21,22,49,50,75]
-clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,6,7,21,22,49,50,75)]
-clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,7,21,22,49,50,75)]
-colnames(clinData)
-clinData <- pradClin[which(pradClin$Sample.ID %in% c(etv1N,etv1HF)),c(65,67,7,21,22,49,50)]
-colnames(clinData) <- c("SampleID","SampleType","CNV","DFMonths","DFStatus","OSMonths","OSStatus")
-clinData$etvStatus <- ifelse(clinData$SampleID%in$etv1N,"None","High/Fusion")
-clinData$etvStatus <- ifelse(clinData$SampleID%in%etv1N,"None","High/Fusion")
-clinData
-require(survival)
-help(Surv)
-clinData$time <- as.numeric(clinData$DFMonths)
-clinData$status <- ifelse(grepl("^R",clinData$DFStatus),1,0)
-base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-1887", print.eval=TRUE)
-l
-plotKM("survival::Surv(time,status)~etv1Status",dat=clinData,inclusive=T)
-rnaSeqFile <- file.path(.localData,"prad_tcga/data_RNA_Seq_v2_expression_median.txt")
-rnaSeq <- read.delim(rnaSeqFile)
-colnames(rnaSeq)
-rownames(clinData) <- gsub("-",".",clinData$SampleID)
-colnames(prad.rnaseq)
-exprData <- prad.rnaseq[,which(substr(colnames(prad.rnaseq),1,15)%in%rownames(clinData))]
-normExpr <- 2e7*t(t(exprData)/colSums(exprData))
-dim(expData)
-dim(exprData)
-require(AnalyseSurvival)
-help(runCHP)
-help(runCPH)
-rb()
-plib::rb()
+BiocInstaller::biocLite("ggplot2")
+sessionInfo()
+.libpaths()
+libpaths()
+libPaths()
+.libPaths()
 q()
+.fileName <- "201804"
+.projName <- "notes_ps"
+setwd("~/Projects/plib_ps/")
+devtools::load_all()
+devtools::document()
+devtools::install(reload=T)
+plib::rcur(fileName=.fileName,projDir=.projName,open="html")
