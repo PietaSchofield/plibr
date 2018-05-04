@@ -9,4 +9,7 @@ evalCluster(expData, survData, hm = F, gcl = F, gcts = 10,
 }
 \description{
 function from etv1 projects not totally sure when I wrote this I have no memory of it
+It seems to take the results from the glmnet modelling to perform a KM survival analysis on a
+set of expression values split by cluster don't really know what the gcl parameter is all abou
+yet
 }

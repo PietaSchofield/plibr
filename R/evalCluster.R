@@ -1,6 +1,9 @@
 #' evalCluster
 #' 
 #' function from etv1 projects not totally sure when I wrote this I have no memory of it
+#' It seems to take the results from the glmnet modelling to perform a KM survival analysis on a
+#' set of expression values split by cluster don't really know what the gcl parameter is all abou
+#' yet
 #'
 #' @export
 evalCluster <- function(expData,survData,hm=F,gcl=F,gcts=10,cmeth="ward.D2"){
@@ -28,8 +31,8 @@ evalCluster <- function(expData,survData,hm=F,gcl=F,gcts=10,cmeth="ward.D2"){
   }
   if(hm){
     phm <- pheatmap::pheatmap(expData,scale="row",cluster_cols=hcls,color=colpal,
-                      cluster_rows=hclg,annotation_col=hclslm,
-                      cex=0.75,breaks=breaks,show_colnames=F,silent=T)
+                      cluster_rows=hclg,annotation_col=hclslm, 
+                      cex=0.75,breaks=breaks,show_colnames=F,silent=F)
   }else{
     phm <- NULL
   }
