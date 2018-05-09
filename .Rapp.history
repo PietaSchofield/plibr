@@ -1,143 +1,16 @@
 plib::autoCommit()
-install.packages("nvimcom")
-BiocInstaller::biocLite("nvimcom")
-wq
-require(nvimcom)
-ls()
-BiocInstaller::biocLite("ggplot2")
-sessionInfo()
-.libpaths()
-libpaths()
-libPaths()
-.libPaths()
-§cd
-sDf$pid <- paste0(sDf$V1,".",sDf$V2,".",sDf$V3,".",substr(sDf$V4,1,2))
-rownames(sDf) <- colnames(prad.rnaseq)
-sD <- sDf[grep("^01",sDf$V4),]
-sip <- sip[which(rownames(sip)%in%sD$pid),]
-sip$time <- as.numeric(sip$Disease.Free..Months.)
-sip$Disease.Free.Status[which(sip$Disease.Free.Status==0)] <- "DiseaseFree"
-sip$status <- ifelse(sip$Disease.Free.Status=="DiseaseFree",0,1)
-colnames(prad.rnaseq) <- gsub("-",".",substr(colnames(prad.rnaseq),1,15))
-eip <- prad.rnaseq[,which(colnames(prad.rnaseq)%in%rownames(sip))]
-sip <- merge(pdata,pradClin[,c(21,22,49,50)],by="row.names")
-sDf <- plyr::ldply(strsplit(colnames(prad.rnaseq),"[.]"))
-sDf
-colnames(pradClin)
-sampleInfo <- plyr::ldply(strsplit(substr(colnames(prad.rnaseq),1,15),"[.]"))
-rownames(sampleInfo) <- substr(colnames(prad.rnaseq),1,15)
-sampleInfo$PID <- with(sampleInfo,paste(V1,V2,V3,sep="_"))
-mutationInfo <- plyr::ldply(strsplit(as.character(pdata$SAMPLE_ID),"[-]"))
-rownames(mutationInfo) <- as.character(pdata$SAMPLE_ID)
-mutationInfo$PID <- with(mutationInfo,paste(V1,V2,V3,sep="_"))
-normalInfo <- sampleInfo[which(sampleInfo$V4 == "11"),]
-tumourInfo <- sampleInfo[which(sampleInfo$V4 == "01"),]
-normalPair <- normalInfo[which(normalInfo$PID %in% mutationInfo$PID),]
-tumourPair <- tumourInfo[which(tumourInfo$PID %in% mutationInfo$PID &
-tumourInfo$PID %in% normalInfo$PID),]
-pairSamples <- rbind(normalPair,tumourPair)
-pairSamples$SampleID <- rownames(pairSamples)
-pairSamples <- reshape2::dcast(pairSamples,PID~V4,value.var="SampleID")
-colnames(pairSamples) <- c("PatientID","Tumour","Normal")
-colnames(pradClin) <- gsub("__","_",gsub("[.]","_",colnames(pradClin)))
-pdata$SAMPLE_ID <- as.character(pdata$SAMPLE_ID)
-pdata$PATIENT_ID <- as.character(pdata$PATIENT_ID)
-patientData <- merge(pradClin,pdata,by.x="Patient_ID",by.y="PATIENT_ID")
-patientData$Patient_ID <- gsub("[-]","_",patientData$Patient_ID)
-patientData$Sample_ID <- gsub("[-]","_",patientData$SAMPLE_ID)
-expressionData <- prad.rnaseq
-colnames(expressionData) <- gsub("[.]","_",substr(colnames(expressionData),1,15))
-expressionData <- expressionData[,which(substr(colnames(expressionData),1,12)%in%
-patientData$Patient_ID)]
-sampleInfo <- sampleInfo[,c(5,4)]
-colnames(sampleInfo) <- c("PatientID","SampleType")
-rownames(sampleInfo) <- gsub("[.]","_",rownames(sampleInfo))
-patientInfo <- patientData[,c("Sample_ID","Subtype","ETV1_status","Patient.s.Vital.Status",
-"ERG_status","Disease.Free..Months.","Disease.Free.Status",
-"Overall.Survival..Months.","Overall.Survival.Status")]
-colnames(patientData)
-"ERG_status","Disease_Free_Months.","Disease_Free_Status",
-"Overall_Survival_Months.","Overall_Survival_Status")]
-patientInfo <- patientData[,c("Sample_ID","Subtype","Patient_s_Vital_Status","ETV1_status",
-"ERG_status","Disease_Free_Months_","Disease_Free_Status",
-"Overall_Survival_Months_","Overall_Survival_Status")]
-colnames(patientInfo) <- c("Sample_ID","Subtype","VitalStatus","ETV1status",
-"ERGstatus","DFMonths","DFStatus", "OSMonths","OSStatus")
-save(sigs,patientData,patientInfo,expressionData,sampleInfo,pairSamples,file=workingFile)
-kable(pairSamples)
-exprdataTN <- expressionData[,which(substr(colnames(expressionData),1,12) %in%
-pairSamples$PatientID)]
-sampledataTN <- sampleInfo[which(rownames(sampleInfo)%in%colnames(exprdataTN)),]
-sampledataTN <- as.data.frame(apply(merge(patientInfo,sampledataTN,by.y="row.names",
-by.x="Sample_ID",all.y=T),2,as.character))
-sampledataTN$Type <- ifelse(grepl("01$",sampledataTN$Sample_ID),"Tumour","Normal")
-rownames(sampledataTN) <- sampledataTN[,1]
-sampledataTN <- sampledataTN[,-1]
-sampledataTN$Subtype[is.na(sampledataTN$Subtype)] <- "Normal"
-table(sampledataTN$Subtype)
-tvnNormExp <- 1e6*t(t(exprdataTN)/colSums(exprdataTN)) + 0.0001
-tvncpm <- log(tvnNormExp[rowSums(apply(tvnNormExp,2,function(x) x>0))>(0.25*ncol(tvnNormExp)),])
-tvnpca <- prcomp(t(tvncpm))
-tvnpdt <- plyr::ldply(strsplit(colnames(tvncpm),"[_]"))
-rownames(tvnpdt) <- colnames(tvncpm)
-tvnpdt <- merge(sampledataTN,tvnpdt,by="row.names")
-rownames(tvnpdt) <- tvnpdt[,1]
-autoplot(tvnpca,data=tvnpdt,colour="Subtype",shape="Type",
-main="PCA Plot for Tumour Normal Pairs")
-write.csv(tvncpm,file=file.path(.localData,"PRAD_logCPM_TumourVNormal.csv"))
-write.csv(tvnpdt,file=file.path(.localData,"PRAD_samples_TumourVNormal.csv"))
-sip <- patientInfo
-patientInfo
-rownames(sip) <- sip[,1]
-sip <- sip[,-1]
-sip$status <- ifelse(sip$DFStatus=="DiseaseFree",0,1)
-sip
-sip$time <- as.numeric(sip$DFMonths)
-sip <- na.omit(sip)
-dim(eip)
-eip <- log(1e6*t(t(eip)/colSums(eip))+0.0001)
-eip <- eip[rowSums(apply(eip,2,function(x) x>0))>(0.25*ncol(eip)),]
-cip <- eip[rowSums(apply(eip,2,function(x) x>0))>(0.25*ncol(eip)),]
-kable(res$plt$tabcox)
-plot(res$phm$gtable)
-rb()
-colnames(sip)
-expData=hmExpsurvData=sip;hm=F;gcl=F;gcts=10;cmeth="ward.D2"
-expData=hmExp;survData=sip;hm=F;gcl=F;gcts=10;cmeth="ward.D2"
-hclslm <- survData[,c("ETV1status","Subtype")]
-hclslm <- cutree(hcls,2)
-survData[,c("ETV1status","Subtype")]
-hclslm
-hm=T
-plib::rb)
-sipaug[,c("ETV1status","Subtype")]
-cex=0.75,breaks=breaks,show_colnames=F,silent=T)
-plt
-kable(res$plt$tabkm)
-eip <- expressionData[,which(colnames(expressionData)%in%rownames(sip))]
-eip <- 1e6*t(t(eip)/colSums(eip))
-cip <- log(eip[rowSums(apply(eip,2,function(x) x>0))>(0.25*ncol(eip)),]+0.0000001)
-fulSig <- rownames(cip)
-hmExp <- cip[which(rownames(cip)%in%fulSig),]
-cv.fit <- cv.glmnet(t(hmExp), Surv(sip$time,sip$status), family="cox")
-sv <- cv.fit$lambda.min
-Coefs <- coef(cv.fit,s=sv)
-fulSigGLM <- names(Coefs[which(Coefs[,1]!=0),])
-fulSigGLM
-hmExp <- cip[which(rownames(cip)%in%fulSigGLM),]
-res <- evalCluster(hmExp,sip,hm=T,gcl=T,gcts=2,cmeth="ward.D")
-plot(res$plt$graph)
-expData <- hmExp
-survData <- sip
-hcls <- hclust(as.dist(1-cor(expData)),method=cmeth)
-hclslm <- as.data.frame(cutree(hcls,2))
+hm=T;gcl=T;gcts=2;cmeth="ward.D2"
+expData <- tvncpm[which(rownames(tvncpm) %in% sigs[["Full"]]),
+hcls <- hclust(as.dist(1-lsa::cosine(expData)),method=cmeth)
+hclslm <- as.data.frame(cutree(hcls,gcts))
 colnames(hclslm) <- "Cluster"
 hclslm$Cluster <- as.factor(hclslm$Cluster)
 sipaug <- merge(survData,hclslm,by="row.names")
 rownames(sipaug) <- sipaug[,1]
 sipaug <- sipaug[,-1]
-fit <- survival::survfit(Surv(time,status)~Cluster,sipaug)
-plt <- plotKM(fit,sipaug)
+fitkm <- survival::survfit(Surv(time,status)~Cluster,sipaug)
+fitdf <- survival::survdiff(Surv(time,status)~Cluster,sipaug)
+plt <- survminer::ggsurvplot(fitkm,pval=T,risk.table=T)
 breaks=seq(-2, 2, by=0.1)
 breaks=append(breaks, 10)
 breaks=append(breaks, -10, 0)
@@ -150,15 +23,181 @@ hclglm$Cluster <- as.factor(hclglm$Cluster)
 hclg <- FALSE
 hclglm <- NULL
 if(hm){
+cex=0.75,breaks=breaks,show_colnames=F,silent=F)
 }else{
 phm <- NULL
-}
-cluster_rows=hclg,annotation_col=sipaug[,c("ETV1status","Subtype")],
+q
+list(plt=plt,phm=phm,km=fitkm,dif=fitdf)
+res$plt
+survminer::ggsurvplot(res$km,date=res$dat)
 phm <- pheatmap::pheatmap(expData,scale="row",cluster_cols=hcls,color=colpal,
-cluster_rows=hclg,annotation_col=hclslm,
-cex=0.75,breaks=breaks,show_colnames=F,silent=F)
-list(plt=plt,phm=phm)
+cluster_rows=hclg,annotation_col=sipaug[,c("Cluster","Subtype")],
+cex=0.75,breaks=breaks,show_colnames=F,silent=T)
+base::source("/var/folders/by/fg39gx653kn67btpb9vw190r0000gq/T/Nvim-R-pschofield/Rsource-611", print.eval=TRUE)
+res <- evalCluster2(expData,survData,hm=T,gcl=T,gcts=2,cmeth="ward.D")
+survminer::ggsurvplot(res$km,data=res$dat)
+res$km
+res$dif
+plot(res$phm$gtable)
+lapply(reslist,function(res)survminer::ggsurvplot(res$km,data=res$dat))
+lapply(reslist,function(res)survminer::ggsurvplot(res$km,data=res$dat,pval=T,risk.table=T))
+reslist <- lapply(sigs,function(sig){
+evalCluster2(expData,survData,hm=T,gcl=T,gcts=2,cmeth="ward.D")
+names(reslist)
+help(ggsurvplot)
+plot(res$phm$gtable,title=resn)
+help(plot)
+help(pheatmap)
 plib::rb()
-plib::rcur(fileName="201805_summary",projDir="etb1_vu",open="html",upload=T)
-base::source("/var/folders/br/yxws82j14bzcd2pq10rqswtw0000gp/T/Nvim-R-pschofield/Rsource-966", print.eval=TRUE)
+names(sigs)
+reslist <- lapply(names(sigs),function(sgn){
+reslist
+plib::rcur(fileName="201805_TumourNormal",projDir="etb1_vu",open="html",upload=T)
+cols <- as.numeric(as.factor(dge$samples$Subtype[match(names(etv1),rownames(dge$samples))]))
+legend(quantile(etv1,1)-1.5,quantile(erg,0.95),levels(as.factor(dge$samples$Subtype)),
+col=c(1:length(unique(dge$samples$Subtype))),pch=20)
+cols <- as.numeric(relevel(cols,ref="Normal"))
+plot(etv1,erg,pch=20,col=cols,
+legend(quantile(etv1,1)-1.5,quantile(erg,0.95),levels(cols)),
+col=c(1:length(levels(cols)),pch=20)
+summary(tvncpm)
+summary(cpm(dge))
+dgeTMM <- calcNormFactors(dge)
+plot(dge$samples$norm.factors,dgeTMM$samples$norm.factors)
+plot(dge$samples$norm.factors,dgeTMM$samples$norm.factors,pch=20)
+help(apply)
+expData  <- cpm(dgeTMM)
+expDN <- expData/apply(exprData,1,quantile,0.75)
+expData  <- cpm(dgeTMM,norm=T)
+expDN <- expData/apply(expData,1,quantile,0.75)
+help(cpm)
+expDN <- expData/apply((expData+0.25),1,quantile,0.75)
+summary(expDN)
+summary(t(expDN))
+which(rowSums(apply(exprdataTN,2,function(x) x>2))>0.25*ncol(expdataTN))
+which(rowSums(apply(exprdataTN,2,function(x) x>2))>0.25*ncol(exprdataTN))
+names(which(rowSums(apply(exprdataTN,2,function(x) x>2))>0.25*ncol(exprdataTN)))
+exp25genes <- names(which(rowSums(apply(exprdataTN,2,function(x) x>2))>0.25*ncol(exprdataTN)))
+exprdataTN <- exprdataTN[rownames(exprdataTN)%in%exp25genes,
+match(rownames(sampledataTN),colnames(exprdataTN))]
+EDASeq::plotPCA(tvncpm,labels=F, col=as.numeric(as.factor(dge$samples$Subtype)),
+tvncpm <- cpm(dge,log=T)
+hclman <- hclust(as.dist(1-lsa::cosine(tvncpm)),method="ward.D2")
+ctman <- cutree(hclman,3)
+ctman <- as.data.frame(ctman)
+ddgman <- as.dendrogram(hclman)
+labels_colors(ddgman) <- as.numeric(as.factor(substr(labels(ddgman),6,7)))
+ddgman <- color_branches(ddgman,k=3,col=c(2,2,3))
+ddgman <- assign_values_to_leaves_edgePar(dend=ddgman,
+value=ifelse(substr(labels(ddgman),14,15)=="11",2,3),edgePar="col")
+labels_cex(ddgman) <- 0.5
+plot(ddgman)
+etv1 <- unlist(tvncpm[grep("ETV1",rownames(tvncpm)),])
+erg <- unlist(tvncpm[grep("^ERG$",rownames(tvncpm)),])
+cols <- as.factor(dge$samples$Subtype[match(names(etv1),rownames(dge$samples))])
+cols <- relevel(cols,ref="Normal")
+plot(etv1,erg,pch=20,col= as.numeric(cols),
+main="ETV1 vs ERG Expression in Tumour-Normal Paired samples, PRAD")
+legend(quantile(etv1,1)-1.5,quantile(erg,0.95),levels(cols),
+col=c(1:length(levels(cols))),pch=20)
+dge$samples$Centre <- substr(dge$samples$PatientID,6,7)
+dge$samples$SampleType <- relevel(as.factor(dge$samples$SampleType),"Normal")
+modmat <- model.matrix(~ PatientID+SampleType,dge$samples)
+tvnlmf <- lmFit(tvncpm,modmat)
+tvnlmf <- eBayes(tvnlmf)
+tvnlms <- topTable(tvnlmf,coef="SampleTypeTumour",1e5,p=0.01)
+dim(tvnlms)
+lapply(sigs,function(sig){
+sigTVNcand <- intersect(sig,rownames(tvnlms))
+sigTVNcand
+write.csv(tvnlms, file=file.path(.localData,"PRAD_sigGene_TumourVNormal.csv"))
+signames <- names(sigs)
+names(signames) <- signames
+reslist <- lapply(signames,function(sgn){
+sig <- sigs[[sgn]]
+identical(colnames(expData),rownames(survData))
+expData <- tvncpm[which(rownames(tvncpm) %in% sig),
+match(rownames(survData),colnames(tvncpm))]
+evalCluster2(expData,survData,hm=T,gcl=T,gcts=2,cmeth="ward.D",titletxt=sgn)
+survminer::ggsurvplot(res$km,data=res$dat,pval=T,risk.table=T,title=resn)
+lapply(names(reslist),function(resn){
+res <- reslist[[resn]]
+plot(res$phm$gtable,main=resn)
+})
+exprData <- expData
+dim(survData)
+exprData <- expData[,match(rownames(survData),colname(expData))]
+exprData <- expData[,match(rownames(survData),colnames(expData))]
+dim(expData)
+dim(exprData)
+mcores=3
+mcParam <- BiocParallel::MulticoreParam(workers=mcores)
+genid <- geneRun[1]
+exprRange=0.33
+summarise=TRUE
+dge <- DGEList(exprdataTN,sample=sampledataTN)
+dge <- calcNormFactors(dge,meth="upper")
+tvncpm <- cpm(dge,log=F)
+colour <- relevel(as.factor(dge$samples$Subtype),ref="Normal")
+EDASeq::plotPCA(tvncpm,labels=F, col=as.numeric(colour),
+pch=ifelse(dge$samples$SampleType=="Normal",19,17))
+legend(-0.2,0.4,0.0,0.0,legend=levels(colour), fill=seq(length(levels(colour))))
+survData <- dge$samples[which(dge$samples$SampleType=="Tumour"),]
+exprData <- tvncpm[,match(rownames(survData),colnames(tvncpm))]
+exprSamples <- colnames(exprData)
+survSamples <- rownames(survData)
+if(!identical(unique(sort(exprSamples)), sort(survSamples))){
+stop(paste0("The samples in ",paste0(survSamples,collapse=",")," do not match those in the ",
+"expression and survival data files"))
+if(!identical(sort(exprSamples), sort(survSamples))){
+warning(paste0("The samples in ",paste(survSamples,collapse=","),
+" potentially have more than one expression sample"))
+}
+exprData <- as.matrix(exprData)
+geneRun <- rownames(exprData)
+geneid <- geneRun[1]
+survTime="time"
+survStatus="status"
+survData$status <- ifelse(grepl("^Dis",survData$DFStatus),0,1)
+survData$time <- as.numeric(survData$DFMonths)
+hlim <- as.numeric(quantile(exprData[geneid,],1-exprRange))
+hi <- survData[names(which(exprData[geneid,]>=hlim)),]
+hi$Class <- "high"
+llim <- as.numeric(quantile(exprData[geneid,],exprRange))
+lo <- survData[names(which(exprData[geneid,]<=llim)),]
+lo$Class <- "low"
+survData2 <- rbind(hi,lo)
+survData2$Expr <- exprData[geneid,match(rownames(survData2),colnames(exprData))]
+survData2$Class <- as.factor(survData2$Class)
+survData2$time <- as.numeric(survData2[,survTime])
+survData2$status <- survData2[,survStatus]
+survData2$survival <- with(survData2,survival::Surv(time,status))
+survData2
+coxfit <- survival::coxph(survival~Class, data=survData2)
+coxfit <- survival::coxph(survival~Expr, data=survData2)
+diffit <- survival::survdiff(survival~Class, data=survData2)
+surfit <- survival::survfit(survival~Class, data=survData2)
+plt <- survminer::ggsurvplot(survival::survfit(survival~Class,data=survData2),
+data=survData2, pval=T,risk.table=T)
+plt
+pairedSamples <- reshape2::melt(pairSamples,"PatientID")
+rownames(pairedSamples) <- pairedSamples$value
+exprdataTN <- expressionData[,which(colnames(expressionData) %in% rownames(pairedSamples))]
+sampledataTN <- sampleInfo[which(rownames(sampleInfo)%in%colnames(exprdataTN)),]
+sampledataTN <- as.data.frame(apply(merge(patientInfo,sampledataTN,by.y="row.names",
+by.x="Sample_ID",all.y=T),2,as.character))
+sampledataTN$SampleType <- ifelse(grepl("01$",sampledataTN$SampleType),"Tumour","Normal")
+rownames(sampledataTN) <- sampledataTN[,1]
+sampledataTN <- sampledataTN[,-1]
+sampledataTN$Subtype[is.na(sampledataTN$Subtype)] <- "Normal"
+table(sampledataTN$Subtype)
+table(sampledataTN$DFStatus)
+table(sampleInfoDFStatus)
+table(sampleInfo$DFStatus)
+table(patientInfo$DFStatus)
+patientInfo
+survData <- patientInfo
+exprData <- expressionData[,match(rownames(survData),colnames(expressionData))]
+identical(rownames(survData),colnames(exprData))
+colnames(exprData)
 q()

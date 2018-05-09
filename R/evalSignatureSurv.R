@@ -13,8 +13,7 @@
 #' @param cmeth hierarchical clustering method (distance is correlation)
 #'
 #' @export
-evalSigSurv <- function(expData,survData,hm=F,gcl=F,gcts=10,cmeth="ward.D2",titletxt=""){
-  expDN <- expData/apply((expData+0.25),1,quantile,0.75)
+evalCluster2 <- function(expData,survData,hm=F,gcl=F,gcts=10,cmeth="ward.D2",titletxt=""){
   hcls <- hclust(as.dist(1-lsa::cosine(expData)),method=cmeth)
   hclslm <- as.data.frame(cutree(hcls,gcts))
   colnames(hclslm) <- "Cluster"
