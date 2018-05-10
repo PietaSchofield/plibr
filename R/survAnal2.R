@@ -22,7 +22,7 @@
 #'
 #' @export
 survAnal2 <- function(survData=NULL, exprData=NULL,survTime="time", exprRange=0.33,
-                     survStatus="status",mcores=4,summarise=TRUE){
+                     survStatus="status",mcores=4,summarise=TRUE,geneList=NULL){
   # Filter by samples in sample data just incase
   exprSamples <- colnames(exprData) 
   survSamples <- rownames(survData)
@@ -39,7 +39,11 @@ survAnal2 <- function(survData=NULL, exprData=NULL,survTime="time", exprRange=0.
 
   mcParam <- BiocParallel::MulticoreParam(workers=mcores)
   exprData <- as.matrix(exprData)
-  geneRun <- rownames(exprData)
+  if(is.null(geneList)){
+    geneRun <- rownames(exprData)
+  }else{
+    geneRun <- geneList
+  }
   # run cox proportional hazard on all expressed genes
   #resList <- BiocParallel::bplapply(geneRun,function(geneid){
   resList <- lapply(geneRun,function(geneid){
@@ -60,16 +64,14 @@ survAnal2 <- function(survData=NULL, exprData=NULL,survTime="time", exprRange=0.
     survData2$status <- survData2[,survStatus]
     survData2$survival <- with(survData2,survival::Surv(time,status))
     # fit cox proportional hazards (non-parametric) survival model
+    coxfit <- survival::coxph(survival~Expr, data=survData2)
+    diffit <- survival::survdiff(survival~Class, data=survData2)
+    surfit <- survival::survfit(survival~Class, data=survData2)
     if(summarise){
-      coxfit <- survival::coxph(survival~Expr, data=survData2)
-      c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"])
+      c(summary(coxfit)$conf.int,summary(coxfit)$sctest["pvalue"],
+        signif(pchisq(diffit$chisq, length(diffit$n)-1, lower.tail=FALSE),4))
     }else{
-      diffit <- survival::survdiff(survival~Class, data=survData2)
-      surfit <- survival::survfit(survival~Class, data=survData2)
-      #plt <- plotKM("survival::Surv(survTime,survStatus)~Class", dat=survData2)
-      #plt <- NULL
-      plt <- survminer::ggsurvplot(survival::survfit(survival~Class,data=survData2),
-                                   data=survData2, pval=T,risk.table=T)
+      plt <- survminer::ggsurvplot(surfit, data=survData2, pval=T,risk.table=T, title=geneid)
       list(cph=coxfit,dif=diffit,kmf=surfit,plt=plt)
     }
   })#, BPPARAM=mcParam)
@@ -79,22 +81,19 @@ survAnal2 <- function(survData=NULL, exprData=NULL,survTime="time", exprRange=0.
     resSurv<- plyr::ldply(resList)
     rownames(resSurv) <- resSurv[,1]
     resSurv <- resSurv[,-1]
-    colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","pvalue")
-    resSurv
+    colnames(resSurv) <- c("HR","1/HR","lower95CI","upper95CI","cph.pvalue","km.pvalue")
+    resSurv[order(resSurv$km.pvalue),]
   }else{
     resList
   }
 }
 
 .testSurvAnal <- function(){
-  survData=pdClin
-  exprData=expData
-  geneData=upAll
   survTime="time"
   exprRange=0.33
   survStatus="status"
   mcores=4
   summarise=TRUE
-  geneid=geneData[2]
+  geneid=rownames(exprData)[1]
 }
 
