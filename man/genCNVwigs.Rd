@@ -6,7 +6,7 @@
 \usage{
 genCNVwigs(sampleID, projName, bamDir, bamExt = "_dedup_realn_recal.bam",
   outDir = file.path("/scratch/pschofield/Projects", projName,
-  "Analysis/wigs"), noSub = F, ncores = 1, scpIt = T, mem = "16Gb",
+  "Analysis/wigs"), noSub = T, ncores = 1, scpIt = T, mem = "16Gb",
   windowSize, chrNames = c(seq(1, 22), "X", "Y"),
   hmmCopyMod = "apps/hmmcopy/0.99.0/gcc-4.4.7")
 }

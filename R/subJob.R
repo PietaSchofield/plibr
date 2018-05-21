@@ -28,6 +28,6 @@ subJob <- function(scriptfile,locRoot="/Users/pschofield",remRoot="~",
     print(remScript)
   }
   if(noSub){
-    paste0(qsubString," ",remScript, " ",args," ")
+    paste0(qsubString," ",basename(remScript), " ",args," ")
   } 
 }
