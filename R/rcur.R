@@ -66,6 +66,9 @@ rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
     if(setWH){
        system(paste0("scp ",htmlFile,
           " pieta@pieta.me:public_html/work/Projects/notes_ps/current.html"))
+       system(paste0("scp ",htmlFile,
+          " pieta@pieta.me:public_html/work/index.html"))
+       htmlFile <- "index.html"
     }
   }
   if(!is.null(open)){
@@ -77,7 +80,11 @@ rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
         system(paste0(wordApp," ",docxFile))
       },
       html=if(upload){
-        htmlPath <- gsub("public_html","",godPath)
+        if(setWH){
+          htmlPath <- "work"
+        }else{
+          htmlPath <- gsub("public_html","",godPath)
+        }
         system(paste0(htmlApp," ",file.path("http://pieta.me",htmlPath,basename(htmlFile))))
       }else{
         system(paste0(htmlApp," ",htmlFile))
