@@ -4,7 +4,7 @@
 #' @param exons boolean if features are exons and there will be duplicate gene ids 
 #'
 #' @export
-readFC <- function(filename, exons=F){
+readFC <- function(filename, exons=F,name=gsub("[.]bam$","",basename(filename))){
   dat <- read.delim(filename,head=T,skip=1,sep="\t")
   if(exons){
     rownames(dat) <- gsub(" ","",apply(dat[,c(1:4)],1,paste,collapse="_"))
@@ -12,16 +12,15 @@ readFC <- function(filename, exons=F){
     rownames(dat) <- dat[,1]
   }
   annotation <- dat[,1:6]
-  counts <- dat[,7:ncol(dat)]
-  colnames(counts) <- gsub("[.]bam$","",colnames(counts))
+  counts <- as.data.frame(dat[,7:ncol(dat)])
+  colnames(counts) <- gsub("[.]bam$","",basename(colnames(dat)[7:ncol(dat)]))
   rownames(counts) <- rownames(dat)
   rownames(annotation) <- rownames(dat)
   if(file.exists(paste0(filename,".summary"))){
     sumDat <- read.delim(paste0(filename,".summary"), sep="\t",h=T)
-    rownames(sumDat) <- sumDat$Status
-    sumDat <- sumDat[,-1]
-    colnames(counts) <- gsub("[.]bam$","",colnames(counts))
-    sumDat <- as.data.frame(sumDat)
+    sumRet <- as.data.frame(sumDat[,-1])
+    rownames(sumRet) <- sumDat$Status
+    colnames(sumRet) <- gsub("[.]bam$","",basename(colnames(sumDat)[-1]))
   }else{
     sumDat <- NULL
   }
