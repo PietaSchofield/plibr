@@ -17,8 +17,8 @@
 #' @export
 genPBSHead <- function(jobName="myrun", jobDescription="My analysis", 
   Nnodes=1, Nproc=16, Memory="32gb", Walltime="1:00:00",delayTil=NULL, environ=TRUE,
-  email="pieta.schofield@cruk.manchester.ac.uk",overwrite=FALSE,emailMode="ae",
-  log.dir="/lustre/scratch/pschofield/tmp", dirSet=T)
+  email="pieta.schofield@manchester.ac.uk",overwrite=FALSE,emailMode="ae",
+  log.dir="/data/compbio/pschofield/logs", dirSet=T)
 {
   header <- c(
     "#!/bin/sh ",
