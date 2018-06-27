@@ -5,7 +5,7 @@
 \title{Loop through Project code committing and pulling as necessary}
 \usage{
 autoCommit(projDir = "~/Projects", pat = "*",
-  subdir = "^(Code|R|package)$")
+  subdir = "^(Code|R|package)$", commitMessage = "Automated ")
 }
 \arguments{
 \item{projDir}{Project Root}
