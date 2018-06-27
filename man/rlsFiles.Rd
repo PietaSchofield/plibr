@@ -4,7 +4,7 @@
 \alias{rlsFiles}
 \title{list remote directory}
 \usage{
-rlsFiles(pattern, hostname = "rds-ssh")
+rlsFiles(pattern, hostname = "feenix", verb = F)
 }
 \arguments{
 \item{pattern}{file pattern}

@@ -18,6 +18,7 @@
 #' @param open view the output file
 #' @param locOnly write output to local hardrive rather than network share
 #' @param setWH sets this file as the home file in the work directory
+#' @param setPI sets this file as the home file in the work directory
 #'
 #' @export
 rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
@@ -26,7 +27,7 @@ rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
                  sysId=Sys.info()["sysname"],setGH=F,
                  htmlApp="google-chrome",pdfApp="evince",wordApp="loffice",
-                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F){
+                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(sysId=="Darwin"){
     htmlApp="open"
     pdfApp="open"
@@ -62,13 +63,16 @@ rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
     }else{
       godPath <- file.path(godPath,projDir)
     }
-    system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godPath),"/",basename(htmlFile)))
     if(setWH){
-       system(paste0("scp ",htmlFile,
-          " pieta@pieta.me:public_html/work/Projects/notes_ps/current.html"))
        system(paste0("scp ",htmlFile,
           " pieta@pieta.me:public_html/work/index.html"))
        htmlFile <- "index.html"
+    } else if(setPI){
+       system(paste0("scp ",htmlFile,
+          " pieta@pieta.me:public_html/work/Projects/index.html"))
+       htmlFile <- "index.html"
+    } else {
+      system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godPath),"/",basename(htmlFile)))
     }
   }
   if(!is.null(open)){
@@ -82,6 +86,8 @@ rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
       html=if(upload){
         if(setWH){
           htmlPath <- "work"
+        }else if(setPI){
+          htmlPath <- "work/Projects"
         }else{
           htmlPath <- gsub("public_html","",godPath)
         }

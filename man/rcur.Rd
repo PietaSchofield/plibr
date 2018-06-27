@@ -11,7 +11,7 @@ rcur(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
   codeDir = file.path(Sys.getenv("HOME"), dirStatus),
   sysId = Sys.info()["sysname"], setGH = F, htmlApp = "google-chrome",
   pdfApp = "evince", wordApp = "loffice", sourcecopy = F, toPDF = F,
-  toDOCX = F, toHTML = T, upload = T, setWH = F)
+  toDOCX = F, toHTML = T, upload = T, setWH = F, setPI = F)
 }
 \arguments{
 \item{fileName}{file name}
@@ -29,6 +29,8 @@ rcur(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
 \item{codeDir}{code tree path}
 
 \item{setWH}{sets this file as the home file in the work directory}
+
+\item{setPI}{sets this file as the home file in the work directory}
 
 \item{sourceCopy}{copy source to the output location too}
 
