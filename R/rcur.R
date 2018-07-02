@@ -21,7 +21,7 @@
 #' @param setPI sets this file as the home file in the work directory
 #'
 #' @export
-rcur <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
+rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  inDir=NULL, outDir=NULL,open="html",godPath="public_html/work/Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
