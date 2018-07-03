@@ -38,7 +38,7 @@ genPBSHead <- function(jobName="myrun", jobDescription="My analysis",
     header <- append(header,paste0('#PBS -a ',delayTil))
   }
   if(!is.null(jobDep)){
-    header <- append(header,paste0('#PBS -W ',jobDep))
+    header <- append(header,paste0('#PBS -W depend=afterok:',paste(jobDep,collapse=":")))
   }
   if(!is.null(dirSet)){
     header <- append(header," ")
