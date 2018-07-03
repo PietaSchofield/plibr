@@ -18,7 +18,7 @@
 genPBSHead <- function(jobName="myrun", jobDescription="My analysis", 
   Nnodes=1, Nproc=16, Memory="32gb", Walltime="1:00:00",delayTil=NULL, environ=TRUE,
   email="pieta.schofield@manchester.ac.uk",overwrite=FALSE,emailMode="ae",
-  log.dir="/data/compbio/pschofield/logs", dirSet=T)
+  log.dir="/data/compbio/pschofield/logs", dirSet=NULL,jobDep=NULL)
 {
   header <- c(
     "#!/bin/sh ",
@@ -37,9 +37,12 @@ genPBSHead <- function(jobName="myrun", jobDescription="My analysis",
   if(!is.null(delayTil)){
     header <- append(header,paste0('#PBS -a ',delayTil))
   }
-  if(dirSet){
+  if(!is.null(jobDep)){
+    header <- append(header,paste0('#PBS -W ',jobDep))
+  }
+  if(!is.null(dirSet)){
     header <- append(header," ")
-    header <- append(header,"cd /scratch/pschofield")
+    header <- append(header,paste0("cd ",dirSet))
   }
   header
 }

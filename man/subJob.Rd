@@ -4,16 +4,11 @@
 \alias{subJob}
 \title{Submit a job to the cluster}
 \usage{
-subJob(scriptfile, locRoot = "/Users/pschofield", remRoot = "~",
-  setDir = "cd /scratch/pschofield;", qsubString = "qsub", args = NULL,
-  noSub = T, scpIt = F, db = 0, host = "dpsf", pname = NULL)
+subJob(scriptfile, locRoot = Sys.getenv("HOME"), remRoot = "~",
+  qsubString = "qsub", args = NULL, pname = NULL, host = "feenix")
 }
 \arguments{
 \item{args}{any arguments to add to the job submission string}
-
-\item{noSub}{unless set to false will merely display the command rather than submit it.}
-
-\item{scpIt}{copy to remote using scp before submit when not using FUSE}
 
 \item{host}{a string with the name of the login host for the cluster}
 
@@ -22,6 +17,10 @@ subJob(scriptfile, locRoot = "/Users/pschofield", remRoot = "~",
 \item{user}{a string with the user name of the person making the ssh connection}
 
 \item{qsubstring}{the submission string for the torque system}
+
+\item{noSub}{unless set to false will merely display the command rather than submit it.}
+
+\item{scpIt}{copy to remote using scp before submit when not using FUSE}
 }
 \description{
 This functions submits a job in the form of a scriptfile to the cluster via ssh

@@ -24,16 +24,17 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
                       logdir = file.path(remroot,jproj,"logs"),
                       scrpdir = file.path(locroot,"Projects",jproj,"Scripts"),
                       nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",
-                      xoverwrite=T,eviron=F,noSub=T,scpIt=T,host="dpsf"){
+                      xoverwrite=T,eviron=F,noSub=T,scpIt=T,host="feenix",
+                      jobDep=NULL){
 
 # Generate PBS script header
   header <- switch(host,
-    cruk = genPBSHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem,
-                     Walltime=wtime, log.dir=logdir,environ=eviron ),
     camp = genSlurmHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, 
                         Memory=mem,logDir=logDir),
     dpsf = genSGEHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem,
-                     logDir=logdir )
+                     logDir=logdir ),
+    feenix = genPBSHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem,
+                     Walltime=wtime, log.dir=logdir,environ=eviron,jobDep=jobDep )
   )
   qsubScript <- file.path(scrpdir, paste(jname, ".sh", sep=""))
   if(file.exists(qsubScript)){
@@ -46,7 +47,11 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
   if(db<0){
     return(writeLines(c(header,jscrp)))
   }else{
-    subJob(qsubScript,noSub=noSub,scpIt=scpIt,db=db,pname=jproj,host=host)
+    if(scpIt){
+      remdir <- gsub(paste0(locroot,"/"),"",scrpdir)
+      system(paste0("scp ",qsubScript," ",host,":",remdir))
+    }
+    subJob(qsubScript,pname=jproj,host=host)
   }
 }
 

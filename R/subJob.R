@@ -11,23 +11,14 @@
 #' @param scpIt copy to remote using scp before submit when not using FUSE
 #'
 #' @export
-subJob <- function(scriptfile,locRoot="/Users/pschofield",remRoot="~", 
-                   setDir="cd /scratch/pschofield;",
-                   qsubString="qsub",args=NULL, noSub=T, scpIt=F, db=0, host="dpsf" ,pname=NULL){
+subJob <- function(scriptfile,locRoot=Sys.getenv("HOME"),remRoot="~", 
+                   qsubString="qsub",args=NULL, pname=NULL,host="feenix"){
   if(host=="camp"){
-    scpIt <- F
     remRoot <- "/home/camp/schofip/Projects"
-    noSub <- T
     qsubString <- "sub"
     remScript <- file.path(remRoot,pname,"Scripts",basename(scriptfile))
   }else{
     remScript <- gsub(locRoot,remRoot,scriptfile)
   }
-  if(db>1){
-    print(scriptfile)
-    print(remScript)
-  }
-  if(noSub){
-    paste0(qsubString," ",basename(remScript), " ",args," ")
-  } 
+  paste0(qsubString," ",remScript, " ",args," ")
 }
