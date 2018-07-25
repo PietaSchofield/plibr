@@ -26,7 +26,7 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
                  sysId=Sys.info()["sysname"],setGH=F,
-                 htmlApp="google-chrome",pdfApp="evince",wordApp="loffice",
+                 htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(sysId=="Darwin"){
     htmlApp="open"
@@ -78,10 +78,10 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
   if(!is.null(open)){
     switch(open,
       pdf=if(toPDF){
-        system(paste0(pdfApp," ",pdfFile))
+        system(paste0(pdfApp," ",pdfFile),wait=F)
       },
       docx=if(toDOCX){
-        system(paste0(wordApp," ",docxFile))
+        system(paste0(wordApp," ",docxFile),wait=F)
       },
       html=if(upload){
         if(setWH){
@@ -91,9 +91,10 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
         }else{
           htmlPath <- gsub("public_html","",godPath)
         }
-        system(paste0(htmlApp," ",file.path("http://pieta.me",htmlPath,basename(htmlFile))))
+        system(paste0(htmlApp," ",file.path("http://pieta.me",htmlPath,basename(htmlFile))),
+               wait=F)
       }else{
-        system(paste0(htmlApp," ",htmlFile))
+        system(paste0(htmlApp," ",htmlFile),wait=F)
       }
     )
   }

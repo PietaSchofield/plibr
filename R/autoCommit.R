@@ -8,7 +8,8 @@
 #' @param subdir names of subdirectories that include code
 #'
 #' @export
-autoCommit <- function(projDir="~/Projects",pat="*",subdir="^(Code|R|package)$",
+autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"Projects"),
+                       pat="*",subdir="^(Code|R|package)$",
                        commitMessage="Automated "){
   dirs <- list.files(projDir,pattern=pat, include.dirs=T, no..=T, full=T)
   retValue <- writeLines(unlist(lapply(dirs,function(d){
