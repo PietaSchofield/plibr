@@ -7,10 +7,10 @@
 subFastQC(fastqDir, fastqPattern = "*.gz", outDir = "pre",
   projName = "Sandbox", noSub = F,
   projDir = file.path("/scratch/pschofield/Projects", projName),
-  fastQCDir = file.path("/scratch/pschofield/Projects", projName, "fastqc"),
-  jobName = paste0("fastQC_", projName),
-  fastqcMod = "apps/fastqc/0.11.3/linux-x86_64", nproc = 16, mem = "48gb",
-  makeCVS = T)
+  fastQCDir = file.path("/scratch/pschofield/Projects", projName,
+  "fastqc"), jobName = paste0("fastQC_", projName),
+  fastqcMod = "apps/fastqc/0.11.3/linux-x86_64", nproc = 16,
+  mem = "48gb", makeCVS = T)
 }
 \arguments{
 \item{fastqDir}{input directory}

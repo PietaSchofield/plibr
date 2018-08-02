@@ -4,8 +4,8 @@
 \alias{runJAFFA}
 \title{run JAFFA fusion gene detection}
 \usage{
-runJAFFA(sampleId, dataDir, filePattern, projName, outDir, refGenome = "hg19",
-  refAnno = "genCode19", readLayout = "single",
+runJAFFA(sampleId, dataDir, filePattern, projName, outDir,
+  refGenome = "hg19", refAnno = "genCode19", readLayout = "single",
   javaMod = "compilers/java/1.8.0_40/noarch",
   velvetMod = "apps/velvet/1.2.10/gcc-4.4.7",
   oasesMod = "apps/oases/0.2.08/gcc-4.4.7",

@@ -5,7 +5,8 @@
 \title{render the current document}
 \usage{
 pubGoD(fileName = .curFile, projDir = .curProj, inDir = NULL,
-  outDir = NULL, open = "html", rootDir = "/Users/pschofield/Projects",
+  outDir = NULL, open = "html",
+  rootDir = "/Users/pschofield/Projects",
   codeDir = "/Users/pschofield/Code/CRUK", sourcecopy = F, toPDF = F,
   toDOCX = F, toHTML = T, godRoot = "/Volumes/pietame/public_html",
   toGoD = F)

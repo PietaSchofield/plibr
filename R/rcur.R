@@ -26,7 +26,7 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
                  sysId=Sys.info()["sysname"],setGH=F,
-                 htmlApp="firefox",pdfApp="evince",wordApp="loffice",
+                 htmlApp="epiphany",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(sysId=="Darwin"){
     htmlApp="open"

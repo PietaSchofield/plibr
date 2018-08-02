@@ -9,9 +9,10 @@ rc(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
   godPath = "public_html/work/Projects",
   rootDir = file.path(Sys.getenv("HOME"), dirStatus),
   codeDir = file.path(Sys.getenv("HOME"), dirStatus),
-  sysId = Sys.info()["sysname"], setGH = F, htmlApp = "firefox",
-  pdfApp = "evince", wordApp = "loffice", sourcecopy = F, toPDF = F,
-  toDOCX = F, toHTML = T, upload = T, setWH = F, setPI = F)
+  sysId = Sys.info()["sysname"], setGH = F, htmlApp = "epiphany",
+  pdfApp = "evince", wordApp = "loffice", sourcecopy = F,
+  toPDF = F, toDOCX = F, toHTML = T, upload = T, setWH = F,
+  setPI = F)
 }
 \arguments{
 \item{fileName}{file name}

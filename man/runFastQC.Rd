@@ -6,7 +6,8 @@
 \usage{
 runFastQC(projName, outRoot = file.path("/scratch/pschofield/Projects",
   projName), fileList = NULL, outName = "Analysis/fastqc",
-  fileFormat = "fastq", noSub = F, scpIt = T, fileExt = ".fastq.gz")
+  fileFormat = "fastq", noSub = F, scpIt = T,
+  fileExt = ".fastq.gz")
 }
 \arguments{
 \item{projName}{project name}

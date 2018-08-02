@@ -4,7 +4,8 @@
 \alias{splitBAMS}
 \title{a routine to split and filter by insert size strand specific bam files}
 \usage{
-splitBAMS(bamFiles, len = 150, projName, outDir = NULL, stranded = "*")
+splitBAMS(bamFiles, len = 150, projName, outDir = NULL,
+  stranded = "*")
 }
 \arguments{
 \item{bamFiles}{and list of fully qualified bamfile names}

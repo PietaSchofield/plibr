@@ -6,8 +6,8 @@
 \usage{
 genCNVmapGC(projName, remRoot = "/scratch/pschofield/Projects",
   outPath = "Analysis/wigs", noSub = F, ncores = 1, scpIt = T,
-  mem = "16Gb", windowSize, chrNames = c(seq(1, 22), "X", "Y"), genomeFasta,
-  mapFile, hmmCopyMod = "apps/hmmcopy/0.99.0/gcc-4.4.7")
+  mem = "16Gb", windowSize, chrNames = c(seq(1, 22), "X", "Y"),
+  genomeFasta, mapFile, hmmCopyMod = "apps/hmmcopy/0.99.0/gcc-4.4.7")
 }
 \arguments{
 \item{projName}{the project}

@@ -6,8 +6,8 @@
 expression values}
 \usage{
 survAnal2(survData = NULL, exprData = NULL, survTime = "time",
-  exprRange = 0.33, survStatus = "status", mcores = 4, summarise = TRUE,
-  geneList = NULL)
+  exprRange = 0.33, survStatus = "status", mcores = 4,
+  summarise = TRUE, geneList = NULL)
 }
 \arguments{
 \item{survData}{survival data must contain a time and status}

@@ -6,7 +6,8 @@
 Takes a file name and squirts the info into the time recording database. It will check if
 data already exists for the dates and stop rather than write duplicate entries.}
 \usage{
-logTime(fileName = NULL, projDir = "/Users/pschofield/Projects/time_sheet/",
+logTime(fileName = NULL,
+  projDir = "/Users/pschofield/Projects/time_sheet/",
   dbName = "timeSheet.db")
 }
 \arguments{

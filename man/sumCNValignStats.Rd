@@ -4,8 +4,9 @@
 \alias{sumCNValignStats}
 \title{Summarise the mapping statistics information for a specific dataset}
 \usage{
-sumCNValignStats(projName, remRoot = file.path("/scratch/pschofield/Projects",
-  projName), mapStatDir = "Analysis/mapping_stats", miSeq = TRUE,
+sumCNValignStats(projName,
+  remRoot = file.path("/scratch/pschofield/Projects", projName),
+  mapStatDir = "Analysis/mapping_stats", miSeq = TRUE,
   locDir = file.path("/Users/pschofield/Projects", projName, "Data"),
   asFilePat = "_align.stats", fsFilePat = "_insertSize.txt")
 }

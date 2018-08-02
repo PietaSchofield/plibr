@@ -4,8 +4,9 @@
 \alias{autoCommit}
 \title{Loop through Project code committing and pulling as necessary}
 \usage{
-autoCommit(projDir = file.path(Sys.getenv("HOME"), "Projects"), pat = "*",
-  subdir = "^(Code|R|package)$", commitMessage = "Automated ")
+autoCommit(projDir = file.path(Sys.getenv("HOME"), "Projects"),
+  pat = "*", subdir = "^(Code|R|package)$",
+  commitMessage = "Automated ")
 }
 \arguments{
 \item{projDir}{Project Root}

@@ -5,9 +5,10 @@
 \title{generate and submit a batch job}
 \usage{
 runScript(jname, jproj, jdesc, jscrp, db = 0,
-  remroot = "~/cbsdata/Projects", locroot = file.path(Sys.getenv("HOME")),
-  logdir = file.path(remroot, jproj, "logs"), scrpdir = file.path(locroot,
-  "Projects", jproj, "Scripts"), nnodes = 1, nproc = 8, mem = "8Gb",
+  remroot = "~/cbsdata/Projects",
+  locroot = file.path(Sys.getenv("HOME")), logdir = file.path(remroot,
+  jproj, "logs"), scrpdir = file.path(locroot, "Projects", jproj,
+  "Scripts"), nnodes = 1, nproc = 8, mem = "8Gb",
   wtime = "24:00:00", xoverwrite = T, eviron = F, noSub = T,
   scpIt = T, host = "feenix", jobDep = NULL)
 }

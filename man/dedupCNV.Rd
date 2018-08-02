@@ -12,8 +12,8 @@ dedupCNV(inBAM, projName, refGenome, gatkStep = T,
   gatkMod = "apps/gatk/3.1.1/noarch",
   picardMod = "apps/picardtools/1.96/noarch",
   samtoolsMod = "apps/samtools/0.1.19/gcc/4.4.7",
-  gatkRes = "/data/compbio/hsleong/Genome/gatk/hg19/bundle", ncores = 1,
-  scpIt = T, noSub = F)
+  gatkRes = "/data/compbio/hsleong/Genome/gatk/hg19/bundle",
+  ncores = 1, scpIt = T, noSub = F)
 }
 \arguments{
 \item{filename}{merged bam file}
