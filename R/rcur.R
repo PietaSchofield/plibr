@@ -26,7 +26,7 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
                  sysId=Sys.info()["sysname"],setGH=F,silent=F,
-                 htmlApp="epiphany",pdfApp="evince",wordApp="loffice",
+                 htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(silent){
     open <- NULL
