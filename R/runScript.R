@@ -16,15 +16,14 @@
 #' @param environ take environment variables of submitting process (not relevant for remote jobs)
 #'
 #' @export
-runScript <- function(jname, jproj, jdesc, jscrp,db=0, locroot=file.path(Sys.getenv("HOME")),
-                      logdir = NULL, scrpdir = NULL, remscrpdir,
-                      nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",
+runScript <- function(jname, jproj, jdesc, jscrp, 
+                      locroot=file.path(Sys.getenv("HOME")),
+                      logdir = .wsLogs, scrpdir = .localScrpts, remscrpdir = .wsScrpts,
+                      nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",db=0,
                       xoverwrite=T,eviron=F,host="feenix", jobDep=NULL){
 
 # Generate PBS script header
   header <- switch(host,
-    camp = genSlurmHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, 
-                        Memory=mem,logDir=logDir),
     dpsf = genSGEHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem,
                      logDir=logdir ),
     feenix = genPBSHead(jobName=jname, jobDescription=jdesc, Nnodes=nnodes, Nproc=nproc, Memory=mem,
