@@ -14,18 +14,12 @@
 #' @param wtime wall time requested
 #' @param overwrite overwrite existing script file if it exists
 #' @param environ take environment variables of submitting process (not relevant for remote jobs)
-#' @param noSub return script rather than running it for debug purposes
-#' @param crick boolean to generate jobscript for slurm an save in script directory
 #'
 #' @export
-runScript <- function(jname, jproj, jdesc, jscrp,db=0,
-                      remroot="~/cbsdata/Projects",
-                      locroot=file.path(Sys.getenv("HOME")),
-                      logdir = file.path(remroot,jproj,"logs"),
-                      scrpdir = file.path(locroot,"Projects",jproj,"Scripts"),
+runScript <- function(jname, jproj, jdesc, jscrp,db=0, locroot=file.path(Sys.getenv("HOME")),
+                      logdir = NULL, scrpdir = NULL, remscrpdir,
                       nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",
-                      xoverwrite=T,eviron=F,noSub=T,scpIt=T,host="feenix",
-                      jobDep=NULL){
+                      xoverwrite=T,eviron=F,host="feenix", jobDep=NULL){
 
 # Generate PBS script header
   header <- switch(host,
@@ -47,11 +41,8 @@ runScript <- function(jname, jproj, jdesc, jscrp,db=0,
   if(db<0){
     return(writeLines(c(header,jscrp)))
   }else{
-    if(scpIt){
-      remdir <- gsub(paste0(locroot,"/"),"",scrpdir)
-      system(paste0("scp ",qsubScript," ",host,":",remdir))
-    }
-    subJob(qsubScript,pname=jproj,host=host)
+    system(paste0("scp ",qsubScript," ",host,":",remscrpdir))
+    paste0("qsub ",file.path(remscrpdir,basename(qsubScript)))
   }
 }
 
