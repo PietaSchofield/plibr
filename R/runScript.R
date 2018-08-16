@@ -16,9 +16,11 @@
 #' @param environ take environment variables of submitting process (not relevant for remote jobs)
 #'
 #' @export
-runScript <- function(jname, jproj, jdesc, jscrp, 
+runScript <- function(jname, jdesc,
+                      jproj=.projName,
+                      jscrp=.script., 
                       locroot=file.path(Sys.getenv("HOME")),
-                      logdir = .wsLogs, scrpdir = .localScrpts, remscrpdir = .wsScrpts,
+                      logdir = .wsLogs, scrpdir = .localScripts, remscrpdir = .wsScrpts,
                       nnodes=1, nproc=8, mem="8Gb",wtime="24:00:00",db=0,
                       xoverwrite=T,eviron=F,host="feenix", jobDep=NULL){
 

@@ -25,12 +25,9 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  inDir=NULL, outDir=NULL,open="html",godPath="public_html/work/Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
-                 sysId=Sys.info()["sysname"],setGH=F,silent=F,
+                 sysId=Sys.info()["sysname"],setGH=F,
                  htmlApp="firefox",pdfApp="evince",wordApp="loffice",
-                 sourcecopy=F,toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
-  if(silent){
-    open <- NULL
-  }
+                 toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(sysId=="Darwin"){
     htmlApp="open"
     pdfApp="open"
@@ -57,9 +54,6 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
     pdfFile <- rmarkdown::render(infile,output_dir=outpath,
                                  output_format="bookdown::pdf_document2")
   }
-  if(sourcecopy){
-    file.copy(infile,outpath,overwrite=T)
-  }
   if(upload){
     if(setGH){
       gotPath <- "public_html"
@@ -70,35 +64,20 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
        system(paste0("scp ",htmlFile,
           " pieta@pieta.me:public_html/work/index.html"))
        htmlFile <- "index.html"
+       htmlPath <- "work"
     } else if(setPI){
        system(paste0("scp ",htmlFile,
           " pieta@pieta.me:public_html/work/Projects/index.html"))
+       htmlPath <- "work/Project"
        htmlFile <- "index.html"
     } else {
+      htmlPath <- gsub("public_html/","",godPath)
       system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godPath),"/",basename(htmlFile)))
     }
   }
-  if(!is.null(open)){
-    switch(open,
-      pdf=if(toPDF){
-        system(paste0(pdfApp," ",pdfFile),wait=F)
-      },
-      docx=if(toDOCX){
-        system(paste0(wordApp," ",docxFile),wait=F)
-      },
-      html=if(upload){
-        if(setWH){
-          htmlPath <- "work"
-        }else if(setPI){
-          htmlPath <- "work/Projects"
-        }else{
-          htmlPath <- gsub("public_html","",godPath)
-        }
-        system(paste0(htmlApp," ",file.path("http://pieta.me",htmlPath,basename(htmlFile))),
-               wait=F)
-      }else{
-        system(paste0(htmlApp," ",htmlFile),wait=F)
-      }
-    )
+  if(exists("htmlPath")){
+    paste0(file.path("http://pieta.me",htmlPath,basename(htmlFile)))
+  }else{
+    htmlFile
   }
 }

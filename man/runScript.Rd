@@ -4,18 +4,18 @@
 \alias{runScript}
 \title{generate and submit a batch job}
 \usage{
-runScript(jname, jproj, jdesc, jscrp,
+runScript(jname, jdesc, jproj = .projName, jscrp = .script.,
   locroot = file.path(Sys.getenv("HOME")), logdir = .wsLogs,
-  scrpdir = .localScrpts, remscrpdir = .wsScrpts, nnodes = 1,
+  scrpdir = .localScripts, remscrpdir = .wsScrpts, nnodes = 1,
   nproc = 8, mem = "8Gb", wtime = "24:00:00", db = 0,
   xoverwrite = T, eviron = F, host = "feenix", jobDep = NULL)
 }
 \arguments{
 \item{jname}{job name}
 
-\item{jproj}{project name}
-
 \item{jdesc}{job description}
+
+\item{jproj}{project name}
 
 \item{jscrp}{job script}
 
