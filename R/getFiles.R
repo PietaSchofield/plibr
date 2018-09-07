@@ -9,35 +9,34 @@
 #' @param user username
 #'
 #' @export
-getFiles <- function(filenames, projName, locDir=NULL, 
-                     remRoot="/scratch/pschofield/Projects",
-                     locRoot=file.path(Sys.getenv("HOME"),"Projects"),
-                     host="camp",user="schofip",force=F,
-                     simple=T){
-  ret <- plyr::ldply(sapply(filenames,function(fn){
-    if(!is.null(locDir)){
-      toDir=file.path(locRoot,projName,locDir,dirname(fn))
-    }else{
-      toDir=gsub(remRoot,locRoot,dirname(fn))
-    }
-    dir.create(file.path(toDir),showWarnings=F,recursive=T)
-    remFile <- file.path(fn)
-    locFile <- file.path(toDir,basename(fn))
-    if(!force){
-      if(file.exists(locFile)){
-        return(locFile)
+getFiles <- function(fn=NULL,filenames=NULL, projName, locDir=.localData,recursive=F, 
+                     host="feenix",user="pschofield",force=F, simple=T){
+  cmd <- "scp "
+  dir.create(file.path(locDir),showWarnings=F,recursive=T)
+  if(recursive){
+    cmd <- "scp -r "
+  }
+  if(!is.null(filenames)){
+    ret <- plyr::ldply(sapply(filenames,function(fn){
+      locFile <- file.path(locDir,basename(fn))
+      if(!force){
+        if(file.exists(locFile)){
+          return(locFile)
+        }
       }
+      system(paste0(cmd,user,"@",host,":",fn," ",locFile))
+      locFile
+    }))
+    colnames(ret) <- c("remotedir","localdir")
+    ret$filename <- basename(ret$localdir)
+    ret$remotedir <- dirname(ret$remotedir)
+    ret$localdir <- dirname(ret$localdir)
+    if(!simple){
+      ret
+    }else{
+      file.path(ret$localdir,ret$filename)
     }
-    system(paste0("scp ",user,"@",host,":",remFile," ",locFile))
-    locFile
-  }))
-  colnames(ret) <- c("remotedir","localdir")
-  ret$filename <- basename(ret$localdir)
-  ret$remotedir <- dirname(ret$remotedir)
-  ret$localdir <- dirname(ret$localdir)
-  if(!simple){
-    ret
   }else{
-    file.path(ret$localdir,ret$filename)
+    system(paste0(cmd,user,"@",host,":",fn," ",locDir),intern=T)
   }
 }
