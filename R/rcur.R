@@ -25,7 +25,7 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
                  inDir=NULL, outDir=NULL,open="html",godPath="public_html/work/Projects",
                  rootDir=file.path(Sys.getenv("HOME"),dirStatus),
                  codeDir=file.path(Sys.getenv("HOME"),dirStatus),
-                 sysId=Sys.info()["sysname"],setGH=F,
+                 sysId=Sys.info()["sysname"],setGH=F,setPH=F,
                  htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
   if(sysId=="Darwin"){
@@ -65,7 +65,12 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
           " pieta@pieta.me:public_html/work/index.html"))
        htmlFile <- "index.html"
        htmlPath <- "work"
-    } else if(setPI){
+    }else if(setPH){
+       system(paste0("scp ",htmlFile,
+          " pieta@pieta.me:public_html/pers/index.html"))
+       htmlFile <- "index.html"
+       htmlPath <- "pers"
+    }else if(setPI){
        system(paste0("scp ",htmlFile,
           " pieta@pieta.me:public_html/work/Projects/index.html"))
        htmlPath <- "work/Project"
