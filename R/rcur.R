@@ -76,7 +76,7 @@ rc <- function(fileName=.curFile,projDir=.projName,pers=NULL,godDir=NULL,
       godFile <- file.path(godPath,projDir,basename(htmlFile))
     }
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
-    paste0(file.path("http://pieta.me",gsub(paste(godHead,"/"),"",godFile)))
+    paste0(file.path("http://pieta.me",gsub(paste0(godHead,"/"),"",godFile)))
   }else{
     basename(htmlFile)
   }
