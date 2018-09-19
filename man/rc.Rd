@@ -4,15 +4,12 @@
 \alias{rc}
 \title{render the current document}
 \usage{
-rc(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
-  inDir = NULL, outDir = NULL, open = "html",
-  godPath = "public_html/work/Projects",
-  rootDir = file.path(Sys.getenv("HOME"), dirStatus),
-  codeDir = file.path(Sys.getenv("HOME"), dirStatus),
-  sysId = Sys.info()["sysname"], setGH = F, setPH = F,
-  htmlApp = "firefox", pdfApp = "evince", wordApp = "loffice",
-  toPDF = F, toDOCX = F, toHTML = T, upload = T, setWH = F,
-  setPI = F)
+rc(fileName = .curFile, projDir = .projName, pers = NULL,
+  godDir = NULL, inDir = NULL, outDir = NULL, open = "html",
+  godHead = "public_html", sysId = Sys.info()["sysname"], setGH = F,
+  setPH = F, htmlApp = "firefox", pdfApp = "evince",
+  wordApp = "loffice", toPDF = F, toDOCX = F, toHTML = T,
+  upload = T, setWH = F, setPI = F)
 }
 \arguments{
 \item{fileName}{file name}
@@ -25,13 +22,13 @@ rc(fileName = .curFile, projDir = .curProj, dirStatus = "Projects",
 
 \item{open}{view the output file}
 
-\item{rootDir}{root of output tree}
-
-\item{codeDir}{code tree path}
-
 \item{setWH}{sets this file as the home file in the work directory}
 
 \item{setPI}{sets this file as the home file in the work directory}
+
+\item{codeDir}{code tree path}
+
+\item{rootDir}{root of output tree}
 
 \item{sourceCopy}{copy source to the output location too}
 

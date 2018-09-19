@@ -21,10 +21,8 @@
 #' @param setPI sets this file as the home file in the work directory
 #'
 #' @export
-rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
-                 inDir=NULL, outDir=NULL,open="html",godPath="public_html/work/Projects",
-                 rootDir=file.path(Sys.getenv("HOME"),dirStatus),
-                 codeDir=file.path(Sys.getenv("HOME"),dirStatus),
+rc <- function(fileName=.curFile,projDir=.projName,pers=NULL,godDir=NULL,
+                 inDir=NULL, outDir=NULL,open="html",godHead="public_html",
                  sysId=Sys.info()["sysname"],setGH=F,setPH=F,
                  htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
@@ -33,6 +31,16 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
     pdfApp="open"
     wordApp="open"
   }
+  if(is.null(pers)){
+    godDir <- file.path("work","Projects")
+    keydir <- "Projects"
+  }else{
+    if(is.null(godDir)) godDir <- "pers"
+    keydir <- pers
+  }
+  godPath <- file.path(godHead,godDir)
+  rootDir=file.path(Sys.getenv("HOME"),keydir)
+  codeDir=file.path(Sys.getenv("HOME"),keydir)
   if(is.null(outDir) & is.null(inDir)){
     infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
     outpath <- file.path(rootDir,projDir,"Notes")
@@ -42,6 +50,7 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
   }else{
     stop("either use default project paths or specify both in and out directories")
   } 
+  dir.create(outpath,showW=F,recur=T)
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
                                output_format="bookdown::word_document2")
@@ -56,33 +65,19 @@ rc <- function(fileName=.curFile,projDir=.curProj,dirStatus="Projects",
   }
   if(upload){
     if(setGH){
-      gotPath <- "public_html"
-    }else{
-      godPath <- file.path(godPath,projDir)
-    }
-    if(setWH){
-       system(paste0("scp ",htmlFile,
-          " pieta@pieta.me:public_html/work/index.html"))
-       htmlFile <- "index.html"
-       htmlPath <- "work"
-    }else if(setPH){
-       system(paste0("scp ",htmlFile,
-          " pieta@pieta.me:public_html/pers/index.html"))
-       htmlFile <- "index.html"
-       htmlPath <- "pers"
+      godFile <- file.path("public_html","index.html")
+    } else if(setWH){
+      godFile <- file.path("public_html","work","index.html")
+    } else if(setPH){
+      godFile <- file.path("public_html","pers","index.html")
     }else if(setPI){
-       system(paste0("scp ",htmlFile,
-          " pieta@pieta.me:public_html/work/Projects/index.html"))
-       htmlPath <- "work/Project"
-       htmlFile <- "index.html"
+      godFile <- file.path("public_html","work","Projects","index.html")
     } else {
-      htmlPath <- gsub("public_html/","",godPath)
-      system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godPath),"/",basename(htmlFile)))
+      godFile <- file.path(godPath,projDir,basename(htmlFile))
     }
-  }
-  if(exists("htmlPath")){
-    paste0(file.path("http://pieta.me",htmlPath,basename(htmlFile)))
+    system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
+    paste0(file.path("http://pieta.me",gsub(paste(godHead,"/"),"",godFile)))
   }else{
-    htmlFile
+    basename(htmlFile)
   }
 }
