@@ -5,10 +5,9 @@
 \title{render the current document}
 \usage{
 rc(fileName = .curFile, projDir = .projName, godDir = "work",
-  codeDir = "Projects", inDir = NULL, outDir = NULL, open = "html",
-  godHead = "public_html", sysId = Sys.info()["sysname"], setGH = F,
+  codeDir = "Projects", godHead = "public_html", setGH = F,
   setPH = F, toPDF = F, toDOCX = F, toHTML = T, upload = T,
-  setWH = F, setPI = F)
+  setWH = F, setPI = F, locCopy = F)
 }
 \arguments{
 \item{fileName}{file name}
@@ -17,25 +16,7 @@ rc(fileName = .curFile, projDir = .projName, godDir = "work",
 
 \item{codeDir}{code tree path}
 
-\item{inDir}{override codeDir construction with exact path}
-
-\item{outDir}{copy to specific output subdirectory}
-
-\item{open}{view the output file}
-
-\item{setWH}{sets this file as the home file in the work directory}
-
-\item{setPI}{sets this file as the home file in the work directory}
-
 \item{rootDir}{root of output tree}
-
-\item{sourceCopy}{copy source to the output location too}
-
-\item{toData}{make a copy of the output in another public location}
-
-\item{dataDir}{secondary location for copy}
-
-\item{locOnly}{write output to local hardrive rather than network share}
 }
 \description{
 renders the named document and puts the output html file in the correct location in my filespace

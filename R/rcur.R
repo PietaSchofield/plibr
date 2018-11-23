@@ -10,21 +10,11 @@
 #' @param fileName file name
 #' @param codeDir code tree path
 #' @param rootDir root of output tree
-#' @param inDir override codeDir construction with exact path
-#' @param outDir copy to specific output subdirectory
-#' @param sourceCopy copy source to the output location too
-#' @param toData make a copy of the output in another public location
-#' @param dataDir secondary location for copy 
-#' @param open view the output file
-#' @param locOnly write output to local hardrive rather than network share
-#' @param setWH sets this file as the home file in the work directory
-#' @param setPI sets this file as the home file in the work directory
 #'
 #' @export
 rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir="Projects",
-                 inDir=NULL, outDir=NULL,open="html",godHead="public_html",
-                 sysId=Sys.info()["sysname"],setGH=F,setPH=F,
-                 toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
+                godHead="public_html", setGH=F,setPH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T,
+                setWH=F,setPI=F, locCopy=F){
   godPath <- file.path(godHead,godDir)
   outpath <- file.path(Sys.getenv("HOME"),".tmp")
   codePath <- file.path(Sys.getenv("HOME"),codeDir,projDir,"Code")
@@ -53,11 +43,11 @@ rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir="Projec
     pdfFile <- rmarkdown::render(infile,output_dir=outpath,
                                  output_format="bookdown::pdf_document2")
   }
-  system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
-  system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
+  if(locCopy){
+    system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
+  }
   if(upload){
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
   }
-  paste0("sudo cp ",paste0(file.path(Sys.getenv("HOME"),godFile))," ",
-         file.path("/var","www",gsub("public_","",godFile)))
+  paste0("sudo cp ",htmlFile," ", file.path("/var","www",gsub("public_","",godFile)))
 }
