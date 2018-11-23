@@ -21,57 +21,26 @@
 #' @param setPI sets this file as the home file in the work directory
 #'
 #' @export
-rc <- function(fileName=.curFile,projDir=.projName,pers=NULL,godDir=NULL,
+rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir="Projects",
                  inDir=NULL, outDir=NULL,open="html",godHead="public_html",
                  sysId=Sys.info()["sysname"],setGH=F,setPH=F,
-                 htmlApp="firefox",pdfApp="evince",wordApp="loffice",
                  toPDF=F,toDOCX=F,toHTML=T,upload=T,setWH=F,setPI=F){
-  if(sysId=="Darwin"){
-    htmlApp="open"
-    pdfApp="open"
-    wordApp="open"
-  }
-  if(is.null(pers)){
-    godDir <- file.path("work","Projects")
-    keydir <- "Projects"
-  }else{
-    if(is.null(godDir)) godDir <- "pers"
-    keydir <- pers
-  }
   godPath <- file.path(godHead,godDir)
-  rootDir=file.path(Sys.getenv("HOME"),keydir)
-  codeDir=file.path(Sys.getenv("HOME"),keydir)
-  if(is.null(outDir) & is.null(inDir)){
-    infile <- file.path(codeDir,projDir,"Code",paste0(fileName,".Rmd"))
-    outpath <- file.path(Sys.getenv("HOME"),"Notes",projDir)
-  }else if(!is.null(outDir) & !is.null(inDir)){
-    infile <- file.path(inDir,paste0(fileName,".Rmd"))
-    outpath <- file.path(outDir)
-  }else{
-    stop("either use default project paths or specify both in and out directories")
-  } 
+  outpath <- file.path(Sys.getenv("HOME"),".tmp")
+  codePath <- file.path(Sys.getenv("HOME"),codeDir,projDir,"Code")
   if(setGH){
-    outPath <- file.path(rootDir,projDir,"Notes")
-    outFile <- "index.html"
-    godFile <- file.path("public_html","index.html")
+    godFile <- file.path(godHead,"index.html")
   } else if(setWH){
-    outPath <- file.path(Sys.getenv("HOME"),"Notes")
-    outFile <- "index.html"
-    godFile <- file.path("public_html","work","index.html")
+    godFile <- file.path(godPath,"index.html")
   } else if(setPH){
-    outPath <- file.path(rootDir,projDir,"Notes")
-    outFile <- "index.html"
-    godFile <- file.path("public_html","pers","index.html")
+    godFile <- file.path(godHead,"pers","index.html")
   }else if(setPI){
-    outPath <- file.path(rootDir,projDir,"Notes")
-    outFile <- "index.html"
-    godFile <- file.path("public_html","work","Projects","index.html")
+    godFile <- file.path(godPath,"Projects","index.html")
   } else {
-outPath <- file.path(Sys.getenv("HOME"),"Notes",projDir)
-    outFile <- paste0(fileName,".html")
-    godFile <- file.path(godPath,projDir,outFile)
+    godFile <- file.path(godPath,projDir,paste0(fileName,".html"))
   }
   dir.create(outpath,showW=F,recur=T)
+  infile <- file.path(codePath,paste0(fileName,".Rmd"))
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
                                output_format="bookdown::word_document2")
@@ -84,10 +53,11 @@ outPath <- file.path(Sys.getenv("HOME"),"Notes",projDir)
     pdfFile <- rmarkdown::render(infile,output_dir=outpath,
                                  output_format="bookdown::pdf_document2")
   }
+  system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
+  system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
   if(upload){
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
-    paste0(file.path("http://pieta.me",gsub(paste0(godHead,"/"),"",godFile)))
-  }else{
-    htmlFile
   }
+  paste0("sudo cp ",paste0(file.path(Sys.getenv("HOME"),godFile))," ",
+         file.path("/var","www",gsub("public_","",godFile)))
 }

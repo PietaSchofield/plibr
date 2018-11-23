@@ -4,17 +4,18 @@
 \alias{rc}
 \title{render the current document}
 \usage{
-rc(fileName = .curFile, projDir = .projName, pers = NULL,
-  godDir = NULL, inDir = NULL, outDir = NULL, open = "html",
+rc(fileName = .curFile, projDir = .projName, godDir = "work",
+  codeDir = "Projects", inDir = NULL, outDir = NULL, open = "html",
   godHead = "public_html", sysId = Sys.info()["sysname"], setGH = F,
-  setPH = F, htmlApp = "firefox", pdfApp = "evince",
-  wordApp = "loffice", toPDF = F, toDOCX = F, toHTML = T,
-  upload = T, setWH = F, setPI = F)
+  setPH = F, toPDF = F, toDOCX = F, toHTML = T, upload = T,
+  setWH = F, setPI = F)
 }
 \arguments{
 \item{fileName}{file name}
 
 \item{projDir}{project name}
+
+\item{codeDir}{code tree path}
 
 \item{inDir}{override codeDir construction with exact path}
 
@@ -25,8 +26,6 @@ rc(fileName = .curFile, projDir = .projName, pers = NULL,
 \item{setWH}{sets this file as the home file in the work directory}
 
 \item{setPI}{sets this file as the home file in the work directory}
-
-\item{codeDir}{code tree path}
 
 \item{rootDir}{root of output tree}
 
