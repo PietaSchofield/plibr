@@ -12,12 +12,16 @@
 #' @param rootDir root of output tree
 #'
 #' @export
-rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir="Projects",
+rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir=NULL,
                 godHead="public_html", setGH=F,setPH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T,
                 setWH=F,setPI=F, locCopy=F){
   godPath <- file.path(godHead,godDir)
   outpath <- file.path(Sys.getenv("HOME"),".tmp")
-  codePath <- file.path(Sys.getenv("HOME"),codeDir,projDir,"Code")
+  if(is.null(codeDir)){
+    codePath <- file.path(Sys.getenv("HOME"),"Projects",projDir,"Code")
+  }else{
+    codePath <- file.path(Sys.getenv("HOME"),codeDir)
+  }
   if(setGH){
     godFile <- file.path(godHead,"index.html")
   } else if(setWH){

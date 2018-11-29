@@ -5,9 +5,9 @@
 \title{render the current document}
 \usage{
 rc(fileName = .curFile, projDir = .projName, godDir = "work",
-  codeDir = "Projects", godHead = "public_html", setGH = F,
-  setPH = F, toPDF = F, toDOCX = F, toHTML = T, upload = T,
-  setWH = F, setPI = F, locCopy = F)
+  codeDir = NULL, godHead = "public_html", setGH = F, setPH = F,
+  toPDF = F, toDOCX = F, toHTML = T, upload = T, setWH = F,
+  setPI = F, locCopy = F)
 }
 \arguments{
 \item{fileName}{file name}
