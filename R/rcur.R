@@ -12,26 +12,21 @@
 #' @param rootDir root of output tree
 #'
 #' @export
-rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir=NULL,
-                godHead="public_html", setGH=F,setPH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T,
-                setWH=F,setPI=F, locCopy=F){
-  godPath <- file.path(godHead,godDir)
-  outpath <- file.path(Sys.getenv("HOME"),".tmp")
-  if(is.null(codeDir)){
-    codePath <- file.path(Sys.getenv("HOME"),"Projects",projDir,"Code")
+rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
+                topDir="public_html", setGH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T){
+  if(!is.null(projName)){
+    godPath <- file.path(topDir,gitRepo,projName)
+    outpath <- file.path(Sys.getenv("HOME"),".tmp",projName)
+    codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo,projName)
   }else{
-    codePath <- file.path(Sys.getenv("HOME"),codeDir)
+    godPath <- file.path(topDir,gitRepo)
+    outpath <- file.path(Sys.getenv("HOME"),".tmp",gitRepo)
+    codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo)
   }
   if(setGH){
-    godFile <- file.path(godHead,"index.html")
-  } else if(setWH){
-    godFile <- file.path(godPath,"index.html")
-  } else if(setPH){
-    godFile <- file.path(godHead,"pers","index.html")
-  }else if(setPI){
-    godFile <- file.path(godPath,"Projects","index.html")
+    godFile <- file.path(topDir,"index.html")
   } else {
-    godFile <- file.path(godPath,projDir,paste0(fileName,".html"))
+    godFile <- file.path(godPath,paste0(fileName,".html"))
   }
   dir.create(outpath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".Rmd"))
@@ -47,11 +42,7 @@ rc <- function(fileName=.curFile,projDir=.projName,godDir="work",codeDir=NULL,
     pdfFile <- rmarkdown::render(infile,output_dir=outpath,
                                  output_format="bookdown::pdf_document2")
   }
-  if(locCopy){
-    system(paste0("cp ",htmlFile," ",file.path(Sys.getenv("HOME"),godFile)))
-  }
   if(upload){
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
   }
-  paste0("sudo cp ",htmlFile," ", file.path("/var","www",gsub("public_","",godFile)))
 }

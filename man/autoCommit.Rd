@@ -4,8 +4,7 @@
 \alias{autoCommit}
 \title{Loop through Project code committing and pulling as necessary}
 \usage{
-autoCommit(projDir = file.path(Sys.getenv("HOME"), "Projects"),
-  pat = "*", subdir = "^(Code|R|package)$",
+autoCommit(projDir = file.path(Sys.getenv("HOME"), "GitLab"),
   commitMessage = "Automated ")
 }
 \arguments{

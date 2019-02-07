@@ -4,17 +4,16 @@
 \alias{rc}
 \title{render the current document}
 \usage{
-rc(fileName = .curFile, projDir = .projName, godDir = "work",
-  codeDir = NULL, godHead = "public_html", setGH = F, setPH = F,
-  toPDF = F, toDOCX = F, toHTML = T, upload = T, setWH = F,
-  setPI = F, locCopy = F)
+rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
+  gitRepo = "liverpool", topDir = "public_html", setGH = F,
+  toPDF = F, toDOCX = F, toHTML = T, upload = T)
 }
 \arguments{
 \item{fileName}{file name}
 
-\item{projDir}{project name}
-
 \item{codeDir}{code tree path}
+
+\item{projDir}{project name}
 
 \item{rootDir}{root of output tree}
 }
