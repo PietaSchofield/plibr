@@ -3,13 +3,11 @@ Type: Package
 Title: Pieta Schofield's repository of useful R functions
 Version: 0.1.0
 Author: Pieta Schofield
-Maintainer: <pieta.schofield@cruk.manchester.ac.uk>
-Description: A collection of useful functions for mainly NGS stuff on the troodon cluster at CRUK 
-  Manchester institue
+Maintainer: <pieta.schofield@liverpool.ac.uk>
+Description: Some useful functions to ease life now at University of Liverpool
 License: CC0
 Imports:
     GenomicRanges,
-    edgeR,
     RSQLite,
     XML,
     ggplot2,
