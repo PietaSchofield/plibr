@@ -6,7 +6,8 @@
 \usage{
 rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
   gitRepo = "liverpool", topDir = "public_html", setGH = F,
-  toPDF = F, toDOCX = F, toHTML = T, upload = T)
+  toPDF = F, toDOCX = F, toHTML = T, upload = T,
+  outRoot = ".tmp")
 }
 \arguments{
 \item{fileName}{file name}
@@ -14,8 +15,6 @@ rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
 \item{codeDir}{code tree path}
 
 \item{projDir}{project name}
-
-\item{rootDir}{root of output tree}
 }
 \description{
 renders the named document and puts the output html file in the correct location in my filespace

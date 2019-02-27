@@ -9,18 +9,17 @@
 #' @param projDir project name
 #' @param fileName file name
 #' @param codeDir code tree path
-#' @param rootDir root of output tree
 #'
 #' @export
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
-                topDir="public_html", setGH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T){
+                topDir="public_html", setGH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T,outRoot=".tmp"){
   if(!is.null(projName)){
     godPath <- file.path(topDir,gitRepo,projName)
-    outpath <- file.path(Sys.getenv("HOME"),".tmp",projName)
+    outpath <- file.path(Sys.getenv("HOME"),outRoot,projName)
     codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo,projName)
   }else{
     godPath <- file.path(topDir,gitRepo)
-    outpath <- file.path(Sys.getenv("HOME"),".tmp",gitRepo)
+    outpath <- file.path(Sys.getenv("HOME"),outRoot,gitRepo)
     codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo)
   }
   if(setGH){
@@ -44,5 +43,7 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
   }
   if(upload){
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
+  }else{
+    cat(paste0("vivaldi ",htmlFile,"\n"))
   }
 }
