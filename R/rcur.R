@@ -1,10 +1,10 @@
-#' render the current document  
+#' render the current document
 #'
 #' renders the named document and puts the output html file in the correct location in my filespace
 #' This currently assumes that I have mounted my troodon home directory to the local host via sshfs
 #' which is available from OSXFUSE. Default paths are configured for my code locations.
 #'
-#' Been making changes to this to use bookdown document styles 
+#' Been making changes to this to use bookdown document styles
 #'
 #' @param projDir project name
 #' @param fileName file name
@@ -12,15 +12,19 @@
 #'
 #' @export
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
-                topDir="public_html", setGH=F, toPDF=F,toDOCX=F,toHTML=T,upload=T,outRoot=".tmp"){
+               sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
+               toHTML=T,upload=T,outRoot=".tmp"){
+  if(Sys.info()["sysname"]=="windows"){
+    sysRoot="M:"
+  }
   if(!is.null(projName)){
     godPath <- file.path(topDir,gitRepo,projName)
-    outpath <- file.path(Sys.getenv("HOME"),outRoot,projName)
-    codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo,projName)
+    outpath <- file.path(sysRoot,outRoot,projName)
+    codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
   }else{
     godPath <- file.path(topDir,gitRepo)
-    outpath <- file.path(Sys.getenv("HOME"),outRoot,gitRepo)
-    codePath <- file.path(Sys.getenv("HOME"),codeDir,gitRepo)
+    outpath <- file.path(sysRoot,outRoot,gitRepo)
+    codePath <- file.path(sysRoot,codeDir,gitRepo)
   }
   if(setGH){
     godFile <- file.path(topDir,"index.html")

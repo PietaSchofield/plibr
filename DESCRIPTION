@@ -7,12 +7,11 @@ Maintainer: <pieta.schofield@liverpool.ac.uk>
 Description: Some useful functions to ease life now at University of Liverpool
 License: CC0
 Imports:
-    GenomicRanges,
     RSQLite,
     XML,
     ggplot2,
     reshape2,
-    lubridate,
+    lubridate
 Suggests:
     testthat,
     knitr

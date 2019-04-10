@@ -1,5 +1,5 @@
 #' Loop through Project code committing and pulling as necessary
-#' 
+#'
 #' currently my build of libgit is not coping with HTTPs protocol need to fix this at some point
 #' until then dropping to system shell to push and pull
 #'
@@ -10,6 +10,9 @@
 #' @export
 autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
                        commitMessage="Automated "){
+  if(Sys.info()["sysname"]=="windows"){
+    projDir="M:/Gitlab"
+  }
   dirs <- list.files(projDir,pattern=".*", include.dirs=T, no..=T, full=T)
   retValue <- writeLines(unlist(lapply(dirs,function(d){
     pushRes <- "No Changes"

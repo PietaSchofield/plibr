@@ -5,9 +5,9 @@
 \title{render the current document}
 \usage{
 rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
-  gitRepo = "liverpool", topDir = "public_html", setGH = F,
-  toPDF = F, toDOCX = F, toHTML = T, upload = T,
-  outRoot = ".tmp")
+  gitRepo = "liverpool", sysRoot = Sys.getenv("HOME"),
+  topDir = "public_html", setGH = F, toPDF = F, toDOCX = F,
+  toHTML = T, upload = T, outRoot = ".tmp")
 }
 \arguments{
 \item{fileName}{file name}
