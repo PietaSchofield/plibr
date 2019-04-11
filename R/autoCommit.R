@@ -10,7 +10,7 @@
 #' @export
 autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
                        commitMessage="Automated "){
-  if(Sys.info()["sysname"]=="windows"){
+  if(tolower(Sys.info()["sysname"])=="windows"){
     projDir="M:/Gitlab"
   }
   dirs <- list.files(projDir,pattern=".*", include.dirs=T, no..=T, full=T)

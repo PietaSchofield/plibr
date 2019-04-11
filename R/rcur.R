@@ -14,7 +14,7 @@
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
                toHTML=T,upload=T,outRoot=".tmp"){
-  if(Sys.info()["sysname"]=="windows"){
+  if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot="M:"
   }
   if(!is.null(projName)){
