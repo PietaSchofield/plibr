@@ -17,8 +17,9 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
                secret=Sys.getenv("MY_SECRET")){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
-    outRoot <- "M:/Documents"
+    outRoot <- "/Documents"
     outDocxPath <- NULL
+    upload <- FALSE
   }
   if(!is.null(projName)){
     godPath <- file.path(topDir,gitRepo,projName)
