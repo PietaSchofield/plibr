@@ -14,7 +14,7 @@
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
                toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid="pietas",
-               secret=Sys.getenv("MY_SECRET")){
+               mys=Sys.getenv("MYS")){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"
@@ -41,7 +41,7 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
                                output_format="bookdown::word_document2")
     if(!is.null(outDocxPath)){
-      RCurl::ftpUpload(docxFile,paste0("ftp://",userid,":",secret,"@pcftp.liv.ac.uk:21",
+      RCurl::ftpUpload(docxFile,paste0("ftp://",userid,":",mys,"@pcftp.liv.ac.uk:21",
                                        file.path(outDocxPath,basename(docxFile))))
     }
   }
