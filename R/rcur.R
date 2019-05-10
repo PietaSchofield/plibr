@@ -15,7 +15,7 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
                toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid=Sys.getenv("USER"),
                mys=Sys.getenv("MYS"),livUP=FALSE,livFTP="pcftp.liv.ac.uk:21",
-               livPath="public.www"){
+               livPath="/public.www"){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"
