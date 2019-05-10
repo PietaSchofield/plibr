@@ -13,8 +13,9 @@
 #' @export
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
-               toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid="pietas",
-               mys=Sys.getenv("MYS")){
+               toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid=Sys.getenv("USER"),
+               mys=Sys.getenv("MYS"),livUP=FALSE,livFTP="pcftp.liv.ac.uk:21",
+               livPath="public.www"){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"
@@ -41,7 +42,7 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
                                output_format="bookdown::word_document2")
     if(!is.null(outDocxPath)){
-      RCurl::ftpUpload(docxFile,paste0("ftp://",userid,":",mys,"@pcftp.liv.ac.uk:21",
+      RCurl::ftpUpload(docxFile,paste0("ftp://",userid,":",mys,"@",livFTP,
                                        file.path(outDocxPath,basename(docxFile))))
     }
   }
@@ -57,5 +58,11 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
   }else{
     cat(paste0("vivaldi ",htmlFile,"\n"))
+  }
+   if(livUP){
+     RCurl::ftpUpload(
+      what=htmlFile,
+      to=paste0("ftp://",userid,":",mys,"@",livFTP,file.path(livPath,basename(htmlFile)))
+    )
   }
 }

@@ -8,7 +8,9 @@ rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
   gitRepo = "liverpool", sysRoot = Sys.getenv("HOME"),
   topDir = "public_html", setGH = F, toPDF = F, toDOCX = F,
   toHTML = T, upload = T, outRoot = ".tmp", outDocxPath = NULL,
-  userid = "pietas", mys = Sys.getenv("MYS"))
+  userid = Sys.getenv("USER"), mys = Sys.getenv("MYS"),
+  livUP = FALSE, livFTP = "pcftp.liv.ac.uk:21",
+  livPath = "public.www")
 }
 \arguments{
 \item{fileName}{file name}
