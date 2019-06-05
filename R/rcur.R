@@ -22,21 +22,21 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     outDocxPath <- NULL
     upload <- FALSE
   }
-  if(!is.null(projName)){
-    godPath <- file.path(topDir,gitRepo,projName)
-    outpath <- file.path(sysRoot,outRoot,projName)
-    codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
-  }else{
-    godPath <- file.path(topDir,gitRepo)
-    outpath <- file.path(sysRoot,outRoot,gitRepo)
-    codePath <- file.path(sysRoot,codeDir,gitRepo)
-  }
   if(setGH){
     godFile <- file.path(topDir,"index.html")
   } else {
+    if(!is.null(projName)){
+      godPath <- file.path(topDir,gitRepo,projName)
+      outpath <- file.path(sysRoot,outRoot,projName)
+      codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
+    }else{
+      godPath <- file.path(topDir,gitRepo)
+      outpath <- file.path(sysRoot,outRoot,gitRepo)
+      codePath <- file.path(sysRoot,codeDir,gitRepo)
+    }
+    dir.create(outpath,showW=F,recur=T)
     godFile <- file.path(godPath,paste0(fileName,".html"))
   }
-  dir.create(outpath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".Rmd"))
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
@@ -59,8 +59,8 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
   }else{
     cat(paste0("vivaldi ",htmlFile,"\n"))
   }
-   if(livUP){
-     RCurl::ftpUpload(
+  if(livUP){
+    RCurl::ftpUpload(
       what=htmlFile,
       to=paste0("ftp://",userid,":",mys,"@",livFTP,file.path(livPath,basename(htmlFile)))
     )
