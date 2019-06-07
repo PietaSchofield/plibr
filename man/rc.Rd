@@ -10,7 +10,7 @@ rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
   toHTML = T, upload = T, outRoot = ".tmp", outDocxPath = NULL,
   userid = Sys.getenv("USER"), mys = Sys.getenv("MYS"),
   livUP = FALSE, livFTP = "pcftp.liv.ac.uk:21",
-  livPath = "/public.www")
+  livPath = "public.www")
 }
 \arguments{
 \item{fileName}{file name}
