@@ -9,8 +9,8 @@
 #' @param user username
 #'
 #' @export
-getFiles <- function(fn=NULL,filenames=NULL, projName, locDir=.localData,recursive=F, 
-                     host="feenix",user="pschofield",force=F, simple=T){
+getFiles <- function(fn=NULL,filenames=NULL, projName, locDir=NULL,recursive=F, 
+                     host="god",user="pieta",force=F, simple=T){
   cmd <- "scp "
   dir.create(file.path(locDir),showWarnings=F,recursive=T)
   if(recursive){
