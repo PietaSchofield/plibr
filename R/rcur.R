@@ -15,7 +15,7 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
                toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid=Sys.getenv("USER"),
                mys=Sys.getenv("MYS"),livUP=FALSE,livFTP="pcftp.liv.ac.uk:21",
-               livPath="/public.www"){
+               livPath="/public.www",godPath=NULL){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"
@@ -26,11 +26,15 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     godFile <- file.path(topDir,"index.html")
   } else {
     if(!is.null(projName)){
-      godPath <- file.path(topDir,gitRepo,projName)
+      if(is.null(godPath)){
+        godPath <- file.path(topDir,gitRepo,projName)
+      }
       outpath <- file.path(sysRoot,outRoot,projName)
       codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
     }else{
-      godPath <- file.path(topDir,gitRepo)
+      if(is.null(godPath)){
+        godPath <- file.path(topDir,gitRepo)
+      }
       outpath <- file.path(sysRoot,outRoot,gitRepo)
       codePath <- file.path(sysRoot,codeDir,gitRepo)
     }
