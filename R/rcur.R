@@ -23,7 +23,9 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
     upload <- FALSE
   }
   if(setGH){
+    outpath <- topDir
     godFile <- file.path(topDir,"index.html")
+    codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
   } else {
     if(!is.null(projName)){
       if(is.null(godPath)){
