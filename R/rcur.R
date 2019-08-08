@@ -14,8 +14,8 @@
 rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
                toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid=Sys.getenv("USER"),
-               mys=Sys.getenv("MYS"),livUP=FALSE,livFTP="pcftp.liv.ac.uk:21",
-               livPath="/public.www",godPath=NULL){
+               livUP=FALSE,over=T,
+               livPath=file.path("/media",userid,"mdrive","public.www"),godPath=NULL){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"
@@ -63,10 +63,9 @@ rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="li
   }else{
     cat(paste0("vivaldi ",htmlFile,"\n"))
   }
-  loadTo <- paste0("ftp://",userid,":",mys,"@",livFTP,
-                   file.path(livPath,projName,basename(htmlFile)))
+  loadTo <- file.path(livPath,projName,basename(htmlFile))
   if(livUP){
-    RCurl::ftpUpload( what=htmlFile, to=loadTo)
+    file.copy(htmlFile,loadTo,overwrite=over)
   }else{
     cat(paste0("\nLiverpool Path ",loadTo,"\n"))
   }
