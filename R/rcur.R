@@ -18,16 +18,11 @@
 rc <- function(fileName=.curFile,projName=.projName,
                codeDir="GitLab",gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"), userid=Sys.getenv("USER"), 
-               topDir="public_html",outRoot=".tmp",outDocxPath=outRoot,
+               topDir="public_html",outRoot=file.path(sysRoot,".tmp"),
+               outDocxPath=outRoot,
                setGH=F, toPDF=F,toDOCX=F, toHTML=T,upload=T, livUP=FALSE,over=T,
                livPath=file.path("/media",userid,"mdrive","public.www"),
                godPath=NULL){
-  if(tolower(Sys.info()["sysname"])=="windows"){
-    sysRoot <- "M:"
-    outRoot <- "/Documents"
-    outDocxPath <- NULL
-    upload <- FALSE
-  }
   if(setGH){
     outpath <- topDir
     godFile <- file.path(topDir,"index.html")
@@ -37,13 +32,13 @@ rc <- function(fileName=.curFile,projName=.projName,
       if(is.null(godPath)){
         godPath <- file.path(topDir,gitRepo,projName)
       }
-      outpath <- file.path(sysRoot,outRoot,projName)
+      outpath <- file.path(outRoot,projName)
       codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
     }else{
       if(is.null(godPath)){
         godPath <- file.path(topDir,gitRepo)
       }
-      outpath <- file.path(sysRoot,outRoot,gitRepo)
+      outpath <- file.path(outRoot,gitRepo)
       codePath <- file.path(sysRoot,codeDir,gitRepo)
     }
     dir.create(outpath,showW=F,recur=T)

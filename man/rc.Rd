@@ -7,10 +7,10 @@
 rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
   gitRepo = "liverpool", sysRoot = Sys.getenv("HOME"),
   userid = Sys.getenv("USER"), topDir = "public_html",
-  outRoot = ".tmp", outDocxPath = outRoot, setGH = F, toPDF = F,
-  toDOCX = F, toHTML = T, upload = T, livUP = FALSE, over = T,
-  livPath = file.path("/media", userid, "mdrive", "public.www"),
-  godPath = NULL)
+  outRoot = file.path(sysRoot, ".tmp"), outDocxPath = outRoot,
+  setGH = F, toPDF = F, toDOCX = F, toHTML = T, upload = T,
+  livUP = FALSE, over = T, livPath = file.path("/media", userid,
+  "mdrive", "public.www"), godPath = NULL)
 }
 \arguments{
 \item{fileName}{file name}
