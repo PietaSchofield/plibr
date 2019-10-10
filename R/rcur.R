@@ -9,13 +9,19 @@
 #' @param projDir project name
 #' @param fileName file name
 #' @param codeDir code tree path
+#' @param sysRoot home directory
+#' @param userid User id 
+#' @param topDir output home directory on god
+#' @param outRoot local temporary file creation location
 #'
 #' @export
-rc <- function(fileName=.curFile,projName=.projName,codeDir="GitLab",gitRepo="liverpool",
-               sysRoot=Sys.getenv("HOME"), topDir="public_html", setGH=F, toPDF=F,toDOCX=F,
-               toHTML=T,upload=T,outRoot=".tmp",outDocxPath=NULL,userid=Sys.getenv("USER"),
-               livUP=FALSE,over=T,
-               livPath=file.path("/media",userid,"mdrive","public.www"),godPath=NULL){
+rc <- function(fileName=.curFile,projName=.projName,
+               codeDir="GitLab",gitRepo="liverpool",
+               sysRoot=Sys.getenv("HOME"), userid=Sys.getenv("USER"), 
+               topDir="public_html",outRoot=".tmp",outDocxPath=outRoot,
+               setGH=F, toPDF=F,toDOCX=F, toHTML=T,upload=T, livUP=FALSE,over=T,
+               livPath=file.path("/media",userid,"mdrive","public.www"),
+               godPath=NULL){
   if(tolower(Sys.info()["sysname"])=="windows"){
     sysRoot <- "M:"
     outRoot <- "/Documents"

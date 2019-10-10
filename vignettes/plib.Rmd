@@ -1,0 +1,30 @@
+---
+title: "Vignette Title"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Build Package
+
+```{r package-build, eval=F}
+plib::autoCommit()
+codeDir <- file.path(Sys.getenv("HOME"),"GitLab","plib")
+setwd(codeDir)
+devtools::load_all()
+devtools::document()
+devtools::build_vignettes()
+devtools::install(reload=T)
+```
+
