@@ -60,7 +60,11 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
   }
   if(livUP){
-    dir.create(livPath,showW=F,recur=T)
-    file.copy(htmlFile,livFile,overwrite=over)
+    if(file.exists(livRoot)){
+      dir.create(livPath,showW=F,recur=T)
+      file.copy(htmlFile,livFile,overwrite=over)
+    }else{
+      system(paste0("scp ",htmlFile," ",paste0("pietas@mini:",livFile)))
+    }
   }
 }
