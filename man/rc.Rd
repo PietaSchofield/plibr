@@ -4,28 +4,28 @@
 \alias{rc}
 \title{render the current document}
 \usage{
-rc(fileName = .curFile, projName = .projName, codeDir = "GitLab",
-  gitRepo = "liverpool", sysRoot = Sys.getenv("HOME"),
-  userid = Sys.getenv("USER"), topDir = "public_html",
-  outRoot = file.path(sysRoot, ".tmp"), outDocxPath = outRoot,
-  setGH = F, toPDF = F, toDOCX = F, toHTML = T, upload = T,
-  livUP = FALSE, over = T, livPath = file.path("/media", userid,
-  "mdrive", "public.www"), godPath = NULL)
+rc(fileName = .curFile, projName = .projName, gitRepo = .gitRepo,
+  sysRoot = Sys.getenv("HOME"), userid = Sys.getenv("USER"),
+  codeDir = file.path(sysRoot, "GitLab", gitRepo),
+  godRoot = "public_html", outRoot = file.path(sysRoot, ".tmp"),
+  livRoot = file.path("/", "var", "www", "html"), setHome = F,
+  toPDF = F, toDOCX = F, toHTML = T, godUP = T, livUP = FALSE,
+  over = T)
 }
 \arguments{
 \item{fileName}{file name}
-
-\item{codeDir}{code tree path}
 
 \item{sysRoot}{home directory}
 
 \item{userid}{User id}
 
-\item{topDir}{output home directory on god}
+\item{codeDir}{code tree path}
 
 \item{outRoot}{local temporary file creation location}
 
 \item{projDir}{project name}
+
+\item{topDir}{output home directory on god}
 }
 \description{
 renders the named document and puts the output html file in the correct location in my filespace

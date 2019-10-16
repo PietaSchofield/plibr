@@ -15,61 +15,52 @@
 #' @param outRoot local temporary file creation location
 #'
 #' @export
-rc <- function(fileName=.curFile,projName=.projName,
-               codeDir="GitLab",gitRepo="liverpool",
+rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                sysRoot=Sys.getenv("HOME"), userid=Sys.getenv("USER"), 
-               topDir="public_html",outRoot=file.path(sysRoot,".tmp"),
-               outDocxPath=outRoot,
-               setGH=F, toPDF=F,toDOCX=F, toHTML=T,upload=T, livUP=FALSE,over=T,
-               livPath=file.path("/media",userid,"mdrive","public.www"),
-               godPath=NULL){
-  if(setGH){
-    outpath <- topDir
-    godFile <- file.path(topDir,"index.html")
-    codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
-  } else {
-    if(!is.null(projName)){
-      if(is.null(godPath)){
-        godPath <- file.path(topDir,gitRepo,projName)
-      }
-      outpath <- file.path(outRoot,projName)
-      codePath <- file.path(sysRoot,codeDir,gitRepo,projName)
-    }else{
-      if(is.null(godPath)){
-        godPath <- file.path(topDir,gitRepo)
-      }
-      outpath <- file.path(outRoot,gitRepo)
-      codePath <- file.path(sysRoot,codeDir,gitRepo)
-    }
-    dir.create(outpath,showW=F,recur=T)
-    godFile <- file.path(godPath,paste0(fileName,".html"))
+               codeDir=file.path(sysRoot,"GitLab",gitRepo),
+               godRoot="public_html", outRoot=file.path(sysRoot,".tmp"),
+               livRoot=file.path("/","var","www","html"),
+               setHome=F, toPDF=F,toDOCX=F, toHTML=T,
+               godUP=T, livUP=FALSE,over=T){
+  if(!is.null(projName)){
+    codePath <- file.path(codeDir,projName)
+    godPath <- file.path(godRoot,gitRepo,projName)
+    livPath <- file.path(livRoot,gitRepo,projName)
+    outPath <- file.path(outRoot,projName)
+  }else{
+    codePath <- file.path(codeDir)
+    outPath <- file.path(outRoot,gitRepo)
+    godPath <- file.path(godRoot,gitRepo)
+    livPath <- file.path(livRoot,gitRepo)
   }
+  if(setHome){
+    godPath <- godRoot 
+    livPath <- livRoot
+    godFile <- file.path(godPath,"index.html")
+    livFile <- file.path(livPath,"index.html")
+  }else{
+    godFile <- file.path(godPath,paste0(fileName,".html"))
+    livFile <- file.path(livPath,paste0(fileName,".html"))
+  }
+  dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".Rmd"))
   if(toDOCX){
-    docxFile <- rmarkdown::render(input=infile,output_dir=outpath,
+    docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                output_format="bookdown::word_document2")
-    if(!is.null(outDocxPath)){
-      RCurl::ftpUpload(docxFile,paste0("ftp://",userid,":",mys,"@",livFTP,
-                                       file.path(outDocxPath,basename(docxFile))))
-    }
   }
   if(toHTML){
-    htmlFile <- rmarkdown::render(input=infile,output_dir=outpath,
+    htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                output_format="bookdown::html_document2")
   }
   if(toPDF){
-    pdfFile <- rmarkdown::render(infile,output_dir=outpath,
+    pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                  output_format="bookdown::pdf_document2")
   }
-  if(upload){
+  if(godUP){
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
-  }else{
-    cat(paste0("vivaldi ",htmlFile,"\n"))
   }
-  loadTo <- file.path(livPath,projName,basename(htmlFile))
   if(livUP){
-    file.copy(htmlFile,loadTo,overwrite=over)
-  }else{
-    cat(paste0("\nLiverpool Path ",loadTo,"\n"))
+    dir.create(livPath,showW=F,recur=T)
+    file.copy(htmlFile,livFile,overwrite=over)
   }
 }
