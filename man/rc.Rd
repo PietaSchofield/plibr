@@ -7,10 +7,11 @@
 rc(fileName = .curFile, projName = .projName, gitRepo = .gitRepo,
   sysRoot = Sys.getenv("HOME"), userid = Sys.getenv("USER"),
   codeDir = file.path(sysRoot, "GitLab", gitRepo),
-  godRoot = "public_html", outRoot = file.path(sysRoot, ".tmp"),
-  livRoot = file.path("/", "var", "www", "html"), setHome = F,
-  toPDF = F, toDOCX = F, toHTML = T, godUP = T, livUP = FALSE,
-  over = T)
+  hostname = "dh174037.liv.ac.uk", godRoot = "public_html",
+  outRoot = file.path(sysRoot, ".tmp"), livRoot = file.path("/", "var",
+  "www", "html"), pphRoot = file.path("/", "opt", "shiny-server",
+  "samples", "sample-apps"), setHome = F, toPDF = F, toDOCX = F,
+  toHTML = T, godUP = T, livUP = FALSE, pphUP = F, over = T)
 }
 \arguments{
 \item{fileName}{file name}

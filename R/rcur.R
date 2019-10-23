@@ -17,30 +17,36 @@
 #' @export
 rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                sysRoot=Sys.getenv("HOME"), userid=Sys.getenv("USER"), 
-               codeDir=file.path(sysRoot,"GitLab",gitRepo),
+               codeDir=file.path(sysRoot,"GitLab",gitRepo),hostname="dh174037.liv.ac.uk",
                godRoot="public_html", outRoot=file.path(sysRoot,".tmp"),
                livRoot=file.path("/","var","www","html"),
+               pphRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,
-               godUP=T, livUP=FALSE,over=T){
+               godUP=T, livUP=FALSE, pphUP=F,over=T){
   if(!is.null(projName)){
     codePath <- file.path(codeDir,projName)
     godPath <- file.path(godRoot,gitRepo,projName)
     livPath <- file.path(livRoot,gitRepo,projName)
+    pphPath <- file.path(pphRoot,gitRepo,projName)
     outPath <- file.path(outRoot,projName)
   }else{
     codePath <- file.path(codeDir)
     outPath <- file.path(outRoot,gitRepo)
     godPath <- file.path(godRoot,gitRepo)
+    pphPath <- file.path(pphRoot,gitRepo)
     livPath <- file.path(livRoot,gitRepo)
   }
   if(setHome){
     godPath <- godRoot 
     livPath <- livRoot
+    pphPath <- pphRoot
     godFile <- file.path(godPath,"index.html")
     livFile <- file.path(livPath,"index.html")
+    pphFile <- file.path(pphPath,"index.html")
   }else{
     godFile <- file.path(godPath,paste0(fileName,".html"))
     livFile <- file.path(livPath,paste0(fileName,".html"))
+    pphFile <- file.path(pphPath,paste0(fileName,".html"))
   }
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".Rmd"))
@@ -64,7 +70,15 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
       dir.create(livPath,showW=F,recur=T)
       file.copy(htmlFile,livFile,overwrite=over)
     }else{
-      system(paste0("scp ",htmlFile," ",paste0("pietas@mini:",livFile)))
+      system(paste0("scp ",htmlFile," ",paste0("pietas@",hostname,":",livFile)))
+    }
+  }
+  if(pphUP){
+    if(file.exists(pphRoot)){
+      dir.create(pphPath,showW=F,recur=T)
+      file.copy(htmlFile,pphFile,overwrite=over)
+    }else{
+      system(paste0("scp ",htmlFile," ",paste0("pietas",hostname,":",livFile)))
     }
   }
 }
