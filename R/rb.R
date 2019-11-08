@@ -5,7 +5,7 @@
 #' @param rstudio
 #'
 #' @export
-rb <- function(wd=NULL,projName="plib", pkgName="package", 
+rb <- function(wd=NULL,projName="plib", pkgName="package",install=F,
                baseDir=file.path(Sys.getenv("HOME"),"GitLab")){
   curd <- getwd()
   if(is.null(wd)){
@@ -19,6 +19,6 @@ rb <- function(wd=NULL,projName="plib", pkgName="package",
   setwd(wd)
   devtools::document()
   devtools::load_all()
-  devtools::install(reload=T)
+  if(install) devtools::install(reload=T)
   setwd(curd)
 }
