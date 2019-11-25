@@ -22,18 +22,18 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                livRoot=file.path("/","var","www","html"),
                pphRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,
-               godUP=T, livUP=FALSE, pphUP=F,over=T){
+               godUP=F, livUP=T, pphUP=F,over=T){
   if(!is.null(projName)){
     codePath <- file.path(codeDir,projName)
     godPath <- file.path(godRoot,gitRepo,projName)
     livPath <- file.path(livRoot,gitRepo,projName)
-    pphPath <- file.path(pphRoot,gitRepo,projName)
+    pphPath <- file.path(pphRoot,projName)
     outPath <- file.path(outRoot,projName)
   }else{
     codePath <- file.path(codeDir)
     outPath <- file.path(outRoot,gitRepo)
     godPath <- file.path(godRoot,gitRepo)
-    pphPath <- file.path(pphRoot,gitRepo)
+    pphPath <- file.path(pphRoot)
     livPath <- file.path(livRoot,gitRepo)
   }
   if(setHome){
@@ -46,7 +46,11 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   }else{
     godFile <- file.path(godPath,paste0(fileName,".html"))
     livFile <- file.path(livPath,paste0(fileName,".html"))
-    pphFile <- file.path(pphPath,paste0(fileName,".html"))
+    if(toHTML){
+      pphFile <- file.path(pphPath,paste0(fileName,".html"))
+    }else{
+      pphFile <- file.path(pphPath,paste0(fileName,".Rmd"))
+    }
   }
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".Rmd"))
@@ -76,9 +80,17 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   if(pphUP){
     if(file.exists(pphRoot)){
       dir.create(pphPath,showW=F,recur=T)
-      file.copy(htmlFile,pphFile,overwrite=over)
+      if(toHTML){
+        file.copy(htmlFile,pphFile,overwrite=over)
+      }else{
+        file.copy(infile,pphFile,overwrite=over)
+      }
     }else{
-      system(paste0("scp ",htmlFile," ",paste0("pietas",hostname,":",livFile)))
+      if(toHTML){
+        system(paste0("scp ",htmlFile," ",paste0("pietas",hostname,":",pphFile)))
+      }else{
+        system(paste0("scp ",infile," ",paste0("pietas",hostname,":",pphFile)))
+      }
     }
   }
 }

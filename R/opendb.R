@@ -1,7 +1,7 @@
 #' open a database using the credentials file
 #'
 #' @export
-openDB <- function(db,credfile=file.path(Sys.getenv("HOME"),".config","psqlcred.yml")){
+openDB <- function(db,credfile=file.path(getwd(),".psqlcred.yml")){
   pg <- config::get(file=credfile)
   cd <- pg[[db]]
   RPostgres::dbConnect(RPostgres::Postgres(),

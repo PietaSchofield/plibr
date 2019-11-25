@@ -11,7 +11,7 @@ rc(fileName = .curFile, projName = .projName, gitRepo = .gitRepo,
   outRoot = file.path(sysRoot, ".tmp"), livRoot = file.path("/", "var",
   "www", "html"), pphRoot = file.path("/", "opt", "shiny-server",
   "samples", "sample-apps"), setHome = F, toPDF = F, toDOCX = F,
-  toHTML = T, godUP = T, livUP = FALSE, pphUP = F, over = T)
+  toHTML = T, godUP = F, livUP = T, pphUP = F, over = T)
 }
 \arguments{
 \item{fileName}{file name}
