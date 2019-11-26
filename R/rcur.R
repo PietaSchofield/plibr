@@ -22,7 +22,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                livRoot=file.path("/","var","www","html"),
                pphRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,
-               godUP=F, livUP=T, pphUP=F,over=T){
+               godUP=F, livUP=T, pphUP=F,over=T,ext="Rmd"){
   if(!is.null(projName)){
     codePath <- file.path(codeDir,projName)
     godPath <- file.path(godRoot,gitRepo,projName)
@@ -49,11 +49,11 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     if(toHTML){
       pphFile <- file.path(pphPath,paste0(fileName,".html"))
     }else{
-      pphFile <- file.path(pphPath,paste0(fileName,".Rmd"))
+      pphFile <- file.path(pphPath,paste0(fileName,".",ext))
     }
   }
   dir.create(outPath,showW=F,recur=T)
-  infile <- file.path(codePath,paste0(fileName,".Rmd"))
+  infile <- file.path(codePath,paste0(fileName,".",ext))
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                output_format="bookdown::word_document2")
