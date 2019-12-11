@@ -4,8 +4,8 @@
 \alias{openDB}
 \title{open a database using the credentials file}
 \usage{
-openDB(db, credir = getwd(), credfile = file.path(credir,
-  ".psqlcred.yml"))
+openDB(db, credir = file.path(Sys.getenv("HOME"), ".config"),
+  credfile = file.path(credir, "psqlcred.yml"))
 }
 \description{
 open a database using the credentials file
