@@ -22,7 +22,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                livRoot=file.path("/","var","www","html"),
                pphRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,
-               godUP=F, livUP=T, pphUP=F,over=T,ext="Rmd"){
+               godUP=F, livUP=T, pphUP=F,over=T,ext="Rmd",livLocal=T){
   if(!is.null(projName)){
     codePath <- file.path(codeDir,projName)
     godPath <- file.path(godRoot,gitRepo,projName)
@@ -70,7 +70,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     system(paste0("scp ",htmlFile," ",paste0("pieta@pieta.me:",godFile)))
   }
   if(livUP){
-    if(file.exists(livRoot)){
+    if(livLocal){
       dir.create(livPath,showW=F,recur=T)
       file.copy(htmlFile,livFile,overwrite=over)
     }else{

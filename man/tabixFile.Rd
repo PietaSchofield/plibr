@@ -4,8 +4,7 @@
 \alias{tabixFile}
 \title{run tabix to produce compressed indexed file}
 \usage{
-tabixFile(infile, outfile = NULL, outpath = NULL, form = NULL,
-  sortstr = NULL)
+tabixFile(infile, outfile = NULL, outpath = NULL, form = NULL, sortstr = NULL)
 }
 \arguments{
 \item{infile}{input file}

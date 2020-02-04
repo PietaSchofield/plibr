@@ -4,8 +4,13 @@
 \alias{rb}
 \title{rebuild a package}
 \usage{
-rb(wd = NULL, projName = "plib", pkgName = "package", install = F,
-  baseDir = file.path(Sys.getenv("HOME"), "GitLab"))
+rb(
+  wd = NULL,
+  projName = "plib",
+  pkgName = "package",
+  install = F,
+  baseDir = file.path(Sys.getenv("HOME"), "GitLab")
+)
 }
 \arguments{
 \item{pkgname}{}

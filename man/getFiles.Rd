@@ -4,9 +4,17 @@
 \alias{getFiles}
 \title{get files from the cluster using scp to avoid using fuse for the moment}
 \usage{
-getFiles(fn = NULL, filenames = NULL, projName, locDir = NULL,
-  recursive = F, host = "god", user = "pieta", force = F,
-  simple = T)
+getFiles(
+  fn = NULL,
+  filenames = NULL,
+  projName,
+  locDir = NULL,
+  recursive = F,
+  host = "god",
+  user = "pieta",
+  force = F,
+  simple = T
+)
 }
 \arguments{
 \item{locDir}{local directory path}

@@ -4,8 +4,7 @@
 \alias{readFC}
 \title{readFC read a featureCount File}
 \usage{
-readFC(filename, exons = F, name = gsub("[.]bam$", "",
-  basename(filename)))
+readFC(filename, exons = F, name = gsub("[.]bam$", "", basename(filename)))
 }
 \arguments{
 \item{filename}{name of feature counts output file}

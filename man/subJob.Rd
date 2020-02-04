@@ -4,8 +4,15 @@
 \alias{subJob}
 \title{Submit a job to the cluster}
 \usage{
-subJob(scriptfile, locRoot = Sys.getenv("HOME"), remRoot = "~",
-  qsubString = "qsub", args = NULL, pname = NULL, host = "feenix")
+subJob(
+  scriptfile,
+  locRoot = Sys.getenv("HOME"),
+  remRoot = "~",
+  qsubString = "qsub",
+  args = NULL,
+  pname = NULL,
+  host = "feenix"
+)
 }
 \arguments{
 \item{args}{any arguments to add to the job submission string}
