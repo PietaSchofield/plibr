@@ -10,8 +10,6 @@ lck(packages, title = F)
 }
 \arguments{
 \item{the}{package name}
-
-\item{the}{package name}
 }
 \description{
 list the citation keys for a package

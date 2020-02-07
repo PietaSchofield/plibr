@@ -4,8 +4,12 @@
 \alias{genBibtex}
 \title{genbibtex}
 \usage{
-genBibtex(packages, db = F, overwrite = TRUE,
-  outfile = "/Users/pschofield/git_tree/biblio/rpackages.bib")
+genBibtex(
+  packages,
+  db = F,
+  overwrite = TRUE,
+  outfile = "/Users/pschofield/git_tree/biblio/rpackages.bib"
+)
 }
 \arguments{
 \item{packages}{package names to add citations from}

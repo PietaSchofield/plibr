@@ -4,9 +4,17 @@
 \alias{getProject}
 \title{get information from project xlsx}
 \usage{
-getProject(filename, sumSheet = "Summary", fileSheet = "Files",
-  ssCol = 1, seCol = 3, ssRow = 1, fsCol = 1, feCol = 6,
-  fsRow = 1)
+getProject(
+  filename,
+  sumSheet = "Summary",
+  fileSheet = "Files",
+  ssCol = 1,
+  seCol = 3,
+  ssRow = 1,
+  fsCol = 1,
+  feCol = 6,
+  fsRow = 1
+)
 }
 \arguments{
 \item{filename}{name of the project file}

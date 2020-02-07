@@ -4,8 +4,11 @@
 \alias{delWeek}
 \title{getWeek return the data for the week comencing}
 \usage{
-delWeek(startDate, projDir = "/Users/pschofield/Projects/time_sheet/",
-  dbName = "timeSheet.db")
+delWeek(
+  startDate,
+  projDir = "/Users/pschofield/Projects/time_sheet/",
+  dbName = "timeSheet.db"
+)
 }
 \arguments{
 \item{start}{date}

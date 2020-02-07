@@ -4,8 +4,10 @@
 \alias{readGMT}
 \title{read in an MSigDB file with gene set}
 \usage{
-readGMT(fileName = "h.all.v5.2.symbols.gmt",
-  dbDir = "/Users/pschofield/Data/GSEA/msigdb_v5.2/msigdb_v5.2_GMTs")
+readGMT(
+  fileName = "h.all.v5.2.symbols.gmt",
+  dbDir = "/Users/pschofield/Data/GSEA/msigdb_v5.2/msigdb_v5.2_GMTs"
+)
 }
 \arguments{
 \item{fileName}{name of the file}
