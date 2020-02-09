@@ -4,13 +4,8 @@
 \alias{go}
 \title{edit most recent note}
 \usage{
-go(
-  pname = "notes",
-  fname = NULL,
-  tname = "git_tree",
-  rname = "/Users/pschofield/",
-  oflag = TRUE
-)
+go(pname = "notes", fname = NULL, tname = "git_tree",
+  rname = "/Users/pschofield/", oflag = TRUE)
 }
 \arguments{
 \item{pname}{project name}

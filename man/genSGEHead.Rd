@@ -4,17 +4,10 @@
 \alias{genSGEHead}
 \title{Batch job script creation}
 \usage{
-genSGEHead(
-  jobName = "myrun",
-  jobDescription = "My analysis",
-  Nnodes = 1,
-  Nproc = 16,
-  Memory = NULL,
-  email = "pieta.schofield@manchester.ac.uk",
-  emailMode = "ae",
-  logDir = "/scratch/log",
-  pe = "smp.pe"
-)
+genSGEHead(jobName = "myrun", jobDescription = "My analysis",
+  Nnodes = 1, Nproc = 16, Memory = NULL,
+  email = "pieta.schofield@manchester.ac.uk", emailMode = "ae",
+  logDir = "/scratch/log", pe = "smp.pe")
 }
 \arguments{
 \item{jobName}{name of job}

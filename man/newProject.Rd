@@ -4,13 +4,8 @@
 \alias{newProject}
 \title{create a new project}
 \usage{
-newProject(
-  name = NULL,
-  root = "/Users/pschofield/Code/",
-  noidx = F,
-  noDir = F,
-  noWWW = F
-)
+newProject(name = NULL, root = "/Users/pschofield/Code/", noidx = F,
+  noDir = F, noWWW = F)
 }
 \arguments{
 \item{name}{name of project}

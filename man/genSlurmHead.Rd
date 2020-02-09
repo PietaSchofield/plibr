@@ -4,18 +4,10 @@
 \alias{genSlurmHead}
 \title{Batch job script creation}
 \usage{
-genSlurmHead(
-  jobName = "myrun",
-  jobDescription = "My analysis",
-  Nnodes = 1,
-  Nproc = 16,
-  Memory = "32gb",
-  Walltime = "24:00:00",
-  email = "pieta.schofield@cruk.manchester.ac.uk",
-  emailMode = "END",
-  logDir = "/home/camp/schofip/logs",
-  Partition = "compute"
-)
+genSlurmHead(jobName = "myrun", jobDescription = "My analysis",
+  Nnodes = 1, Nproc = 16, Memory = "32gb", Walltime = "24:00:00",
+  email = "pieta.schofield@cruk.manchester.ac.uk", emailMode = "END",
+  logDir = "/home/camp/schofip/logs", Partition = "compute")
 }
 \arguments{
 \item{jobName}{name of job}

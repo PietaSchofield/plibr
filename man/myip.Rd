@@ -4,13 +4,8 @@
 \alias{myip}
 \title{myip}
 \usage{
-myip(
-  pattern = "Bcast",
-  command = "ifconfig",
-  item = "addr",
-  linesep = "  ",
-  namesep = ":"
-)
+myip(pattern = "Bcast", command = "ifconfig", item = "addr",
+  linesep = "  ", namesep = ":")
 }
 \arguments{
 \item{pattern}{pattern to search for in command output}

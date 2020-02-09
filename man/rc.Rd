@@ -4,29 +4,15 @@
 \alias{rc}
 \title{render the current document}
 \usage{
-rc(
-  fileName = .curFile,
-  projName = .projName,
-  gitRepo = .gitRepo,
-  sysRoot = Sys.getenv("HOME"),
-  userid = Sys.getenv("USER"),
+rc(fileName = .curFile, projName = .projName, gitRepo = .gitRepo,
+  sysRoot = Sys.getenv("HOME"), userid = Sys.getenv("USER"),
   codeDir = file.path(sysRoot, "GitLab", gitRepo),
-  hostname = "dh174037.liv.ac.uk",
-  godRoot = "public_html",
-  outRoot = file.path(sysRoot, ".tmp"),
-  livRoot = file.path("/", "var", "www", "html"),
-  pphRoot = file.path("/", "opt", "shiny-server", "samples", "sample-apps"),
-  setHome = F,
-  toPDF = F,
-  toDOCX = F,
-  toHTML = T,
-  godUP = F,
-  livUP = T,
-  pphUP = F,
-  over = T,
-  ext = "Rmd",
-  livLocal = T
-)
+  hostname = "dh174037.liv.ac.uk", godRoot = "public_html",
+  outRoot = file.path(sysRoot, ".tmp"), livRoot = file.path("/", "var",
+  "www", "html"), pphRoot = file.path("/", "opt", "shiny-server",
+  "samples", "sample-apps"), setHome = F, toPDF = F, toDOCX = F,
+  toHTML = T, godUP = F, livUP = T, pphUP = F, over = T,
+  ext = "Rmd", livLocal = T)
 }
 \arguments{
 \item{fileName}{file name}

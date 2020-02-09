@@ -3,6 +3,7 @@
 \docType{package}
 \name{plib}
 \alias{plib}
+\alias{plib-package}
 \title{plib}
 \description{
 A library of convenience functions to make life easier while produce workday notebooks to record what

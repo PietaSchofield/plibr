@@ -4,12 +4,9 @@
 \alias{newFile}
 \title{create a new notebook file}
 \usage{
-newFile(
-  project = NULL,
-  fname = NULL,
+newFile(project = NULL, fname = NULL,
   root = "/Users/pschofield/git_tree/",
-  template = "/Users/pschofield/git_hub/template.Rmd"
-)
+  template = "/Users/pschofield/git_hub/template.Rmd")
 }
 \arguments{
 \item{root}{default project root directory}
