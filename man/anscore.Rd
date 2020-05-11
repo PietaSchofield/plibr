@@ -4,8 +4,7 @@
 \alias{anscore}
 \title{A N Spiess bigcore function}
 \usage{
-anscore(x, y = NULL, fun = c("cor", "cov"), size = 2000,
-  verbose = TRUE, ...)
+anscore(x, y = NULL, fun = c("cor", "cov"), size = 2000, verbose = TRUE, ...)
 }
 \description{
 A N Spiess bigcore function

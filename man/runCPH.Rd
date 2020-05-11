@@ -4,11 +4,20 @@
 \alias{runCPH}
 \title{runCPH: runs cox proportional hazard models against patients with top and bottom n percent expression values}
 \usage{
-runCPH(exprRange = 0.33, percExpr = 0.8, sep = ";", exprSep = sep,
-  outputDir = getwd(), silent = F, survData = NULL,
-  expressionData = NULL, simple = T, analysisName = paste("run",
-  gsub("([ ]|[:])", "_", format(Sys.time()))), scan = T,
-  geneList = NULL)
+runCPH(
+  exprRange = 0.33,
+  percExpr = 0.8,
+  sep = ";",
+  exprSep = sep,
+  outputDir = getwd(),
+  silent = F,
+  survData = NULL,
+  expressionData = NULL,
+  simple = T,
+  analysisName = paste("run", gsub("([ ]|[:])", "_", format(Sys.time()))),
+  scan = T,
+  geneList = NULL
+)
 }
 \arguments{
 \item{exprRange}{top and bottom quantiles of expression values to select samples for testing}
