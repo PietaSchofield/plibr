@@ -9,19 +9,24 @@
 #'
 #' @export
 autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
-                       commitMessage="Automated "){
-  if(tolower(Sys.info()["sysname"])=="windows"){
+                       commitMessage="Automated ",oncampus=F, mws=F){
+  if(Sys.info()["sysname"]!="Windows") mws=T
+  if(oncampus & mws){
     projDir="M:/Gitlab"
   }
   dirs <- list.files(projDir,pattern=".*", include.dirs=T, no..=T, full=T)
-  retValue <- writeLines(unlist(lapply(dirs,function(d){
+  retValue <- lapply(dirs,function(d){
     pushRes <- "No Changes"
       repDir <- d
       repo <- git2r::repository(repDir)
       #
       # Kludge to get round lake of protocol for fetch
       #
-      system(paste0("cd ",repDir,"; git fetch origin"),intern=F)
+      if(mws){
+        system(paste0("cd ",repDir,"; git fetch origin"),intern=F)
+      }else{
+        git2r::fetch(repo,name="origin")
+      }
       stat <- git2r::status(repo)
       if(length(stat$unstaged)>0 | length(stat$untracked)>0 ){
         git2r::add(repo=repo,file.path("*.*"))
@@ -43,6 +48,7 @@ autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
       #
       system(paste0("cd ",repDir,"; git pull"),intern=T)
       paste0(pushRes," ",repDir)
-  })))
+  })
+  return(writeLines(unlist(retValue)))
 }
 
