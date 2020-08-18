@@ -4,7 +4,9 @@
 \name{filter150kb}
 \alias{filter150kb}
 \title{filter150kb}
-\format{a GRanges object}
+\format{
+a GRanges object
+}
 \usage{
 filter150kb
 }
