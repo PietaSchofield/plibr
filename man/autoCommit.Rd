@@ -6,7 +6,9 @@
 \usage{
 autoCommit(
   projDir = file.path(Sys.getenv("HOME"), "GitLab"),
-  commitMessage = "Automated "
+  commitMessage = "Automated ",
+  oncampus = F,
+  mws = F
 )
 }
 \arguments{
