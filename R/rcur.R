@@ -21,17 +21,19 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                outRoot=file.path(sysRoot,".tmp"),
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
-               docRoot=file.path(sysRoot,"Projects",.projName),
+               docRoot=file.path(sysRoot,"Projects",projName),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,
                htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
   if(!is.null(projName)){
     codePath <- file.path(codeDir,projName)
     htmlPath <- file.path(htmlRoot,gitRepo,projName)
+    docPath <- file.path(docRoot,gitRepo,projName)
     shinyPath <- file.path(shinyRoot,gitRepo,projName)
     outPath <- file.path(outRoot,projName)
   }else{
     codePath <- file.path(codeDir)
     outPath <- file.path(outRoot,gitRepo)
+    docPath <- file.path(docRoot,gitRepo)
     shinyPath <- file.path(shinyRoot,gitRepo)
     htmlPath <- file.path(htmlRoot,gitRepo)
   }
