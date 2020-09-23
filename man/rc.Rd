@@ -9,23 +9,22 @@ rc(
   projName = .projName,
   gitRepo = .gitRepo,
   sysRoot = Sys.getenv("HOME"),
-  userid = Sys.getenv("USER"),
+  user = Sys.getenv("USER"),
   codeDir = file.path(sysRoot, "GitLab", gitRepo),
   hostname = "dh174037.liv.ac.uk",
-  godRoot = "public_html",
   outRoot = file.path(sysRoot, ".tmp"),
-  livRoot = file.path("/", "var", "www", "html"),
-  pphRoot = file.path("/", "opt", "shiny-server", "samples", "sample-apps"),
+  htmlRoot = file.path("/", "var", "www", "html"),
+  shinyRoot = file.path("/", "opt", "shiny-server", "samples", "sample-apps"),
+  docRoot = file.path(sysRoot, "Projects", .projName),
   setHome = F,
   toPDF = F,
   toDOCX = F,
   toHTML = T,
-  godUP = F,
-  livUP = T,
-  pphUP = F,
-  over = T,
-  ext = "Rmd",
-  livLocal = T
+  htmlUP = T,
+  shinyUP = F,
+  pdfUP = F,
+  docUP = F,
+  ext = "Rmd"
 )
 }
 \arguments{
@@ -33,15 +32,13 @@ rc(
 
 \item{sysRoot}{home directory}
 
-\item{userid}{User id}
-
 \item{codeDir}{code tree path}
 
 \item{outRoot}{local temporary file creation location}
 
 \item{projDir}{project name}
 
-\item{topDir}{output home directory on god}
+\item{userid}{User id}
 }
 \description{
 renders the named document and puts the output html file in the correct location in my filespace
