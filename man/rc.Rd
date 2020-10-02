@@ -20,6 +20,8 @@ rc(
   toPDF = F,
   toDOCX = F,
   toHTML = T,
+  setRepo = T,
+  setProj = T,
   htmlUP = T,
   shinyUP = F,
   pdfUP = F,

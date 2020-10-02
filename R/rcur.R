@@ -22,20 +22,25 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
                docRoot=file.path(sysRoot,"Projects",projName),
-               setHome=F, toPDF=F,toDOCX=F, toHTML=T,
+               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,
                htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
-  if(!is.null(projName)){
-    codePath <- file.path(codeDir,projName)
-    htmlPath <- file.path(htmlRoot,gitRepo,projName)
-    docPath <- file.path(docRoot,gitRepo,projName)
-    shinyPath <- file.path(shinyRoot,gitRepo,projName)
-    outPath <- file.path(outRoot,projName)
-  }else{
-    codePath <- file.path(codeDir)
-    outPath <- file.path(outRoot,gitRepo)
-    docPath <- file.path(docRoot,gitRepo)
-    shinyPath <- file.path(shinyRoot,gitRepo)
-    htmlPath <- file.path(htmlRoot,gitRepo)
+  codePath <- file.path(codeDir)
+  outPath <- file.path(outRoot)
+  docPath <- file.path(docRoot)
+  shinyPath <- file.path(shinyRoot)
+  htmlPath <- file.path(htmlRoot)
+  if(setRepo){
+    htmlPath <- file.path(htmlPath,gitRepo)
+    docPath <- file.path(docPath,gitRepo)
+    shinyPath <- file.path(shinyPath,gitRepo)
+    outPath <- file.path(outPath,gitRepo)
+  }
+  if(setProj){
+    codePath <- file.path(codePath,projName)
+    htmlPath <- file.path(htmlPath,projName)
+    docPath <- file.path(docPath,projName)
+    shinyPath <- file.path(shinyPath,projName)
+    outPath <- file.path(outPath,projName)
   }
   if(setHome){
     htmlFileName <- file.path(htmlPath,"index.html")
