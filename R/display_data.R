@@ -6,5 +6,7 @@ display_data <- function(dataset,number=NULL,disp=T){
     }else{
       dataset %>% head(number) %>% DT::datatable()
     }
+  }else{
+    dataset %>% tibble::as_tibble()
   }
 }
