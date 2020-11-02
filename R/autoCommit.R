@@ -20,7 +20,7 @@ autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
       repDir <- d
       repo <- git2r::repository(repDir)
       #
-      # Kludge to get round lake of protocol for fetch
+      # Kludge to get round lack of protocol for fetch
       #
       if(mws){
         system(paste0("cd ",repDir,"; git fetch origin"),intern=F)
@@ -35,16 +35,20 @@ autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
       if(length(stat$staged)>0){
         git2r::commit(repo=repo,message=paste0(commitMessage," ",date()))
         #
-        # Kludge to get round lake of protocol for push
+        # Kludge to get round lack of protocol for push
         #
-        if(system(paste0("cd ",repDir,"; git push"),intern=F)==0){
-          pushRes <- "Pushed"
+        if(mws){
+          if(system(paste0("cd ",repDir,"; git push"),intern=F)==0){
+            pushRes <- "Pushed"
+          }else{
+            pushRes <- "Push Error"
+          }
         }else{
-          pushRes <- "Push Error"
+          gitr::push(repo)
         }
       }
       #
-      # Kludge to get round lake of protocol for pull
+      # Kludge to get round lack of protocol for pull
       #
       system(paste0("cd ",repDir,"; git pull"),intern=T)
       paste0(pushRes," ",repDir)
