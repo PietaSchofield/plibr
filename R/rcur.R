@@ -30,7 +30,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   docPath <- file.path(docRoot)
   shinyPath <- file.path(shinyRoot)
   htmlPath <- file.path(htmlRoot)
-  odPath <- file.path(htmlRoot)
+  odPath <- file.path(onedrive)
   if(setRepo){
     htmlPath <- file.path(htmlPath,gitRepo)
     docPath <- file.path(docPath,gitRepo)
