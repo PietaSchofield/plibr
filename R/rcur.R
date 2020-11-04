@@ -21,6 +21,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                outRoot=file.path(sysRoot,".tmp"),
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
+               onedrive=file.path(sysRoot,"OneDrive","me","html"),
                docRoot=file.path(sysRoot,"Projects",projName),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,
                htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
@@ -29,11 +30,13 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   docPath <- file.path(docRoot)
   shinyPath <- file.path(shinyRoot)
   htmlPath <- file.path(htmlRoot)
+  odPath <- file.path(htmlRoot)
   if(setRepo){
     htmlPath <- file.path(htmlPath,gitRepo)
     docPath <- file.path(docPath,gitRepo)
     shinyPath <- file.path(shinyPath,gitRepo)
     outPath <- file.path(outPath,gitRepo)
+    odPath <- file.path(odPath,gitRepo)
   }
   if(setProj){
     codePath <- file.path(codePath,projName)
@@ -41,11 +44,14 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     docPath <- file.path(docPath,projName)
     shinyPath <- file.path(shinyPath,projName)
     outPath <- file.path(outPath,projName)
+    odPath <- file.path(odPath,projName)
   }
   if(setHome){
     htmlFileName <- file.path(htmlPath,"index.html")
+    odFileName <- file.path(odPath,"index.html")
   }else{
     htmlFileName <- file.path(htmlPath,paste0(fileName,".html"))
+    odFileName <- file.path(odPath,paste0(fileName,".html"))
     shinyFileName <- file.path(shinyPath,paste0(fileName,".",ext))
     docFileName <- file.path(docPath,fileName)
   }
@@ -63,6 +69,9 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                                output_format="bookdown::html_document2")
     if(htmlUP){
       system(paste0("scp ",htmlFile," ",paste0(user,"@",hostname,":",htmlFileName)))
+      if(file.exists(odPath)){
+        system(paste0("cp ",htmlFile," ",odFileName))
+      }
     }
   }
   if(toPDF){

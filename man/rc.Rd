@@ -15,6 +15,7 @@ rc(
   outRoot = file.path(sysRoot, ".tmp"),
   htmlRoot = file.path("/", "var", "www", "html"),
   shinyRoot = file.path("/", "opt", "shiny-server", "samples", "sample-apps"),
+  onedrive = file.path(sysRoot, "OneDrive", "me", "html"),
   docRoot = file.path(sysRoot, "Projects", projName),
   setHome = F,
   toPDF = F,
