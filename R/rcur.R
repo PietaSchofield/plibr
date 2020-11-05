@@ -26,7 +26,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,
                htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
   codePath <- file.path(codeDir)
-  outPath <- file.path(outRoot)
+  outPath <- file.path(outPath,gitRepo)
   docPath <- file.path(docRoot)
   shinyPath <- file.path(shinyRoot)
   htmlPath <- file.path(htmlRoot)
@@ -35,7 +35,6 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     htmlPath <- file.path(htmlPath,gitRepo)
     docPath <- file.path(docPath,gitRepo)
     shinyPath <- file.path(shinyPath,gitRepo)
-    outPath <- file.path(outPath,gitRepo)
     odPath <- file.path(odPath,gitRepo)
   }
   if(setProj){
