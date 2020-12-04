@@ -26,7 +26,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,
                htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
   codePath <- file.path(codeDir)
-  outPath <- file.path(outPath,gitRepo)
+  outPath <- file.path(outRoot,gitRepo)
   docPath <- file.path(docRoot)
   shinyPath <- file.path(shinyRoot)
   htmlPath <- file.path(htmlRoot)
@@ -83,5 +83,4 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   if(shinyUP){
     system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",shinyFileName)))
   }
-
 }
