@@ -20,28 +20,33 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                codeDir=file.path(sysRoot,"GitLab",gitRepo),hostname="dh174037.liv.ac.uk",
                outRoot=file.path(sysRoot,".tmp"),
                htmlRoot=file.path("/","var","www","html"),
-               shinyRoot=file.path("/","opt","shiny-server","samples","sample-apps"),
+               shinyRoot=file.path("/","u1","shiny-server","samples"),
                onedrive=file.path(sysRoot,"OneDrive","me","html"),
                docRoot=file.path(sysRoot,"Projects",projName),
-               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,
-               htmlUP=T, shinyUP=F,pdfUP=F,docUP=F,ext="Rmd"){
+               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,toShiny=F,
+               htmlUP=T, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F){
   codePath <- file.path(codeDir)
   outPath <- file.path(outRoot,gitRepo)
   docPath <- file.path(docRoot)
-  shinyPath <- file.path(shinyRoot)
-  htmlPath <- file.path(htmlRoot)
+  if(toShiny){
+    htmlPath <- file.path(shinyRoot)
+  }else{
+    htmlPath <- file.path(htmlRoot)
+  }
   odPath <- file.path(onedrive)
   if(setRepo){
     htmlPath <- file.path(htmlPath,gitRepo)
     docPath <- file.path(docPath,gitRepo)
-    shinyPath <- file.path(shinyPath,gitRepo)
     odPath <- file.path(odPath,gitRepo)
   }
   if(setProj){
     codePath <- file.path(codePath,projName)
-    htmlPath <- file.path(htmlPath,projName)
     docPath <- file.path(docPath,projName)
-    shinyPath <- file.path(shinyPath,projName)
+    if(toShiny){
+      htmlPath <- file.path(htmlPath,"sample-apps",projName)
+    }else{
+      htmlPath <- file.path(htmlPath,projName)
+    }
     outPath <- file.path(outPath,projName)
     odPath <- file.path(odPath,projName)
   }
@@ -51,8 +56,15 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
   }else{
     htmlFileName <- file.path(htmlPath,paste0(fileName,".html"))
     odFileName <- file.path(odPath,paste0(fileName,".html"))
-    shinyFileName <- file.path(shinyPath,paste0(fileName,".",ext))
+    if(rmdUP){
+      shinyFileName <- file.path(htmlPath,paste0(fileName,".Rmd"))
+    }else{
+      shinyFileName <- file.path(htmlPath,paste0(fileName,".html"))
+    }
     docFileName <- file.path(docPath,fileName)
+  }
+  if(dbg){
+    return(outPath)
   }
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
@@ -63,7 +75,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
        system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName,".docx")))
     }
   }
-  if(toHTML){
+  if(toHTML & !rmdUP){
     htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                output_format="bookdown::html_document2")
     if(htmlUP){
@@ -80,7 +92,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
        system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName,".pdf")))
     }
   }
-  if(shinyUP){
+  if(rmdUP){
     system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",shinyFileName)))
   }
 }

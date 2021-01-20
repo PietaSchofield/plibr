@@ -14,7 +14,7 @@ rc(
   hostname = "dh174037.liv.ac.uk",
   outRoot = file.path(sysRoot, ".tmp"),
   htmlRoot = file.path("/", "var", "www", "html"),
-  shinyRoot = file.path("/", "opt", "shiny-server", "samples", "sample-apps"),
+  shinyRoot = file.path("/", "u1", "shiny-server", "samples"),
   onedrive = file.path(sysRoot, "OneDrive", "me", "html"),
   docRoot = file.path(sysRoot, "Projects", projName),
   setHome = F,
@@ -23,11 +23,13 @@ rc(
   toHTML = T,
   setRepo = T,
   setProj = T,
+  toShiny = F,
   htmlUP = T,
-  shinyUP = F,
+  rmdUP = F,
   pdfUP = F,
   docUP = F,
-  ext = "Rmd"
+  ext = "Rmd",
+  dbg = F
 )
 }
 \arguments{
