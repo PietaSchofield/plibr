@@ -43,7 +43,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     codePath <- file.path(codePath,projName)
     docPath <- file.path(docPath,projName)
     if(toShiny){
-      htmlPath <- file.path(htmlPath,"sample-apps",projName)
+      htmlPath <- file.path(htmlPath,"apps",projName)
     }else{
       htmlPath <- file.path(htmlPath,projName)
     }
