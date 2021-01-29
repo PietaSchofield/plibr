@@ -19,7 +19,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                codeDir=file.path(sysRoot,"GitLab",gitRepo),hostname="dh174037.liv.ac.uk",
                outRoot=file.path(sysRoot,".tmp"),
                htmlRoot=file.path("/","var","www","html"),
-               shinyRoot=file.path("/","u1","shiny-server","samples"),
+               shinyRoot=file.path("/","u1","shiny-server","samples","apps"),
                onedrive=file.path(sysRoot,"OneDrive","me","html"),
                docRoot=file.path(sysRoot,"Projects",projName),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,toShiny=F,
@@ -42,7 +42,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
     codePath <- file.path(codePath,projName)
     docPath <- file.path(docPath,projName)
     if(toShiny){
-      htmlPath <- file.path(htmlPath,"apps",projName)
+      htmlPath <- file.path(htmlPath,projName)
     }else{
       htmlPath <- file.path(htmlPath,projName)
     }

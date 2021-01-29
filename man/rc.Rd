@@ -14,7 +14,7 @@ rc(
   hostname = "dh174037.liv.ac.uk",
   outRoot = file.path(sysRoot, ".tmp"),
   htmlRoot = file.path("/", "var", "www", "html"),
-  shinyRoot = file.path("/", "u1", "shiny-server", "samples"),
+  shinyRoot = file.path("/", "u1", "shiny-server", "samples", "apps"),
   onedrive = file.path(sysRoot, "OneDrive", "me", "html"),
   docRoot = file.path(sysRoot, "Projects", projName),
   setHome = F,
