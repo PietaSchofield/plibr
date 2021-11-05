@@ -1,5 +1,9 @@
 #' open a database using the credentials file
 #'
+#' @param db the name of the database
+#' @param credir the location of the credentials file
+#' @param credfile the name of the credentials file if not standard
+#'
 #' @export
 openDB <- function(db,credir=file.path(Sys.getenv("HOME"),".config"),
                    credfile=file.path(credir,"psqlcred.yml")){
