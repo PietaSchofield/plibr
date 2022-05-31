@@ -10,6 +10,13 @@ openDB(
   credfile = file.path(credir, "psqlcred.yml")
 )
 }
+\arguments{
+\item{db}{the name of the database}
+
+\item{credir}{the location of the credentials file}
+
+\item{credfile}{the name of the credentials file if not standard}
+}
 \description{
 open a database using the credentials file
 }

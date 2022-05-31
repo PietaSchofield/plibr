@@ -46,10 +46,9 @@ rc(
 \item{userid}{User id}
 }
 \description{
-renders the named document and puts the output html file in the correct location in my filespace
-This currently assumes that I have mounted my troodon home directory to the local host via sshfs
-which is available from OSXFUSE. Default paths are configured for my code locations.
-}
-\details{
-Been making changes to this to use bookdown document styles
+This function has evolved way beyond the parameter list. It has also had to adapt from the original
+dundee version to a version that worked with GoDaddy and then worked at Manchester CRUK and then cope
+with the changes at CRUK and the whole reconfiguration due to the fire and then the  move to Liverpool
+and the introduction of the virtual machine at Liverpook running a shiny server and the final dropping
+of GoDaddy.
 }
