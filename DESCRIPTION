@@ -6,6 +6,7 @@ Author: Pieta Schofield
 Maintainer: <pieta.schofield@liverpool.ac.uk>
 Description: Some useful functions to ease life now at University of Liverpool
 License: CC0
+Encoding: UTF-8
 Imports:
     RSQLite,
     XML,
@@ -17,4 +18,4 @@ Suggests:
     knitr
 VignetteBuilder: knitr
 LazyData: TRUE
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.2

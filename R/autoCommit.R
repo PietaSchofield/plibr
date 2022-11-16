@@ -10,42 +10,34 @@
 #' @export
 autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
                        commitMessage="Automated ",oncampus=F, mws=F){
-  if(Sys.info()["sysname"]!="Windows") mws=T
+  if(Sys.info()["sysname"]!="Windows"){
+    mws=T
+    oncampus=T
+  }
   if(oncampus & mws){
-    projDir="M:/Gitlab"
+    projDir=file.path("U:","Gitlab")
   }
   dirs <- list.files(projDir,pattern=".*", include.dirs=T, no..=T, full=T)
+  d <- dirs[1]
   retValue <- lapply(dirs,function(d){
     pushRes <- "No Changes"
-      repDir <- d
-      repo <- git2r::repository(repDir)
-      #
-      # Kludge to get round lack of protocol for fetch
-      #
-      if(mws){
-        system(paste0("cd ",repDir,"; git fetch origin"),intern=F)
-      }else{
-        git2r::fetch(repo,name="origin")
-      }
-      stat <- git2r::status(repo)
-      if(length(stat$unstaged)>0 | length(stat$untracked)>0 ){
-        git2r::add(repo=repo,file.path("*.*"))
-      }
+    repDir <- d
+    repo <- git2r::repository(repDir)
+    #
+    # Kludge to get round lack of protocol for fetch
+    #
+    git2r::fetch(repo,name="origin")
+    stat <- git2r::status(repo)
+    if(length(stat$unstaged)>0 | length(stat$untracked)>0 ){
+      git2r::add(repo=repo,file.path("*.*"))
+    }
       stat <- git2r::status(repo)
       if(length(stat$staged)>0){
         git2r::commit(repo=repo,message=paste0(commitMessage," ",date()))
         #
         # Kludge to get round lack of protocol for push
         #
-        if(mws){
-          if(system(paste0("cd ",repDir,"; git push"),intern=F)==0){
-            pushRes <- "Pushed"
-          }else{
-            pushRes <- "Push Error"
-          }
-        }else{
-          gitr::push(repo)
-        }
+        gitr::push(repo)
       }
       #
       # Kludge to get round lack of protocol for pull
@@ -55,4 +47,3 @@ autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
   })
   return(writeLines(unlist(retValue)))
 }
-
