@@ -8,15 +8,11 @@ rc(
   fileName = .curFile,
   projName = .projName,
   gitRepo = .gitRepo,
-  sysRoot = Sys.getenv("HOME"),
+  sysRoot = .sysRoot,
   user = Sys.getenv("USER"),
-  codeDir = file.path(sysRoot, "GitLab", gitRepo),
-  hostname = "dh174037.liv.ac.uk",
-  outRoot = file.path(sysRoot, ".tmp"),
+  hostname = .hostName,
   htmlRoot = file.path("/", "var", "www", "html"),
   shinyRoot = file.path("/", "u1", "shiny-server", "samples", "apps"),
-  onedrive = file.path(sysRoot, "OneDrive", "me", "html"),
-  docRoot = file.path(sysRoot, "Projects", projName),
   setHome = F,
   toPDF = F,
   toDOCX = F,
@@ -37,13 +33,13 @@ rc(
 
 \item{sysRoot}{home directory}
 
-\item{codeDir}{code tree path}
-
-\item{outRoot}{local temporary file creation location}
-
 \item{projDir}{project name}
 
+\item{codeDir}{code tree path}
+
 \item{userid}{User id}
+
+\item{outRoot}{local temporary file creation location}
 }
 \description{
 This function has evolved way beyond the parameter list. It has also had to adapt from the original
