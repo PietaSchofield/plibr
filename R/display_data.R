@@ -9,20 +9,33 @@
 #' @param limited contrain to container
 #'
 #' @export
-display_data <- function(dataset,number=NULL,disp=T,limited=T){
+display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F){
   if(!is.null(number)){
-    dataset <- dataset %>% head(number)
+    dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
   }
   if(disp){
-    dataset %>% DT::datatable(extensions = 'Buttons', 
-                              options = list(dom = 'Blfrtip', 
-                                             buttons = c('copy', 'csv', 'excel', 'pdf'), 
+    if(buttons){
+      ext <- 'Buttons'
+      btns <- c("copy","csv")
+      dom <- 'Blfrtip'
+      dataset %>% DT::datatable(extensions = ext, 
+                              options = list(dom = dom, 
+                                             buttons = btns, 
                                              lengthMenu = list(c(10,50,100, -1), 
                                                                c('10', '50', '100', 'All')),
                                              paging = T,
                                              scrollX = T),
                               fillContainer=limited)
-  }else{
+    }else{
+      dom <- 'lfrtip'
+      dataset %>% DT::datatable( options = list(dom = dom, 
+                                             lengthMenu = list(c(10,50,100, -1), 
+                                                               c('10', '50', '100', 'All')),
+                                             paging = T,
+                                             scrollX = T),
+                              fillContainer=limited)
+    }
+}else{
     dataset %>% tibble::as_tibble()
   }
 }
