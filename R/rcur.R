@@ -20,13 +20,11 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","u1","shiny-server","samples","apps"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,toShiny=F,
-               htmlUP=T, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F){
+               htmlUP=T, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
   codeDir=file.path(sysRoot,"GitLab",gitRepo)
   outRoot=file.path(sysRoot,".tmp")
   docRoot=file.path(sysRoot,".tmp")
   codePath <- file.path(codeDir)
-  outPath <- file.path(outRoot,gitRepo)
-  docPath <- file.path(docRoot)
   if(toShiny){
     htmlPath <- file.path(shinyRoot)
   }else{
@@ -34,16 +32,13 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
   }
   if(setRepo){
     htmlPath <- file.path(htmlPath,gitRepo)
-    docPath <- file.path(docPath,gitRepo)
+    outPath <- file.path(outRoot,gitRepo)
+  }else{
+    outPath <- file.path(outRoot)
   }
   if(setProj){
     codePath <- file.path(codePath,projName)
-    docPath <- file.path(docPath,projName)
-    if(toShiny){
-      htmlPath <- file.path(htmlPath,projName)
-    }else{
-      htmlPath <- file.path(htmlPath,projName)
-    }
+    htmlPath <- file.path(htmlPath,projName)
     outPath <- file.path(outPath,projName)
   }
   if(setHome){
@@ -55,35 +50,46 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
     }else{
       shinyFileName <- file.path(htmlPath,paste0(fileName,".html"))
     }
-    docFileName <- file.path(docPath,fileName)
-  }
-  if(dbg){
-    return(outPath)
+    docFileName <- file.path(htmlPath,paste0(fileName,".docx"))
+    pdfFileName <- file.path(htmlPath,paste0(fileName,".pdf"))
   }
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
-  if(toDOCX){
-    docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                               output_format="bookdown::word_document2")
-    if(docUP){
-       system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName,".docx")))
+  if(!is.null(quarto)){
+    quartoFile <- paste0(xfun::sans_ext(infile),".",quarto)
+    if(dbg) print(quartoFile)
+    quarto::quarto_render(input=infile,execute_dir=outPath)
+    if(file.exists(quartoFile)){
+      if(quartoUP){
+        quartoFileName <- file.path(htmlPath,paste0(fileName,".",quarto))
+        system(paste0("scp ",quartoFile," ",paste0(user,"@",hostname,":",quartoFileName)))
+      }
+      fs::file_move(paste0(quartoFile),outPath)
     }
-  }
-  if(toHTML & !rmdUP){
-    htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                               output_format="bookdown::html_document2")
-    if(htmlUP){
-      system(paste0("scp ",htmlFile," ",paste0(user,"@",hostname,":",htmlFileName)))
+  }else{
+    if(toDOCX){
+      docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
+                                    output_format="bookdown::word_document2")
+      if(docUP){
+         system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName)))
+      }
     }
-  }
-  if(toPDF){
-    pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                 output_format="bookdown::pdf_document2")
-    if(pdfUP){
-       system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName,".pdf")))
+    if(toHTML & !rmdUP){
+      htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
+                                output_format="bookdown::html_document2")
+      if(htmlUP){
+        system(paste0("scp ",htmlFile," ",paste0(user,"@",hostname,":",htmlFileName)))
+      }
     }
-  }
-  if(rmdUP){
-    system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",shinyFileName)))
+    if(toPDF){
+      pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
+                                  output_format="bookdown::pdf_document2")
+      if(pdfUP){
+        system(paste0("scp ",pdffile," ",paste0(user,"@",hostname,":",pdfFileName)))
+      }
+    }
+    if(rmdUP){
+      system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",shinyFileName)))
+    }
   }
 }

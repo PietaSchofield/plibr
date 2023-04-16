@@ -25,7 +25,9 @@ rc(
   pdfUP = F,
   docUP = F,
   ext = "Rmd",
-  dbg = F
+  dbg = F,
+  quarto = NULL,
+  quartoUP = F
 )
 }
 \arguments{
