@@ -25,7 +25,7 @@ display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F){
                                                                c('10', '50', '100', 'All')),
                                              paging = T,
                                              scrollX = T),
-                              fillContainer=limited)
+                              fillContainer=limited,escape=F,rownames=F)
     }else{
       dom <- 'lfrtip'
       dataset %>% DT::datatable( options = list(dom = dom, 
@@ -33,7 +33,7 @@ display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F){
                                                                c('10', '50', '100', 'All')),
                                              paging = T,
                                              scrollX = T),
-                              fillContainer=limited)
+                              fillContainer=limited,escape=F,rownames=F)
     }
 }else{
     dataset %>% tibble::as_tibble()
