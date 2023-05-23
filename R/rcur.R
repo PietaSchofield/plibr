@@ -1,5 +1,7 @@
 #' render the current document
 #'
+#' Latest changes are to stop pushing files up to an html server and to keep them local by default 
+#'
 #' This function has evolved way beyond the parameter list. It has also had to adapt from the original
 #' dundee version to a version that worked with GoDaddy and then worked at Manchester CRUK and then cope
 #' with the changes at CRUK and the whole reconfiguration due to the fire and then the  move to Liverpool
@@ -16,13 +18,15 @@
 #' @export
 rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
                user=Sys.getenv("USER"),
+               outputroot="notebooks_uol",
                hostname=.hostName,
+               quartoPath=NULL,
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","u1","shiny-server","samples","apps"),
-               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=T,setProj=T,toShiny=F,
-               htmlUP=T, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
+               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=F,setProj=T,toShiny=F,
+               htmlUP=F, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
   codeDir=file.path(sysRoot,"GitLab",gitRepo)
-  outRoot=file.path(sysRoot,".tmp")
+  outRoot=file.path(sysRoot,".tmp",outputroot)
   docRoot=file.path(sysRoot,".tmp")
   codePath <- file.path(codeDir)
   if(toShiny){
@@ -41,6 +45,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
     htmlPath <- file.path(htmlPath,projName)
     outPath <- file.path(outPath,projName)
   }
+  if(is.null(quartoPath)) quartoPath=outPath
   if(setHome){
     htmlFileName <- file.path(htmlPath,"index.html")
   }else{
@@ -64,7 +69,7 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
         quartoFileName <- file.path(htmlPath,paste0(fileName,".",quarto))
         system(paste0("scp ",quartoFile," ",paste0(user,"@",hostname,":",quartoFileName)))
       }
-      fs::file_move(paste0(quartoFile),outPath)
+      fs::file_move(paste0(quartoFile),quartoPath)
     }
   }else{
     if(toDOCX){

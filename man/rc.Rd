@@ -10,17 +10,19 @@ rc(
   gitRepo = .gitRepo,
   sysRoot = .sysRoot,
   user = Sys.getenv("USER"),
+  outputroot = "notebooks_uol",
   hostname = .hostName,
+  quartoPath = NULL,
   htmlRoot = file.path("/", "var", "www", "html"),
   shinyRoot = file.path("/", "u1", "shiny-server", "samples", "apps"),
   setHome = F,
   toPDF = F,
   toDOCX = F,
   toHTML = T,
-  setRepo = T,
+  setRepo = F,
   setProj = T,
   toShiny = F,
-  htmlUP = T,
+  htmlUP = F,
   rmdUP = F,
   pdfUP = F,
   docUP = F,
@@ -44,6 +46,9 @@ rc(
 \item{outRoot}{local temporary file creation location}
 }
 \description{
+Latest changes are to stop pushing files up to an html server and to keep them local by default
+}
+\details{
 This function has evolved way beyond the parameter list. It has also had to adapt from the original
 dundee version to a version that worked with GoDaddy and then worked at Manchester CRUK and then cope
 with the changes at CRUK and the whole reconfiguration due to the fire and then the  move to Liverpool
