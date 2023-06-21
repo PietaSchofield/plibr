@@ -26,8 +26,8 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=F,setProj=T,toShiny=F,
                htmlUP=F, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
   codeDir=file.path(sysRoot,"GitLab",gitRepo)
-  outRoot=file.path(sysRoot,".tmp",outputroot)
-  docRoot=file.path(sysRoot,".tmp")
+  outRoot=file.path(sysRoot,"Notes",outputroot)
+  docRoot=file.path(sysRoot,"Projects")
   codePath <- file.path(codeDir)
   if(toShiny){
     htmlPath <- file.path(shinyRoot)
