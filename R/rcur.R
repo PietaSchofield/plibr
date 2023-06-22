@@ -16,47 +16,26 @@
 #' @param outRoot local temporary file creation location
 #'
 #' @export
-rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
-               user=Sys.getenv("USER"),
-               outputroot="notebooks_uol",
-               hostname=.hostName,
-               quartoPath=NULL,
-               htmlRoot=file.path("/","var","www","html"),
-               shinyRoot=file.path("/","u1","shiny-server","samples","apps"),
-               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setRepo=F,setProj=T,toShiny=F,
-               htmlUP=F, rmdUP=F,pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
-  codeDir=file.path(sysRoot,"GitLab",gitRepo)
-  outRoot=file.path(sysRoot,"Notes",outputroot)
-  docRoot=file.path(sysRoot,"Projects")
-  codePath <- file.path(codeDir)
-  if(toShiny){
-    htmlPath <- file.path(shinyRoot)
-  }else{
-    htmlPath <- file.path(htmlRoot)
-  }
-  if(setRepo){
-    htmlPath <- file.path(htmlPath,gitRepo)
-    outPath <- file.path(outRoot,gitRepo)
-  }else{
-    outPath <- file.path(outRoot)
-  }
+rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
+               user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes","uol"),
+               quartoPath=NULL, nbPath=file.path("/media","pietas","onedrive","ul","Notes"),
+               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               docPath=file.path(sysRoot,"Projects"),
+               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
+               htmlUP=F, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
   if(setProj){
     codePath <- file.path(codePath,projName)
-    htmlPath <- file.path(htmlPath,projName)
+    nbPath <- file.path(nbPath,projName)
     outPath <- file.path(outPath,projName)
+    docPath <- file.path(docPath,projName)
   }
   if(is.null(quartoPath)) quartoPath=outPath
   if(setHome){
-    htmlFileName <- file.path(htmlPath,"index.html")
+    nbFileName <- file.path(nbPath,"index.html")
   }else{
-    htmlFileName <- file.path(htmlPath,paste0(fileName,".html"))
-    if(rmdUP){
-      shinyFileName <- file.path(htmlPath,paste0(fileName,".Rmd"))
-    }else{
-      shinyFileName <- file.path(htmlPath,paste0(fileName,".html"))
-    }
-    docFileName <- file.path(htmlPath,paste0(fileName,".docx"))
-    pdfFileName <- file.path(htmlPath,paste0(fileName,".pdf"))
+    nbFileName <- file.path(nbPath,paste0(fileName,".html"))
+    docFileName <- file.path(docPath,paste0(fileName,".docx"))
+    pdfFileName <- file.path(docPath,paste0(fileName,".pdf"))
   }
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
@@ -66,8 +45,8 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
     quarto::quarto_render(input=infile,execute_dir=outPath)
     if(file.exists(quartoFile)){
       if(quartoUP){
-        quartoFileName <- file.path(htmlPath,paste0(fileName,".",quarto))
-        system(paste0("scp ",quartoFile," ",paste0(user,"@",hostname,":",quartoFileName)))
+        quartoFileName <- file.path(nbPath,paste0(fileName,".",quarto))
+        fs::file_copy(quartoFile,quartoFileName,overwrite=T)
       }
       fs::file_move(paste0(quartoFile),quartoPath)
     }
@@ -76,25 +55,22 @@ rc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,sysRoot=.sy
       docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                     output_format="bookdown::word_document2")
       if(docUP){
-         system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",docFileName)))
+        fs::file_copy(docxFile,docFileName,overwrite=T)
       }
     }
-    if(toHTML & !rmdUP){
+    if(toHTML){
       htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                 output_format="bookdown::html_document2")
       if(htmlUP){
-        system(paste0("scp ",htmlFile," ",paste0(user,"@",hostname,":",htmlFileName)))
+        fs::file_copy(htmlFile,nbFileName,overwrite=T)
       }
     }
     if(toPDF){
       pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                   output_format="bookdown::pdf_document2")
       if(pdfUP){
-        system(paste0("scp ",pdffile," ",paste0(user,"@",hostname,":",pdfFileName)))
+        fs::file_copy(pdfFile,pdfFileName,overwrite=T)
       }
-    }
-    if(rmdUP){
-      system(paste0("scp ",infile," ",paste0(user,"@",hostname,":",shinyFileName)))
     }
   }
 }
