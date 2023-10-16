@@ -4,7 +4,14 @@
 \alias{display_data}
 \title{display datatable}
 \usage{
-display_data(dataset, number = NULL, disp = T, limited = F, buttons = F)
+display_data(
+  dataset,
+  number = NULL,
+  disp = T,
+  limited = F,
+  buttons = F,
+  plen = 10
+)
 }
 \arguments{
 \item{dataset}{the data to display}
