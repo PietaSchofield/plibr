@@ -7,10 +7,10 @@
 display_data(
   dataset,
   number = NULL,
-  disp = T,
+  disp = F,
   limited = F,
   buttons = F,
-  plen = 10
+  plen = NULL
 )
 }
 \arguments{

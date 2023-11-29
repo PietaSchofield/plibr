@@ -9,9 +9,14 @@
 #' @param limited contrain to container
 #'
 #' @export
-display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F,plen=10){
+display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL){
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
+  }
+  if(is.null(plen)){
+    plen=10
+  }else if(!is.numeric(plen)){
+    plen=nrow(dataset)
   }
   if(disp){
     if(buttons){
