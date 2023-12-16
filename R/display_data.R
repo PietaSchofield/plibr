@@ -9,7 +9,8 @@
 #' @param limited contrain to container
 #'
 #' @export
-display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL){
+display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,
+                         caption=NULL){
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
   }
@@ -24,6 +25,7 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
       btns <- c("copy","csv")
       dom <- 'Blfrtip'
       dataset %>% DT::datatable(extensions = ext, 
+                                caption=caption,
                               options = list(dom = dom, 
                                              buttons = btns, 
                                              lengthMenu = list(c(10,50,100, -1), 
@@ -34,7 +36,7 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
                               fillContainer=limited,escape=F,rownames=F)
     }else{
       dom <- 'lfrtip'
-      dataset %>% DT::datatable( options = list(dom = dom, 
+      dataset %>% DT::datatable( caption=caption, options = list(dom = dom, 
                                              lengthMenu = list(c(10,50,100, -1), 
                                                                c('10', '50', '100', 'All')),
                                              paging = T,

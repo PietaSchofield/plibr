@@ -10,7 +10,8 @@ display_data(
   disp = F,
   limited = F,
   buttons = F,
-  plen = NULL
+  plen = NULL,
+  caption = NULL
 )
 }
 \arguments{

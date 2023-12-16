@@ -18,7 +18,7 @@
 #' @export
 rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
                user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes","uol"),
-               quartoPath=NULL, nbPath=file.path("/media","pietas","onedrive","ul","Notes"),
+               quartoPath=NULL, nbPath=file.path("/var","www","html","uol"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
