@@ -20,9 +20,9 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
                user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes","uol"),
                quartoPath=NULL, nbPath=file.path("/var","www","html","uol"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
-               docPath=file.path(sysRoot,"Projects"),
+               docPath=file.path(sysRoot,"Projects"),silent=F,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
-               htmlUP=F, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
+               htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
   if(setProj){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
@@ -72,5 +72,8 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
         fs::file_copy(pdfFile,pdfFileName,overwrite=T)
       }
     }
+  }
+  if(!silent){
+    return(nbFileName)
   }
 }

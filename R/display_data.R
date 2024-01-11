@@ -9,12 +9,7 @@
 #' @param limited contrain to container
 #'
 #' @export
-<<<<<<< HEAD
-display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,
-                         caption=NULL){
-=======
 display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,caption=NULL){
->>>>>>> f2b69e9eda405b015719f6c7023e5ef7bc8b81f6
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
   }
@@ -40,11 +35,7 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
                               fillContainer=limited,escape=F,rownames=F)
     }else{
       dom <- 'lfrtip'
-<<<<<<< HEAD
-      dataset %>% DT::datatable( caption=caption, options = list(dom = dom, 
-=======
       dataset %>% DT::datatable(caption=caption, options = list(dom = dom, 
->>>>>>> f2b69e9eda405b015719f6c7023e5ef7bc8b81f6
                                              lengthMenu = list(c(10,50,100, -1), 
                                                                c('10', '50', '100', 'All')),
                                              paging = T,
