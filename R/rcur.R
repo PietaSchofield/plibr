@@ -23,6 +23,9 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
                docPath=file.path(sysRoot,"Projects"),silent=F,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
+  if(!file.exists(nbPath)){
+    htmlUP <- F
+  }
   if(setProj){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
