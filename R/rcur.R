@@ -17,12 +17,19 @@
 #'
 #' @export
 rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
-               user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes","uol"),
-               quartoPath=NULL, nbPath=file.path("/var","www","html","uol"),
+               user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes"),
+               quartoPath=NULL, nbPath=file.path("/var","www","html"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),silent=F,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
+  if(.gitRepo=="liverpool"){
+    nbPath <- file.path(nbPath,"uol")
+    outPath <- file.path(outPath,"uol")
+  }else{
+    nbPath <- file.path(nbPath,.gitRepo)
+    outPath <- file.path(outPath,.gitRepo)
+  }
   if(setProj){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
