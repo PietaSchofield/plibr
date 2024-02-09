@@ -23,17 +23,15 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
                docPath=file.path(sysRoot,"Projects"),silent=F,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
-<<<<<<< HEAD
   if(.gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
   }else{
     nbPath <- file.path(nbPath,.gitRepo)
     outPath <- file.path(outPath,.gitRepo)
-=======
+  }
   if(!file.exists(nbPath)){
     htmlUP <- F
->>>>>>> 6ecf4174d84a654c56abc2665961ec7b160d8223
   }
   if(setProj){
     codePath <- file.path(codePath,projName)
