@@ -32,6 +32,8 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
   }
   if(!file.exists(nbPath)){
     htmlUP <- F
+  }else{
+    outPath <- nbPath
   }
   if(setProj){
     codePath <- file.path(codePath,projName)
@@ -84,6 +86,6 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
     }
   }
   if(!silent){
-    return(nbFileName)
+    return(htmlFile)
   }
 }
