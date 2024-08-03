@@ -16,32 +16,42 @@
 #' @param outRoot local temporary file creation location
 #'
 #' @export
-rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
-               user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes"),
-               quartoPath=NULL, nbPath=file.path("/srv","http"),
+compilecurrent <- function(fileName=.fileName,
+               projName=.projName,
+               gitRepo="liverpool",
+               sysRoot=Sys.getenv("HOME"),
+               user=Sys.getenv("USER"), 
+               outPath=file.path(Sys.getenv("HOME"),"Notes"),
+               quartoPath=NULL, 
+               nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
-               docPath=file.path(sysRoot,"Projects"),silent=F,
-               setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
+               docPath=file.path(sysRoot,"Projects"),
+               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,setProj=T,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
-  if(.gitRepo=="liverpool"){
+  
+  if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
   }else{
-    nbPath <- file.path(nbPath,.gitRepo)
-    outPath <- file.path(outPath,.gitRepo)
+    nbPath <- file.path(nbPath,gitRepo)
+    outPath <- file.path(outPath,gitRepo)
   }
+
   if(!file.exists(nbPath)){
     htmlUP <- F
   }else{
     outPath <- nbPath
   }
+
   if(setProj){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
     outPath <- file.path(outPath,projName)
     docPath <- file.path(docPath,projName)
   }
+
   if(is.null(quartoPath)) quartoPath=outPath
+
   if(setHome){
     nbFileName <- file.path(nbPath,"index.html")
   }else{
@@ -49,8 +59,10 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
     docFileName <- file.path(docPath,paste0(fileName,".docx"))
     pdfFileName <- file.path(docPath,paste0(fileName,".pdf"))
   }
+
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
+  
   if(!is.null(quarto)){
     quartoFile <- paste0(xfun::sans_ext(infile),".",quarto)
     if(dbg) print(quartoFile)
@@ -85,7 +97,21 @@ rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.s
       }
     }
   }
+
   if(!silent){
-    return(htmlFile)
+    ofile <- htmlFile
+    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))){
+      lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
+      if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
+    }
+
+    if(RCurl::url.exists("http://localhost")){
+      ofile <- gsub("/srv/http/","http://localhost/",ofile)
+      system2("firefox",args=ofile ,wait=F,stderr=F)
+    }else{
+      if(!is.null(lfile)){
+        system2("firefox",args=lfile,wait=F)
+      }
+    }
   }
 }

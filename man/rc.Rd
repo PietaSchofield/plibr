@@ -12,7 +12,7 @@ rc(
   user = Sys.getenv("USER"),
   outPath = file.path(Sys.getenv("HOME"), "Notes"),
   quartoPath = NULL,
-  nbPath = file.path("/var", "www", "html"),
+  nbPath = file.path("/srv", "http"),
   codePath = file.path(sysRoot, "GitLab", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = F,
