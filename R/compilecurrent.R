@@ -26,9 +26,9 @@ compilecurrent <- function(fileName=.fileName,
                nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
-               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,setProj=T,
+               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,nomove=F,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
-  
+ 
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
@@ -43,7 +43,7 @@ compilecurrent <- function(fileName=.fileName,
     outPath <- nbPath
   }
 
-  if(setProj){
+  if(!is.null(projName)){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
     outPath <- file.path(outPath,projName)
@@ -60,7 +60,8 @@ compilecurrent <- function(fileName=.fileName,
     pdfFileName <- file.path(docPath,paste0(fileName,".pdf"))
   }
 
-  dir.create(outPath,showW=F,recur=T)
+  dir.create(dirname(nbFileName),showW=F,recur=T)
+  dir.create(dirname(docFileName),showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
   
   if(!is.null(quarto)){
@@ -100,7 +101,7 @@ compilecurrent <- function(fileName=.fileName,
 
   if(!silent){
     ofile <- htmlFile
-    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))){
+    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove){
       lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
       if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
     }
