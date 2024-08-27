@@ -24,6 +24,7 @@ compilecurrent <- function(fileName=.fileName,
                outPath=file.path(Sys.getenv("HOME"),"Notes"),
                quartoPath=NULL, 
                nbPath=file.path("/srv","http"),
+               default_browser="epiphany",
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,nomove=F,
@@ -109,10 +110,10 @@ compilecurrent <- function(fileName=.fileName,
 
     if(RCurl::url.exists("http://localhost")){
       ofile <- gsub("/srv/http/","http://localhost/",ofile)
-      system2("firefox",args=ofile ,wait=F,stderr=F)
+      system2(default_browser,args=ofile ,wait=F,stderr=F)
     }else{
       if(!is.null(lfile)){
-        system2("firefox",args=lfile,wait=F)
+        system2(default_browser,args=lfile,wait=F)
       }
     }
   }
