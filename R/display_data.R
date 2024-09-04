@@ -23,25 +23,30 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
       ext <- 'Buttons'
       btns <- c("copy","csv")
       dom <- 'Blfrtip'
-      dataset %>% DT::datatable(extensions = ext, 
-                                caption=caption,
-                              options = list(dom = dom, 
-                                             buttons = btns, 
-                                             lengthMenu = list(c(10,50,100, -1), 
-                                                               c('10', '50', '100', 'All')),
-                                             paging = T,
-                                             scrollX = T,
-                                             pageLength = plen),
-                              fillContainer=limited,escape=F,rownames=F)
+      dataset %>% DT::datatable(extensions = ext, caption=caption,
+       options = list(dom = dom, buttons = btns, 
+         lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
+         paging = T, scrollX = T, pageLength = plen,
+         initComplete = JS(
+           "function(settings, json) {",
+             "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
+             "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
+           "}"
+         )),
+      fillContainer=limited,escape=F,rownames=F)
     }else{
       dom <- 'lfrtip'
-      dataset %>% DT::datatable(caption=caption, options = list(dom = dom, 
-                                             lengthMenu = list(c(10,50,100, -1), 
-                                                               c('10', '50', '100', 'All')),
-                                             paging = T,
-                                             scrollX = T,
-                                             pageLength = plen),
-                              fillContainer=limited,escape=F,rownames=F)
+      dataset %>% DT::datatable(caption=caption, 
+        options = list(dom = dom, 
+          lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
+           paging = T, scrollX = T, pageLength = plen,
+           initComplete = JS(
+           "function(settings, json) {",
+             "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
+             "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
+           "}"
+         )),
+      fillContainer=limited,escape=F,rownames=F)
     }
 }else{
     dataset %>% tibble::as_tibble()
