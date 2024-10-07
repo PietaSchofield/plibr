@@ -11,7 +11,9 @@ display_data(
   limited = F,
   buttons = F,
   plen = NULL,
-  caption = NULL
+  caption = NULL,
+  fixh = T,
+  fixc = list(leftColumns = 1)
 )
 }
 \arguments{

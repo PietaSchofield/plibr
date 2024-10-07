@@ -9,7 +9,8 @@
 #' @param limited contrain to container
 #'
 #' @export
-display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,caption=NULL){
+display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,caption=NULL,
+                         fixh=T,fixc=list(leftColumns=1)){
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
   }
@@ -26,7 +27,8 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
       dataset %>% DT::datatable(extensions = ext, caption=caption,
        options = list(dom = dom, buttons = btns, 
          lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-         paging = T, scrollX = T, pageLength = plen,
+         paging = T, scrollX = T, scrollY=T, pageLength = plen,
+         fixHeader=fixh,fixColumns=fixc,
          initComplete = JS(
            "function(settings, json) {",
              "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
@@ -39,7 +41,8 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
       dataset %>% DT::datatable(caption=caption, 
         options = list(dom = dom, 
           lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-           paging = T, scrollX = T, pageLength = plen,
+           paging = T, scrollX = T, scrollY=T,pageLength = plen,
+           fixHeader=fixh,fixColumns=fixc,
            initComplete = JS(
            "function(settings, json) {",
              "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
