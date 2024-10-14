@@ -10,7 +10,7 @@
 #'
 #' @export
 display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,caption=NULL,
-                         fixh=T,fixc=list(leftColumns=1)){
+                         fixh=T,fixc=list(leftColumns=1),sigf=3){
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 
   }
@@ -19,37 +19,43 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
   }else if(!is.numeric(plen)){
     plen=nrow(dataset)
   }
+
+  non_int_numeric_cols <- names(dataset)[sapply(dataset,function(x){
+    is.numeric(x) && any(x!=as.integer(x))
+    })]
   if(disp){
     if(buttons){
       ext <- 'Buttons'
       btns <- c("copy","csv")
       dom <- 'Blfrtip'
-      dataset %>% DT::datatable(extensions = ext, caption=caption,
-       options = list(dom = dom, buttons = btns, 
-         lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-         paging = T, scrollX = T, scrollY=T, pageLength = plen,
-         fixHeader=fixh,fixColumns=fixc,
-         initComplete = JS(
-           "function(settings, json) {",
-             "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
-             "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
-           "}"
-         )),
-      fillContainer=limited,escape=F,rownames=F)
+      dataset %>% 
+        DT::datatable(extensions = ext, caption=caption,
+          options = list(dom = dom, buttons = btns, 
+            lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
+            paging = T, scrollX = T, scrollY=T, pageLength = plen,
+            fixHeader=fixh,fixColumns=fixc,
+            initComplete = JS("function(settings, json) {",
+              "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
+              "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
+            "}"
+          )),
+          fillContainer=limited,escape=F,rownames=F) %>%
+        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
     }else{
       dom <- 'lfrtip'
-      dataset %>% DT::datatable(caption=caption, 
-        options = list(dom = dom, 
-          lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-           paging = T, scrollX = T, scrollY=T,pageLength = plen,
-           fixHeader=fixh,fixColumns=fixc,
-           initComplete = JS(
-           "function(settings, json) {",
-             "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
-             "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
-           "}"
-         )),
-      fillContainer=limited,escape=F,rownames=F)
+      dataset %>%
+        DT::datatable(caption=caption, 
+          options = list(dom = dom, 
+            lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
+            paging = T, scrollX = T, scrollY=T,pageLength = plen,
+            fixHeader=fixh,fixColumns=fixc,
+            initComplete = JS("function(settings, json) {",
+              "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
+              "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
+            "}"
+          )),
+          fillContainer=limited,escape=F,rownames=F) %>%
+        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
     }
 }else{
     dataset %>% tibble::as_tibble()

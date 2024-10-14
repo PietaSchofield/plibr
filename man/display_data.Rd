@@ -13,7 +13,8 @@ display_data(
   plen = NULL,
   caption = NULL,
   fixh = T,
-  fixc = list(leftColumns = 1)
+  fixc = list(leftColumns = 1),
+  sigf = 3
 )
 }
 \arguments{
