@@ -10,7 +10,7 @@ output:
     includes:
       before_body: !expr system.file('html','before_body_page.html',package='plibr')
     toc: no
-    css: !expr system.file('css','solarized_dark.css')
+    css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
 ---
 
