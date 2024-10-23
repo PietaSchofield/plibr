@@ -4,6 +4,7 @@
 !*.sql
 !*.html
 !*.css
+!*.csl
 !*.Rproj
 !*.Rd
 !*.yaml
