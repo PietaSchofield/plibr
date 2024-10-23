@@ -6,7 +6,7 @@
 \usage{
 rb(
   wd = NULL,
-  projName = "plib",
+  projName = "plibr",
   pkgName = "package",
   install = F,
   baseDir = file.path(Sys.getenv("HOME"), "GitLab")

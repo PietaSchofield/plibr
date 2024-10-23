@@ -29,6 +29,6 @@ sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_g
 
 
 ```{r eval=F,include=F}
-plib::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
-plib::displaycurrent(fileName="FN",projName="PN",gitRepo="liverpool")
+plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
+plibr::displaycurrent(fileName="FN",projName="PN",gitRepo="liverpool")
 ```

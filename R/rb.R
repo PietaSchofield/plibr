@@ -5,11 +5,11 @@
 #' @param rstudio
 #'
 #' @export
-rb <- function(wd=NULL,projName="plib", pkgName="package",install=F,
+rb <- function(wd=NULL,projName="plibr", pkgName="package",install=F,
                baseDir=file.path(Sys.getenv("HOME"),"GitLab")){
   curd <- getwd()
   if(is.null(wd)){
-    if(projName!="plib"){
+    if(projName!="plibr"){
       wd <- file.path(baseDir,projName,pkgName)
     }else{
       wd <- file.path(baseDir,projName)

@@ -25,7 +25,7 @@ genCovTracks <- function(projName,fileList, outPath, paired=T){
       paste0("export(covTrack,con='",file.path(outDir,gsub("bam$","bw",fname)),"')"),
       "q()"
       )
-   plib::runRScript(rscript,jname=paste0("bam2bw_",fn),jproj=projName,
+   plibr::runRScript(rscript,jname=paste0("bam2bw_",fn),jproj=projName,
                         jdesc=paste0("Run Rscript to make bw ",fname," "))
   })
 }

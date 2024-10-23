@@ -3,7 +3,7 @@
 #' @param pattern file pattern
 #'
 #' @export
-rlsFiles <- function(pattern,hostname="pieta.me",username="pieta",verb=F,dir=F){
+rlsFiles <- function(pattern,hostname="localhost",username="pietas",verb=F,dir=F){
   if(verb){
     if(dir){
       cmd <- "ls -dlah --time-style=long-iso "
@@ -17,5 +17,5 @@ rlsFiles <- function(pattern,hostname="pieta.me",username="pieta",verb=F,dir=F){
       cmd <- "ls "
     }
   }
-  plib::rcmd(paste0(cmd,pattern),hostname=hostname,username=username)
+  plibr::rcmd(paste0(cmd,pattern),hostname=hostname,username=username)
 }

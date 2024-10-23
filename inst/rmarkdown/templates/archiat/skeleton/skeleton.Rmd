@@ -209,36 +209,5 @@ The English National Institute for Health Research has produced resources for me
 [hiat]: https://forequity.uk
 
 ```{r eval=F,include=F}
-#
-# This needs changing if not on phplxa to point to the code location probably this will be the mount
-# point of the unix home
-#
-.homeDir <- file.path(Sys.getenv("HOME"))
-.mntPnt <- file.path("/","media","pietas")
-.uDrive <- file.path(.mntPnt,"unix")
-.sysRoot <- .homeDir
-#
-.gitRepo <- "liverpool"
-.hostName <- "phplxa.liv.ac.uk"
-.fileName <- "202404_hiat"
-.projName <- "sprint"
-.codeDir <- file.path(.sysRoot,"GitLab",.gitRepo,.projName)
-
-# Check for vpn connetion
-# Only try to upload if connected to vpn
-ofile <- plib::rc(fileName=.fileName)
-
-if(file.exists(file.path(.homeDir,"OneDrive","ul","Notes"))){
-  lfile <- gsub(file.path("/var","www","html"),file.path(.homeDir,"OneDrive","ul","Notes"),ofile)
-  if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
-}
-
-if(Sys.info()["nodename"]=="S600"){
-  ofile <- gsub("/var/www/html/","http://localhost/",ofile)
-  system2("firefox",args=ofile ,wait=F,stderr=F)
-}else{
-  if(!is.null(lfile)){
-    system2("firefox",args=lfile,wait=F)
-  }
-}
+plibr::compilecurrent(fileName="FN",projName="PN")
 ```

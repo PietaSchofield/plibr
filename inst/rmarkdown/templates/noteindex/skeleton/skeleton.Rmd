@@ -30,7 +30,7 @@ sys.source(system.file('scripts','paths.R',package='plibr') envir=knitr::knit_gl
 wwwHost <- "localhost"
 wwwUser <- "pietas"
 wwwRoot <- file.path("/srv","http","uol")
-allPages <- plib::rlsFiles(file.path(wwwRoot,.projName,"*.html"),host=wwwHost,user=wwwUser,verb=T)
+allPages <- plibr::rlsFiles(file.path(wwwRoot,.projName,"*.html"),host=wwwHost,user=wwwUser,verb=T)
 if(length(grep("index",allPages))>0){
   allPages <- allPages[-grep("index",allPages)]
 }
@@ -41,7 +41,7 @@ pagesDB$Project <- basename(dirname(pagesDB$URL))
 pagesDB$URL <- file.path(basename(pagesDB$URL))
 pagesDB$Link <- paste0('<a href="',pagesDB$URL,'">',gsub("[.]html","",pagesDB$File),'</a>')
 pagesDB[order(pagesDB$Link,decreasing=T),c("Link","Date","Time","Size")] %>%
-  DT::datatable(escape=F,rownames=F)
+  plibr::display_data(disp=T,plen='all') 
 ```
 
 # References
