@@ -1,0 +1,34 @@
+---
+title: PN
+author: "Pieta Schofield"
+output:
+  bookdown::html_document2:
+    code_folding: hide
+    keep_md: no
+    number_sections: no
+    fig_caption: yes
+    includes:
+      before_body: !expr system.file('html','before_body_page.html',package='plibr')
+    toc: no
+    css: !expr system.file('css','solarized_dark.css')
+bibliography: ../../../Zotero/zoterofull.bib
+---
+
+```{r,echo=FALSE, include=F}
+.gitRepo <- "liverpool"
+.projName <- "PN"
+.fileName <- "FN"
+sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
+```
+
+
+#### References
+
+```{r links,child=.linksFile,eval=T}
+```
+
+
+```{r eval=F,include=F}
+plib::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
+plib::displaycurrent(fileName="FN",projName="PN",gitRepo="liverpool")
+```
