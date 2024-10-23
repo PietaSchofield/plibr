@@ -3,7 +3,7 @@
 # 
 require(conflicted)
 require(duckdb)
-require(plib)
+require(plibr)
 require(knitr)
 require(tidyverse)
 require(dbplyr)

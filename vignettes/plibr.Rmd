@@ -1,5 +1,5 @@
 ---
-title: "Pieta's Library of Useful Functions"
+title: "Pieta's Library of Useful Functions R"
 author: "Pieta Schofield"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,8 +19,8 @@ knitr::opts_chunk$set(
 # Build Package
 
 ```{r package-build, eval=F}
-plib::autoCommit()
-codeDir <- file.path(Sys.getenv("HOME"),"GitLab","plib")
+#plibr::autoCommit()
+codeDir <- file.path(Sys.getenv("HOME"),"GitLab","plibr")
 setwd(codeDir)
 devtools::load_all()
 devtools::document()
