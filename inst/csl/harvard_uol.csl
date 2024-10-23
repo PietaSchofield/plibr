@@ -153,8 +153,8 @@
   </citation>
   <bibliography hanging-indent="true">
     <sort>
+      <key variable="year" sort="decending"/>
       <key macro="author"/>
-      <key variable="title"/>
     </sort>
     <layout>
       <group delimiter=" " suffix=".">
