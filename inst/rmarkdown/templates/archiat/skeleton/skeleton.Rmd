@@ -1,0 +1,244 @@
+---
+title: Health Equity Assessment 
+author: "Pieta Schofield"
+output:
+  bookdown::html_document2:
+    code_folding: show
+    keep_md: no 
+    number_sections: no
+    includes:
+      before_body: !expr system.file('html','before_body_page.html',package='plibr')
+    toc: yes
+    toc_depth: 3
+    css: !expr system.file('css','solarized_dark.css',package='plibr')
+bibliography: ../../../Zotero/zoterofull.bib
+---
+
+
+
+```{r,echo=FALSE, include=F}
+.gitRepo <- "liverpool"
+.projName <- "PN"
+.fileName <- "FN"
+sys.source(system.file('scripts','paths.R',package='plibr'),envir=knitr::knit_global())
+```
+
+# Introduction
+
+The rational to this is to ensure that the inequalities bit of the protocol is thought out fully. I have
+decided to use the [ForEquity HIAT approach][hiat] partly because it is there and partly because it is
+an ARC NW developed tool. Because the SPRINT project is an ARC NW affiliated project it seems the right
+approach to take at this point 
+
+# Sections
+
+## Mapping health inequalities relevant to your research
+
+### Purpose:
+
+All research topics have dimensions of inequalities. Identifying and mapping those most relevant to your
+topic will ensure that an equity lens is integrated throughout the research process.
+
+    Health inequalities have overlapping and interacting dimensions across social 
+    categories. The term social category refers to people who share a particular 
+    characteristic. 
+    
+    Examples of social categories include:
+    1. people who identify as women, men or non-binary; 
+    2. people sharing a religion, sexual orientation or ethnic identity; 
+    3. people in different age groups; people with disabilities; 
+    4. and people in different social classes. 
+    
+    A society’s systems of discrimination, stigmatisation and resource allocation 
+    associated with these social categories – sexism, racism, classism, disablism, 
+    ageism – create inequalities in living and working conditions, and in the control 
+    people have in their lives. Individuals are members of multiple social categories 
+    and may therefore be impacted by overlapping or intersecting systems of 
+    discrimination and disadvantage (e.g. women of colour living on low incomes). These 
+    systems are sometimes called ‘structural’ because they arise from the way societies are
+    organised and they lead in turn to health inequalities.
+
+Existing literature will help in this mapping but the knowledge of people with relevant lived experience,
+and policy makers and practitioners in the field, is just as important.
+
+### Reflection:
+
+## Integrating an intersectional equity lens into research questions
+
+### Purpose:
+
+Integrating relevant dimensions of intersectional inequalities into your research questions will ensure
+that these are central to your study design and will be addressed throughout the research process. To do
+this requires a good understanding of the social context of the research topic.
+
+To understand the dimensions of inequalities relevant to a particular topic, two issues need to be
+considered: (1) whether people in different social categories will have differential (unequal)
+experiences or outcomes, and (2) which structural factors may create these. Research that illuminates how
+the conditions in which people live and work impact on their lives and health rather than focusing only
+on individual biological factors (e.g. age, sex) or behavioural characteristics (e.g. diet) will help
+decision-makers to design more effective action to address social and health inequalities.
+
+Section 1 of the HIAT encourages you to identify the inequalities relevant to your topic by exploring
+existing research and involving people with relevant lived experience or practice/policy expertise. This
+section encourages you to consider how to integrate these dimensions into your research questions.
+
+### Reflection:
+
+
+## Designing and conducting research sensitive to inequalities
+
+The design of any study is determined by the problem or questions it aims to address. It is more likely
+that research will be sensitive to inequalities if the researchers start off with a good understanding of
+what is known about the dimensions of intersectional inequalities relevant to the topic they wish to
+study (HIAT section 1), and if they integrate these into the way the problem or research questions are
+framed including any theory of change or logic model that has been developed. (HIAT section 2).
+
+To design and conduct studies that take account of relevant intersecting dimensions of inequalities
+requires careful consideration of the specification of data to be used, how data will be obtained and
+analysed, and who will be involved in interpreting the findings.
+
+Whether your study involves a systematic review, uses primary or secondary data, or involves
+quantitative, qualitative or mixed method designs, three key elements will determine how sensitive to
+inequalities it is:
+
+    1. If the available data and the analytical techniques used enable exploration of 
+       differential experiences or outcomes across intersecting social categories 
+       (e.g. gender, race, and class).
+    2. If your data and analytical techniques can illuminate the causes of any differential
+       experiences/outcomes identified, moving beyond proximal factors (such as aspects
+       of lifestyle) to consider the role of structural drivers of inequality such as 
+       powerlessness, stigma, and material disadvantage.
+    3. If people with lived experience and other relevant stakeholders are involved as 
+       equal partners in the design and conduct of your research and interpretation of 
+       findings.
+
+### Reflection:
+
+
+## Prioritising findings relevant to action on inequalities in reporting and dissemination
+
+### Purpose:
+
+Research sensitive to inequalities is more likely to produce evidence that can help increase the
+acceptability and effectiveness of action to reduce social and health inequalities. However, maximising
+the positive impact of research evidence, and avoiding unintended negative impacts, require careful
+consideration when deciding on how to report and disseminate research findings.
+
+Dissemination is a communication process that aims to exchange knowledge for use in ways that lead to
+improvements. Successful dissemination requires clear and accessible messages, appropriate products based
+on these, directed at relevant audiences through appropriate channels (Ordonez and Serrat 2017). There
+are important considerations to each of these elements, if the aim is to contribute to action to reduce
+health inequalities.
+
+### Reflection:
+
+## Principles for research that is sensitive to intersectional inequalities
+
+Social and health inequalities are found everywhere, but some societies are more unequal than others.
+Some low-income countries have relatively good population health outcomes despite their lower level of
+economic development whilst some high-income countries, like the UK and USA are doing relatively badly
+(Freeman et al. 2020). These inequalities result from long standing social structures that determine the
+unequal distribution of power and resources.
+
+People doing research often make recommendations for policies, professional practice and other actions
+that can impact on these inequalities positively or negatively [see HIAT section 4]. For this reason,
+there is a growing debate about what responsibilities researchers should have. Three possible principles
+for research sensitive to inequalities practice are presented below along with examples of resources that
+may help you reflect on these.
+
+Principle 1. Researchers can work to remove their implicit biases.
+
+These biases can reinforce negative stereotypes and contribute to stigma. Reflecting on potential bias
+and involving people with lived experience of the problems being studied in discussions about them will
+reduce this risk.
+
+The Association Test [please note you will need to register to access it] has been developed to support
+research teams to discuss these issues in a constructive manner at any point in the research process.
+
+The Stanford Gendered Innovations Website on Science and Medicine also provides resources to help
+researchers to think about the role of language in restricting knowledge production and perpetuating
+inequalities.
+
+Principle 2. Research can be designed and conducted in ways that challenge inequities.
+
+This is the main focus of the HIAT tool but other resources that help support the development of research
+that explicitly challenges social and health inequalities are included in the FOR Equity inventory.
+
+Principle 3. Research practices can positively promote greater equity.
+
+These include practices that ensure inclusive approaches to the composition of the research team and
+establishing positive respectful relationships between team members. It also includes thinking how public
+and other expert advisers are recruited, rewarded and acknowledged for their contribution to studies.
+Some of the resources that can help you think about these issues are highlighted below:
+
+A set of standards for public involvement in research has been produced by a national partnership group
+which included members of the public who had been involved in research as well as researchers and
+research funders. The standards cover the six dimensions of involvement shown in the image. 
+
+Work funded by the European Commission produced the following checklist to support the development of
+research practice sensitive to inequalities:
+
+    1. Are you considering how you can increase diversity in your project team?
+    2. Have you recruited people with relevant lived experience onto your team?
+    3. Are you discouraging hierarchical relations in your team?
+
+Five principles developed by the US research organisation Child Trends have a particular focus on racial
+equity. They argue that these principles can be applied in any field to improve understanding of how to
+use research to create greater equity with a particular focus on racial equity:
+
+    Examine our own backgrounds and biases; 
+    1. Commit to digging deeper into the data; 
+    2. Recognize research process impacts communities; 
+    3. researchers play a role in ensuring their research benefits communities;
+    4. Engage communities as partners in research and credit them for their contribution; 
+    5. Guard against the implied or explicit assumption that white is the normative, standard, or default
+       position.
+
+The CCGHR (Canadian Coalition of Global Health Research Principles for Global Health Research) is a framework to guide how to integrate equity considerations into everyday research, knowledge translation, and practice activities. The resource comprises six principles: authentic partnering, inclusion, shared benefits, commitment to the future, responsiveness to causes of inequities, and humility.
+
+The English National Institute for Health Research has produced resources for members of the public who want to get involved in research and for researchers:
+
+    1. A brief guide to public involvement in funding applications (2020);
+    2. Patients, Carers and the Public
+
+# References
+
+```{r links,child=.linksFile,eval=T}
+```
+
+[hiat]: https://forequity.uk
+
+```{r eval=F,include=F}
+#
+# This needs changing if not on phplxa to point to the code location probably this will be the mount
+# point of the unix home
+#
+.homeDir <- file.path(Sys.getenv("HOME"))
+.mntPnt <- file.path("/","media","pietas")
+.uDrive <- file.path(.mntPnt,"unix")
+.sysRoot <- .homeDir
+#
+.gitRepo <- "liverpool"
+.hostName <- "phplxa.liv.ac.uk"
+.fileName <- "202404_hiat"
+.projName <- "sprint"
+.codeDir <- file.path(.sysRoot,"GitLab",.gitRepo,.projName)
+
+# Check for vpn connetion
+# Only try to upload if connected to vpn
+ofile <- plib::rc(fileName=.fileName)
+
+if(file.exists(file.path(.homeDir,"OneDrive","ul","Notes"))){
+  lfile <- gsub(file.path("/var","www","html"),file.path(.homeDir,"OneDrive","ul","Notes"),ofile)
+  if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
+}
+
+if(Sys.info()["nodename"]=="S600"){
+  ofile <- gsub("/var/www/html/","http://localhost/",ofile)
+  system2("firefox",args=ofile ,wait=F,stderr=F)
+}else{
+  if(!is.null(lfile)){
+    system2("firefox",args=lfile,wait=F)
+  }
+}
+```

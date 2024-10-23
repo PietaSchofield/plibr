@@ -6,6 +6,7 @@
 !*.css
 !*.Rproj
 !*.Rd
+!*.yaml
 !README.md
 !LICENSE
 !DESCRIPTION
