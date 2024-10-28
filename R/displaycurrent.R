@@ -33,6 +33,9 @@ displaycurrent <- function(fileName=.fileName,
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
+  }else if(gitRepo=="personal"){
+    nbPath <- file.path(nbPath,"pers")
+    outPath <- file.path(outPath,"pers")
   }else{
     nbPath <- file.path(nbPath,gitRepo)
     outPath <- file.path(outPath,gitRepo)

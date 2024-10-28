@@ -1,0 +1,54 @@
+---
+title: PN
+author: "Pieta Schofield"
+output:
+  bookdown::html_document2:
+    code_folding: hide
+    keep_md: no
+    number_sections: no
+    fig_caption: yes
+    includes:
+      before_body: !expr system.file('html','before_body_index_per.html',package='plibr')
+    toc: no
+    css: !expr system.file('css','solarized_dark.css')
+bibliography: ../../../Zotero/zoterofull.bib
+---
+
+```{r,echo=FALSE, include=F}
+.projName <- "PN"
+.gitRepo <- "personal"
+.fileName <- "index"
+sys.source(system.file('scripts','paths_per.R',package='plibr') envir=knitr::knit_global())
+```
+
+# Introduction
+
+# Notebooks 
+
+```{r NoteBook_Pages, echo=F, eval=T}
+# The information behind this is contained in an SQLite database
+wwwHost <- "localhost"
+wwwUser <- "pietas"
+wwwRoot <- file.path("/srv","http","pers")
+allPages <- plibr::rlsFiles(file.path(wwwRoot,.projName,"*.html"),host=wwwHost,user=wwwUser,verb=T)
+if(length(grep("index",allPages))>0){
+  allPages <- allPages[-grep("index",allPages)]
+}
+pagesDB <- plyr::ldply(strsplit(gsub("\\s+", " ", stringr::str_trim(allPages))," "))[,c(8,6,7,5)]
+colnames(pagesDB) <- c("URL","Date","Time","Size") 
+pagesDB$File <- basename(pagesDB$URL)
+pagesDB$Project <- basename(dirname(pagesDB$URL))
+pagesDB$URL <- file.path(basename(pagesDB$URL))
+pagesDB$Link <- paste0('<a href="',pagesDB$URL,'">',gsub("[.]html","",pagesDB$File),'</a>')
+pagesDB[order(pagesDB$Link,decreasing=T),c("Link","Date","Time","Size")] %>%
+  plibr::display_data(disp=T,plen='all') 
+```
+
+# References
+
+```{r links,child=.linksFile,eval=T}
+```
+
+```{r, eval=F,include=F}
+plibr::compilecurrent(fileName="index",projName="PN",gitRepo="personal")
+```

@@ -32,6 +32,9 @@ compilecurrent <- function(fileName=.fileName,
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
+  }else if(gitRepo=="personal"){
+    nbPath <- file.path(nbPath,"pers")
+    outPath <- file.path(outPath,"pers")
   }else{
     nbPath <- file.path(nbPath,gitRepo)
     outPath <- file.path(outPath,gitRepo)
@@ -102,7 +105,7 @@ compilecurrent <- function(fileName=.fileName,
   if(!silent){
     ofile <- htmlFile
     lfile <- NULL
-    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove){
+    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove&gitRepo=="liverpool"){
       lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
       if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
     }
