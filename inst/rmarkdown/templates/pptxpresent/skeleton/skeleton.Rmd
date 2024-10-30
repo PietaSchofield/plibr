@@ -1,0 +1,28 @@
+---
+title: title
+author: Pieta Schofield
+date: !expr Sys.Date()
+always_allow_html: true
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+.gitRepo <- "liverpool"
+.projName <- "PN"
+.fileName <- "FN"
+sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Overview 
+
+## Overview Slide
+
+# Section
+
+## Section Content Slide
+
+
+```{r eval=F,include=F}
+plibr::presentcurrent(fileName="FN",projName="PN")
+```
