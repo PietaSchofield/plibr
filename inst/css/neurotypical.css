@@ -7,15 +7,15 @@
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f9; /* Light, neutral background */
-    color: #333333; /* Dark, neutral text color for good contrast */
+    background-color: #c1c1a1; /* Light, neutral background */
+    color: #00404b; /* Dark, neutral text color for good contrast */
     line-height: 1.2;
     font-size: 16px;
     padding: 20px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #2b2b2b; /* Darker heading color */
+    color: #00404b; /* Darker heading color */
     margin-bottom: 1rem;
     line-height: 1.4;
     font-weight: 600;
@@ -37,7 +37,7 @@ a:hover {
 
 code {
     font-family: 'Courier New', monospace;
-    background-color: #f7f7f7;
+    background-color: #c1c1a1;
     padding: 2px 4px;
     border-radius: 4px;
     font-size: 0.95em;
@@ -51,8 +51,8 @@ code {
 }
 
 header, footer {
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #c1c1a1;
+    color: #00404b;
     padding: 20px;
     text-align: center;
     border-top: 2px solid #eeeeee;
@@ -68,8 +68,8 @@ footer {
 
 /* Buttons */
 button {
-    background-color: #1a73e8;
-    color: white;
+    background-color: #00404b;
+    color: #c1c1a1;
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
@@ -78,7 +78,7 @@ button {
 }
 
 button:hover {
-    background-color: #1664c4;
+    background-color: #c1c1a1;
 }
 
 /* Form fields */
@@ -87,7 +87,7 @@ textarea {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #cccccc;
+    border: 1px solid #c1c1a1;
     border-radius: 4px;
     font-size: 1em;
 }
