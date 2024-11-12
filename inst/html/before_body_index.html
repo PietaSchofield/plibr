@@ -29,6 +29,64 @@
           </ul>
         </li>
       </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" id="searchBar" class="form-control" placeholder="Search...">
+        </div>
+      </form>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
+
+<!-- JavaScript for handling search functionality -->
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    let index = new FlexSearch.Document({
+      document: {
+        id: "id",
+        index: ["title", "content"],
+        store: ["title", "content"]
+      }
+    });
+    let data = null;
+
+    fetch('/search_index.json')
+      .then(response => response.json())
+      .then(jsonData => {
+        data = jsonData;
+        data.forEach(doc => index.add(doc));  // Add documents to the index
+      });
+
+    document.getElementById('searchBar').addEventListener('input', function () {
+      let query = this.value.trim();
+      if (!query) return;
+
+      let results = index.search(query, { limit: 10, enrich: true });  // Limit results to speed up
+
+      let resultsDiv = document.getElementById('searchResults');
+      if (!resultsDiv) {
+        resultsDiv = document.createElement('div');
+        resultsDiv.id = 'searchResults';
+        resultsDiv.style.position = 'absolute';
+        resultsDiv.style.backgroundColor = 'white';
+        resultsDiv.style.border = '1px solid #ddd';
+        resultsDiv.style.width = '100%';
+        document.getElementById('searchBar').parentNode.appendChild(resultsDiv);
+      }
+      resultsDiv.innerHTML = '';
+
+      results.forEach(function (result) {
+        result.result.forEach(function (ref) {
+          let item = data.find(d => d.id === ref);
+          if (item) {
+            let resultItem = document.createElement('div');
+            resultItem.innerHTML = `<a href="${item.id}">${item.title}</a><p>${item.content.slice(0, 150)}...</p>`;
+            resultsDiv.appendChild(resultItem);
+          }
+        });
+      });
+    });
+  });
+</script>
+
