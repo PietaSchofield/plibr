@@ -5,11 +5,11 @@
 #' @export
 create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F){
   meta <- list(
-    project_name = projName,
+    project_name = toupper(projName),
     description = projDesc,
     status = 'active',
-    start_date = as.character(lubridate::ymd_hms(Sys.Date())),
-    last_update = as.character(lubridate::ymd_hms(Sys.Date())),
+    start_date = format(Sys.Date(),"%Y-%m-%d %H:%M:%S"),
+    last_updated = format(Sys.Date(),"%Y-%m-%d %H:%M:%S"),
     owner = owner,
     contact = owner)
 
@@ -23,7 +23,7 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(projDir, base_url = "http://localhost/uol/") {
+update_meta_yaml <- function(projDir, base_url = "http://localhost/uol/",active=NULL) {
   
   # 1. Check if meta.yaml exists
   meta_file <- file.path(projDir, "meta.yaml")
@@ -38,7 +38,7 @@ update_meta_yaml <- function(projDir, base_url = "http://localhost/uol/") {
   project_files <- list.files(projDir, recursive = TRUE, full.names = TRUE)
   if (length(project_files) > 0) {
     last_modified <- max(file.info(project_files)$mtime)
-    meta$last_updated <- as.character(lubridate::ymd_hms(last_modified))
+    meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
   } else {
     warning("No files found in the project directory. Keeping the last_updated date unchanged.")
   }
@@ -53,6 +53,14 @@ update_meta_yaml <- function(projDir, base_url = "http://localhost/uol/") {
   } else {
     meta$web_status <- "missing"
   }
+
+  if(!is.null(active)){
+    meta$status <- active
+  }else{
+    meta$status <- "active"
+  }
+
+  meta$project_name <- toupper(meta$project_name)
   
   # 5. Save the updated metadata back to meta.yaml
   writeLines(yaml::as.yaml(meta), meta_file)
