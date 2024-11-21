@@ -56,8 +56,6 @@ update_meta_yaml <- function(projDir, base_url = "http://localhost/uol/",active=
 
   if(!is.null(active)){
     meta$status <- active
-  }else{
-    meta$status <- "active"
   }
 
   meta$project_name <- toupper(meta$project_name)
