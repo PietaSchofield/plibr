@@ -10,7 +10,7 @@ output:
     includes:
       before_body: !expr system.file('html','before_body_index.html',package='plibr')
     toc: no
-    css: !expr system.file('css','solarized_dark.css')
+    css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
 ---
 
@@ -18,7 +18,7 @@ bibliography: ../../../Zotero/zoterofull.bib
 .projName <- "PN"
 .gitRepo <- "liverpool"
 .fileName <- "index"
-sys.source(system.file('scripts','paths.R',package='plibr') envir=knitr::knit_global())
+sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
 ```
 
 # Introduction
