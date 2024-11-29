@@ -4,7 +4,12 @@
 \alias{update_meta_yaml}
 \title{update meta data}
 \usage{
-update_meta_yaml(projDir, base_url = "http://localhost/uol/")
+update_meta_yaml(
+  repo_path,
+  base_url = "http://localhost/uol/",
+  active = NULL,
+  recur = FALSE
+)
 }
 \description{
 update meta data

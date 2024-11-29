@@ -88,3 +88,75 @@ build_master_list <- function(repo_path,recur=FALSE,wwwroot="http://localhost/uo
   return(master_list)
 }
 
+#' build project index
+#'
+#' @export
+build_project_index <- function(project,
+                                git_directory=file.path(Sys.getenv("HOME"),"GitLab"), 
+                                html_directory=file.path("/srv","http"),
+                                localhost="http://localhost",
+                                repo="liverpool",
+                                htmlroot="uol") {
+  if(F){
+    project <- "notes"
+    git_directory <- file.path(Sys.getenv("HOME"),"GitLab","liverpool")
+    html_directory <- file.path("/srv","http","uol",project)
+    localhost <- "http://localhost"
+    repo <- "uol"
+  }
+
+  rmd_directory <- file.path(git_directory,repo,project)
+  html_directory <- file.path(html_directory,htmlroot,project)
+  # Helper function to extract YAML metadata
+
+  # List all Rmd files
+  rmd_files <- list.files(rmd_directory, pattern = "\\.Rmd$", full.names = TRUE)
+  rmd_files <- rmd_files[basename(rmd_files) != "index.Rmd"]
+
+  # Extract metadata and other information
+  index_data <- lapply(rmd_files, function(rmd_file) {
+    metadata <- plibr::extract_metadata(rmd_file)
+    rmd_name <- basename(rmd_file)
+    base_name <- gsub("[.]Rmd","",rmd_name)
+    html_file <- file.path(html_directory, sub("\\.Rmd$", ".html", rmd_name))
+
+    # Check if HTML file exists
+    html_exists <- fs::file_exists(html_file)
+
+    # File dates
+    last_modified <- fs::file_info(rmd_file)$modification_time
+    html_created <- if (html_exists) fs::file_info(html_file)$modification_time else NA
+
+    # Build a row for the index
+    list(
+      Name = if (html_exists) {
+        sprintf('<a href="%s">%s</a>',file.path(localhost,htmlroot,project,basename(html_file)),base_name)
+      } else {
+        base_name
+      },
+      Description = metadata$description %||% "No description",
+      Date_Updated = as.character(last_modified),
+      HTML_Created = if (!is.na(html_created)) as.character(html_created) else "Not available"
+    )
+  })
+
+  # Convert to a data frame
+  index_df <- do.call(rbind, lapply(index_data, as.data.frame))
+
+  return(index_df)
+}
+
+#' extrct metadata
+#'
+#' @export
+extract_metadata <- function(file_path) {
+  lines <- readLines(file_path, warn = FALSE)
+  start <- which(lines == "---")[1]
+  end <- which(lines == "---")[2]
+  if (is.na(start) || is.na(end)) return(NULL)
+  yaml_block <- paste(lines[start:end], collapse = "\n")
+  
+  # Load YAML and evaluate expressions
+  metadata <- yaml::yaml.load(yaml_block, eval.expr = TRUE)
+  return(metadata)
+}

@@ -34,7 +34,7 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
             lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
             paging = T, scrollX = T, scrollY=T, pageLength = plen,
             fixHeader=fixh,fixColumns=fixc,
-            initComplete = JS("function(settings, json) {",
+            initComplete = htmlwidgets::JS("function(settings, json) {",
               "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
               "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
             "}"
@@ -49,7 +49,7 @@ display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NUL
             lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
             paging = T, scrollX = T, scrollY=T,pageLength = plen,
             fixHeader=fixh,fixColumns=fixc,
-            initComplete = JS("function(settings, json) {",
+            initComplete = htmlwidgets::JS("function(settings, json) {",
               "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
               "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
             "}"
