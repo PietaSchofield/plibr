@@ -12,7 +12,8 @@ Imports:
     XML,
     ggplot2,
     reshape2,
-    lubridate
+    lubridate,
+    cachem
 Suggests:
     testthat,
     knitr

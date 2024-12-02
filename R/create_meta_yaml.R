@@ -24,7 +24,7 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(repo_path, base_url = "http://localhost/uol/",active=NULL,recur=FALSE) {
+update_meta_yaml <- function(repo_path,recur=FALSE) {
   
   project_dirs <- list.dirs(path = repo_path, recursive = recur)
   lapply(project_dirs, function(dir) {
@@ -34,7 +34,6 @@ update_meta_yaml <- function(repo_path, base_url = "http://localhost/uol/",activ
       # 2. Load the existing metadata
       meta <- yaml::yaml.load_file(meta_file)
       prev_updated <- meta$last_updated
-      prev_status <- meta$web_status
       # 3. Get the most recent file modification date for a Rmd file ignore the yaml as it will change
       project_files <- list.files(dir, recursive = TRUE, full.names = TRUE)
       if (length(project_files) > 0) {
@@ -44,25 +43,8 @@ update_meta_yaml <- function(repo_path, base_url = "http://localhost/uol/",activ
         warning("No files found in the project directory. Keeping the last_updated date unchanged.")
       }
   
-      # 4. Check for the index.html file on the website
-      project_name <- basename(dir) # Assume project name is the directory name
-      url <- paste0(base_url, project_name, "/index.html")
-      response <- httr::HEAD(url)
-      
-      if (httr::status_code(response) == 200) {
-        meta$web_status <- "exists"
-      } else {
-        meta$web_status <- "missing"
-      }
-
-      if(!is.null(active)){
-        meta$status <- active
-      }
-
-      meta$project_name <- toupper(meta$project_name)
-      
       # 5. Save the updated metadata back to meta.yaml
-      if(prev_updated!=meta$last_updated | prev_status!=meta$web_status){
+      if(prev_updated!=meta$last_updated){
         writeLines(yaml::as.yaml(meta), meta_file)
         message("Updated metadata file: ", meta_file)
       }
@@ -80,6 +62,17 @@ build_master_list <- function(repo_path,recur=FALSE,wwwroot="http://localhost/uo
     if (file.exists(yaml_file)) {
       metadata <- yaml::yaml.load_file(yaml_file)
       metadata$directory <- dir
+      # 4. Check for the index.html file on the website
+      project_name <- basename(dir) # Assume project name is the directory name
+      url <- paste0(www_root, project_name, "/index.html")
+      response <- httr::HEAD(url)
+      
+      if (httr::status_code(response) == 200) {
+        metadata$web_status <- "exists"
+      } else {
+        metadata$web_status <- "missing"
+      }
+      metadata$project_name <- toupper(meta$project_name)
       metadata$link <- gsub(dirname(dir),wwwroot,dir)
       return(metadata)
     }

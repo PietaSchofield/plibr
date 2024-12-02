@@ -1,92 +1,33 @@
 <div class="navbar navbar-default navbar-custom" role="navigation">
-  <div class="container">
+  <div class="container">                                       
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-            aria-expanded="false">Menu</a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-             <li class="dropdown-header"></li>
-             <li><a href="https://scholar.google.co.uk/citations?user=lj0BqCYAAAAJ&hl=en"> Google Scholar</a></li>
-             <li><a href="https://www.researchgate.net/profile/Pieta_Schofield"> Research Gate</a></li>
-             <li><a href="https://www.liverpool.ac.uk/population-health-sciences/staff/pieta-schofield">
-                 Liverpool University Profile</a></li>
-             <li><a href="https://twitter.com/PietaSchofield">Twitter</a></li>
-             <li><a href="https://pieta.wordpress.com">Wordpress blog</a></li>
-             <li><a href="https://github.com/PietaSchofield">GitHub</a></li>
-             <li><a href="https://bitbucket.org/pschofield">BitBucket</a></li>
-             <li><a href="https://gitlab.com/pieta.schofield">GitLab</a></li>
-             <li class="divider"></li>
-             <li><a href="https://theuniversityofliverpool.sharepoint.com/sites/cprd-resource">
-                 University of Liverpool CPRD Resource</a></li>
-             <li class="divider"></li>
-             <li><a href="/uol/index.html"> Home nuc</a></li>
-             <li><a href="/uol/notes/index.html"> Notes nuc</a></li>
-             <li><a href="/uol/todo.html"> To Do nuc</a></li>
-             <li class="divider"></li>
-             <li><a href="../index.html"> Up</a></li>
-
+            <li class="dropdown-item"></li>
+            <li><a href="https://scholar.google.co.uk/citations?user=lj0BqCYAAAAJ&hl=en">Google Scholar</a></li>
+            <li><a href="https://www.researchgate.net/profile/Pieta_Schofield">Research Gate</a></li>
+            <li><a href="https://www.liverpool.ac.uk/population-health-sciences/staff/pieta-schofield">Liverpool University Profile</a></li>
+            <li><a href="https://twitter.com/PietaSchofield">Twitter</a></li>
+            <li><a href="https://pieta.wordpress.com">Wordpress blog</a></li>
+            <li><a href="https://github.com/PietaSchofield">GitHub</a></li>
+            <li><a href="https://bitbucket.org/pschofield">BitBucket</a></li>
+            <li><a href="https://gitlab.com/pieta.schofield">GitLab</a></li>
+            <li class="divider"></li>
+            <li><a href="https://theuniversityofliverpool.sharepoint.com/sites/cprd-resource">University of Liverpool CPRD Resource</a></li>
+            <li class="divider"></li>
+            <li><a href="/index.html">Home </a><li>
+            <li class="divider"></li>
+            <li><a href="/uol/index.html">Home UoL Projects </a><li>
+            <li><a href="/uol/notes/index.html">UoL Monthly Notes</a><li>
+            <li><a href="/uol/todo.html">UoL ToDo List</a></li>
+            <li class="divider"></li>
+            <li><a href="./index.html">Up</a></li>
           </ul>
         </li>
       </ul>
-      <form class="navbar-form navbar-right" role="search">
-        <div class="form-group">
-          <input type="text" id="searchBar" class="form-control" placeholder="Search...">
-        </div>
-      </form>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
-
-
-<!-- JavaScript for handling search functionality -->
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    let index = new FlexSearch.Document({
-      document: {
-        id: "id",
-        index: ["title", "content"],
-        store: ["title", "content"]
-      }
-    });
-    let data = null;
-
-    fetch('/search_index.json')
-      .then(response => response.json())
-      .then(jsonData => {
-        data = jsonData;
-        data.forEach(doc => index.add(doc));  // Add documents to the index
-      });
-
-    document.getElementById('searchBar').addEventListener('input', function () {
-      let query = this.value.trim();
-      if (!query) return;
-
-      let results = index.search(query, { limit: 10, enrich: true });  // Limit results to speed up
-
-      let resultsDiv = document.getElementById('searchResults');
-      if (!resultsDiv) {
-        resultsDiv = document.createElement('div');
-        resultsDiv.id = 'searchResults';
-        resultsDiv.style.position = 'absolute';
-        resultsDiv.style.backgroundColor = 'white';
-        resultsDiv.style.border = '1px solid #ddd';
-        resultsDiv.style.width = '100%';
-        document.getElementById('searchBar').parentNode.appendChild(resultsDiv);
-      }
-      resultsDiv.innerHTML = '';
-
-      results.forEach(function (result) {
-        result.result.forEach(function (ref) {
-          let item = data.find(d => d.id === ref);
-          if (item) {
-            let resultItem = document.createElement('div');
-            resultItem.innerHTML = `<a href="${item.id}">${item.title}</a><p>${item.content.slice(0, 150)}...</p>`;
-            resultsDiv.appendChild(resultItem);
-          }
-        });
-      });
-    });
-  });
-</script>
 
