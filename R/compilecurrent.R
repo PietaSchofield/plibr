@@ -105,10 +105,10 @@ compilecurrent <- function(fileName=.fileName,
   if(!silent){
     ofile <- htmlFile
     lfile <- NULL
-    if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove&gitRepo=="liverpool"){
-      lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
-      if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
-    }
+    #if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove&gitRepo=="liverpool"){
+    #  lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
+    #  if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
+    #}
 
     if(RCurl::url.exists("http://localhost")){
       ofile <- gsub("/srv/http/","http://localhost/",ofile)
