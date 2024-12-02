@@ -26,22 +26,10 @@ sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_g
 # Notebooks 
 
 ```{r NoteBook_Pages, echo=F, eval=T}
-# The information behind this is contained in an SQLite database
-wwwHost <- "localhost"
-wwwUser <- "pietas"
-wwwRoot <- file.path("/srv","http","uol")
-allPages <- plibr::rlsFiles(file.path(wwwRoot,.projName,"*.html"),host=wwwHost,user=wwwUser,verb=T)
-if(length(grep("index",allPages))>0){
-  allPages <- allPages[-grep("index",allPages)]
-}
-pagesDB <- plyr::ldply(strsplit(gsub("\\s+", " ", stringr::str_trim(allPages))," "))[,c(8,6,7,5)]
-colnames(pagesDB) <- c("URL","Date","Time","Size") 
-pagesDB$File <- basename(pagesDB$URL)
-pagesDB$Project <- basename(dirname(pagesDB$URL))
-pagesDB$URL <- file.path(basename(pagesDB$URL))
-pagesDB$Link <- paste0('<a href="',pagesDB$URL,'">',gsub("[.]html","",pagesDB$File),'</a>')
-pagesDB[order(pagesDB$Link,decreasing=T),c("Link","Date","Time","Size")] %>%
-  plibr::display_data(disp=T,plen='all') 
+# Current system uses the meta.yaml in the Git source repository for indexing not the HTML pages as
+# before so used the indexing function in plibr
+idx <- plibr::build_project_index("PN")
+idx %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx))
 ```
 
 # References
