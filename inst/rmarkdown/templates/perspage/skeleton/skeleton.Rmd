@@ -12,6 +12,7 @@ output:
     toc: no
     css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
+description: "not set yet"
 ---
 
 ```{r,echo=FALSE, include=F}
