@@ -55,7 +55,7 @@ update_meta_yaml <- function(repo_path,recur=FALSE) {
 #' build master list
 #'
 #' @export
-build_master_list <- function(repo_path,recur=FALSE,wwwroot="http://localhost/uol/") {
+build_master_list <- function(repo_path,recur=FALSE,www_root="http://localhost/uol/") {
   project_dirs <- list.dirs(path = repo_path, recursive = recur)
   master_list <- lapply(project_dirs, function(dir) {
     yaml_file <- file.path(dir, "meta.yaml")

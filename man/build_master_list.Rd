@@ -4,7 +4,7 @@
 \alias{build_master_list}
 \title{build master list}
 \usage{
-build_master_list(repo_path, recur = FALSE, wwwroot = "http://localhost/uol/")
+build_master_list(repo_path, recur = FALSE, www_root = "http://localhost/uol/")
 }
 \description{
 build master list
