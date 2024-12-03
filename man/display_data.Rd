@@ -7,7 +7,7 @@
 display_data(
   dataset,
   number = NULL,
-  disp = F,
+  disp = T,
   limited = F,
   buttons = F,
   plen = NULL,

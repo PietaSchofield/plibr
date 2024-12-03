@@ -4,7 +4,14 @@
 \alias{build_master_list}
 \title{build master list}
 \usage{
-build_master_list(repo_path, recur = FALSE, www_root = "http://localhost/uol/")
+build_master_list(
+  repoName,
+  git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
+  recur = FALSE,
+  localhost = "http://localhost/uol",
+  htmlroot = "uol",
+  html_directory = file.path("/srv", "http")
+)
 }
 \description{
 build master list

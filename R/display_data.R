@@ -9,7 +9,7 @@
 #' @param limited contrain to container
 #'
 #' @export
-display_data <- function(dataset,number=NULL,disp=F,limited=F,buttons=F,plen=NULL,caption=NULL,
+display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F,plen=NULL,caption=NULL,
                          fixh=T,fixc=list(leftColumns=1),sigf=3){
   if(!is.null(number)){
     dataset <- dataset %>% tibble::as_tibble() %>% head(number) 

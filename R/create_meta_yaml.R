@@ -24,25 +24,22 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(repo_path,recur=FALSE) {
+update_meta_yaml <- function(repo_path) {
   
-  project_dirs <- list.dirs(path = repo_path, recursive = recur)
-  lapply(project_dirs, function(dir) {
-    meta_file <- file.path(dir, "meta.yaml")
+  project_dirs <- list.dirs(path = repo_path, recursive = F)
+  ret <- lapply(project_dirs, function(dirn) {
+    meta_file <- file.path(dirn, "meta.yaml")
     if(file.exists(meta_file)){
   
-      # 2. Load the existing metadata
       meta <- yaml::yaml.load_file(meta_file)
       prev_updated <- meta$last_updated
-      # 3. Get the most recent file modification date for a Rmd file ignore the yaml as it will change
-      project_files <- list.files(dir, recursive = TRUE, full.names = TRUE)
+
+      project_files <- list.files(dirn, pattern=".*Rmd",recursive = F, full.names = TRUE)
       if (length(project_files) > 0) {
         last_modified <- max(file.info(project_files[grepl(".*Rmd$",project_files)])$mtime)
         meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
-      } else {
-        warning("No files found in the project directory. Keeping the last_updated date unchanged.")
       }
-  
+
       # 5. Save the updated metadata back to meta.yaml
       if(prev_updated!=meta$last_updated){
         writeLines(yaml::as.yaml(meta), meta_file)
@@ -53,30 +50,35 @@ update_meta_yaml <- function(repo_path,recur=FALSE) {
 }
 
 #' build master list
-#'
+#f
 #' @export
-build_master_list <- function(repo_path,recur=FALSE,www_root="http://localhost/uol/") {
+build_master_list <- function(repoName,
+                              git_directory=file.path(Sys.getenv("HOME"),"GitLab"),
+                              recur=FALSE,
+                              localhost="http://localhost",
+                              htmlroot="uol",
+                              html_directory=file.path("/srv","http")) {
+  repo_path <- file.path(git_directory,repoName)
   project_dirs <- list.dirs(path = repo_path, recursive = recur)
-  master_list <- lapply(project_dirs, function(dir) {
-    yaml_file <- file.path(dir, "meta.yaml")
+  master_list <- lapply(project_dirs, function(dirn) {
+    yaml_file <- file.path(dirn, "meta.yaml")
     if (file.exists(yaml_file)) {
       metadata <- yaml::yaml.load_file(yaml_file)
-      metadata$directory <- dir
+      metadata$directory <- dirn
       # 4. Check for the index.html file on the website
-      project_name <- basename(dir) # Assume project name is the directory name
-      url <- paste0(www_root, project_name, "/index.html")
-      response <- httr::HEAD(url)
-      
-      if (httr::status_code(response) == 200) {
+      project_name <- toupper(basename(dirn))
+      index_file <- file.path(html_directory,htmlroot,basename(dirn),"index.html")
+      html_exists <- fs::file_exists(index_file)
+      if (html_exists) {
         metadata$web_status <- "exists"
+        metadata$name <- sprintf('<a href="%s">%s</a>',
+              file.path(localhost,htmlroot,basename(dirn),"index.html"),project_name)
       } else {
         metadata$web_status <- "missing"
+        metadata$name <- project_name
       }
-      metadata$project_name <- toupper(meta$project_name)
-      metadata$link <- gsub(dirname(dir),wwwroot,dir)
       return(metadata)
     }
-    NULL
   }) %>% bind_rows()  # Combine all metadata into a single data frame
   return(master_list)
 }
