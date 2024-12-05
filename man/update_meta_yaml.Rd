@@ -4,7 +4,7 @@
 \alias{update_meta_yaml}
 \title{update meta data}
 \usage{
-update_meta_yaml(repo_path, recur = FALSE)
+update_meta_yaml(repo_path)
 }
 \description{
 update meta data

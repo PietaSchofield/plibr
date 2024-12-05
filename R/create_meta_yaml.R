@@ -119,8 +119,9 @@ build_project_index <- function(project,
     html_exists <- fs::file_exists(html_file)
 
     # File dates
-    last_modified <- fs::file_info(rmd_file)$modification_time
-    html_created <- if (html_exists) fs::file_info(html_file)$modification_time else NA
+    last_modified <- format(fs::file_info(rmd_file)$modification_time,"%Y-%m-%d %H:%M")
+    html_created <- ifelse(html_exists,
+        format(fs::file_info(html_file)$modification_time,"%Y-%m-%d %H:%M"),NA)
 
     # Build a row for the index
     list(
@@ -154,4 +155,12 @@ extract_metadata <- function(file_path) {
   # Load YAML and evaluate expressions
   metadata <- yaml::yaml.load(yaml_block, eval.expr = TRUE)
   return(metadata)
+}
+
+#' Display Project Index
+#'
+#' @export
+display_project_index <- function(projName,gitRepo=.gitRepo,htmlroot=htmlroot){
+  index_df <- plibr::build_project_index(projName,repo=gitRepo,htmlroot=htmlroot)
+  index_df %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(index_df))
 }
