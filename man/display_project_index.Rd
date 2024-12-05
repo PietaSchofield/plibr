@@ -4,7 +4,7 @@
 \alias{display_project_index}
 \title{Display Project Index}
 \usage{
-display_project_index(projName, gitRepo = .gitRepo, htmlroot = htmlroot)
+display_project_index(idx_df)
 }
 \description{
 Display Project Index

@@ -160,7 +160,6 @@ extract_metadata <- function(file_path) {
 #' Display Project Index
 #'
 #' @export
-display_project_index <- function(projName,gitRepo=.gitRepo,htmlroot=htmlroot){
-  index_df <- plibr::build_project_index(projName,repo=gitRepo,htmlroot=htmlroot)
-  index_df %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(index_df))
+display_project_index <- function(idx_df){
+  idx_df %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx_df))
 }
