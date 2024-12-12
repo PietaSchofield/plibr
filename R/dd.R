@@ -30,7 +30,7 @@ disp_tab <- function(dataset, number = NULL, disp = TRUE, limited = FALSE, butto
   
   # Define common options
   dom <- if (buttons) "Blfrtip" else "lfrtip"
-  extensions <- if (buttons) "Buttons" else NULL
+  extensions <- if (buttons) "Buttons" else character(0)
   buttons_list <- if (buttons) c("copy", "csv") else NULL
   
   options_list <- list(

@@ -8,7 +8,6 @@ build_project_index(
   project,
   git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
   html_directory = file.path("/srv", "http"),
-  localhost = "http://localhost",
   repo = "liverpool",
   htmlroot = "uol"
 )

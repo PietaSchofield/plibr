@@ -8,7 +8,6 @@ build_master_list(
   repoName,
   git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
   recur = FALSE,
-  localhost = "http://localhost",
   htmlroot = "uol",
   html_directory = file.path("/srv", "http")
 )

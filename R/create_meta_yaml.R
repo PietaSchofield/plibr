@@ -55,7 +55,6 @@ update_meta_yaml <- function(repo_path) {
 build_master_list <- function(repoName,
                               git_directory=file.path(Sys.getenv("HOME"),"GitLab"),
                               recur=FALSE,
-                              localhost="http://localhost",
                               htmlroot="uol",
                               html_directory=file.path("/srv","http")) {
   repo_path <- file.path(git_directory,repoName)
@@ -72,7 +71,7 @@ build_master_list <- function(repoName,
       if (html_exists) {
         metadata$web_status <- "exists"
         metadata$name <- sprintf('<a href="%s">%s</a>',
-              file.path(localhost,htmlroot,basename(dirn),"index.html"),project_name)
+              paste0("/",htmlroot,"/",basename(dirn),"/","index.html"),project_name)
       } else {
         metadata$web_status <- "missing"
         metadata$name <- project_name
@@ -89,14 +88,12 @@ build_master_list <- function(repoName,
 build_project_index <- function(project,
                                 git_directory=file.path(Sys.getenv("HOME"),"GitLab"), 
                                 html_directory=file.path("/srv","http"),
-                                localhost="http://localhost",
                                 repo="liverpool",
                                 htmlroot="uol") {
   if(F){
     project <- "notes"
     git_directory <- file.path(Sys.getenv("HOME"),"GitLab","liverpool")
     html_directory <- file.path("/srv","http","uol",project)
-    localhost <- "http://localhost"
     repo <- "uol"
   }
 
@@ -126,7 +123,7 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-        sprintf('<a href="%s">%s</a>',file.path(localhost,htmlroot,project,basename(html_file)),base_name)
+        sprintf('<a href="%s">%s</a>',paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
       } else {
         base_name
       },
