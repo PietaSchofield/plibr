@@ -157,6 +157,10 @@ extract_metadata <- function(file_path) {
 #' Display Project Index
 #'
 #' @export
-display_project_index <- function(idx_df){
-  idx_df %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx_df))
+display_project_index <- function(idx_df,sortover=NULL){
+  if(!is.null(sortover)){
+    idx_df <- idx_df %>% 
+      dplyr::arrange(desc(.data[[sortover]]))
+  }
+  idx_df %>%  plibr::display_data(disp=T,plen=nrow(idx_df))
 }

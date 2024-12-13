@@ -4,7 +4,7 @@
 \alias{display_project_index}
 \title{Display Project Index}
 \usage{
-display_project_index(idx_df)
+display_project_index(idx_df, sortover = NULL)
 }
 \description{
 Display Project Index
