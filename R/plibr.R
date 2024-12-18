@@ -11,7 +11,5 @@
 #' Most of this is redundant code now but I am loathed to lose it certainly all the batch-job submission
 #' management for bioinformatics jobs is not distant history
 #'
-#' @docType _PACKAGE
-#' @name plibr
-#'
-NULL
+#' @keywords internal
+"_PACKAGE"

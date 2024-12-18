@@ -21,17 +21,16 @@ compilecurrent <- function(fileName=.fileName,
                gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
-               outPath=file.path(Sys.getenv("HOME"),"Notes"),
-               quartoPath=NULL, 
+               outPath=file.path(Sys.getenv("HOME"),"Projects"),
                nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
-               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,nomove=F,
-               htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
+               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,
+               htmlUP=T, ext="Rmd",dbg=F){
  
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
-    outPath <- file.path(outPath,"uol")
+    outPath <- file.path(outPath)
   }else if(gitRepo=="personal"){
     nbPath <- file.path(nbPath,"pers")
     outPath <- file.path(outPath,"pers")
@@ -42,81 +41,49 @@ compilecurrent <- function(fileName=.fileName,
 
   if(!file.exists(nbPath)){
     htmlUP <- F
-  }else{
-    outPath <- nbPath
   }
 
   if(!is.null(projName)){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
-    outPath <- file.path(outPath,projName)
-    docPath <- file.path(docPath,projName)
+    outPath <- file.path(outPath,projName,"pubs")
   }
-
-  if(is.null(quartoPath)) quartoPath=outPath
 
   if(setHome){
     nbFileName <- file.path(nbPath,"index.html")
   }else{
     nbFileName <- file.path(nbPath,paste0(fileName,".html"))
-    docFileName <- file.path(docPath,paste0(fileName,".docx"))
-    pdfFileName <- file.path(docPath,paste0(fileName,".pdf"))
   }
 
-  dir.create(dirname(nbFileName),showW=F,recur=T)
-  dir.create(dirname(docFileName),showW=F,recur=T)
+  dir.create(nbPath,showW=F,recur=T)
+  dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
   
-  if(!is.null(quarto)){
-    quartoFile <- paste0(xfun::sans_ext(infile),".",quarto)
-    if(dbg) print(quartoFile)
-    quarto::quarto_render(input=infile,execute_dir=outPath)
-    if(file.exists(quartoFile)){
-      if(quartoUP){
-        quartoFileName <- file.path(nbPath,paste0(fileName,".",quarto))
-        fs::file_copy(quartoFile,quartoFileName,overwrite=T)
-      }
-      fs::file_move(paste0(quartoFile),quartoPath)
-    }
-  }else{
-    if(toDOCX){
-      docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                    output_format="bookdown::word_document2")
-      if(docUP){
-        fs::file_copy(docxFile,docFileName,overwrite=T)
-      }
-    }
-    if(toHTML){
+  if(toDOCX){
+    docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
+                                  output_format="bookdown::word_document2")
+  }
+  if(toHTML){
+    if(htmlUP){
+      htmlFile <- rmarkdown::render(input=infile,output_dir=nbPath,
+                                   output_format="bookdown::html_document2")
+    }else{
       htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                output_format="bookdown::html_document2")
-      if(htmlUP){
-        fs::file_copy(htmlFile,nbFileName,overwrite=T)
-      }
-    }
-    if(toPDF){
-      pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                  output_format="bookdown::pdf_document2")
-      if(pdfUP){
-        fs::file_copy(pdfFile,pdfFileName,overwrite=T)
-      }
+                                   output_format="bookdown::html_document2")
     }
   }
-
+  if(toPDF){
+    pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
+                                output_format="bookdown::pdf_document2")
+  }
+ 
   if(!silent){
-    ofile <- htmlFile
-    lfile <- NULL
-    #if(file.exists(file.path(sysRoot,"OneDrive","ul","Notes"))&!nomove&gitRepo=="liverpool"){
-    #  lfile <- gsub(file.path("/srv","http"),file.path(sysRoot,"OneDrive","ul","Notes"),ofile)
-    #  if(file.copy(ofile,lfile,over=T)) cat(paste(basename(ofile),"copied to OneDrive\n"))
-    #}
+    urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
 
-    if(RCurl::url.exists("http://localhost")){
-      ofile <- gsub("/srv/http/","http://localhost/",ofile)
-      displayURL(ofile)
+    if(RCurl::url.exists(urlout)){
+      displayURL(urlout)
     }else{
-      if(!is.null(lfile)){
-        displayURL(lfile)
-      }
+      displayURL(htmlFile)
     }
   }
 }

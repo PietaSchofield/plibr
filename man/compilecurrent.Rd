@@ -10,8 +10,7 @@ compilecurrent(
   gitRepo = "liverpool",
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
-  outPath = file.path(Sys.getenv("HOME"), "Notes"),
-  quartoPath = NULL,
+  outPath = file.path(Sys.getenv("HOME"), "Projects"),
   nbPath = file.path("/srv", "http"),
   codePath = file.path(sysRoot, "GitLab", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
@@ -20,14 +19,9 @@ compilecurrent(
   toPDF = F,
   toDOCX = F,
   toHTML = T,
-  nomove = F,
   htmlUP = T,
-  pdfUP = F,
-  docUP = F,
   ext = "Rmd",
-  dbg = F,
-  quarto = NULL,
-  quartoUP = F
+  dbg = F
 )
 }
 \arguments{
