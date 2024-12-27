@@ -39,8 +39,13 @@ display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F,plen=NUL
               "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
             "}"
           )),
-          fillContainer=limited,escape=F,rownames=F) %>%
-        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
+          fillContainer=limited,escape=F,rownames=F) %>% {
+          if(length(non_int_numeric_cols) >0){
+            DT::formatRound(.,columns = non_int_numeric_cols,digits=sigf) 
+          }else{
+            .
+          }
+        }
     }else{
       dom <- 'lfrtip'
       dataset %>%
@@ -54,8 +59,13 @@ display_data <- function(dataset,number=NULL,disp=T,limited=F,buttons=F,plen=NUL
               "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
             "}"
           )),
-          fillContainer=limited,escape=F,rownames=F) %>%
-        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
+          fillContainer=limited,escape=F,rownames=F) %>% {
+          if(length(non_int_numeric_cols) >0){
+            DT::formatRound(.,columns = non_int_numeric_cols,digits=sigf) 
+          }else{
+            .
+          }
+        }
     }
 }else{
     dataset %>% tibble::as_tibble()
