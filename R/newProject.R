@@ -7,7 +7,7 @@
 #' @param noWWW don't create a soft link under public_html on server
 #'
 #' @export
-newProject <- function(name=NULL,root="/Users/pschofield/Code/",noidx=F,noDir=F,noWWW=F){
+oldProject <- function(name=NULL,root="/Users/pschofield/Code/",noidx=F,noDir=F,noWWW=F){
   dir.create(paste0(root,name))
   if(!noDir){
     dir.create(paste0("/Users/pschofield/Projects/",name,"/notebook"),recursive=T)

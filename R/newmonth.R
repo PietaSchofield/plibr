@@ -1,7 +1,7 @@
 #' make a new notebook for a project
 #'
 #' @export
-newnote <- function(fileName,projName,rootDir=file.path(Sys.getenv("HOME"),"GitLab"),gitRepo="liverpool",
+newNote <- function(fileName,projName,rootDir=file.path(Sys.getenv("HOME"),"GitLab"),gitRepo="liverpool",
                     ext="Rmd",db=F, template='notepage',package='plibr',chkidx=T,ed=F){
   if(db){
     projName <- 'notes'

@@ -1,15 +1,16 @@
 ---
-title: PN
+title: TITLE
 author: "Pieta Schofield"
 output:
   bookdown::html_document2:
-    code_folding: hide
+    code_folding: show
     keep_md: no
     number_sections: no
     fig_caption: yes
     includes:
       before_body: !expr system.file('html','before_body_page.html',package='plibr')
-    toc: no
+    toc: yes
+    toc_depth: 2
     css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
 description: "not set yet"
@@ -31,5 +32,4 @@ sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_g
 
 ```{r eval=F,include=F}
 plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
-plibr::displaycurrent(fileName="FN",projName="PN",gitRepo="liverpool")
 ```

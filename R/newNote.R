@@ -4,7 +4,7 @@
 #' @param root default project root directory
 #'
 #' @export
-newNote <- function(name=NULL,root="/Users/pschofield/Code/"){
+oldNote <- function(name=NULL,root="/Users/pschofield/Code/"){
   projDir <- paste0("/Users/pschofield/Projects/",name)
   wwwDir <- paste0("/homes/pschofield/public_html/Projects/",name)
   fname<-paste0("note_",format(Sys.time(), "%Y_%m"))
