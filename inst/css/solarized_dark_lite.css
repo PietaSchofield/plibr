@@ -1,0 +1,118 @@
+/* === Solarized Dark CSS === */
+
+/* === Base Colors === */
+:root {
+    --base03: #002b36;  /* Background */
+    --base02: #073642;  /* Lighter Background */
+    --base01: #586e75;  /* Comments/Text */
+    --base00: #657b83;  /* Default Text */
+    --base0:  #839496;  /* Highlight Text */
+    --base1:  #93a1a1;  /* Secondary Text */
+    --base2:  #eee8d5;  /* Light Background */
+    --base3:  #fdf6e3;  /* Cream */
+    --yellow: #b58900;
+    --orange: #cb4b16;
+    --red:    #dc322f;
+    --magenta:#d33682;
+    --violet: #6c71c4;
+    --blue:   #268bd2;
+    --cyan:   #2aa198;
+    --green:  #859900;
+}
+
+/* === Typography === */
+body {
+    font-family: "Quicksand", "Recursive", sans-serif;
+    background-color: var(--base03);
+    color: var(--base3);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    color: var(--base1);
+}
+
+p, li {
+    font-size: 1rem;
+    color: var(--base0);
+}
+
+a {
+    color: var(--blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* === Buttons === */
+button {
+    background-color: var(--blue);
+    color: var(--base3);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: var(--cyan);
+}
+
+/* === Tables === */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--base02);
+    color: var(--base3);
+    margin: 20px 0;
+    font-size: 0.9rem;
+}
+
+table th, table td {
+    border: 1px solid var(--base01);
+    padding: 10px;
+    text-align: left;
+}
+
+table th {
+    background-color: var(--base01);
+    color: var(--base3);
+}
+
+/* === Forms === */
+input, textarea, select {
+    background-color: var(--base02);
+    color: var(--base3);
+    border: 1px solid var(--base01);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--cyan);
+    outline: none;
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
+
