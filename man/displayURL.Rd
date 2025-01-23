@@ -4,7 +4,7 @@
 \alias{displayURL}
 \title{display a web page nicely in chrome}
 \usage{
-displayURL(url)
+displayURL(urlpath = "http://localhost", browser_path = "/usr/bin/brave")
 }
 \description{
 display a web page nicely in chrome
