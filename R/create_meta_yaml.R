@@ -116,9 +116,9 @@ build_project_index <- function(project,
     html_exists <- fs::file_exists(html_file)
 
     # File dates
-    last_modified <- format(fs::file_info(rmd_file)$modification_time,"%Y-%m-%d %H:%M")
+    last_modified <- format(fs::file_info(rmd_file)$modification_time,"%Y-%m-%d")
     html_created <- ifelse(html_exists,
-        format(fs::file_info(html_file)$modification_time,"%Y-%m-%d %H:%M"),NA)
+        format(fs::file_info(html_file)$modification_time,"%Y-%m-%d"),NA)
 
     # Build a row for the index
     list(
