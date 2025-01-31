@@ -218,6 +218,24 @@ th {background-color: #ffffff;  /* Background for the table */
     border-radius: 3px;         /* Border radius */}
 .dataTables_info span {color: #000000;              /* Adjusted text color for readability */
     background-color: #ffffff !important;  /* Background color for the info label */}
+.dataTable tbody tr td {
+  color: #000000 !important;
+}
+.dataTable thead th {
+  color: #000000 !important;
+}
+/* Change color of sorting arrows in DataTable */
+.dataTables_wrapper .dataTables_sorting::after,
+.dataTables_wrapper .dataTables_sorting::before,
+.dataTables_wrapper .sorting::after,
+.dataTables_wrapper .sorting::before,
+.dataTables_wrapper .sorting_asc::after,
+.dataTables_wrapper .sorting_asc::before,
+.dataTables_wrapper .sorting_desc::after,
+.dataTables_wrapper .sorting_desc::before {
+    color: #000000 !important; /* Change to a darker color */
+    opacity: 1 !important; /* Ensure full visibility */
+}
 * {-webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;}
