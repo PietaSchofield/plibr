@@ -34,9 +34,9 @@ update_meta_yaml <- function(repo_path) {
       meta <- yaml::yaml.load_file(meta_file)
       prev_updated <- meta$last_updated
 
-      project_files <- list.files(dirn, pattern=".*Rmd",recursive = F, full.names = TRUE)
+      project_files <- list.files(dirn, pattern=".*md",recursive = F, full.names = TRUE)
       if (length(project_files) > 0) {
-        last_modified <- max(file.info(project_files[grepl(".*Rmd$",project_files)])$mtime)
+        last_modified <- max(file.info(project_files[grepl(".*md$",project_files)])$mtime)
         meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
       }
 
@@ -102,15 +102,15 @@ build_project_index <- function(project,
   # Helper function to extract YAML metadata
 
   # List all Rmd files
-  rmd_files <- list.files(rmd_directory, pattern = "\\.Rmd$", full.names = TRUE)
+  rmd_files <- list.files(rmd_directory, pattern = ".*md$", full.names = TRUE)
   rmd_files <- rmd_files[basename(rmd_files) != "index.Rmd"]
 
   # Extract metadata and other information
   index_data <- lapply(rmd_files, function(rmd_file) {
     metadata <- plibr::extract_metadata(rmd_file)
     rmd_name <- basename(rmd_file)
-    base_name <- gsub("[.]Rmd","",rmd_name)
-    html_file <- file.path(html_directory, sub("\\.Rmd$", ".html", rmd_name))
+    base_name <- gsub("[.].md","",rmd_name)
+    html_file <- file.path(html_directory, sub("[.].md$", ".html", rmd_name))
 
     # Check if HTML file exists
     html_exists <- fs::file_exists(html_file)

@@ -1,0 +1,104 @@
+
+html {font-family: "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%; font-family: "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;}
+
+.container, .book-body {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;  /* Adjust padding as needed */
+}
+
+
+header, footer {
+  width: 100%;
+  padding: 0 2rem;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.42857;
+  color: #000000;
+  background-color: #eeeedd; 
+  line-height: 1.42857;
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* Set code blocks and inline code to use Recursive */
+code, pre {
+  font-family: 'Recursive', monospace;
+}
+
+/* Optional: Adjust additional elements as needed */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Quicksand', sans-serif;
+}
+.reveal .slides {
+  pointer-events: none;
+}
+
+.reveal .slides .html-widget {
+  pointer-events: auto;
+}
+
+.slide {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.vis-item-content {
+  padding: 2px 5px !important;
+  font-size: 0.8em;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vis-item {
+  top: -20px !important;  /* Adjusts label position above the timeline */
+  position: relative !important;
+  max-width: fit-content !important;
+  width: auto !important;
+}
+
+.vis-item.vis-selected {
+  top: -20px !important; /* Ensures selected items remain in the correct position */
+}
+
+.dataTable td,
+.dataTable th {
+  color: #000 !important;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+  color: #000 !important;
+}
+
+.datatable-container {
+  overflow-x: auto;
+}
+
+@media (min-width: 1200px) {
+  .container, .book-body {
+    width: 95%;
+  }
+}
+
+.html-widget {
+  width: 100% !important;
+}
+
+.datatable, .timevis {
+  width: 100%;
+}

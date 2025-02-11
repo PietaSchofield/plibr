@@ -7,12 +7,13 @@
 display_data(
   dataset,
   number = NULL,
-  disp = T,
-  limited = F,
-  buttons = F,
+  disp = TRUE,
+  limited = FALSE,
+  buttons = FALSE,
   plen = NULL,
   caption = NULL,
-  fixh = T,
+  dbug = FALSE,
+  fixh = TRUE,
   fixc = list(leftColumns = 1),
   sigf = 3
 )

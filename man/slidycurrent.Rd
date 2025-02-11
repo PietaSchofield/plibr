@@ -12,9 +12,11 @@ slidycurrent(
   user = Sys.getenv("USER"),
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
   codePath = file.path(sysRoot, "GitLab", gitRepo),
+  outputFormat = "ioslides_presentation",
   silent = F,
   ext = "Rmd",
-  dbg = F
+  dbg = F,
+  htmlPath = file.path("/srv", "http")
 )
 }
 \arguments{

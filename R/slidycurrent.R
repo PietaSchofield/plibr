@@ -23,9 +23,18 @@ slidycurrent <- function(fileName=.fileName,
                user=Sys.getenv("USER"), 
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
-               silent=F, ext="Rmd",dbg=F){
- 
-  htmlPath <- file.path(outPath,projName)
+               outputFormat="ioslides_presentation",
+               silent=F, ext="Rmd",dbg=F,
+               htmlPath=file.path("/srv","http")){
+
+  if(gitRepo=="liverpool"){
+    htmlPath <- file.path(htmlPath,"uol")
+  }else if(gitRepo=="personal"){
+    htmlPath <- file.path(htmlPath,"pers")
+  }else{
+    htmlPath <- file.path(htmlPath,gitRepo)
+  }
+  outPath <- file.path(outPath,projName)
   codePath <- file.path(codePath,projName)
   htmlFileName <- file.path(htmlPath,paste0(fileName,".html"))
 
@@ -33,10 +42,15 @@ slidycurrent <- function(fileName=.fileName,
   infile <- file.path(codePath,paste0(fileName,".",ext))
 
   outfile <- rmarkdown::render(infile, 
-                  output_format = "slidy_presentation",
+                  output_format = outputFormat,
                   output_file = htmlFileName)
 
   if(!silent){
-    displayURL(htmlFileName)
+    urlout <- gsub("/srv/http/","http://localhost/",htmlFileName)
+    if(RCurl::url.exists(urlout)){
+      displayURL(urlout)
+    }else{
+      displayURL(htmlFileName)
+    }
   }
 }
