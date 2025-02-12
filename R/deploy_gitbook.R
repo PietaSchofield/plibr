@@ -56,6 +56,7 @@ deploy_gitbook <- function(book_path = ".", book_name = NULL, server_user = "pie
               to = book_deploy_path,
               recursive = TRUE,
               overwrite = TRUE)
+    
     message("Local deployment complete!")
   } else {
     message("Uploading to remote web server...")
