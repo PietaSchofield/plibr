@@ -11,7 +11,7 @@
 #' @import DT
 #'
 #' @export
-display_data <- function(dataset, number = NULL, disp = TRUE, limited = FALSE,
+display_data <- function(dataset, number = NULL, disp = TRUE, limited = FALSE,row_names=F,
                          buttons = FALSE, plen = NULL, caption = NULL,dbug = FALSE,
                          fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3) {
 
@@ -50,7 +50,7 @@ display_data <- function(dataset, number = NULL, disp = TRUE, limited = FALSE,
                                         "$(this.api().table().header()).css({'color': '#93B2B2'});",
                                         "$(this.api().table().body()).css({'color': '#93A1A1'});",
                                                                      "}")),
-                      fillContainer = limited, escape = FALSE, rownames = FALSE) %>%
+                      fillContainer = limited, escape = FALSE, rownames = row_names) %>%
         {
           if (length(non_int_numeric_cols) > 0) {
             DT::formatRound(., columns = non_int_numeric_cols, digits = sigf)
@@ -70,7 +70,7 @@ display_data <- function(dataset, number = NULL, disp = TRUE, limited = FALSE,
                                            "$(this.api().table().header()).css({'color': '#A1B2B2'});",
                                            "$(this.api().table().body()).css({'color': '#93A1A1'});",
                                                                      "}")),
-                      fillContainer = limited, escape = FALSE, rownames = FALSE) %>%
+                      fillContainer = limited, escape = FALSE, rownames = row_names) %>%
         {
           if (length(non_int_numeric_cols) > 0) {
             DT::formatRound(., columns = non_int_numeric_cols, digits = sigf)

@@ -9,6 +9,7 @@ display_data(
   number = NULL,
   disp = TRUE,
   limited = FALSE,
+  row_names = F,
   buttons = FALSE,
   plen = NULL,
   caption = NULL,
