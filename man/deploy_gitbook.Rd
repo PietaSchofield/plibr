@@ -8,6 +8,7 @@ deploy_gitbook(
   book_path = ".",
   book_name = NULL,
   server_user = "pietas",
+  pdfout = NULL,
   server_host = "localhost",
   server_path = file.path("/srv/http/uol")
 )

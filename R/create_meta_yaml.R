@@ -162,5 +162,5 @@ display_project_index <- function(idx_df,sortover=NULL){
     idx_df <- idx_df %>% 
       dplyr::arrange(desc(.data[[sortover]]))
   }
-  idx_df %>%  plibr::display_data(disp=T,plen=nrow(idx_df))
+  idx_df %>%  plibr::display_data(plen=nrow(idx_df))
 }

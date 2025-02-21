@@ -16,20 +16,30 @@
 #' @import glue
 #'
 #' @export
-deploy_gitbook <- function(book_path = ".", book_name = NULL, server_user = "pietas", 
+deploy_gitbook <- function(book_path = ".", book_name = NULL, server_user = "pietas", pdfout = NULL,
                            server_host = "localhost", server_path = file.path("/srv/http/uol")) {
-  
+
   # Step 1: Render the book
   message("Rendering GitBook...")
   bookdown::render_book(input = book_path, output_format = "bookdown::gitbook")
 
-  # Define paths
-  book_output_dir <- file.path(book_path, "_book")  # Where the book is built
-  local_assets <- file.path(book_path, "assets")  # Folder containing extra files
-  html_files <- list.files(local_assets, "\\.html$", full.names = TRUE)
-  image_files <- list.files(local_assets, pattern = "\\.png$", full.names = TRUE)  # Get all images
+  # If pdfout is specified as beamer_presentation, render as Beamer
+  if (!is.null(pdfout)) {
+    if (pdfout == "rmarkdown::beamer_presentation") {
+      message("Rendering Beamer presentation...")
+      rmarkdown::render(input = file.path(book_path, "index.Rmd"), output_format = "rmarkdown::beamer_presentation")
+    } else {
+      bookdown::render_book(input = book_path, output_format = pdfout)
+    }
+  }
 
-  # Step 2: Copy necessary files into `_book/`
+  # Define paths for book output and assets
+  book_output_dir <- file.path(book_path, "_book")
+  local_assets <- file.path(book_path, "assets")
+  html_files <- list.files(local_assets, "\\.html$", full.names = TRUE)
+  image_files <- list.files(local_assets, pattern = "\\.png$", full.names = TRUE)
+
+  # Step 2: Copy necessary files into _book/
   message("Copying timevis_page.html and images to _book/")
   if (length(html_files) > 0) {
     file.copy(html_files, book_output_dir, overwrite = TRUE)
@@ -38,25 +48,18 @@ deploy_gitbook <- function(book_path = ".", book_name = NULL, server_user = "pie
     file.copy(image_files, book_output_dir, overwrite = TRUE)
   }
 
-  # Define the deployment path
+  # Step 3: Deploy locally or remotely
   book_deploy_path <- file.path(server_path, book_name)
 
-  # Step 3: Check if local deployment or remote deployment
   if (server_host == "localhost") {
-
     if (dir.exists(book_deploy_path)) {
       message("Removing existing book directory...")
       unlink(book_deploy_path, recursive = TRUE, force = TRUE)
     }
-
     message("Moving _book content to local web server directory...")
-
     dir.create(book_deploy_path, recursive = TRUE, showWarnings = FALSE)
     file.copy(from = list.files(book_output_dir, full.names = TRUE),
-              to = book_deploy_path,
-              recursive = TRUE,
-              overwrite = TRUE)
-    
+              to = book_deploy_path, recursive = TRUE, overwrite = TRUE)
     message("Local deployment complete!")
   } else {
     message("Uploading to remote web server...")
@@ -64,6 +67,6 @@ deploy_gitbook <- function(book_path = ".", book_name = NULL, server_user = "pie
     message("Remote deployment complete!")
   }
 
-  message(paste0("GitBook is live at http://",server_host,"/",book_name))
+  message(paste0("GitBook is live at http://", server_host, "/", book_name))
 }
 
