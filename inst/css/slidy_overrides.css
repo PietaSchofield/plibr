@@ -1,0 +1,16 @@
+/* Center ONLY Section Headers (h1 that is the only element) */
+div.slide h1:only-child {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+}
+
+/* Keep normal slide titles (h2) in their default position */
+div.slide h2 {
+    text-align: left;
+    margin-top: 0;
+}
+

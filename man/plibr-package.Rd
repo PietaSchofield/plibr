@@ -18,4 +18,8 @@ that I started at CRUK Manchester. However it makes more sense to combine these 
 Most of this is redundant code now but I am loathed to lose it certainly all the batch-job submission
 management for bioinformatics jobs is not distant history
 }
+\author{
+\strong{Maintainer}: Pieta Schofield \email{pieta.schofield@me.com}
+
+}
 \keyword{internal}

@@ -1,26 +1,25 @@
 Package: plibr
-Type: Package
-Title: Pieta Schofield's repository of useful R functions
-Version: 0.2.0
-Author: Pieta Schofield
-Maintainer: <pieta.schofield@liverpool.ac.uk>
-Description: Some useful functions to ease life now at University of Liverpool
-License: CC0
-Encoding: UTF-8
+Title: Pieta Schofield's library of requirements 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Pieta", "Schofield", , "pieta.schofield@me.com", role = c("aut", "cre"))
+Description: My library of function to make working with R Rmarkdown reticulate duckdb etc easier
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Depends: 
+  knitr,
+  rmarkdown,
+  bookdown,
+  tidyverse,
+  duckdb,
+  reticulate
 Imports:
-    RSQLite,
-    XML,
-    ggplot2,
-    reshape2,
-    lubridate,
-    cachem,
-    DT,
-    duckdb,
-    bookdown,
-    reticulate
-Suggests:
-    testthat,
-    knitr
-VignetteBuilder: knitr
-LazyData: TRUE
+  knitr,
+  rmarkdown,
+  bookdown,
+  tidyverse,
+  duckdb,
+  reticulate
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2

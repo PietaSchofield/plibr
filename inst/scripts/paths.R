@@ -30,8 +30,5 @@ require(DT)
 .credDir <- file.path(.oneDrive,".config")
 .linksFile <- file.path(.homeDir,"GitLab",.gitRepo,"include","link.Rmd")
 #
-opts_chunk$set( message=F, warning=F,comment=NA,class.output="code")
-options(scipen=999)
-.cf <- T
 if(file.exists(.tmpFile)) load(.tmpFile)
 conflicts_prefer(DT::JS)

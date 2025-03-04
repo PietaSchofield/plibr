@@ -118,7 +118,7 @@ build_project_index <- function(project,
     # File dates
     last_modified <- format(fs::file_info(rmd_file)$modification_time,"%Y-%m-%d")
     html_created <- ifelse(html_exists,
-        format(fs::file_info(html_file)$modification_time,"%Y-%m-%d"),NA)
+        format(fs::file_info(html_file)$modification_time,"%Y-%m-%d"),"Not Available")
 
     # Build a row for the index
     list(
@@ -128,8 +128,8 @@ build_project_index <- function(project,
         base_name
       },
       Description = metadata$description %||% "No description",
-      Date_Updated = as.character(last_modified),
-      HTML_Created = if (!is.na(html_created)) as.character(html_created) else "Not available"
+      Date_Updated = last_modified,
+      HTML_Created = html_created
     )
   })
 

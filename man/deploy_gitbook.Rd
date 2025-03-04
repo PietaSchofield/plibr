@@ -14,13 +14,13 @@ deploy_gitbook(
 )
 }
 \arguments{
-\item{book_path}{Character. The local path to the GitBook source directory. Defaults to `"."` (current directory).}
+\item{book_path}{Character. The local path to the GitBook source directory. Defaults to \code{"."} (current directory).}
 
 \item{book_name}{Character. The name of the book directory.}
 
-\item{server_user}{Character. The SSH username for the remote server. Defaults to `"pietas"`.}
+\item{server_user}{Character. The SSH username for the remote server. Defaults to \code{"pietas"}.}
 
-\item{server_host}{Character. The hostname or IP address of the remote server. Defaults to `"localhost"`.}
+\item{server_host}{Character. The hostname or IP address of the remote server. Defaults to \code{"localhost"}.}
 
 \item{server_path}{Character. The destination path on the web server where the book should be deployed.}
 }
@@ -28,7 +28,7 @@ deploy_gitbook(
 No return value. This function performs rendering and deployment as a side effect.
 }
 \description{
-This function wraps `bookdown::render_book()` to render a GitBook and 
-then automatically moves necessary assets (such as images and HTML pages) 
+This function wraps \code{bookdown::render_book()} to render a GitBook and
+then automatically moves necessary assets (such as images and HTML pages)
 to the correct location on a web server.
 }
