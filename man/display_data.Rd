@@ -2,18 +2,16 @@
 % Please edit documentation in R/display_data.R
 \name{display_data}
 \alias{display_data}
-\title{display datatable with different table types}
+\title{display datatable}
 \usage{
 display_data(
   dataset,
   number = NULL,
   table_type = "DT",
   limited = FALSE,
-  row_names = FALSE,
   buttons = FALSE,
   plen = NULL,
   caption = NULL,
-  dbug = FALSE,
   fixh = TRUE,
   fixc = list(leftColumns = 1),
   sigf = 3
@@ -22,28 +20,13 @@ display_data(
 \arguments{
 \item{dataset}{the data to display}
 
-\item{number}{the maximum number of rows to display}
+\item{number}{the maxium number of rows to display}
 
-\item{table_type}{the type of table to use ("DT", "kable", "flextable")}
+\item{limited}{contrain to container}
 
-\item{limited}{constrain to container}
-
-\item{row_names}{display row names}
-
-\item{buttons}{include export buttons}
-
-\item{plen}{page length for DT}
-
-\item{caption}{table caption}
-
-\item{dbug}{debugging flag}
-
-\item{fixh}{fix header}
-
-\item{fixc}{fix column options}
-
-\item{sigf}{significant figures for numeric formatting}
+\item{disp}{the flag which decides the whole shebang}
 }
 \description{
-display datatable with different table types
+displays a datatable (DT) either as raw tibble if not compiling to avoid trying to fire up unnecessary
+browers or as a DT if rendering to html
 }
