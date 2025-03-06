@@ -2,7 +2,7 @@
 % Please edit documentation in R/display_data.R
 \name{display_data}
 \alias{display_data}
-\title{display datatable}
+\title{Display Data Table in Multiple Formats}
 \usage{
 display_data(
   dataset,
@@ -14,19 +14,35 @@ display_data(
   caption = NULL,
   fixh = TRUE,
   fixc = list(leftColumns = 1),
-  sigf = 3
+  sigf = 3,
+  dbug = FALSE
 )
 }
 \arguments{
-\item{dataset}{the data to display}
+\item{dataset}{The data to display.}
 
-\item{number}{the maxium number of rows to display}
+\item{number}{The maximum number of rows to display. Defaults to NULL (displays all rows).}
 
-\item{limited}{contrain to container}
+\item{table_type}{The type of table output. Options are "DT" (interactive table), "kable" (Markdown/PDF), and "flextable" (Word/PowerPoint).}
 
-\item{disp}{the flag which decides the whole shebang}
+\item{limited}{Logical. If TRUE, constrains the table to a fixed container size. Defaults to FALSE.}
+
+\item{buttons}{Logical. If TRUE, includes export buttons (only applies to "DT" output).}
+
+\item{plen}{The number of rows per page in DT tables. Defaults to 10.}
+
+\item{caption}{Optional character string to include as a table caption.}
+
+\item{fixh}{Logical. If TRUE, enables fixed headers in DT tables.}
+
+\item{fixc}{List specifying column fixing options for DT tables. Defaults to left column fixed.}
+
+\item{sigf}{Numeric. Number of significant figures for numeric formatting.}
+}
+\value{
+A data table formatted as specified by \code{table_type}.
 }
 \description{
-displays a datatable (DT) either as raw tibble if not compiling to avoid trying to fire up unnecessary
-browers or as a DT if rendering to html
+This function renders a dataset as an interactive datatable (DT), a kable table, or a flextable,
+depending on the specified output type.
 }

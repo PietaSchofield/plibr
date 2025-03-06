@@ -1,72 +1,89 @@
-
-# datatable 
+#' Display Data Table in Multiple Formats
 #'
-#' displays a datatable (DT) either as raw tibble if not compiling to avoid trying to fire up unnecessary
-#' browers or as a DT if rendering to html
-#' 
-#' @param dataset the data to display
-#' @param number the maxium number of rows to display
-#' @param disp the flag which decides the whole shebang
-#' @param limited contrain to container
+#' This function renders a dataset as an interactive datatable (DT), a kable table, or a flextable,
+#' depending on the specified output type.
 #'
+#' @param dataset The data to display.
+#' @param number The maximum number of rows to display. Defaults to NULL (displays all rows).
+#' @param table_type The type of table output. Options are "DT" (interactive table), "kable" (Markdown/PDF), and "flextable" (Word/PowerPoint).
+#' @param limited Logical. If TRUE, constrains the table to a fixed container size. Defaults to FALSE.
+#' @param buttons Logical. If TRUE, includes export buttons (only applies to "DT" output).
+#' @param plen The number of rows per page in DT tables. Defaults to 10.
+#' @param caption Optional character string to include as a table caption.
+#' @param fixh Logical. If TRUE, enables fixed headers in DT tables.
+#' @param fixc List specifying column fixing options for DT tables. Defaults to left column fixed.
+#' @param sigf Numeric. Number of significant figures for numeric formatting.
+#'
+#' @return A data table formatted as specified by `table_type`.
+#' @importFrom DT datatable
+#' @importFrom knitr kable
+#' @importFrom flextable qflextable
 #' @export
+
 display_data <- function(dataset, number = NULL, table_type = "DT", limited = FALSE, 
                          buttons = FALSE, plen = NULL, caption = NULL, 
-                         fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3){
+                         fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3,dbug=FALSE) {
+  if(dbug){
+    dataset = cvdall
+    number = NULL
+    table_type = "DT"
+    limited = FALSE
+    buttons = FALSE
+    plen = NULL
+    caption = NULL 
+    fixh = TRUE
+    fixc = list(leftColumns = 1)
+    sigf = 3
+  }
   if (!is.null(number)) {
     dataset <- dataset %>% tibble::as_tibble() %>% head(number)
   }
-  if(is.null(plen)){
-    plen=10
-  }else if(!is.numeric(plen)){
-    plen=nrow(dataset)
-  }else{
-    plen=plen
+
+  if (is.null(plen)) {
+    plen = 10
+  } else if (!is.numeric(plen)) {
+    plen = nrow(dataset)
   }
 
-  non_int_numeric_cols <- names(dataset)[sapply(dataset,function(x){
-    is.numeric(x) && any(x!=as.integer(x))
-    })]
-  if (table_type == 'DT') {
-    if(buttons){
-      ext <- 'Buttons'
-      btns <- c("copy","csv")
-      dom <- 'Blfrtip'
-      dataset %>% 
-        DT::datatable(extensions = ext, caption=caption,
-          options = list(dom = dom, buttons = btns, 
-            lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-            paging = T, scrollX = T, scrollY=T, pageLength = plen,
-            fixHeader=fixh,fixColumns=fixc,
-            initComplete = htmlwidgets::JS("function(settings, json) {",
-              "$(this.api().table().header()).css({'color': '#93B2B2'});",  # Header text color
-              "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
-            "}"
-          )),
-          fillContainer=limited,escape=F,rownames=F) %>%
-        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
-    }else{
-      dom <- 'lfrtip'
-      dataset %>%
-        DT::datatable(caption=caption, 
-          options = list(dom = dom, 
-            lengthMenu = list(c(10,50,100, -1), c('10', '50', '100', 'All')),
-            paging = T, scrollX = T, scrollY=T,pageLength = plen,
-            fixHeader=fixh,fixColumns=fixc,
-            initComplete = htmlwidgets::JS("function(settings, json) {",
-              "$(this.api().table().header()).css({'color': '#A1B2B2'});",  # Header text color
-              "$(this.api().table().body()).css({'color': '#93A1A1'});",   # Body text color
-            "}"
-          )),
-          fillContainer=limited,escape=F,rownames=F) %>%
-        DT::formatRound(columns = non_int_numeric_cols,digits=sigf) 
+  non_int_numeric_cols <- names(dataset)[sapply(dataset, function(x) {
+    is.numeric(x) && any(x != as.integer(x))
+  })]
+
+  if (table_type == "DT") {
+    # Validate fixc to prevent errors
+    if (!is.list(fixc) || is.null(fixc$leftColumns) || any(is.na(fixc$leftColumns))) {
+      fixc <- NULL
     }
-  } else if (table_type == 'kable') {
-    knitr::kable(dataset, format = 'pipe')
-  } else if (table_type == 'flextable') {
+    
+    if (buttons) {
+      ext <- 'Buttons'
+      btns <- c("copy", "csv")
+      dom <- 'Blfrtip'
+    } else {
+      ext <- character(0)
+      btns <- NULL
+      dom <- 'lfrtip'
+    }
+
+    options_list <- list(
+      dom = dom,
+      lengthMenu = list(c(10, 50, 100, -1), c('10', '50', '100', 'All')),
+      paging = TRUE, scrollX = TRUE, scrollY = TRUE, pageLength = plen,
+      fixHeader = fixh, fixColumns = if (!is.null(fixc)) fixc else NULL
+    )
+    
+    if (buttons) {
+      options_list$buttons <- btns
+    }
+
+    DT::datatable(dataset, caption = caption, options = options_list, extension=ext,
+                         fillContainer = limited, escape = FALSE, rownames = FALSE)
+  } else if (table_type == "kable") {
+    knitr::kable(dataset, format = "pipe")
+  } else if (table_type == "flextable") {
     flextable::qflextable(dataset)
   } else {
-    dataset %>% tibble::as_tibble()
+    dataset
   }
-
 }
+

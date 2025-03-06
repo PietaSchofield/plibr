@@ -43,7 +43,6 @@ update_meta_yaml <- function(repo_path) {
       # 5. Save the updated metadata back to meta.yaml
       if(prev_updated!=meta$last_updated){
         writeLines(yaml::as.yaml(meta), meta_file)
-        message("Updated metadata file: ", meta_file)
       }
     }
   })
