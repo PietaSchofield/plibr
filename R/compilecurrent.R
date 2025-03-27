@@ -77,7 +77,7 @@ compilecurrent <- function(fileName=.fileName,
                                 output_format="bookdown::pdf_document2")
   }
  
-  if(!silent){
+  if(!silent && session_mode()=="interactive"){
     urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
 
     if(RCurl::url.exists(urlout)){

@@ -76,8 +76,16 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
       options_list$buttons <- btns
     }
 
-    DT::datatable(dataset, caption = caption, options = options_list, extension=ext,
+    widget <- DT::datatable(dataset, caption = caption, options = options_list, extension=ext,
                          fillContainer = limited, escape = FALSE, rownames = FALSE)
+
+    if(interactive()){
+      widgetfile <- tempfile(fileext=".html")
+      htmlwidgets::saveWidget(widget, html_file,selfcontained=TRUE)
+      displayURL(widgetfile)
+    }else{
+      invisible(widget)
+    }
   } else if (table_type == "kable") {
     knitr::kable(dataset, format = "pipe")
   } else if (table_type == "flextable") {
