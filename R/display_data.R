@@ -78,13 +78,15 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
 
     widget <- DT::datatable(dataset, caption = caption, options = options_list, extension=ext,
                          fillContainer = limited, escape = FALSE, rownames = FALSE)
+    
+    is_rendering <- !is.null(knitr::opts_knit$get("rmarkdown.pandoc.to"))
 
-    if(interactive()){
+    if(!is_rendering && interactive()){
       widgetfile <- tempfile(fileext=".html")
-      htmlwidgets::saveWidget(widget, html_file,selfcontained=TRUE)
+      htmlwidgets::saveWidget(widget, widgetfile,selfcontained=TRUE)
       displayURL(widgetfile)
     }else{
-      invisible(widget)
+      return(widget)
     }
   } else if (table_type == "kable") {
     knitr::kable(dataset, format = "pipe")
