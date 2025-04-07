@@ -78,7 +78,12 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
 
     widget <- DT::datatable(dataset, caption = caption, options = options_list, extension=ext,
                          fillContainer = limited, escape = FALSE, rownames = FALSE)
-    
+
+    if (!is.null(non_int_numeric_cols) && length(non_int_numeric_cols) > 0
+        && !any(is.na(non_int_numeric_cols))) {
+      widget <- DT::formatRound(widget, columns = non_int_numeric_cols, digits = sigf)
+    }
+
     is_rendering <- !is.null(knitr::opts_knit$get("rmarkdown.pandoc.to"))
 
     if(!is_rendering && interactive()){
