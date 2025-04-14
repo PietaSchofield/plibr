@@ -21,13 +21,20 @@ compilecurrent <- function(fileName=.fileName,
                gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
-               outPath=file.path(Sys.getenv("HOME"),"Projects"),
+               oneDrive=F,
                nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,
                htmlUP=T, ext="Rmd",dbg=F){
- 
+
+
+  if(!oneDrive){
+    outPath=file.path(Sys.getenv("HOME"),"Projects")
+  }else{
+    outPath=file.path(Sys.getenv("HOME"),"OneDrive","ul","Projects")
+  }
+
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath)
@@ -62,6 +69,15 @@ compilecurrent <- function(fileName=.fileName,
   if(toDOCX){
     docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                   output_format="bookdown::word_document2")
+    if(!silent && session_mode()=="interactive"){
+      if(system("which onlyoffice-desktopeditors", ignore.stdout=TRUE, ignore.stderr=TRUE) == 0){
+         system(paste("onlyoffice-desktopeditors", shQuote(docxFile), "&"))
+      } else if(system("which abiword", ignore.stdout=TRUE, ignore.stderr=TRUE) == 0){
+        system(paste("abiword", shQuote(docxFile), "&"))
+      } else {
+        message("No suitable Word viewer found.")
+      }
+    }
   }
   if(toHTML){
     if(htmlUP){
@@ -71,19 +87,20 @@ compilecurrent <- function(fileName=.fileName,
       htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                    output_format="bookdown::html_document2")
     }
+    if(!silent && session_mode()=="interactive"){
+      urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
+      if(RCurl::url.exists(urlout)){
+        displayURL(urlout)
+      }else{
+        displayURL(htmlFile)
+      }
+    }
   }
   if(toPDF){
     pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
                                 output_format="bookdown::pdf_document2")
-  }
- 
-  if(!silent && session_mode()=="interactive"){
-    urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
-
-    if(RCurl::url.exists(urlout)){
-      displayURL(urlout)
-    }else{
-      displayURL(htmlFile)
+    if(!silent && session_mode()=="interactive"){
+      system(paste("okular", shQuote(pdfFile),"&"))
     }
   }
 }
