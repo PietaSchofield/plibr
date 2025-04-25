@@ -103,4 +103,5 @@ compilecurrent <- function(fileName=.fileName,
       system(paste("okular", shQuote(pdfFile),"&"))
     }
   }
+  system("wmctrl -a vim")
 }
