@@ -8,6 +8,7 @@ require(knitr)
 require(tidyverse)
 require(dbplyr)
 require(DT)
+require(cachem)
 #
 #
 .homeDir <- file.path(Sys.getenv("HOME"))
