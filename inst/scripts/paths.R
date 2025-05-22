@@ -33,3 +33,4 @@ require(cachem)
 #
 if(file.exists(.tmpFile)) load(.tmpFile)
 conflicts_prefer(DT::JS)
+conflicts_prefer(dplyr::filter)
