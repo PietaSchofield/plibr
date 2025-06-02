@@ -8,6 +8,7 @@ require(knitr)
 require(tidyverse)
 require(dbplyr)
 require(DT)
+require(kableExtra)
 require(cachem)
 #
 #
