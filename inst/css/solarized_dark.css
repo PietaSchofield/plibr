@@ -4809,3 +4809,7 @@ pre .hljs-attr {
   color: #d33682;  /* Magenta for attributes */
 }
 
+pre.nohighlight code {
+  color: inherit !important;
+  background-color: inherit !important;
+}
