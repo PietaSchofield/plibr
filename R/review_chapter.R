@@ -6,7 +6,8 @@ review_chapter <- function(chap, fmt = "bookdown::gitbook") {
   cfg <- list(
     book_filename = "mybook",
     rmd_files = c("index.Rmd", chap),
-    clean = FALSE
+    clean = FALSE,
+    delete_merged_file = TRUE
   )
   yaml::write_yaml(cfg, "_bookdown-preview.yml")
   on.exit(unlink("_bookdown-preview.yml"))
