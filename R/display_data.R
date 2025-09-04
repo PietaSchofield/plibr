@@ -94,7 +94,8 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
       return(widget)
     }
   } else if (table_type == "kable") {
-    knitr::kable(dataset, format = "pipe")
+    knitr::kable(dataset, format = "pipe") |>
+      kable_styling(latex_options = c("hold_position", "scale_down"))
   } else if (table_type == "flextable") {
     flextable::qflextable(dataset)
   } else {
