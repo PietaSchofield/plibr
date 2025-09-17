@@ -1,25 +1,54 @@
 Package: plibr
 Title: Pieta Schofield's library of requirements 
-Version: 0.0.0.9000
+Version: 0.0.1.9000
 Authors@R: 
     person("Pieta", "Schofield", , "pieta.schofield@me.com", role = c("aut", "cre"))
 Description: My library of function to make working with R Rmarkdown reticulate duckdb etc easier
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Depends: 
-  knitr,
-  rmarkdown,
-  bookdown,
-  tidyverse,
-  duckdb,
-  reticulate
+License: MIT + file LICENSE
+Depends:
+    R (>= 4.1.0)
 Imports:
-  knitr,
-  rmarkdown,
-  bookdown,
-  tidyverse,
-  duckdb,
-  reticulate
+    DT,
+    flextable,
+    glue,
+    htmlwidgets,
+    httr,
+    servr,
+    tibble,
+    yaml,
+    bookdown,
+    knitr,
+    reticulate,
+    rmarkdown,
+    RCurl,
+    RPostgres,
+    RSQLite, 
+    blogdown, 
+    cachem,
+    config,
+    devtools,
+    dplyr,
+    fs, 
+    git2r, 
+    gitr,
+    gtools,
+    jsonlite,
+    lubridate, 
+    plyr,
+    reshape2, 
+    rvest, 
+    stringr, 
+    svglite, 
+    xfun, 
+    xlsx, 
+    xml2,
+    ff
+Suggests:
+    duckdb,
+    bookdown,
+    tidyverse,
+    quarto
+VignetteBuilder: knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3

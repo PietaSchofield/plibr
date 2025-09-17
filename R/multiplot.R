@@ -14,7 +14,6 @@
 #'
 #' @export
 multiplot <- function(..., plotlist=NULL, file, cols=1, lout=NULL) {
-  require(grid)
 
   # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)

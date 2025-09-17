@@ -11,9 +11,6 @@
 #' @param dir Output directory. Default is "figures". Created if needed.
 #'
 #' @return Invisibly returns character vector of saved file paths.
-#' @examples
-#' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
-#' save_fig(p, "scatter_plot")
 #'
 #' @export
 save_fig <- function(plot, name, width = 6, height = 4, dpi = 300, dir = "figures") {

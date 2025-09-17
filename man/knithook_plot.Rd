@@ -2,10 +2,10 @@
 % Please edit documentation in R/knithook_plot.R
 \name{knithook_plot}
 \alias{knithook_plot}
-\title{kniter hook for figure numbering}
+\title{knitr hook for figure numbering (HTML)}
 \usage{
 knithook_plot(x, options)
 }
 \description{
-kniter hook for figure numbering
+knitr hook for figure numbering (HTML)
 }

@@ -7,13 +7,12 @@
 #' @export
 bigcor <- function(x, nblocks = 10, verbose = TRUE, absolute=F )
 {
-  require(ff, quietly = TRUE)
   NCOL <- ncol(x)
   ## test if ncol(x) %% nblocks gives remainder 0
   if (NCOL %% nblocks != 0) stop("Choose different 'nblocks' so that ncol(x) %% nblocks = 0!")
   ## preallocate square matrix of dimension
   ## ncol(x) in 'ff' single format
-  corMAT <- ff(vmode = "single", dim = c(NCOL, NCOL))
+  corMAT <- ff::ff(vmode = "single", dim = c(NCOL, NCOL))
   ## split column numbers into 'nblocks' groups
   SPLIT <- split(1:NCOL, rep(1:nblocks, each = NCOL/nblocks))
   ## create all unique combinations of blocks

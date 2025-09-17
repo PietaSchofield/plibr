@@ -26,8 +26,3 @@ Invisibly returns character vector of saved file paths.
 Saves a given plot object (ggplot or base R) as both SVG and high-resolution PNG,
 to a specified directory. Keeps your project tidy for Git.
 }
-\examples{
-p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
-save_fig(p, "scatter_plot")
-
-}
