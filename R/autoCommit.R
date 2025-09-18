@@ -7,8 +7,6 @@
 #' @param pat pattern for directory names
 #' @param subdir names of subdirectories that include code
 #'
-#' @import git2r
-#'
 #' @export
 autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"GitLab"),
                        commitMessage="Automated ",oncampus=F, mws=F){

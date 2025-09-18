@@ -29,8 +29,6 @@ Imports:
     devtools,
     dplyr,
     fs, 
-    git2r, 
-    gitr,
     gtools,
     jsonlite,
     lubridate, 
@@ -45,6 +43,8 @@ Imports:
     ff
 Suggests:
     duckdb,
+    gitr,
+    git2r, 
     bookdown,
     tidyverse,
     quarto
