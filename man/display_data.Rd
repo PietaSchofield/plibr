@@ -9,7 +9,7 @@ display_data(
   number = NULL,
   table_type = "DT",
   limited = FALSE,
-  buttons = FALSE,
+  buttons = TRUE,
   plen = NULL,
   caption = NULL,
   fixh = TRUE,

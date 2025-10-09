@@ -4,7 +4,7 @@
 \alias{review_chapter}
 \title{review a book chapter}
 \usage{
-review_chapter(chap, fmt = "bookdown::gitbook")
+review_chapter(chap, fmt = "bookdown::gitbook", root = NULL)
 }
 \description{
 review a book chapter

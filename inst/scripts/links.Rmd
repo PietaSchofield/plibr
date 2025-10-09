@@ -1,0 +1,83 @@
+[home]: /index.html
+[thismonth]: /uol/notes/current.html#references
+
+[today]: /uol/notes/today.html
+[todo]: /uol/todo.html
+[uol]: /uol/index.html
+[notes]: /uol/notes/index.html
+[reflections]: /uol/reflections/index.html
+[r00]: /uol/reflections/index.html
+
+[cdc]: /uol/cdc/index.html
+[dart]: /uol/dart/index.html
+[arc]: /uol/arc/index.html
+
+[aurumtools]: /uol/aurumtools/index.html
+
+[fibmab]: /uol/fibmab/index.html
+[adhdaj]: /uol/adhdaj/index.html
+[cats]: /uol/cats/index.html
+[acmi]: /uol/acmi/index.html
+[atlasps]: /uol/atlasps/index.html
+[dynairx]: /uol/dynairx/index.html
+[dsmegl]: /uol/dsmegl/index.html
+[diaphram]: /uol/diaphram/index.html
+[lupusmb]: /uol/lupusmb/index.html
+[mdjb]: /uol/mdjb/index.html
+[t2dd]: /uol/t2dd/index.html
+[mung]: /uol/mung/index.html
+[jrcss]: /uol/jrcss/index.html
+[bsabdh]: /uol/bsabdh/index.html
+[apsychyf]: /uol/apsychyf/index.html
+[egiiz]: /uol/egiiz/index.html
+[ref]: /uol/reflections/index.html
+[sentinelreadr]: /uol/sentinelreadr/index.html
+[ukbbpcos]: /uol/ukbbpcos/index.html
+[ukbbkp]: /uol/ukbbkp/index.html
+[mrhia]: /uol/mrhia/index.html
+[covidgimh]: /uol/covidgimh/index.html
+[lthft]: /uol/lthft/index.html
+[sprint]: /uol/sprint/index.html
+[valprogm]: /uol/valprogm/index.html
+[hypertes]: /uol/hypertes/index.html
+[ibdfc]: /uol/ibdfc/index.html
+[mhrecpk]: /uol/mhrecpk/index.html
+[gdibmlw]: /uol/gdibmlw/index.html
+[acceles]: /uol/acceles/index.html
+[cprdtools]: /uol/cprdtools/index.html
+[cprd]: /uol/cprd/index.html
+[rtrhd]: /uol/rtrhd/index.html
+[dmedgl]: /uol/dmedgl/index.html
+[pancrs]: /uol/pancrs/index.html
+[bcsrj]: /uol/bcsrj/index.html
+[plibr]: /uol/plibr/index.html
+[qcqaps]: /uol/qcqaps/index.html
+[hfavp]: /uol/hfavp/index.html
+[demrfmr]: /uol/demrfmr/index.html
+[ckddoh]: /uol/ckddoh/index.html
+[setuphtes]: /uol/setuphtes/index.html
+[sprtanal]: /uol/sprint_anal/master_analysis/index.html
+[tutorials]: /uol/tutorials/index.html
+[sprintanalysis]: /uol/sprint_anal/master_analysis/index.html
+
+[agem]: https://client.wvd.microsoft.com/arm/webclient/index.html
+
+[iphgit]: https://gitlab-iph.liv.ac.uk
+
+[gitlabacmi]: https://gitlab-iph.liv.ac.uk/pietas/acmi
+[githubuol]: https://github.com/PietaSchofield/UoL_open
+[ghplibr]: https://github.com/PietaSchofield/plibr
+[ghrtrhd]: https://github.com/PietaSchofield/rtrhd
+[ghps]: https://github.com/PietaSchofield
+[bbps]: https://bitbucket.org/pschofield
+
+[sharepoint]: https://theuniversityofliverpool.sharepoint.com/_layouts/15/sharepoint.aspx
+[onedrive]: https://theuniversityofliverpool-my.sharepoint.com/personal/pietas_liverpool_ac_uk/_layouts/15/onedrive.aspx?view=1
+
+[wake]: http://wakemypc.liv.ac.uk/user/WakeSearch.aspx?ComputerName=WIN1064-1032211&Wake=True "Wake my pc"
+
+[dnanexus]: https://ukbiobank.dnanexus.com/:w
+[cat]: https://github.com/PietaSchofield/cprdaurumtools
+[cgt]: https://github.com/PietaSchofield/cprdgoldtools
+[rtgit]: https://github.com/PietaSchofield/rtrhd
+

@@ -1,0 +1,19 @@
+#
+# This file is highly specific and only works with my file structure
+# 
+require(conflicted)
+require(duckdb)
+require(plibr)
+require(knitr)
+require(tidyverse)
+require(dbplyr)
+require(DT)
+require(kableExtra)
+require(cachem)
+#
+#
+#
+conflicts_prefer(DT::JS)
+conflicts_prefer(dplyr::filter)
+conflicts_prefer(dplyr::select)
+conflicts_prefer(dplyr::sql)

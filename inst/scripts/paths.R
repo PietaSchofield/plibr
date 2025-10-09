@@ -1,17 +1,7 @@
 #
 # This file is highly specific and only works with my file structure
 # 
-require(conflicted)
-require(duckdb)
-require(plibr)
-require(knitr)
-require(tidyverse)
-require(dbplyr)
-require(DT)
-require(kableExtra)
-require(cachem)
-#
-#
+
 .homeDir <- file.path(Sys.getenv("HOME"))
 .sysRoot <- .homeDir
 .mntPnt <- file.path("/","media","pietas")
@@ -28,12 +18,7 @@ require(cachem)
 .dataDir <- file.path(.projDir,".data")
 .locData <- file.path(.projLoc,".data")
 .tmpDir <- file.path(.homeDir,".tmp")
-.tmpFile <- file.path(.tmpDir,paste0(.fileName,".rdata"))
 .credDir <- file.path(.oneDrive,".config")
-.linksFile <- file.path(.homeDir,"GitLab",.gitRepo,"include","link.Rmd")
 #
+.tmpFile <- file.path(.tmpDir,paste0(.fileName,".rdata"))
 if(file.exists(.tmpFile)) load(.tmpFile)
-conflicts_prefer(DT::JS)
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::select)
-conflicts_prefer(dplyr::sql)
