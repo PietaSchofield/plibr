@@ -17,6 +17,12 @@ cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fil
 dir.create(cache_base, recursive = TRUE, showWarnings = FALSE)
 
 # enable knitr caching to that location
-knitr::opts_chunk$set(cache = TRUE, cache.path = paste0(cache_base, "/"), dev="png", dpi=96)
+knitr::opts_chunk$set(cache = TRUE,
+                      cache.path = paste0(cache_base, "/"), 
+                      fig.path = paste0(file.path(Sys.getenv("HOME"),"Projects",.projName,"figs"),"/"),
+                      dev="png", 
+                      dpi=96)
+
+knitr::opts_knit$set(root.dir = .proj)
 
 
