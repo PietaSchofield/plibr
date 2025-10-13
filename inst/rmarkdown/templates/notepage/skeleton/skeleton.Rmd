@@ -28,7 +28,7 @@ sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::k
 
 # References
 
-```{r links,child=.linksFile,eval=T}
+```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
 ```
 
 

@@ -35,7 +35,8 @@ local_page_open <- function(file_path,
                                   root_dir = "/var/www/html",
                                   host = "http://localhost",
                                   open = FALSE,
-                                  request_timeout = 5) {
+                                  request_timeout = 5,
+                                  browser=getOption("browser")) {
   stopifnot(is.character(file_path), length(file_path) == 1L)
   stopifnot(is.character(root_dir), length(root_dir) == 1L)
   stopifnot(is.character(host), length(host) == 1L)
@@ -66,7 +67,7 @@ local_page_open <- function(file_path,
   # Optionally open the URL without blocking
   if (isTRUE(open)) {
     # utils::browseURL is non-blocking and cross-platform
-    utils::browseURL(url)
+    utils::browseURL(url,browser=browser)
     opened <- TRUE
   }
 

@@ -9,7 +9,8 @@ local_page_open(
   root_dir = "/var/www/html",
   host = "http://localhost",
   open = FALSE,
-  request_timeout = 5
+  request_timeout = 5,
+  browser = getOption("browser")
 )
 }
 \arguments{

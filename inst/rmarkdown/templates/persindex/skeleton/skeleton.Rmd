@@ -1,5 +1,5 @@
 ---
-title: PN
+title: "TITLE"
 author: "Pieta Schofield"
 output:
   bookdown::html_document2:
@@ -18,7 +18,9 @@ bibliography: ../../../Zotero/zoterofull.bib
 .projName <- "PN"
 .gitRepo <- "personal"
 .fileName <- "index"
-sys.source(system.file('scripts','paths_per.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','paths_pers.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
 ```
 
 # Introduction
@@ -34,7 +36,7 @@ idx %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx))
 
 # References
 
-```{r links,child=.linksFile,eval=T}
+```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
 ```
 
 ```{r, eval=F,include=F}

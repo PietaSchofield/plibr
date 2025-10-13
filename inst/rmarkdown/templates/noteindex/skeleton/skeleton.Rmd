@@ -36,7 +36,7 @@ idx %>% arrange(desc(Name)) %>% plibr::display_data(plen=nrow(idx))
 
 # References
 
-```{r links,child=.linksFile,eval=T}
+```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
 ```
 
 ```{r, eval=F,include=F}
