@@ -1,14 +1,14 @@
 ---
-title: TITLE
+title: "TITLE"
 author: "Pieta Schofield"
 output:
   bookdown::html_document2:
-    code_folding: show
+    code_folding: hide
     keep_md: no
     number_sections: no
     fig_caption: yes
     includes:
-      before_body: !expr system.file('html','before_body_page.html',package='plibr')
+      before_body: !expr system.file('pkg-html','before_body_page.html',package='plibr')
     toc: yes
     toc_depth: 2
     css: !expr system.file('css','solarized_dark.css',package='plibr')
@@ -20,11 +20,13 @@ description: "not set yet"
 .gitRepo <- "liverpool"
 .projName <- "PN"
 .fileName <- "FN"
+sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
 sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
 ```
 
 
-#### References
+# References
 
 ```{r links,child=.linksFile,eval=T}
 ```

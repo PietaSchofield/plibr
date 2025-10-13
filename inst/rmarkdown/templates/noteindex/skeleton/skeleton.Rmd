@@ -1,5 +1,5 @@
 ---
-title: PN
+title: "TITLE"
 author: "Pieta Schofield"
 output:
   bookdown::html_document2:
@@ -8,7 +8,7 @@ output:
     number_sections: no
     fig_caption: yes
     includes:
-      before_body: !expr system.file('html','before_body_index.html',package='plibr')
+      before_body: !expr system.file('pkg-html','before_body_index.html',package='plibr')
     toc: no
     css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
@@ -18,7 +18,9 @@ bibliography: ../../../Zotero/zoterofull.bib
 .projName <- "PN"
 .gitRepo <- "liverpool"
 .fileName <- "index"
+sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
 sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
 ```
 
 # Introduction
@@ -29,7 +31,7 @@ sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_g
 # Current system uses the meta.yaml in the Git source repository for indexing not the HTML pages as
 # before so used the indexing function in plibr
 idx <- plibr::build_project_index("PN")
-idx %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx))
+idx %>% arrange(desc(Name)) %>% plibr::display_data(plen=nrow(idx))
 ```
 
 # References
