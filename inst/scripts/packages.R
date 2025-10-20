@@ -13,7 +13,8 @@ require(cachem)
 #
 #
 #
-conflicts_prefer(DT::JS)
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::select)
-conflicts_prefer(dplyr::sql)
+conflicted::conflicts_prefer(DT::JS)
+conflicted::conflicts_prefer(dplyr::filter)
+conflicted::conflicts_prefer(dplyr::select)
+conflicted::conflicts_prefer(dplyr::sql)
+conflicted::conflicts_prefer(dplyr::lag)

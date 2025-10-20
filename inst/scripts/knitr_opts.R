@@ -13,13 +13,19 @@ knitr::opts_hooks$set(cache = function(opts) {
   opts
 })
 
-cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fileName)
+if(!is.null(.projName)){
+  cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fileName)
+  fig_path = paste0(file.path(Sys.getenv("HOME"),"Projects",.projName,"figs"),"/")
+}else{
+  cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo,  .fileName)
+  fig_path = paste0(file.path(Sys.getenv("HOME"),"Projects","figs"),"/")
+}
 dir.create(cache_base, recursive = TRUE, showWarnings = FALSE)
 
 # enable knitr caching to that location
 knitr::opts_chunk$set(cache = TRUE,
                       cache.path = paste0(cache_base, "/"), 
-                      fig.path = paste0(file.path(Sys.getenv("HOME"),"Projects",.projName,"figs"),"/"),
+                      fig.path = fig_path, 
                       dev="png", 
                       dpi=96)
 
