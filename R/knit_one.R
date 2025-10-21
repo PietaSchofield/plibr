@@ -35,16 +35,38 @@
 #'
 #' @export
 knit_one <- function(chap_path,
-                    title = NULL,
-                    self_contained = TRUE,
-                    toc = TRUE,
-                    number_sections = TRUE,
-                    code_folding = "hide",
-                    output_file = NULL,
-                    root = getwd()) {
+                     title = NULL,
+                     self_contained = TRUE,
+                     toc = TRUE,
+                     number_sections = TRUE,
+                     code_folding = "hide",
+                     output_file = NULL,
+                     output_dir = "/srv/http/standalone/",
+                     fig_path = NULL,
+                     root = getwd()) {
+
   stopifnot(file.exists(chap_path))
   title <- title %||% paste0("Standalone: ", basename(chap_path))
-  knitr::opts_knit$set(root.dir = root)
+  if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+
+  # If fig_path given, force non-self-contained; if not, force self-contained
+  if (is.null(fig_path)) {
+    self_contained <- TRUE
+  } else {
+    self_contained <- FALSE
+    fig_path <- paste0(rtrim(fig_path), "/")            # ensure trailing slash
+  }
+
+  # Build setup block with fig.path only when provided
+  setup_lines <- c(
+    "```{r setup, include=FALSE}",
+    sprintf("knitr::opts_knit$set(root.dir = %s)", shQuote(normalizePath(root)))
+  )
+  if (!is.null(fig_path)) {
+    setup_lines <- c(setup_lines,
+      sprintf("knitr::opts_chunk$set(fig.path = %s)", shQuote(fig_path)))
+  }
+  setup_lines <- c(setup_lines, "```")
 
   wrapper <- tempfile(fileext = ".Rmd")
   writeLines(c(
@@ -55,12 +77,10 @@ knit_one <- function(chap_path,
     sprintf("    self_contained: %s", tolower(self_contained)),
     sprintf("    toc: %s", tolower(toc)),
     sprintf("    number_sections: %s", tolower(number_sections)),
-    sprintf("    code_folding: %s",tolower(code_folding)),
+    sprintf("    code_folding: %s", tolower(code_folding)),
     "---",
     "",
-    "```{r setup, include=FALSE}",
-    sprintf("source(file.path('%s','R','common_setup.R'), local = TRUE)", dirname(chap_path)),
-    "```",
+    setup_lines,
     "",
     sprintf("```{r build_it, child=%s}", shQuote(chap_path)),
     "```"
@@ -69,8 +89,11 @@ knit_one <- function(chap_path,
   rmarkdown::render(
     wrapper,
     output_file = output_file,
+    output_dir  = output_dir,
     clean = TRUE,
     envir = new.env(parent = globalenv())
   )
 }
+
 `%||%` <- function(a, b) if (is.null(a)) b else a
+rtrim <- function(x) sub('[/\\\\]+$', '', x)

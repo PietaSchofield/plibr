@@ -15,10 +15,10 @@ knitr::opts_hooks$set(cache = function(opts) {
 
 if(!is.null(.projName)){
   cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fileName)
-  fig_path = paste0(file.path(Sys.getenv("HOME"),"Projects",.projName,"figs"),"/")
+  fig_path = paste0(file.path("figures"),"/")
 }else{
   cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo,  .fileName)
-  fig_path = paste0(file.path(Sys.getenv("HOME"),"Projects","figs"),"/")
+  fig_path = paste0(file.path("figures"),"/")
 }
 dir.create(cache_base, recursive = TRUE, showWarnings = FALSE)
 
