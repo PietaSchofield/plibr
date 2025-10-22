@@ -58,7 +58,7 @@
 [setuphtes]: /uol/setuphtes/index.html
 [sprtanal]: /uol/sprint_anal/master_analysis/index.html
 [tutorials]: /uol/tutorials/index.html
-[sprintanalysis]: /uol/sprint_anal/master_analysis/index.html
+[sprintanalysis]: /uol/sprint_anal/index.html
 
 [agem]: https://client.wvd.microsoft.com/arm/webclient/index.html
 

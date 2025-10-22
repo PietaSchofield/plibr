@@ -122,7 +122,7 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-        sprintf('<a href="%s">%s</a>',paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
+sprintf('<a href="%s">%s</a>',paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
       } else {
         base_name
       },

@@ -15,20 +15,14 @@ knitr::opts_hooks$set(cache = function(opts) {
 
 if(!is.null(.projName)){
   cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fileName)
-  fig_path = paste0(file.path("figures"),"/")
 }else{
   cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo,  .fileName)
-  fig_path = paste0(file.path("figures"),"/")
 }
 dir.create(cache_base, recursive = TRUE, showWarnings = FALSE)
 
 # enable knitr caching to that location
 knitr::opts_chunk$set(cache = TRUE,
                       cache.path = paste0(cache_base, "/"), 
-                      fig.path = fig_path, 
-                      dev="png", 
-                      dpi=96)
-
-knitr::opts_knit$set(root.dir = .proj)
+                      root.dir = .proj)
 
 
