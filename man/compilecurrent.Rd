@@ -21,7 +21,8 @@ compilecurrent(
   toHTML = T,
   htmlUP = T,
   ext = "Rmd",
-  dbg = F
+  dbg = F,
+  browserPath = "librewolf"
 )
 }
 \arguments{

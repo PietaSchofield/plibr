@@ -12,6 +12,7 @@ display_data(
   buttons = TRUE,
   plen = NULL,
   caption = NULL,
+  browserPath = "librewolf",
   fixh = TRUE,
   fixc = list(leftColumns = 1),
   sigf = 3,

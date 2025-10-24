@@ -21,7 +21,7 @@
 #' @export
 
 display_data <- function(dataset, number = NULL, table_type = "DT", limited = FALSE, 
-                         buttons = TRUE, plen = NULL, caption = NULL, 
+                         buttons = TRUE, plen = NULL, caption = NULL, browserPath='librewolf',
                          fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3,dbug=FALSE) {
   if(dbug){
     dataset = cvdall
@@ -89,7 +89,7 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     if(!is_rendering && interactive()){
       widgetfile <- tempfile(fileext=".html")
       htmlwidgets::saveWidget(widget, widgetfile,selfcontained=TRUE)
-      displayURL(widgetfile)
+      displayURL(widgetfile,browser_path=browserPath)
     }else{
       return(widget)
     }

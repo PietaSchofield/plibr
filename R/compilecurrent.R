@@ -26,7 +26,8 @@ compilecurrent <- function(fileName=.fileName,
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,
-               htmlUP=T, ext="Rmd",dbg=F){
+               htmlUP=T, ext="Rmd",dbg=F,
+               browserPath='librewolf'){
 
 
   if(!oneDrive){
@@ -90,9 +91,9 @@ compilecurrent <- function(fileName=.fileName,
     if(!silent && session_mode()=="interactive"){
       urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
       if(RCurl::url.exists(urlout)){
-        displayURL(urlout)
+        displayURL(urlout,browser_path=browserPath)
       }else{
-        displayURL(htmlFile)
+        displayURL(htmlFile,browser_path=browserPath)
       }
     }
   }

@@ -44,6 +44,8 @@ update_meta_yaml <- function(repo_path) {
       if(prev_updated!=meta$last_updated){
         writeLines(yaml::as.yaml(meta), meta_file)
       }
+    }else{
+      cat(paste0('Missing meta.yaml: ',meta_file,'\n'))
     }
   })
 }
