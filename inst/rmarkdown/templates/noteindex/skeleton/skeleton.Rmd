@@ -14,7 +14,7 @@ output:
 bibliography: ../../../Zotero/zoterofull.bib
 ---
 
-```{r,echo=FALSE, include=F}
+```{r setup,echo=FALSE, include=F}
 .projName <- "PN"
 .gitRepo <- "liverpool"
 .fileName <- "index"
@@ -39,6 +39,6 @@ idx %>% arrange(desc(Name)) %>% plibr::display_data(plen=nrow(idx))
 ```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
 ```
 
-```{r, eval=F,include=F}
+```{r build, eval=F,include=F}
 plibr::compilecurrent(fileName="index",projName="PN",gitRepo="liverpool")
 ```

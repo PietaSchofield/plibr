@@ -8,13 +8,13 @@ output:
     number_sections: no
     fig_caption: yes
     includes:
-      before_body: !expr system.file('html','before_body_index_per.html',package='plibr')
+      before_body: !expr system.file('pkg-html','before_body_index_per.html',package='plibr')
     toc: no
     css: !expr system.file('css','solarized_dark.css',package='plibr')
 bibliography: ../../../Zotero/zoterofull.bib
 ---
 
-```{r,echo=FALSE, include=F}
+```{r setup,echo=FALSE, include=F}
 .projName <- "PN"
 .gitRepo <- "personal"
 .fileName <- "index"
@@ -39,6 +39,6 @@ idx %>% arrange(desc(Name)) %>% plibr::display_data(disp=T,plen=nrow(idx))
 ```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
 ```
 
-```{r, eval=F,include=F}
+```{r build, eval=F,include=F}
 plibr::compilecurrent(fileName="index",projName="PN",gitRepo="personal")
 ```

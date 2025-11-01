@@ -16,7 +16,7 @@ bibliography: ../../../Zotero/zoterofull.bib
 description: "not set yet"
 ---
 
-```{r,echo=FALSE, include=F}
+```{r setup,echo=FALSE, include=F}
 .gitRepo <- "personal"
 .projName <- "PN"
 .fileName <- "FN"
@@ -32,6 +32,6 @@ sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::k
 ```
 
 
-```{r eval=F,include=F}
+```{r build,eval=F,include=F}
 plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="personal")
 ```
