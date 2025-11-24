@@ -25,7 +25,7 @@ compilecurrent <- function(fileName=.fileName,
                nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
-               silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,
+               silent=F,setHome=F,toPDF=F,toHTML=T,
                htmlUP=T, ext="Rmd",dbg=F,
                browserPath='librewolf'){
 
@@ -67,19 +67,6 @@ compilecurrent <- function(fileName=.fileName,
   dir.create(outPath,showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
   
-  if(toDOCX){
-    docxFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                  output_format="bookdown::word_document2")
-    if(!silent && session_mode()=="interactive"){
-      if(system("which onlyoffice-desktopeditors", ignore.stdout=TRUE, ignore.stderr=TRUE) == 0){
-         system(paste("onlyoffice-desktopeditors", shQuote(docxFile), "&"))
-      } else if(system("which abiword", ignore.stdout=TRUE, ignore.stderr=TRUE) == 0){
-        system(paste("abiword", shQuote(docxFile), "&"))
-      } else {
-        message("No suitable Word viewer found.")
-      }
-    }
-  }
   if(toHTML){
     if(htmlUP){
       htmlFile <- rmarkdown::render(input=infile,output_dir=nbPath,

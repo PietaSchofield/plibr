@@ -17,7 +17,6 @@ compilecurrent(
   silent = F,
   setHome = F,
   toPDF = F,
-  toDOCX = F,
   toHTML = T,
   htmlUP = T,
   ext = "Rmd",
