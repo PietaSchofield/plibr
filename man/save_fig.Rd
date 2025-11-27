@@ -4,7 +4,15 @@
 \alias{save_fig}
 \title{Save a ggplot or base R plot to both SVG and PNG in a clean directory}
 \usage{
-save_fig(plot, name, width = 6, height = 4, dpi = 300, dir = "figures")
+save_fig(
+  plot,
+  name,
+  width = 6,
+  height = 4,
+  dpi = 300,
+  dir = "figures",
+  formats = c("svg", "png")
+)
 }
 \arguments{
 \item{plot}{A plot object (e.g. from ggplot2 or base graphics via \code{recordPlot()}).}

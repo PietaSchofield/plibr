@@ -13,25 +13,44 @@
 #' @return Invisibly returns character vector of saved file paths.
 #'
 #' @export
-save_fig <- function(plot, name, width = 6, height = 4, dpi = 300, dir = "figures") {
+save_fig <- function(plot,
+                     name,
+                     width  = 6,
+                     height = 4,
+                     dpi    = 300,
+                     dir    = "figures",
+                     formats = c("svg", "png")) {
+
   if (!dir.exists(dir)) dir.create(dir, recursive = TRUE)
 
-  svg_file <- file.path(dir, paste0(name, ".svg"))
-  png_file <- file.path(dir, paste0(name, ".png"))
+  files <- character()
 
-  # SVG
-  svglite::svglite(svg_file, width = width, height = height)
-  on.exit(dev.off(), add = TRUE)
-  print(plot)
-  dev.off()
+  for (ext in formats) {
+    file <- file.path(dir, paste0(name, ".", ext))
 
-  # PNG
-  png(png_file, width = width, height = height, units = "in", res = dpi)
-  on.exit(dev.off(), add = TRUE)
-  print(plot)
-  dev.off()
+    if (ext == "svg") {
+      # use svglite device via ggsave
+      ggsave(
+        filename = file,
+        plot     = plot,
+        width    = width,
+        height   = height,
+        device   = svglite::svglite
+      )
+    } else {
+      ggsave(
+        filename = file,
+        plot     = plot,
+        width    = width,
+        height   = height,
+        dpi      = dpi
+      )
+    }
 
-  message("Saved: ", svg_file, " and ", png_file)
-  invisible(c(svg_file, png_file))
+    files <- c(files, file)
+  }
+
+  message("Saved: ", paste(files, collapse = ", "))
+  invisible(files)
 }
 
