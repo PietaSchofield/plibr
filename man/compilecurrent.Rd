@@ -10,7 +10,6 @@ compilecurrent(
   gitRepo = "liverpool",
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
-  oneDrive = F,
   nbPath = file.path("/srv", "http"),
   codePath = file.path(sysRoot, "GitLab", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
@@ -21,6 +20,8 @@ compilecurrent(
   htmlUP = T,
   ext = "Rmd",
   dbg = F,
+  outPath = file.path(Sys.getenv("HOME"), "Projects"),
+  srvRoot = "uol",
   browserPath = "librewolf"
 )
 }

@@ -21,20 +21,14 @@ compilecurrent <- function(fileName=.fileName,
                gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
-               oneDrive=F,
                nbPath=file.path("/srv","http"),
                codePath=file.path(sysRoot,"GitLab",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toHTML=T,
                htmlUP=T, ext="Rmd",dbg=F,
+               outPath=file.path(Sys.getenv("HOME"),"Projects"),
+               srvRoot="uol",
                browserPath='librewolf'){
-
-
-  if(!oneDrive){
-    outPath=file.path(Sys.getenv("HOME"),"Projects")
-  }else{
-    outPath=file.path(Sys.getenv("HOME"),"OneDrive","ul","Projects")
-  }
 
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
@@ -43,7 +37,7 @@ compilecurrent <- function(fileName=.fileName,
     nbPath <- file.path(nbPath,"pers")
     outPath <- file.path(outPath,"pers")
   }else{
-    nbPath <- file.path(nbPath,gitRepo)
+    nbPath <- file.path(nbPath,srvRoot,gitRepo)
     outPath <- file.path(outPath,gitRepo)
   }
 
