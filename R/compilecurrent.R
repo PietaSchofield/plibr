@@ -41,9 +41,9 @@ compilecurrent <- function(fileName=.fileName,
     outPath <- file.path(outPath,gitRepo)
   }
 
-  if(!file.exists(nbPath)){
-    htmlUP <- F
-  }
+  # if(!file.exists(nbPath)){
+  #   htmlUP <- F
+  # }
 
   if(!is.null(projName)){
     codePath <- file.path(codePath,projName)

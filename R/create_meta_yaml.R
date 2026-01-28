@@ -51,36 +51,49 @@ update_meta_yaml <- function(repo_path) {
 }
 
 #' build master list
-#f
+#'
 #' @export
-build_master_list <- function(repoName,
+build_master_list <- function(repoNames,
                               git_directory=file.path(Sys.getenv("HOME"),"GitLab"),
                               recur=FALSE,
                               htmlroot="uol",
                               html_directory=file.path("/srv","http")) {
-  repo_path <- file.path(git_directory,repoName)
-  project_dirs <- list.dirs(path = repo_path, recursive = recur)
-  master_list <- lapply(project_dirs, function(dirn) {
-    yaml_file <- file.path(dirn, "meta.yaml")
-    if (file.exists(yaml_file)) {
-      metadata <- yaml::yaml.load_file(yaml_file)
-      metadata$directory <- dirn
-      # 4. Check for the index.html file on the website
-      project_name <- toupper(basename(dirn))
-      index_file <- file.path(html_directory,htmlroot,basename(dirn),"index.html")
-      html_exists <- fs::file_exists(index_file)
-      if (html_exists) {
-        metadata$web_status <- "exists"
-        metadata$name <- sprintf('<a href="%s">%s</a>',
-              paste0("/",htmlroot,"/",basename(dirn),"/","index.html"),project_name)
-      } else {
-        metadata$web_status <- "missing"
-        metadata$name <- project_name
+
+  if(F){
+    repoNames=c("liverpool","github")
+    git_directory=file.path(Sys.getenv("HOME"),"GitLab")
+    recur=FALSE
+    htmlroot="uol"
+    html_directory=file.path("/srv","http")
+  }
+
+
+  master_lists <- lapply(repoNames, function(repoName){
+    repo_path <- file.path(git_directory,repoName)
+    project_dirs <- list.dirs(path = repo_path, recursive = recur)
+    master_list <- lapply(project_dirs, function(dirn) {
+      yaml_file <- file.path(dirn, "meta.yaml")
+      if (file.exists(yaml_file)) {
+        metadata <- yaml::yaml.load_file(yaml_file)
+        metadata$directory <- dirn
+        # 4. Check for the index.html file on the website
+        project_name <- toupper(basename(dirn))
+        index_file <- file.path(html_directory,htmlroot,basename(dirn),"index.html")
+        html_exists <- fs::file_exists(index_file)
+        if (html_exists) {
+          metadata$web_status <- "exists"
+          metadata$name <- sprintf('<a href="%s">%s</a>',
+                paste0("/",htmlroot,"/",basename(dirn),"/","index.html"),project_name)
+        } else {
+          metadata$web_status <- "missing"
+          metadata$name <- project_name
+        }
+        return(metadata)
       }
-      return(metadata)
-    }
-  }) %>% bind_rows()  # Combine all metadata into a single data frame
-  return(master_list)
+    }) |> bind_rows()
+  })
+
+  master_lists %>% bind_rows()  # Combine all metadata into a single data frame
 }
 
 #' build project index
@@ -90,17 +103,23 @@ build_project_index <- function(project,
                                 git_directory=file.path(Sys.getenv("HOME"),"GitLab"), 
                                 html_directory=file.path("/srv","http"),
                                 repo="liverpool",
+                                coderoot=NULL,
                                 htmlroot="uol") {
   if(F){
-    project <- "notes"
-    git_directory <- file.path(Sys.getenv("HOME"),"GitLab","liverpool")
-    html_directory <- file.path("/srv","http","uol",project)
-    repo <- "uol"
+    project <- "sprint-paper-1"
+    htmlroot <- "uol"
+    coderoot <- "github"
+    git_directory <- file.path(Sys.getenv("HOME"),"GitLab")
+    html_directory <- file.path("/srv","http",htmlroot)
+    repo <- "sprint-paper-1"
   }
 
-  rmd_directory <- file.path(git_directory,repo,project)
+  if(is.null(coderoot)){
+    rmd_directory <- file.path(git_directory,repo,project)
+  }else{
+    rmd_directory <- file.path(git_directory,coderoot,project)
+  }
   html_directory <- file.path(html_directory,htmlroot,project)
-  # Helper function to extract YAML metadata
 
   # List all Rmd files
   rmd_files <- list.files(rmd_directory, pattern = ".*md$", full.names = TRUE)
@@ -124,7 +143,8 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-sprintf('<a href="%s">%s</a>',paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
+        sprintf('<a href="%s">%s</a>',
+             paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
       } else {
         base_name
       },

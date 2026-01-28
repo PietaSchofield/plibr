@@ -5,7 +5,7 @@
 \title{build master list}
 \usage{
 build_master_list(
-  repoName,
+  repoNames,
   git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
   recur = FALSE,
   htmlroot = "uol",
