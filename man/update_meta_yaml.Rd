@@ -4,7 +4,11 @@
 \alias{update_meta_yaml}
 \title{update meta data}
 \usage{
-update_meta_yaml(repo_path)
+update_meta_yaml(
+  repo_paths,
+  codeDir = file.path(Sys.getenv("HOME"), "GitLab"),
+  db = F
+)
 }
 \description{
 update meta data

@@ -24,9 +24,14 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(repo_path) {
-  
-  project_dirs <- list.dirs(path = repo_path, recursive = F)
+update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"GitLab"),db=F) {
+  if(db){
+    codeDir <- file.path(Sys.getenv("HOME"),"GitLab")
+    repo_paths <- c("liverpool","github")
+    repo_path <- repo_paths[1]
+  }
+  lapply(repo_paths,function(repo_path){
+  project_dirs <- list.dirs(path = file.path(codeDir,repo_path), full=T,recursive = F)
   ret <- lapply(project_dirs, function(dirn) {
     meta_file <- file.path(dirn, "meta.yaml")
     if(file.exists(meta_file)){
@@ -47,6 +52,7 @@ update_meta_yaml <- function(repo_path) {
     }else{
       cat(paste0('Missing meta.yaml: ',meta_file,'\n'))
     }
+  })
   })
 }
 
