@@ -29,5 +29,5 @@ if(!is.null(.projName)){
 .credDir <- file.path(.oneDrive,".config")
 .proj <- .codeDir
 #
-.tmpFile <- file.path(.tmpDir,paste0(.fileName,".rdata"))
-if(file.exists(.tmpFile)) load(.tmpFile)
+
+

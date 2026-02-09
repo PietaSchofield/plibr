@@ -13,11 +13,14 @@ knitr::opts_hooks$set(cache = function(opts) {
   opts
 })
 
-if(!is.null(.projName)){
-  cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo, .projName, .fileName)
+cache_dir <- file.path(Sys.getenv("HOME"),".cache","knitr",.gitRepo)
+
+if(isTRUE(getOption('knitr.in.progress'))){
+  cache_name <- gsub("[.]Rmd","",basename(knitr::current_input()))
 }else{
-  cache_base <- file.path(path.expand('~/.cache/knitr'), .gitRepo,  .fileName)
+  cache_name <- "interactive"
 }
+cache_base <- file.path(cache_dir, basename(getwd()), cache_name)
 dir.create(cache_base, recursive = TRUE, showWarnings = FALSE)
 
 # enable knitr caching to that location
