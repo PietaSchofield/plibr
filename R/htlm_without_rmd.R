@@ -26,20 +26,27 @@
 #' @export
 html_without_rmd <- function(projName,
                             rmd_dir=.codeDir,
-                            html_dir=file.path("/srv","http","uol",projName)
+                            html_dir=file.path("/srv","http","uol",projName),
+                            dbug=FALSE
                             ) {
 
-  html_files <- list.files(html_dir, pattern = "\\.html$", full.names = FALSE)
-  rmd_files  <- list.files(rmd_dir, pattern = "\\.Rmd$", full.names = FALSE)
+  if(dbug){
+    projName <- "sprint"
+    rmd_dir <- file.path(Sys.getenv("HOME"),"GitLab","liverpool",projName)
+    html_dir <- file.path("/srv","http","uol",projName)
+  }
+  html_files <- list.files(html_dir, pattern = "\\.html$", full.names = TRUE) |>
+     file.info() 
+  html_files$base <- tools::file_path_sans_ext(basename(rownames(html_files)))
 
-  html_base <- tools::file_path_sans_ext(html_files)
-  rmd_base  <- tools::file_path_sans_ext(rmd_files)
+  rmd_files  <- list.files(rmd_dir, pattern = "\\.Rmd$", full.names = TRUE) |>
+    file.info()
+  rmd_files$base  <- tools::file_path_sans_ext(basename(rownames(rmd_files)))
 
-  missing_rmd <- html_files[!html_base %in% rmd_base]
-
-  tibble(
-    name = tools::file_path_sans_ext(missing_rmd)
-  ) |>
-  mutate(orphanpage=sprintf('<a href="%s.html" target="_blank">%s</a>',name,name)) |>
-  select(orphanpage)
+  missing_rmd <- html_files |> filter(!base %in% rmd_files$base)
+  missing_rmd |> select(ctime) |> tibble()
+  missing_rmd |> select(base,ctime,mtime,atime) |> as_tibble() |>
+  mutate(orphanpage=sprintf('<a href="%s.html" target="_blank">%s</a>',base,base)) |>
+  select(orphanpage,ctime,mtime,atime) |>
+  mutate(across(c(ctime,mtime,atime),~ format(as.POSIXct(.),"%Y-%m-%d %H:%M")))
 }

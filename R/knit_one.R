@@ -43,7 +43,8 @@ knit_one <- function(chap_path,
                      output_file = NULL,
                      output_dir = "/srv/http/standalone/",
                      fig_path = NULL,
-                     root = getwd()) {
+                     root = getwd(),
+                     force_solarized = TRUE) {  # Added parameter
 
   stopifnot(file.exists(chap_path))
   title <- title %||% paste0("Standalone: ", basename(chap_path))
@@ -78,6 +79,8 @@ knit_one <- function(chap_path,
     sprintf("    toc: %s", tolower(toc)),
     sprintf("    number_sections: %s", tolower(number_sections)),
     sprintf("    code_folding: %s", tolower(code_folding)),
+    "    css: !expr system.file('css', 'solarized_dark.css', package = 'plibr')",
+    "",
     "---",
     "",
     setup_lines,

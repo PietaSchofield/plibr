@@ -7,7 +7,8 @@
 html_without_rmd(
   projName,
   rmd_dir = .codeDir,
-  html_dir = file.path("/srv", "http", "uol", projName)
+  html_dir = file.path("/srv", "http", "uol", projName),
+  dbug = FALSE
 )
 }
 \arguments{

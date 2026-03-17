@@ -4,6 +4,8 @@
 [adhdaj]: /uol/adhdaj/index.html
 [apsychyf]: /uol/apsychyf/index.html
 [arc]: /uol/arc/index.html
+[asag]: /uol/asag/index.html
+[astascem]: /uol/astascem/index.html
 [atlasps]: /uol/atlasps/index.html
 [aurumtools]: /uol/aurumtools/index.html
 [bcsrj]: /uol/bcsrj/index.html

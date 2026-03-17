@@ -14,7 +14,8 @@ knit_one(
   output_file = NULL,
   output_dir = "/srv/http/standalone/",
   fig_path = NULL,
-  root = getwd()
+  root = getwd(),
+  force_solarized = TRUE
 )
 }
 \arguments{
