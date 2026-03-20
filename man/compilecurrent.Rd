@@ -22,7 +22,7 @@ compilecurrent(
   dbg = F,
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
   srvRoot = "uol",
-  browserPath = "librewolf"
+  browserPath = getOption("browser_main")
 )
 }
 \arguments{

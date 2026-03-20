@@ -34,6 +34,7 @@
 [jrcss]: /uol/jrcss/index.html
 [lthft]: /uol/lthft/index.html
 [lupusmb]: /uol/lupusmb/index.html
+[macear]: /uol/macear/index.html
 [mdjb]: /uol/mdjb/index.html
 [mhrecpk]: /uol/mhrecpk/index.html
 [mrhia]: /uol/mrhia/index.html

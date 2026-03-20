@@ -15,6 +15,8 @@
 #' @param userid User id
 #' @param outRoot local temporary file creation location
 #'
+#' @importFrom rlang %||%
+#'
 #' @export
 compilecurrent <- function(fileName=.fileName,
                projName=.projName,
@@ -28,7 +30,9 @@ compilecurrent <- function(fileName=.fileName,
                htmlUP=T, ext="Rmd",dbg=F,
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
                srvRoot="uol",
-               browserPath='librewolf'){
+               browserPath=getOption("browser_main")){
+
+  browserPath = browserPath %||% getOption("browser") %||% Sys.getenv("BROWSER") %||% "/usr/bin/firefox" 
 
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
