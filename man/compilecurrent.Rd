@@ -21,7 +21,7 @@ compilecurrent(
   ext = "Rmd",
   dbg = F,
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
-  srvRoot = "uol",
+  srvRoot = NULL,
   browserPath = getOption("browser_main")
 )
 }

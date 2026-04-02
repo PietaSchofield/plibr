@@ -10,7 +10,8 @@ build_project_index(
   html_directory = file.path("/srv", "http"),
   repo = "liverpool",
   coderoot = NULL,
-  htmlroot = "uol"
+  htmlroot = "uol",
+  pub = F
 )
 }
 \description{

@@ -29,6 +29,7 @@
 [gdibmlw]: /uol/gdibmlw/index.html
 [hfavp]: /uol/hfavp/index.html
 [home]: /index.html
+[htpreges]: /uol/htpreges/index.html
 [hypertes]: /uol/hypertes/index.html
 [ibdfc]: /uol/ibdfc/index.html
 [jrcss]: /uol/jrcss/index.html

@@ -29,7 +29,7 @@ compilecurrent <- function(fileName=.fileName,
                silent=F,setHome=F,toPDF=F,toHTML=T,
                htmlUP=T, ext="Rmd",dbg=F,
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
-               srvRoot="uol",
+               srvRoot=NULL,
                browserPath=getOption("browser_main")){
 
   browserPath = browserPath %||% getOption("browser") %||% Sys.getenv("BROWSER") %||% "/usr/bin/firefox" 
@@ -41,7 +41,11 @@ compilecurrent <- function(fileName=.fileName,
     nbPath <- file.path(nbPath,"pers")
     outPath <- file.path(outPath,"pers")
   }else{
-    nbPath <- file.path(nbPath,srvRoot,gitRepo)
+    if(!is.null(srvRoot)){
+      nbPath <- file.path(nbPath,srvRoot,gitRepo)
+    }else{
+      nbPath <- file.path(nbPath,gitRepo)
+    }
     outPath <- file.path(outPath,gitRepo)
   }
 

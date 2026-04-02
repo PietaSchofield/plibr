@@ -9,7 +9,8 @@ build_master_list(
   git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
   recur = FALSE,
   htmlroot = "uol",
-  html_directory = file.path("/srv", "http")
+  html_directory = file.path("/srv", "http"),
+  pub = F
 )
 }
 \description{

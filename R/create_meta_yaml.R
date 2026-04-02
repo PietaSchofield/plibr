@@ -63,16 +63,17 @@ build_master_list <- function(repoNames,
                               git_directory=file.path(Sys.getenv("HOME"),"GitLab"),
                               recur=FALSE,
                               htmlroot="uol",
-                              html_directory=file.path("/srv","http")) {
+                              html_directory=file.path("/srv","http"),
+                              pub=F) {
 
   if(F){
-    repoNames=c("liverpool","github")
+    repoNames=c("public")
     git_directory=file.path(Sys.getenv("HOME"),"GitLab")
     recur=FALSE
-    htmlroot="uol"
+    htmlroot="public"
     html_directory=file.path("/srv","http")
+    pub=T
   }
-
 
   master_lists <- lapply(repoNames, function(repoName){
     repo_path <- file.path(git_directory,repoName)
@@ -88,8 +89,13 @@ build_master_list <- function(repoNames,
         html_exists <- fs::file_exists(index_file)
         if (html_exists) {
           metadata$web_status <- "exists"
-          metadata$name <- sprintf('<a href="%s">%s</a>',
-                paste0("/",htmlroot,"/",basename(dirn),"/","index.html"),project_name)
+          if(pub){
+            metadata$name <- sprintf('<a href="%s">%s</a>',
+                  file.path("./",basename(dirn),"index.html"),project_name)
+          }else{
+            metadata$name <- sprintf('<a href="%s">%s</a>',
+                  file.path("http://localhost/",htmlroot,basename(dirn),"index.html"),project_name)
+          }
         } else {
           metadata$web_status <- "missing"
           metadata$name <- project_name
@@ -110,7 +116,8 @@ build_project_index <- function(project,
                                 html_directory=file.path("/srv","http"),
                                 repo="liverpool",
                                 coderoot=NULL,
-                                htmlroot="uol") {
+                                htmlroot="uol",
+                                pub=F) {
   if(F){
     project <- "sprint-paper-1"
     htmlroot <- "uol"
@@ -149,8 +156,13 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-        sprintf('<a href="%s">%s</a>',
-             paste0("/",htmlroot,"/",project,"/",basename(html_file)),base_name)
+        if(pub){
+          sprintf('<a href="%s">%s</a>',
+             file.path("./",basename(html_file)),base_name)
+        }else{
+          sprintf('<a href="%s">%s</a>',
+             file.path("http://localhost/",htmlroot,project,basename(html_file)),base_name)
+        }
       } else {
         base_name
       },
@@ -184,10 +196,10 @@ extract_metadata <- function(file_path) {
 #' Display Project Index
 #'
 #' @export
-display_project_index <- function(idx_df,sortover=NULL){
+display_project_index <- function(idx_df,sortover=NULL,buts=FALSE){
   if(!is.null(sortover)){
     idx_df <- idx_df %>% 
       dplyr::arrange(desc(.data[[sortover]]))
   }
-  idx_df %>%  plibr::display_data(plen=nrow(idx_df))
+  idx_df %>%  plibr::display_data(plen=nrow(idx_df),buttons=buts)
 }
