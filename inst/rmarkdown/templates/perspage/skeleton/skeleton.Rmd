@@ -21,14 +21,13 @@ description: "not set yet"
 .projName <- "PN"
 .fileName <- "FN"
 sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
-sys.source(system.file('scripts','paths_pers.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
 sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
 ```
 
-
 # References
 
-```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
+```{r links,child=file.path(Sys.getenv("HOME"),"GitLab","liverpool","include","links.Rmd"),eval=T}
 ```
 
 

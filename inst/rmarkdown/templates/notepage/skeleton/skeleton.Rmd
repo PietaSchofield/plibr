@@ -25,12 +25,10 @@ sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_g
 sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
 ```
 
-
 # References
 
-```{r links,child=system.file('scripts','links.Rmd',package='plibr'),eval=T}
+```{r links,child=file.path(Sys.getenv("HOME"),"GitLab","liverpool","include","links.Rmd"),eval=T}
 ```
-
 
 ```{r build,eval=F,include=F}
 plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
