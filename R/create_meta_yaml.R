@@ -119,12 +119,12 @@ build_project_index <- function(project,
                                 htmlroot="uol",
                                 pub=F) {
   if(F){
-    project <- "sprint-paper-1"
+    project <- "tutorials"
     htmlroot <- "uol"
-    coderoot <- "github"
+    coderoot <- NULL
     git_directory <- file.path(Sys.getenv("HOME"),"GitLab")
     html_directory <- file.path("/srv","http",htmlroot)
-    repo <- "sprint-paper-1"
+    repo <- "liverpool"
   }
 
   if(is.null(coderoot)){
@@ -179,7 +179,7 @@ build_project_index <- function(project,
 }
 
 #' extrct metadata
-#'
+#' 
 #' @export
 extract_metadata <- function(file_path) {
   lines <- readLines(file_path, warn = FALSE)
@@ -188,9 +188,18 @@ extract_metadata <- function(file_path) {
   if (is.na(start) || is.na(end)) return(NULL)
   yaml_block <- paste(lines[start:end], collapse = "\n")
   
-  # Load YAML and evaluate expressions
-  metadata <- yaml::yaml.load(yaml_block, eval.expr = TRUE)
-  return(metadata)
+  # Load YAML and evaluate expressions with error handling
+  tryCatch(
+    {
+      metadata <- yaml::yaml.load(yaml_block, eval.expr = TRUE)
+      return(metadata)
+    },
+    error = function(e) {
+      message("YAML parse error in: ", file_path)
+      message("Error: ", e$message)
+      return(NULL)
+    }
+  )
 }
 
 #' Display Project Index

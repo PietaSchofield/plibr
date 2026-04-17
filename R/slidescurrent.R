@@ -16,7 +16,7 @@
 #' @param outRoot local temporary file creation location
 #'
 #' @export
-presentcurrent <- function(fileName=.fileName,
+slidescurrent <- function(fileName=.fileName,
                projName=.projName,
                gitRepo="liverpool",
                sysRoot=Sys.getenv("HOME"),
@@ -26,21 +26,18 @@ presentcurrent <- function(fileName=.fileName,
                silent=F, ext="Rmd",dbg=F,
                browserPath=getOption("browser_main")){
  
+  browserPath = browserPath %||% getOption("browser") %||% Sys.getenv("BROWSER") %||% "/usr/bin/firefox" 
   pptxPath <- file.path(outPath,projName)
   codePath <- file.path(codePath,projName)
-  pptxFileName <- file.path(pptxPath,paste0(fileName,".pptx"))
+  pptxFileName <- file.path(pptxPath,paste0(fileName,".html"))
 
   dir.create(dirname(pptxFileName),showW=F,recur=T)
   infile <- file.path(codePath,paste0(fileName,".",ext))
   
 
   outfile <- rmarkdown::render(infile, 
-                  output_format = "powerpoint_presentation",
-                  output_options = list(reference_doc =
-                                        system.file('pptx','chi_template.pptx',package='plibr')),
+                  output_format = "ioslides_presentation",
                   output_file = pptxFileName)
+  displayURL(outfile,browser_path=browserPath)
 
-  if(!silent){
-    system(paste("onlyoffice-desktopeditors", shQuote(pptxFileName)),intern=F,wait=F)
-  }
 }

@@ -19,7 +19,6 @@
 #' @importFrom knitr kable
 #' @importFrom flextable qflextable
 #' @export
-
 display_data <- function(dataset, number = NULL, table_type = "DT", limited = FALSE, 
                          buttons = TRUE, plen = NULL, caption = NULL, browserPath='librewolf',
                          fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3,dbug=FALSE) {
