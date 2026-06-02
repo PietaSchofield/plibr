@@ -7,9 +7,9 @@
 base2dec(base_number, base = 2)
 }
 \arguments{
-\item{base}{}
+\item{base_number}{(the number to convert)}
 
-\item{number}{}
+\item{base}{the base to convert to}
 }
 \description{
 Convert a bit string to a number

@@ -13,9 +13,7 @@ rb(
 )
 }
 \arguments{
-\item{pkgname}{}
-
-\item{rstudio}{}
+\item{pkgname}{the package name}
 }
 \description{
 rebuild a package

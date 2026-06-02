@@ -1,8 +1,6 @@
 #' rebuild a package
 #'
-#' @param pkgname
-#'
-#' @param rstudio
+#' @param pkgname the package name
 #'
 #' @export
 rb <- function(wd=NULL,projName="plibr", pkgName="package",install=F,

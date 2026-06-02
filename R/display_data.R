@@ -56,7 +56,13 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     
     if (buttons) {
       ext <- 'Buttons'
-      btns <- c("copy", "csv")
+      btns <- list("copy", 
+                   list(extend="csv",
+                        text = "TSV", 
+                        fieldSeparator = "\t",
+                        fieldBoundary = ""
+                  ),
+              )
       dom <- 'Blfrtip'
     } else {
       ext <- character(0)

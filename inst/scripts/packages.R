@@ -7,9 +7,10 @@ require(plibr)
 require(knitr)
 require(tidyverse)
 require(dbplyr)
+require(ggplot2)
 require(DT)
 require(kableExtra)
-require(cachem)
+
 #
 #
 #

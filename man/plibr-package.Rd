@@ -21,5 +21,10 @@ management for bioinformatics jobs is not distant history
 \author{
 \strong{Maintainer}: Pieta Schofield \email{pieta.schofield@me.com}
 
+Authors:
+\itemize{
+  \item Pieta Schofield \email{pieta.schofield@me.com}
+}
+
 }
 \keyword{internal}

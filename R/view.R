@@ -2,7 +2,7 @@
 #'
 #' very simple command possibly expand to take application as an argument
 #'
-#' @param fileName
+#' @param fileName name of the file
 #'
 #' @export
 macOpen <- function(fileName){

@@ -1,7 +1,7 @@
 #' Convert a bit string to a number 
 #'
-#' @param number 
-#' @param base
+#' @param base_number (the number to convert)
+#' @param base the base to convert to
 #'
 #' @export
 base2dec = function(base_number, base = 2) {

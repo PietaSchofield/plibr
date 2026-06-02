@@ -7,7 +7,7 @@
 macOpen(fileName)
 }
 \arguments{
-\item{fileName}{}
+\item{fileName}{name of the file}
 }
 \description{
 very simple command possibly expand to take application as an argument
