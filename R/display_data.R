@@ -23,7 +23,7 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
                          buttons = TRUE, plen = NULL, caption = NULL, browserPath='librewolf',
                          fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3,dbug=FALSE) {
   if(dbug){
-    dataset = cvdall
+    dataset = plist
     number = NULL
     table_type = "DT"
     limited = FALSE
@@ -33,6 +33,7 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     fixh = TRUE
     fixc = list(leftColumns = 1)
     sigf = 3
+    browserPath = 'librewolf'
   }
   if (!is.null(number)) {
     dataset <- dataset %>% tibble::as_tibble() %>% head(number)
@@ -61,7 +62,7 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
                         text = "TSV", 
                         fieldSeparator = "\t",
                         fieldBoundary = ""
-                  ),
+                  )
               )
       dom <- 'Blfrtip'
     } else {
