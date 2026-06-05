@@ -32,45 +32,26 @@
 #' @importFrom httr GET status_code timeout
 #' @export
 local_page_open <- function(file_path,
-                                  root_dir = "/var/www/html",
+                                  root_dir = "/srv/http",
                                   host = "http://localhost",
                                   open = FALSE,
                                   request_timeout = 5,
                                   browser=getOption("browser")) {
-  stopifnot(is.character(file_path), length(file_path) == 1L)
-  stopifnot(is.character(root_dir), length(root_dir) == 1L)
-  stopifnot(is.character(host), length(host) == 1L)
 
-  # Normalise paths
+  if(F){
+    file_path <- htmlPath
+    root_dir = "/srv/http"
+    host = "http://localhost"
+    open = FALSE
+    request_timeout = 5
+    browser="opera"
+  } 
+  
   fp_norm <- normalizePath(file_path, winslash = "/", mustWork = FALSE)
   root_norm <- normalizePath(root_dir, winslash = "/", mustWork = FALSE)
 
-  # Derive URL path relative to root
-  rel_path <- sub(paste0("^", root_norm, "(?=/|$)"), "", fp_norm, perl = TRUE)
-  if (!startsWith(rel_path, "/")) rel_path <- paste0("/", rel_path)
-
-  # Construct URL (avoid double slashes)
-  host <- sub("/+$", "", host)
-  url <- paste0(host, rel_path)
-
-  # Probe the URL
-  status <- NA_integer_
-  ok <- FALSE
-  opened <- FALSE
-
-  resp <- try(httr::GET(url, httr::timeout(request_timeout)), silent = TRUE)
-  if (!inherits(resp, "try-error")) {
-    status <- httr::status_code(resp)
-    ok <- identical(status, 200L)
-  }
-
-  # Optionally open the URL without blocking
-  if (isTRUE(open)) {
-    # utils::browseURL is non-blocking and cross-platform
-    utils::browseURL(url,browser=browser)
-    opened <- TRUE
-  }
-
-  list(url = url, ok = ok, status = status, opened = opened)
+  url <- gsub(paste0("^",root_dir),host,fp_norm)
+ 
+  plibr::displayURL(as.character(url),browser=browser)
 }
 
