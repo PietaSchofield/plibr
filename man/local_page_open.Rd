@@ -6,7 +6,7 @@
 \usage{
 local_page_open(
   file_path,
-  root_dir = "/var/www/html",
+  root_dir = "/srv/http",
   host = "http://localhost",
   open = FALSE,
   request_timeout = 5,

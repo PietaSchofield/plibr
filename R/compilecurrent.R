@@ -30,6 +30,8 @@ compilecurrent <- function(fileName=.fileName,
                htmlUP=T, ext="Rmd",dbg=F,
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
                srvRoot=NULL,
+               html_of = "bookdown::html_document2",
+               pdf_of ="bookdown::pdf_document2",
                browserPath=getOption("browser_main")){
 
   browserPath = browserPath %||% getOption("browser") %||% Sys.getenv("BROWSER") %||% "/usr/bin/firefox" 
@@ -71,11 +73,9 @@ compilecurrent <- function(fileName=.fileName,
   
   if(toHTML){
     if(htmlUP){
-      htmlFile <- rmarkdown::render(input=infile,output_dir=nbPath,
-                                   output_format="bookdown::html_document2")
+      htmlFile <- rmarkdown::render(input=infile,output_dir=nbPath, output_format=html_of)
     }else{
-      htmlFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                   output_format="bookdown::html_document2")
+      htmlFile <- rmarkdown::render(input=infile,output_dir=outPath, output_format=html_of)
     }
     if(!silent && session_mode()=="interactive"){
       urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
@@ -87,8 +87,7 @@ compilecurrent <- function(fileName=.fileName,
     }
   }
   if(toPDF){
-    pdfFile <- rmarkdown::render(input=infile,output_dir=outPath,
-                                output_format="bookdown::pdf_document2")
+    pdfFile <- rmarkdown::render(input=infile,output_dir=outPath, output_format=pdf_of)
     if(!silent && session_mode()=="interactive"){
       system(paste("okular", shQuote(pdfFile),"&"))
     }

@@ -1,0 +1,87 @@
+/* Solarized Dark for Xaringan */
+/* Author: Adapted for Xaringan Slides */
+
+/* ---- Body and Slide Background ---- */
+body, .remark-slide-content {
+  background-color: #002b36;  /* Base dark teal */
+  color: #839496;             /* Base text */
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ---- Headings ---- */
+h1, h2, h3, h4, h5, h6 {
+  color: #93a1a1; /* Slightly lighter than body for contrast */
+}
+
+/* ---- Links ---- */
+a {
+  color: #268bd2;   /* Blue links */
+}
+a:hover {
+  color: #2aa198;   /* Cyan highlight on hover */
+}
+
+/* ---- Horizontal Rules ---- */
+hr {
+  border: 1px solid #586e75;
+}
+
+/* ---- Code Blocks ---- */
+pre, code {
+  background-color: #073642;  /* Darker background for code */
+  color: #839496;             /* Default text */
+  font-family: "Fira Code", monospace;
+  font-size: 0.9em;
+  padding: 4px 6px;
+  border-radius: 4px;
+}
+
+/* ---- Inline Code ---- */
+p code, li code, h1 code, h2 code, h3 code {
+  background-color: #073642;
+  color: #b58900;  /* Solarized yellow for inline code */
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* ---- Blockquotes ---- */
+blockquote {
+  border-left: 4px solid #586e75;
+  color: #93a1a1;
+  padding-left: 10px;
+  margin-left: 0;
+}
+
+/* ---- Lists ---- */
+ul, ol {
+  color: #839496;
+}
+
+/* ---- Tables ---- */
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+table, th, td {
+  border: 1px solid #586e75;
+}
+th {
+  background-color: #073642;
+  color: #93a1a1;
+}
+td {
+  background-color: #002b36;
+  color: #839496;
+  padding: 4px 8px;
+}
+
+/* ---- Speaker Notes (optional) ---- */
+.remark-notes {
+  background-color: #073642 !important;
+  color: #93a1a1 !important;
+}
+
+/* ---- Optional: slide transition tweaks ---- */
+.remark-slide-content {
+  transition: background-color 0.3s, color 0.3s;
+}
