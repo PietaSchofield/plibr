@@ -24,7 +24,7 @@ compilecurrent(
   srvRoot = NULL,
   html_of = "bookdown::html_document2",
   pdf_of = "bookdown::pdf_document2",
-  browserPath = getOption("browser_main")
+  browserOpt = "browser_main"
 )
 }
 \arguments{

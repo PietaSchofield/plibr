@@ -38,6 +38,6 @@ slidescurrent <- function(fileName=.fileName,
   outfile <- rmarkdown::render(infile, 
                   output_format = "ioslides_presentation",
                   output_file = pptxFileName)
-  displayURL(outfile,browser_path=browserPath)
+  displayURL(outfile,bp=browserPath)
 
 }

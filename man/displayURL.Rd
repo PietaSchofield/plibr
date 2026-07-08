@@ -4,7 +4,7 @@
 \alias{displayURL}
 \title{display a web page nicely in chrome}
 \usage{
-displayURL(urlpath = NULL, browser_path = NULL)
+displayURL(urlpath = NULL, bp = "browser_main")
 }
 \description{
 display a web page nicely in chrome

@@ -32,9 +32,7 @@ compilecurrent <- function(fileName=.fileName,
                srvRoot=NULL,
                html_of = "bookdown::html_document2",
                pdf_of ="bookdown::pdf_document2",
-               browserPath=getOption("browser_main")){
-
-  browserPath = browserPath %||% getOption("browser") %||% Sys.getenv("BROWSER") %||% "/usr/bin/firefox" 
+               browserOpt="browser_main"){
 
   if(gitRepo=="liverpool"){
     nbPath <- file.path(nbPath,"uol")
@@ -80,9 +78,9 @@ compilecurrent <- function(fileName=.fileName,
     if(!silent && session_mode()=="interactive"){
       urlout <- gsub("/srv/http/","http://localhost/",htmlFile)
       if(RCurl::url.exists(urlout)){
-        displayURL(urlout,browser_path=browserPath)
+        displayURL(urlout,bp=browserOpt)
       }else{
-        displayURL(htmlFile,browser_path=browserPath)
+        displayURL(htmlFile,bp=browserOpt)
       }
     }
   }

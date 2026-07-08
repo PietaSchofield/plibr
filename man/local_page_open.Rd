@@ -10,7 +10,7 @@ local_page_open(
   host = "http://localhost",
   open = FALSE,
   request_timeout = 5,
-  browser = getOption("browser")
+  browser = "browser_main"
 )
 }
 \arguments{

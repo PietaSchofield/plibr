@@ -95,7 +95,7 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     if(!is_rendering && interactive()){
       widgetfile <- tempfile(fileext=".html")
       htmlwidgets::saveWidget(widget, widgetfile,selfcontained=TRUE)
-      displayURL(widgetfile,browser_path=browserPath)
+      displayURL(widgetfile,bp=browserPath)
     }else{
       return(widget)
     }

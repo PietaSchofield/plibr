@@ -36,7 +36,7 @@ local_page_open <- function(file_path,
                                   host = "http://localhost",
                                   open = FALSE,
                                   request_timeout = 5,
-                                  browser=getOption("browser")) {
+                                  browser="browser_main") {
 
   if(F){
     file_path <- htmlPath
@@ -44,7 +44,7 @@ local_page_open <- function(file_path,
     host = "http://localhost"
     open = FALSE
     request_timeout = 5
-    browser="opera"
+    browser="browser_main"
   } 
   
   fp_norm <- normalizePath(file_path, winslash = "/", mustWork = FALSE)
@@ -52,6 +52,6 @@ local_page_open <- function(file_path,
 
   url <- gsub(paste0("^",root_dir),host,fp_norm)
  
-  plibr::displayURL(as.character(url),browser=browser)
+  plibr::displayURL(as.character(url),bp=browser)
 }
 

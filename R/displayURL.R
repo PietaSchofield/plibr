@@ -1,13 +1,16 @@
 #' display a web page nicely in chrome
 #'
 #' @export
-displayURL <- function(urlpath=NULL, browser_path=NULL) {
+displayURL <- function(urlpath=NULL, bp="browser_main") {
+  if(F){
+    urlpath=NULL
+    bp="browser_main"
+  }
   if (is.null(urlpath)) {
-    urlpath <- "http://localhost/uol"
+    urlpath <- shQuote('http://localhost/uol')
   }
-  if (is.null(browser_path)) {
-    browser_path <- getOption("browser_path", "/usr/bin/librewolf") # Default if not set
-  }
-  system2(browser_path,arg=urlpath,wait=F,stdout=NULL,stderr=NULL)
+  browser_path <- getOption(bp, "/usr/bin/librewolf") 
+  arg=c(urlpath)
+  system2(browser_path,arg=arg,wait=F,stdout=NULL,stderr=NULL)
 }
 
