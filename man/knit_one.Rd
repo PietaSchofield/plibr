@@ -12,6 +12,8 @@ knit_one(
   number_sections = TRUE,
   code_folding = "hide",
   output_file = NULL,
+  highlight = "espresso",
+  mathjax = "null",
   output_dir = "/srv/http/standalone/",
   fig_path = NULL,
   root = getwd(),
