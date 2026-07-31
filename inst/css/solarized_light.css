@@ -1,0 +1,440 @@
+/* Solarized Light base colours */
+/* Quicksand font import */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO,slnt,wght@1,1,0,0,500&display=swap');
+
+/* Solarized Light base colours */
+:root {
+  --bs-body-bg:#eee8d5;
+  --bs-body-color:#657b83;
+  --base03:#eee8d5;
+  --base02:#d8d2bf;
+  --base01:#93a1a1;
+  --base00:#839496;
+  --base0:#657b83;
+  --base1:#586e75;
+  --base2:#073642;
+  --base3:#002b36;
+  --yellow:#b58900;
+  --orange:#ab4b16;
+  --red:#dc322f;
+  --magenta:#d33682;
+  --violet:#6c71c4;
+  --blue:#268bd2;
+  --cyan:#2aa198;
+  --green:#859900;
+  /* ---- Georgie-friendly semantic link colours ----
+     NOTE: unlike the base03/02/01/00 swap above, these three were
+     NOT a mechanical swap - the dark-theme choices (bright yellow,
+     pale cream, orange) were tuned for contrast against a near-black
+     background and would read poorly (or clash) against cream.
+     Re-picked using the standard Solarized-light link convention
+     (blue) instead, with violet/orange for hover/visited so the
+     hue-shift-on-interaction pattern from the dark theme is kept. */
+  --link:        var(--blue);     /* #268bd2 — strong contrast on cream */
+  --link-hover:  var(--violet);   /* #6c71c4 — clear hue shift on hover */
+  --link-visited: var(--orange);  /* #ab4b16 — dark enough to read on light bg */
+}
+
+/* Force Quicksand everywhere.
+   NOTE: this now covers both gitbook (.book...) pages AND
+   plain html_document2 pages (body, .container, .main-container, TOC, etc.) */
+html, body, p, li, h1, h2, h3, h4, h5, h6, a, span, div, td, th, label, button {
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* ============================================================
+   BASE FONT SIZE — root fixed at a normal 16px.
+   Previously this was 12px, which is why headings looked huge
+   and code/body text looked tiny: every rem-based size below
+   (and Bootstrap's own defaults for h1-h6) was scaling against
+   an unusually small root, producing an inconsistent range.
+   ============================================================ */
+html, body {
+  font-size: 18px !important;
+}
+
+/* Heading sizes — explicit and compressed range.
+   These apply to BOTH gitbook's .page-inner headings and
+   html_document2's plain h1-h6 (e.g. inside .main-container). */
+h1, .book .book-body .page-inner h1 { font-size: 1.8rem !important; }
+h2, .book .book-body .page-inner h2 { font-size: 1.5rem !important; }
+h3, .book .book-body .page-inner h3 { font-size: 1.25rem !important; }
+h4, .book .book-body .page-inner h4 { font-size: 1.1rem !important; }
+h5, .book .book-body .page-inner h5 { font-size: 1rem !important; }
+h6, .book .book-body .page-inner h6 { font-size: 0.95rem !important; }
+
+/* Body text baseline, so paragraphs/list items aren't left to
+   whatever Bootstrap's default happens to be on plain pages */
+body, p {
+  font-size: 1rem !important;
+}
+
+table td, table th, li,
+.main-container table td, .main-container table th,
+.book .book-body .page-inner table td, .book .book-body .page-inner table th {
+  font-size: 0.9rem !important;
+}
+
+
+.math.display, .math.inline {
+  font-size: 1.1rem !important;
+  line-height: 1.5 !important;
+}
+
+/* ============================================================
+   CORE BACKGROUND AND TEXT
+   Gitbook rules kept as-is; generic rules added for html_document2
+   (body, .container, .main-container are the plain-page equivalents
+   of .book/.book-body/.page-inner)
+   ============================================================ */
+html, body,
+.book,
+.book .book-body .body-inner,
+.book .book-body .page-wrapper,
+.book .book-body .page-inner,
+.book .book-body .page-inner section.normal,
+.main-container,
+.container {
+  background: var(--base03) !important;
+  color: var(--base0) !important;
+}
+
+/* Sidebar restored: slightly lighter background (gitbook only —
+   html_document2 has no sidebar equivalent, harmless to leave scoped) */
+.book .book-summary {
+  background: var(--base02) !important;
+  color: var(--base1) !important;
+}
+.book .book-summary a { color: var(--base1) !important; }
+.book .book-summary .active > a,
+.book .book-summary a:hover { color: var(--base3) !important; }
+
+/* html_document2's floating/static TOC sidebar equivalent */
+#TOC,
+nav[id="TOC"] {
+  background: var(--base02) !important;
+  color: var(--base1) !important;
+}
+#TOC a { color: var(--base1) !important; }
+#TOC a:hover,
+#TOC a.active { color: var(--base3) !important; }
+
+/* Content text + headings (gitbook) */
+.book .book-body .page-inner p,
+.book .book-body .page-inner li,
+.book .book-body .page-inner h1,
+.book .book-body .page-inner h2,
+.book .book-body .page-inner h3 {
+  color: var(--base0) !important;
+}
+
+/* Content text (html_document2 generic equivalent) */
+.main-container p,
+.main-container li,
+.main-container h1,
+.main-container h2,
+.main-container h3 {
+  color: var(--base0) !important;
+}
+
+/* ============================================================
+   LINKS — semantic colours, tuned for clarity not Solarized purity
+   ============================================================ */
+.book .book-body a,
+.main-container a,
+body a {
+  color: var(--link) !important;
+}
+.book .book-body a:hover,
+.main-container a:hover,
+body a:hover {
+  color: var(--link-hover) !important;
+}
+.book .book-body a:visited,
+.main-container a:visited,
+body a:visited {
+  color: var(--link-visited) !important;
+}
+
+/* Restore icon fonts that got clobbered by the universal Quicksand rule */
+.fa, [class^="fa-"], [class*=" fa-"],
+.book-header .fa,
+.dropdown-caret,
+i.fa {
+  font-family: "FontAwesome" !important;
+}
+
+/* Tables, callouts, etc. — gitbook + generic html_document2 */
+.book .book-body table,
+.book .book-body .table,
+.book .book-body .note,
+.book .book-body blockquote,
+.main-container table,
+.main-container .table,
+.main-container .note,
+.main-container blockquote {
+  background: var(--base02) !important;
+  color: var(--base0) !important;
+  border-color: var(--base01) !important;
+}
+
+/* Bootstrap 5 tables paint backgrounds via CSS custom properties
+   set per-cell, not inherited from the table element — so the
+   block above (background/color on <table>) never reaches the
+   actual <td>/<th>. Override the variables instead; these DO
+   inherit, so setting them once here flows into every cell. */
+.main-container table,
+.book .book-body .page-inner table {
+  --bs-table-bg: var(--base02) !important;
+  --bs-table-color: var(--base0) !important;
+  --bs-table-border-color: var(--base01) !important;
+  --bs-table-striped-bg: var(--base02) !important;
+  --bs-table-striped-color: var(--base0) !important;
+  --bs-table-hover-bg: var(--base01) !important;
+  --bs-table-hover-color: var(--base3) !important;
+}
+
+/* Raw pandoc markdown tables (no Bootstrap .table class) use
+   tr.odd / tr.even with hardcoded light backgrounds from pandoc's
+   own default template CSS — this beats our --base02 table rule
+   because it paints the row, not the table, and cells inherit that. */
+.main-container table tr.odd,
+.main-container table tr.even,
+.main-container table tr.odd td,
+.main-container table tr.even td,
+.book .book-body .page-inner table tr.odd,
+.book .book-body .page-inner table tr.even,
+.book .book-body .page-inner table tr.odd td,
+.book .book-body .page-inner table tr.even td {
+  background-color: var(--base02) !important;
+  color: var(--base0) !important;
+}
+
+/* ===== Plain / markdown / pandoc tables — matched to Bootstrap's
+   own selector shape so striping can't win the specificity tie ===== */
+.main-container table,
+.main-container table > tbody > tr > td,
+.main-container table > thead > tr > th,
+.main-container table > tbody > tr:nth-child(odd) > td,
+.main-container table > tbody > tr:nth-child(even) > td,
+.book .book-body .page-inner table,
+.book .book-body .page-inner table > tbody > tr > td,
+.book .book-body .page-inner table > thead > tr > th, 
+.book .book-body .page-inner table > tbody > tr:nth-child(odd) > td,
+.book .book-body .page-inner table > tbody > tr:nth-child(even) > td {
+  background-color: var(--base02) !important;
+  color: var(--base0) !important;
+  border-color: var(--base01) !important;
+  font-size: 0.9rem !important;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important; 
+}
+
+/* ============================================================
+   CODE + PREFORMATTED
+   Recursive Mono, Casual + Cursive + Slant axes = "Casual Italic"
+   Duplicate block removed (was declared twice identically before,
+   this is now the single source of truth).
+   Selector list extended so plain <pre>/<code> outside .book
+   (i.e. html_document2 output) is covered too.
+   Font-size now relative to the corrected 16px root:
+   1rem = 16px, consistent with body text rather than dwarfed by it.
+   ============================================================ */
+.book .book-body pre, .book .book-body code, pre:not(.sourceCode), pre:not(.r), pre:not(.r) code, 
+pre:not(.sourceCode) r, code {
+  background: var(--base02) !important;
+  color: var(--base1) !important;
+  font-family: 'Consolas', 'Courier New', monospace !important;
+  font-variation-settings: normal !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+/* html_document2 R code — Recursive, as now */
+.main-container pre.r,
+.main-container pre.r code,
+.main-container .sourceCode pre.sourceCode,
+.main-container pre.sourceCode code {
+  background: var(--base02) !important;
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+/* gitbook R code — whatever you actually want here */
+.book .book-body .sourceCode pre.sourceCode,
+.book .book-body pre.sourceCode code {
+  background: var(--base02) !important;
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+  font-size: 0.9rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Inline code specifically — often smaller than block code by default */
+.book .book-body p code,
+.book .book-body li code,
+.main-container p code,
+.main-container li code,
+p code,
+li code {
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings:  'MONO' 1, 'CASL' 1, 'CRSV' 1, 'slnt' -15, 'wght' 500 !important;
+  font-size: 0.95rem !important;
+}
+
+.book .book-body pre, pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}
+
+/* only add this if inline `code` spans need to keep manual spacing —
+   it will change how inline code wraps mid-sentence, so test it */
+.book .book-body p code, .main-container p code, p code, li code {
+  white-space: pre-wrap !important;
+}
+/* ============================================================
+   NAVBAR — top navigation bar (site title, links up/out to
+   GitHub etc.), styled to match solarized light instead of
+   Bootstrap's default light navbar.
+   ============================================================ */
+.navbar-default {
+  background-color: var(--base02) !important;
+  border-color: var(--base01) !important;
+}
+
+.navbar-default .navbar-brand {
+  color: var(--base3) !important;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: var(--yellow) !important;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: var(--base1) !important;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: var(--yellow) !important;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: var(--base3) !important;
+  background-color: var(--base03) !important;
+}
+
+/* Mobile hamburger toggle, in case the page is ever viewed narrow */
+.navbar-default .navbar-toggle {
+  border-color: var(--base01) !important;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: var(--base1) !important;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: var(--base01) !important;
+}
+
+/* Dropdown menus hanging off the navbar (e.g. a "Chapters" or
+   external-links dropdown) */
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: var(--base1) !important;
+  background-color: var(--base02) !important;
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+  color: var(--base3) !important;
+  background-color: var(--base01) !important;
+}
+
+.dropdown-menu {
+  background-color: var(--base02) !important;
+  border-color: var(--base01) !important;
+}
+.dropdown-menu > li > a {
+  color: var(--base1) !important;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: var(--base3) !important;
+  background-color: var(--base01) !important;
+}
+
+/* ============================================================
+   CODE FOLDING — the global "Code ▾" dropdown button and the
+   per-chunk Show/Hide toggle buttons generated by
+   code_folding: hide/show
+   ============================================================ */
+.btn-default {
+  background-color: var(--base02) !important;
+  border-color: var(--base01) !important;
+  color: var(--base1) !important;
+}
+.btn-default:hover,
+.btn-default:focus {
+  background-color: var(--base01) !important;
+  color: var(--base3) !important;
+}
+.btn-default:active,
+.btn-default.active {
+  background-color: var(--yellow) !important;
+  color: var(--base03) !important;
+}
+
+/* The specific per-chunk fold button knitr generates */
+.code-folding-btn {
+  background-color: var(--base02) !important;
+  border-color: var(--base01) !important;
+  color: var(--base1) !important;
+}
+.code-folding-btn:hover {
+  background-color: var(--base01) !important;
+  color: var(--base3) !important;
+}
+
+/* Button toolbar wrapper some code-folding layouts use */
+.btn-toolbar {
+  background-color: transparent !important;
+}
+/* Pin code-folding button font size explicitly — same root cause as
+   the DT fix above: .page-inner (gitbook) compounds an extra
+   multiplier on top of the 18px root that .main-container doesn't
+   have, so these buttons were inheriting different effective sizes
+   depending on which page type they rendered in. */
+.btn-default,
+.code-folding-btn,
+.btn-toolbar {
+  font-size: 1rem !important;
+}
+
+/* ============================================================
+   Datatables widget tweaks 
+   ============================================================ 
+   Pin DT font size explicitly — .page-inner (gitbook) compounds an
+   extra multiplier on top of the 18px root that .main-container
+   doesn't have, so DT text was inheriting a larger effective size
+   inside .book pages than on plain html_document2 pages. */
+.book .book-body .page-inner {
+  font-size: 1rem !important;
+}
+.dataTable, .dataTables_wrapper {
+  font-size: 1rem !important;
+}
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_filter label {
+  color: var(--base0) !important;
+}
+
+.dataTable tbody td { background: var(--base02) !important; color: var(--base1) !important; }
+.dataTable thead th { background: var(--base01) !important; color: var(--base3) !important; }
+
+/* Force hljs's own token spans to inherit our font instead of
+   whatever font their own highlight theme sets — hljs classes
+   otherwise beat our wildcard rule on specificity */
+.hljs, .hljs span,
+pre code span, code span {
+  font-family: inherit !important;
+}
