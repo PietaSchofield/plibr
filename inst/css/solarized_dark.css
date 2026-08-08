@@ -29,14 +29,17 @@
      Chosen for maximum at-a-glance distinctiveness, not palette purity. */
   --link:        #d3a700;  /* brighter than --yellow, genuinely reads as yellow */
   --link-hover:  var(--base2);   /* pale cream — already worked well */
-  --link-visited: var(--orange);   /* cool colour, pops against warm link/hover */
+  --link-visited: var(--yellow);   /* cool colour, pops against warm link/hover */
 }
 
 /* Force Quicksand everywhere.
    NOTE: this now covers both gitbook (.book...) pages AND
    plain html_document2 pages (body, .container, .main-container, TOC, etc.) */
 html, body, p, li, h1, h2, h3, h4, h5, h6, a, span, div, td, th, label, button {
-  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  /*font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+   * !important;*/
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
 }
 
 /* ============================================================
@@ -246,6 +249,16 @@ pre:not(.sourceCode) r, code {
   line-height: 1.5 !important;
 }
 
+/* hljs code blocks (bash, python, js, etc. — anything highlight.js
+   touches) — must outrank the Consolas rule above via specificity,
+   not source order, since :not() counts as a class */
+pre:not(.r) code.hljs,
+pre.sourceCode code.hljs {
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+}
+
+/*
 /* html_document2 R code — Recursive, as now */
 .main-container pre.r,
 .main-container pre.r code,
@@ -427,6 +440,15 @@ li code {
 .dataTable tbody td { background: var(--base02) !important; color: var(--base1) !important; }
 .dataTable thead th { background: var(--base01) !important; color: var(--base3) !important; }
 
+/* SOME NASTY Verbatim block wrangling */
+
+/* Unqualified pre/code — no class at all — treated as
+   general prose code, gets Recursive like R/hljs blocks */
+pre:not([class]) code:not([class]) {
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+}
+
 /* Force hljs's own token spans to inherit our font instead of
    whatever font their own highlight theme sets — hljs classes
    otherwise beat our wildcard rule on specificity */
@@ -434,3 +456,14 @@ li code {
 pre code span, code span {
   font-family: inherit !important;
 }
+
+/* Escape hatch — verbatim/ASCII-art blocks, e.g. flowcharts.
+   Mark these blocks explicitly (```{.rawmono} or a wrapping div
+   with class="rawmono") to guarantee strict monospace regardless
+   of what hljs auto-tags them as. */
+pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
+  font-family: 'Consolas', 'Courier New', monospace !important;
+  font-variation-settings: normal !important;
+}
+```
+

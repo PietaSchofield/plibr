@@ -2,15 +2,33 @@
 % Please edit documentation in R/setcurrent.R
 \name{setcurrent}
 \alias{setcurrent}
-\title{set current month}
+\title{Set current file (symlinks Rmd + html to a "current" pointer)}
 \usage{
 setcurrent(
   fileName,
-  in_path = "/srv/http/uol/notes",
-  out_path = in_path,
+  projName = "notes",
+  repoName = "liverpool",
+  htmlName = "uol",
+  html_path = file.path("/srv", "http", htmlName, projName),
+  rmd_path = file.path(Sys.getenv("HOME"), "GitLab", repoName, projName),
   linkName = "current"
 )
 }
+\arguments{
+\item{fileName}{Name (without extension) of the target file}
+
+\item{projName}{Project/subfolder name, e.g. "notes"}
+
+\item{repoName}{GitLab repo name, e.g. "liverpool"}
+
+\item{htmlName}{Top-level folder under /srv/http, default "uol"}
+
+\item{html_path}{Path to rendered html output}
+
+\item{rmd_path}{Path to Rmd source}
+
+\item{linkName}{Name to give the symlink (default "current")}
+}
 \description{
-set current month
+Set current file (symlinks Rmd + html to a "current" pointer)
 }

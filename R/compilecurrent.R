@@ -49,15 +49,19 @@ compilecurrent <- function(fileName=.fileName,
     outPath <- file.path(outPath,gitRepo)
   }
 
-  # if(!file.exists(nbPath)){
-  #   htmlUP <- F
-  # }
-
   if(!is.null(projName)){
     codePath <- file.path(codePath,projName)
     nbPath <- file.path(nbPath,projName)
     outPath <- file.path(outPath,projName,"pubs")
   }
+
+  # --- THE FIX: check source exists BEFORE touching the filesystem anywhere else ---
+  infile <- file.path(codePath, paste0(fileName,".",ext))
+  if(!file.exists(infile)){
+    stop("compilecurrent: source file not found, nothing was created.\n  Looked for: ",
+         infile, call. = FALSE)
+  }
+  # --------------------------------------------------------------------------------
 
   if(setHome){
     nbFileName <- file.path(nbPath,"index.html")
@@ -67,8 +71,7 @@ compilecurrent <- function(fileName=.fileName,
 
   dir.create(nbPath,showW=F,recur=T)
   dir.create(outPath,showW=F,recur=T)
-  infile <- file.path(codePath,paste0(fileName,".",ext))
-  
+
   if(toHTML){
     if(htmlUP){
       htmlFile <- rmarkdown::render(input=infile,output_dir=nbPath, output_format=html_of)
