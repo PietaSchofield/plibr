@@ -1,20 +1,22 @@
-/* Solarized Light base colours */
+/* Solarized Light (ish) base colours  rather than a relative path */
 /* Quicksand font import */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO,slnt,wght@1,1,0,0,500&display=swap');
 
 /* Solarized Light base colours */
 :root {
-  --bs-body-bg:#eee8d5;
-  --bs-body-color:#657b83;
-  --base03:#eee8d5;
-  --base02:#d8d2bf;
+  --bs-body-bg:#f5edda;
+  --bs-body-color:#586e75;
+
+  --base03:#f5edda;   /* main background — darker cream than before */
+  --base02:#e3dcc4;   /* panel/table/code background — darker cream */
   --base01:#93a1a1;
   --base00:#839496;
-  --base0:#657b83;
-  --base1:#586e75;
+  --base0:#586e75;
+  --base1:#657b83;
   --base2:#073642;
   --base3:#002b36;
+
   --yellow:#b58900;
   --orange:#ab4b16;
   --red:#dc322f;
@@ -23,24 +25,20 @@
   --blue:#268bd2;
   --cyan:#2aa198;
   --green:#859900;
-  /* ---- Georgie-friendly semantic link colours ----
-     NOTE: unlike the base03/02/01/00 swap above, these three were
-     NOT a mechanical swap - the dark-theme choices (bright yellow,
-     pale cream, orange) were tuned for contrast against a near-black
-     background and would read poorly (or clash) against cream.
-     Re-picked using the standard Solarized-light link convention
-     (blue) instead, with violet/orange for hover/visited so the
-     hue-shift-on-interaction pattern from the dark theme is kept. */
-  --link:        var(--blue);     /* #268bd2 — strong contrast on cream */
-  --link-hover:  var(--violet);   /* #6c71c4 — clear hue shift on hover */
-  --link-visited: var(--orange);  /* #ab4b16 — dark enough to read on light bg */
+
+  --link:         var(--blue);
+  --link-hover:   var(--violet);
+  --link-visited: var(--cyan);
 }
 
 /* Force Quicksand everywhere.
    NOTE: this now covers both gitbook (.book...) pages AND
    plain html_document2 pages (body, .container, .main-container, TOC, etc.) */
 html, body, p, li, h1, h2, h3, h4, h5, h6, a, span, div, td, th, label, button {
-  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  /*font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+   * !important;*/
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
 }
 
 /* ============================================================
@@ -250,6 +248,16 @@ pre:not(.sourceCode) r, code {
   line-height: 1.5 !important;
 }
 
+/* hljs code blocks (bash, python, js, etc. — anything highlight.js
+   touches) — must outrank the Consolas rule above via specificity,
+   not source order, since :not() counts as a class */
+pre:not(.r) code.hljs,
+pre.sourceCode code.hljs {
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+}
+
+/*
 /* html_document2 R code — Recursive, as now */
 .main-container pre.r,
 .main-container pre.r code,
@@ -296,7 +304,7 @@ li code {
 }
 /* ============================================================
    NAVBAR — top navigation bar (site title, links up/out to
-   GitHub etc.), styled to match solarized light instead of
+   GitHub etc.), styled to match solarized dark instead of
    Bootstrap's default light navbar.
    ============================================================ */
 .navbar-default {
@@ -431,10 +439,42 @@ li code {
 .dataTable tbody td { background: var(--base02) !important; color: var(--base1) !important; }
 .dataTable thead th { background: var(--base01) !important; color: var(--base3) !important; }
 
+/* SOME NASTY Verbatim block wrangling */
+
+/* Unqualified pre/code — no class at all — treated as
+   general prose code, gets Recursive like R/hljs blocks */
+pre:not([class]) code:not([class]) {
+  font-family: 'Recursive', monospace !important;
+  font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
+}
+
 /* Force hljs's own token spans to inherit our font instead of
    whatever font their own highlight theme sets — hljs classes
    otherwise beat our wildcard rule on specificity */
 .hljs, .hljs span,
 pre code span, code span {
   font-family: inherit !important;
+}
+
+/* Escape hatch — verbatim/ASCII-art blocks, e.g. flowcharts.
+   Mark these blocks explicitly (```{.rawmono} or a wrapping div
+   with class="rawmono") to guarantee strict monospace regardless
+   of what hljs auto-tags them as. */
+pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
+  font-family: 'Consolas', 'Courier New', monospace !important;
+  font-variation-settings: normal !important;
+}
+/* ============================================================
+   HEADINGS — deliberately distinct from body text colour
+   ============================================================ */
+:root {
+  --heading: #073642;
+}
+
+.main-container h1, .main-container h2, .main-container h3,
+.main-container h4, .main-container h5, .main-container h6,
+.book .book-body .page-inner h1, .book .book-body .page-inner h2,
+.book .book-body .page-inner h3, .book .book-body .page-inner h4,
+.book .book-body .page-inner h5, .book .book-body .page-inner h6 {
+  color: var(--heading) !important;
 }

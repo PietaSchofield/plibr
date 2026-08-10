@@ -30,6 +30,7 @@
   --link:        #d3a700;  /* brighter than --yellow, genuinely reads as yellow */
   --link-hover:  var(--base2);   /* pale cream — already worked well */
   --link-visited: var(--yellow);   /* cool colour, pops against warm link/hover */
+  --heading: #efef9f;
 }
 
 /* Force Quicksand everywhere.
@@ -465,5 +466,17 @@ pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
   font-family: 'Consolas', 'Courier New', monospace !important;
   font-variation-settings: normal !important;
 }
-```
+/* ============================================================
+   HEADINGS — deliberately distinct from body text colour
+   ============================================================ */
+:root {
+}
+
+.main-container h1, .main-container h2, .main-container h3,
+.main-container h4, .main-container h5, .main-container h6,
+.book .book-body .page-inner h1, .book .book-body .page-inner h2,
+.book .book-body .page-inner h3, .book .book-body .page-inner h4,
+.book .book-body .page-inner h5, .book .book-body .page-inner h6 {
+  color: var(--heading) !important;
+}
 
