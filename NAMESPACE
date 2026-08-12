@@ -102,16 +102,22 @@ import(bookdown)
 import(glue)
 import(reticulate)
 import(yaml)
-importFrom(DT,datatable)
-importFrom(DT,formatRound)
+importFrom(DT,
+  datatable,
+  formatRound
+)
 importFrom(flextable,qflextable)
 importFrom(htmlwidgets,saveWidget)
-importFrom(httr,GET)
-importFrom(httr,status_code)
-importFrom(httr,timeout)
-importFrom(knitr,kable)
-importFrom(knitr,knit_hooks)
-importFrom(knitr,opts_knit)
+importFrom(httr,
+  GET,
+  status_code,
+  timeout
+)
+importFrom(knitr,
+  kable,
+  knit_hooks,
+  opts_knit
+)
 importFrom(rlang,"%||%")
 importFrom(rmarkdown,render)
 importFrom(servr,httd)

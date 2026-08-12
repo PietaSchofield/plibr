@@ -15,6 +15,7 @@ knit_one(
   highlight = "espresso",
   mathjax = "null",
   output_dir = "/srv/http/standalone/",
+  css = system.file("css", "solarized_dark.css", package = "plibr"),
   fig_path = NULL,
   root = getwd(),
   force_solarized = TRUE
