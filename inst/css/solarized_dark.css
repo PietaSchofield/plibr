@@ -33,12 +33,10 @@
   --heading: #efef9f;
 }
 
-/* Force Quicksand everywhere.
+/* Force Recursive everywhere.
    NOTE: this now covers both gitbook (.book...) pages AND
    plain html_document2 pages (body, .container, .main-container, TOC, etc.) */
 html, body, p, li, h1, h2, h3, h4, h5, h6, a, span, div, td, th, label, button {
-  /*font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
-   * !important;*/
   font-family: 'Recursive', monospace !important;
   font-variation-settings: 'MONO' 1, 'CASL' 1, 'CRSV' 0, 'slnt' 0, 'wght' 400 !important;
 }
