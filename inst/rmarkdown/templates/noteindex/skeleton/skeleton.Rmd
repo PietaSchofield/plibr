@@ -16,7 +16,7 @@ bibliography: ../../../Zotero/zoterofull.bib
 
 ```{r setup,echo=FALSE, include=F}
 .projName <- "PN"
-.gitRepo <- "liverpool"
+.gitRepo <- "uol"
 .fileName <- "index"
 sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
 sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
@@ -40,5 +40,5 @@ idx %>% arrange(desc(Name)) %>% plibr::display_data(plen=nrow(idx))
 ```
 
 ```{r build, eval=F,include=F}
-plibr::compilecurrent(fileName="index",projName="PN",gitRepo="liverpool")
+plibr::compilecurrent(fileName="index",projName="PN",gitRepo="uol")
 ```

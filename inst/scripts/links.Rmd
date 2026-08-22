@@ -75,7 +75,7 @@
 [githubuol]: https://github.com/PietaSchofield/UoL_open
 [gitlabacmi]: https://gitlab-iph.liv.ac.uk/pietas/acmi
 [iphgit]: https://gitlab-iph.liv.ac.uk
-[onedrive]: https://theuniversityofliverpool-my.sharepoint.com/personal/pietas_liverpool_ac_uk/_layouts/15/onedrive.aspx?view=1
+[onedrive]: https://theuniversityofliverpool-my.sharepoint.com/pers/pietas_liverpool_ac_uk/_layouts/15/onedrive.aspx?view=1
 [rtgit]: https://github.com/PietaSchofield/rtrhd
 [sharepoint]: https://theuniversityofliverpool.sharepoint.com/_layouts/15/sharepoint.aspx
 [wake]: http://wakemypc.liv.ac.uk/user/WakeSearch.aspx?ComputerName=WIN1064-1032211&Wake=True "Wake my pc"

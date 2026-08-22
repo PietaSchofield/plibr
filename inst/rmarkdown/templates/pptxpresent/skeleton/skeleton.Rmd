@@ -7,7 +7,7 @@ output: powerpoint_presentation
 ---
 
 ```{r setup, include=FALSE}
-.gitRepo <- "liverpool"
+.gitRepo <- "uol"
 .projName <- "PN"
 .fileName <- "FN"
 sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())

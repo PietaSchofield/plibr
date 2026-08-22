@@ -24,10 +24,10 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"GitLab"),db=F) {
+update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"Repos"),db=F) {
   if(db){
-    codeDir <- file.path(Sys.getenv("HOME"),"GitLab")
-    repo_paths <- c("liverpool","github")
+    codeDir <- file.path(Sys.getenv("HOME"),"Repos")
+    repo_paths <- c("uol","github")
     repo_path <- repo_paths[1]
   }
   lapply(repo_paths,function(repo_path){
@@ -60,7 +60,7 @@ update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"G
 #'
 #' @export
 build_master_list <- function(repoNames,
-                              git_directory=file.path(Sys.getenv("HOME"),"GitLab"),
+                              git_directory=file.path(Sys.getenv("HOME"),"Repos"),
                               recur=FALSE,
                               htmlroot="uol",
                               html_directory=file.path("/srv","http"),
@@ -68,7 +68,7 @@ build_master_list <- function(repoNames,
 
   if(F){
     repoNames=c("public")
-    git_directory=file.path(Sys.getenv("HOME"),"GitLab")
+    git_directory=file.path(Sys.getenv("HOME"),"Repos")
     recur=FALSE
     htmlroot="public"
     html_directory=file.path("/srv","http")
@@ -112,9 +112,9 @@ build_master_list <- function(repoNames,
 #'
 #' @export
 build_project_index <- function(project,
-                                git_directory=file.path(Sys.getenv("HOME"),"GitLab"), 
+                                git_directory=file.path(Sys.getenv("HOME"),"Repos"), 
                                 html_directory=file.path("/srv","http"),
-                                repo="liverpool",
+                                repo="uol",
                                 coderoot=NULL,
                                 htmlroot="uol",
                                 pub=F) {
@@ -122,9 +122,9 @@ build_project_index <- function(project,
     project <- "tutorials"
     htmlroot <- "uol"
     coderoot <- NULL
-    git_directory <- file.path(Sys.getenv("HOME"),"GitLab")
+    git_directory <- file.path(Sys.getenv("HOME"),"Repos")
     html_directory <- file.path("/srv","http",htmlroot)
-    repo <- "liverpool"
+    repo <- "uol"
   }
 
   if(is.null(coderoot)){

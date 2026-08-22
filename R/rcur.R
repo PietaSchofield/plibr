@@ -19,11 +19,11 @@
 rc <- function(fileName=.fileName,projName=.projName,gitRepo=.gitRepo,sysRoot=.sysRoot,
                user=Sys.getenv("USER"), outPath=file.path(Sys.getenv("HOME"),"Notes"),
                quartoPath=NULL, nbPath=file.path("/srv","http"),
-               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               codePath=file.path(sysRoot,"Repos",gitRepo),
                docPath=file.path(sysRoot,"Projects"),silent=F,
                setHome=F, toPDF=F,toDOCX=F, toHTML=T,setProj=T,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
-  if(.gitRepo=="liverpool"){
+  if(.gitRepo=="uol"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
   }else{

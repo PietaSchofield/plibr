@@ -6,9 +6,9 @@
 \usage{
 build_project_index(
   project,
-  git_directory = file.path(Sys.getenv("HOME"), "GitLab"),
+  git_directory = file.path(Sys.getenv("HOME"), "Repos"),
   html_directory = file.path("/srv", "http"),
-  repo = "liverpool",
+  repo = "uol",
   coderoot = NULL,
   htmlroot = "uol",
   pub = F

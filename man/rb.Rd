@@ -9,7 +9,7 @@ rb(
   projName = "plibr",
   pkgName = "package",
   install = F,
-  baseDir = file.path(Sys.getenv("HOME"), "GitLab")
+  baseDir = file.path(Sys.getenv("HOME"), "Repos")
 )
 }
 \arguments{

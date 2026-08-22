@@ -18,11 +18,11 @@
 #' @export
 slidescurrent <- function(fileName=.fileName,
                projName=.projName,
-               gitRepo="liverpool",
+               gitRepo="uol",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
-               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               codePath=file.path(sysRoot,"Repos",gitRepo),
                silent=F, ext="Rmd",dbg=F,
                browserPath=getOption("browser_main")){
  

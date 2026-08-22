@@ -2,17 +2,17 @@
 #'
 #' @param fileName Name (without extension) of the target file
 #' @param projName Project/subfolder name, e.g. "notes"
-#' @param repoName GitLab repo name, e.g. "liverpool"
+#' @param repoName Repos repo name, e.g. "uol"
 #' @param htmlName Top-level folder under /srv/http, default "uol"
 #' @param html_path Path to rendered html output
 #' @param rmd_path Path to Rmd source
 #' @param linkName Name to give the symlink (default "current")
 #'
 #' @export
-setcurrent <- function(fileName, projName = "notes", repoName = "liverpool",
+setcurrent <- function(fileName, projName = "notes", repoName = "uol",
                         htmlName = "uol",
                         html_path = file.path("/srv", "http", htmlName, projName),
-                        rmd_path = file.path(Sys.getenv("HOME"), "GitLab", repoName, projName),
+                        rmd_path = file.path(Sys.getenv("HOME"), "Repos", repoName, projName),
                         linkName = "current") {
 
   link_it <- function(target_path, link_path) {

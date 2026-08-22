@@ -18,22 +18,22 @@
 #' @export
 displaycurrent <- function(fileName=.fileName,
                projName=.projName,
-               gitRepo="liverpool",
+               gitRepo="uol",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
                outPath=file.path(Sys.getenv("HOME"),"Notes"),
                quartoPath=NULL, 
                nbPath=file.path("/srv","http"),
                default_browser="nyxt",
-               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               codePath=file.path(sysRoot,"Repos",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toDOCX=F,toHTML=T,nomove=F,
                htmlUP=T, pdfUP=F,docUP=F,ext="Rmd",dbg=F,quarto=NULL,quartoUP=F){
  
-  if(gitRepo=="liverpool"){
+  if(gitRepo=="uol"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath,"uol")
-  }else if(gitRepo=="personal"){
+  }else if(gitRepo=="pers"){
     nbPath <- file.path(nbPath,"pers")
     outPath <- file.path(outPath,"pers")
   }else{

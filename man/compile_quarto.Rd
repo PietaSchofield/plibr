@@ -7,12 +7,12 @@
 compile_quarto(
   fileName = .fileName,
   projName = .projName,
-  gitRepo = "liverpool",
+  gitRepo = "uol",
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
   nbPath = file.path("/srv", "http"),
-  codePath = file.path(sysRoot, "GitLab", gitRepo),
+  codePath = file.path(sysRoot, "Repos", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = FALSE,
   setHome = FALSE,
@@ -28,7 +28,7 @@ compile_quarto(
 
 \item{projName}{project name}
 
-\item{gitRepo}{Git repository (default "liverpool")}
+\item{gitRepo}{Git repository (default "uol")}
 
 \item{sysRoot}{home directory}
 

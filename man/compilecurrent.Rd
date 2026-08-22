@@ -7,11 +7,11 @@
 compilecurrent(
   fileName = .fileName,
   projName = .projName,
-  gitRepo = "liverpool",
+  gitRepo = "uol",
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
   nbPath = file.path("/srv", "http"),
-  codePath = file.path(sysRoot, "GitLab", gitRepo),
+  codePath = file.path(sysRoot, "Repos", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = F,
   setHome = F,

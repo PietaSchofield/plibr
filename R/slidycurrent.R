@@ -18,18 +18,18 @@
 #' @export
 slidycurrent <- function(fileName=.fileName,
                projName=.projName,
-               gitRepo="liverpool",
+               gitRepo="uol",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
                outPath=file.path(Sys.getenv("HOME"),"Projects"),
-               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               codePath=file.path(sysRoot,"Repos",gitRepo),
                outputFormat="ioslides_presentation",
                silent=F, ext="Rmd",dbg=F,
                htmlPath=file.path("/srv","http")){
 
-  if(gitRepo=="liverpool"){
+  if(gitRepo=="uol"){
     htmlPath <- file.path(htmlPath,"uol")
-  }else if(gitRepo=="personal"){
+  }else if(gitRepo=="pers"){
     htmlPath <- file.path(htmlPath,"pers")
   }else{
     htmlPath <- file.path(htmlPath,gitRepo)

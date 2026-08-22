@@ -4,7 +4,7 @@
 #'
 #' @param fileName file name (without extension)
 #' @param projName project name
-#' @param gitRepo Git repository (default "liverpool")
+#' @param gitRepo Git repository (default "uol")
 #' @param sysRoot home directory
 #' @param user User id
 #' @param outPath local directory where rendered files will be written
@@ -23,12 +23,12 @@
 #' @export
 compile_quarto <- function(fileName = .fileName,
                                   projName = .projName,
-                                  gitRepo = "liverpool",
+                                  gitRepo = "uol",
                                   sysRoot = Sys.getenv("HOME"),
                                   user = Sys.getenv("USER"),
                                   outPath = file.path(Sys.getenv("HOME"), "Projects"),
                                   nbPath = file.path("/srv", "http"),
-                                  codePath = file.path(sysRoot, "GitLab", gitRepo),
+                                  codePath = file.path(sysRoot, "Repos", gitRepo),
                                   docPath = file.path(sysRoot, "Projects"),
                                   silent = FALSE,
                                   setHome = FALSE,
@@ -38,10 +38,10 @@ compile_quarto <- function(fileName = .fileName,
                                   ext = "qmd",
                                   dbg = FALSE) {
   # Set paths based on the repository type
-  if (gitRepo == "liverpool") {
+  if (gitRepo == "uol") {
     nbPath <- file.path(nbPath, "uol")
     outPath <- file.path(outPath)
-  } else if (gitRepo == "personal") {
+  } else if (gitRepo == "pers") {
     nbPath <- file.path(nbPath, "pers")
     outPath <- file.path(outPath, "pers")
   } else {

@@ -7,10 +7,10 @@
 setcurrent(
   fileName,
   projName = "notes",
-  repoName = "liverpool",
+  repoName = "uol",
   htmlName = "uol",
   html_path = file.path("/srv", "http", htmlName, projName),
-  rmd_path = file.path(Sys.getenv("HOME"), "GitLab", repoName, projName),
+  rmd_path = file.path(Sys.getenv("HOME"), "Repos", repoName, projName),
   linkName = "current"
 )
 }
@@ -19,7 +19,7 @@ setcurrent(
 
 \item{projName}{Project/subfolder name, e.g. "notes"}
 
-\item{repoName}{GitLab repo name, e.g. "liverpool"}
+\item{repoName}{Repos repo name, e.g. "uol"}
 
 \item{htmlName}{Top-level folder under /srv/http, default "uol"}
 

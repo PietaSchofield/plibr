@@ -17,7 +17,7 @@ bibliography: ../../../Zotero/zoterofull.bib
 
 
 ```{r,echo=FALSE, include=F}
-.gitRepo <- "liverpool"
+.gitRepo <- "uol"
 .projName <- "PN"
 .fileName <- "FN"
 sys.source(system.file('scripts','paths.R',package='plibr'),envir=knitr::knit_global())

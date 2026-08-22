@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 ```{r package-build, eval=F}
 #plibr::autoCommit()
-codeDir <- file.path(Sys.getenv("HOME"),"GitLab","plibr")
+codeDir <- file.path(Sys.getenv("HOME"),"Repos","plibr")
 setwd(codeDir)
 devtools::load_all()
 devtools::document()

@@ -6,7 +6,7 @@
 \usage{
 update_meta_yaml(
   repo_paths,
-  codeDir = file.path(Sys.getenv("HOME"), "GitLab"),
+  codeDir = file.path(Sys.getenv("HOME"), "Repos"),
   db = F
 )
 }

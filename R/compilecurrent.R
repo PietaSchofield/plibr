@@ -20,11 +20,11 @@
 #' @export
 compilecurrent <- function(fileName=.fileName,
                projName=.projName,
-               gitRepo="liverpool",
+               gitRepo="uol",
                sysRoot=Sys.getenv("HOME"),
                user=Sys.getenv("USER"), 
                nbPath=file.path("/srv","http"),
-               codePath=file.path(sysRoot,"GitLab",gitRepo),
+               codePath=file.path(sysRoot,"Repos",gitRepo),
                docPath=file.path(sysRoot,"Projects"),
                silent=F,setHome=F,toPDF=F,toHTML=T,
                htmlUP=T, ext="Rmd",dbg=F,
@@ -34,10 +34,10 @@ compilecurrent <- function(fileName=.fileName,
                pdf_of ="bookdown::pdf_document2",
                browserOpt="browser_main"){
 
-  if(gitRepo=="liverpool"){
+  if(gitRepo=="uol"){
     nbPath <- file.path(nbPath,"uol")
     outPath <- file.path(outPath)
-  }else if(gitRepo=="personal"){
+  }else if(gitRepo=="pers"){
     nbPath <- file.path(nbPath,"pers")
     outPath <- file.path(outPath,"pers")
   }else{

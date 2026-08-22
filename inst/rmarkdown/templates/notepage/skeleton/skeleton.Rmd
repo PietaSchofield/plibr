@@ -17,7 +17,7 @@ description: "not set yet"
 ---
 
 ```{r setup,echo=FALSE, include=F}
-.gitRepo <- "liverpool"
+.gitRepo <- "uol"
 .projName <- "PN"
 .fileName <- "FN"
 sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
@@ -27,9 +27,9 @@ sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::k
 
 # References
 
-```{r links,child=file.path(Sys.getenv("HOME"),"GitLab","liverpool","include","links.Rmd"),eval=T}
+```{r links,child=file.path(Sys.getenv("HOME"),"Repos","uol","include","links.Rmd"),eval=T}
 ```
 
 ```{r build,eval=F,include=F}
-plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="liverpool")
+plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="uol")
 ```
