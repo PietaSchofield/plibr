@@ -13,6 +13,8 @@
 #' @param fixh Logical. If TRUE, enables fixed headers in DT tables.
 #' @param fixc List specifying column fixing options for DT tables. Defaults to left column fixed.
 #' @param sigf Numeric. Number of significant figures for numeric formatting.
+#' @param filename Optional character string for exported file name (no extension). Defaults to
+#'   current chunk label if available, otherwise "export".
 #'
 #' @return A data table formatted as specified by `table_type`.
 #' @importFrom DT datatable
@@ -21,7 +23,8 @@
 #' @export
 display_data <- function(dataset, number = NULL, table_type = "DT", limited = FALSE, 
                          buttons = TRUE, plen = NULL, caption = NULL, browserPath='librewolf',
-                         fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3,dbug=FALSE) {
+                         fixh = TRUE, fixc = list(leftColumns = 1), sigf = 3, dbug=FALSE,
+                         filename = NULL) {
   if(dbug){
     dataset = plist
     number = NULL
@@ -34,7 +37,15 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     fixc = list(leftColumns = 1)
     sigf = 3
     browserPath = 'librewolf'
+    filename = NULL
   }
+
+  # Resolve export filename: explicit arg > chunk label > fallback
+  if (is.null(filename)) {
+    chunk_label <- knitr::opts_current$get("label")
+    filename <- if (!is.null(chunk_label)) chunk_label else "export"
+  }
+
   if (!is.null(number)) {
     dataset <- dataset %>% tibble::as_tibble() %>% head(number)
   }
@@ -58,10 +69,11 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     if (buttons) {
       ext <- 'Buttons'
       btns <- list("copy", 
-                   list(extend="csv",
+                   list(extend = "csv",
                         text = "TSV", 
                         fieldSeparator = "\t",
-                        fieldBoundary = ""
+                        fieldBoundary = "",
+                        filename = filename
                   )
               )
       dom <- 'Blfrtip'
@@ -108,4 +120,3 @@ display_data <- function(dataset, number = NULL, table_type = "DT", limited = FA
     dataset
   }
 }
-

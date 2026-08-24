@@ -16,7 +16,8 @@ display_data(
   fixh = TRUE,
   fixc = list(leftColumns = 1),
   sigf = 3,
-  dbug = FALSE
+  dbug = FALSE,
+  filename = NULL
 )
 }
 \arguments{
@@ -39,6 +40,9 @@ display_data(
 \item{fixc}{List specifying column fixing options for DT tables. Defaults to left column fixed.}
 
 \item{sigf}{Numeric. Number of significant figures for numeric formatting.}
+
+\item{filename}{Optional character string for exported file name (no extension). Defaults to
+current chunk label if available, otherwise "export".}
 }
 \value{
 A data table formatted as specified by \code{table_type}.
