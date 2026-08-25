@@ -68,12 +68,15 @@ body, p {
   font-size: 1rem !important;
 }
 
-table td, table th, li,
+table td, table th, 
 .main-container table td, .main-container table th,
 .book .book-body .page-inner table td, .book .book-body .page-inner table th {
   font-size: 0.9rem !important;
 }
 
+li {
+  font-size: 1rem !important; /* match body text */
+}
 
 .math.display, .math.inline {
   font-size: 1.1rem !important;
@@ -478,3 +481,38 @@ pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
   color: var(--heading) !important;
 }
 
+/* DT Buttons extension — Copy/TSV export buttons.
+   These use .dt-button, NOT .btn-default, so none of the
+   existing button styling rules reach them. */
+.dt-button,
+.dt-button:link,
+.dt-button:visited {
+  background-color: var(--base02) !important;
+  color: var(--base1) !important;
+  border-color: var(--base01) !important;
+}
+.dt-button:hover,
+.dt-button:focus {
+  background-color: var(--base01) !important;
+  color: var(--base3) !important;
+}
+
+/* "Showing 1 to N of X entries" status line — currently
+   unstyled/inheriting a colour too dim against base03. */
+.dataTables_wrapper .dataTables_info {
+  color: var(--base1) !important;
+}
+
+/* "Show N entries" length dropdown — select element defaults
+   to browser/Bootstrap styling, unstyled dark-mode-wise. */
+.dataTables_wrapper .dataTables_length select {
+  background-color: var(--base02) !important;
+  color: var(--base1) !important;
+  border-color: var(--base01) !important;
+}
+
+/* The "Show" / "entries" label text wrapping the dropdown —
+   same dim inheritance issue as the info line. */
+.dataTables_wrapper .dataTables_length {
+  color: var(--base1) !important;
+}

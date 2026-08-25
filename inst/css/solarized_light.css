@@ -68,10 +68,14 @@ body, p {
   font-size: 1rem !important;
 }
 
-table td, table th, li,
+table td, table th,
 .main-container table td, .main-container table th,
 .book .book-body .page-inner table td, .book .book-body .page-inner table th {
   font-size: 0.9rem !important;
+}
+
+li {
+  font-size: 1rem !important; /* match body text */
 }
 
 
