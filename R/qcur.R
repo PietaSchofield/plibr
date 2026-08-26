@@ -16,7 +16,7 @@
 #' @export
 qc <- function(fileName=.curFile,projName=.projName,gitRepo=.gitRepo,
                sysRoot=Sys.getenv("HOME"), user=Sys.getenv("USER"),
-               codeDir=file.path(sysRoot,"Repos",gitRepo),hostname="dh174037.liv.ac.uk",
+               codeDir=file.path(sysRoot,"repositories",gitRepo),hostname="dh174037.liv.ac.uk",
                outRoot=file.path(sysRoot,".tmp"),
                htmlRoot=file.path("/","var","www","html"),
                shinyRoot=file.path("/","u1","shiny-server","samples","apps"),

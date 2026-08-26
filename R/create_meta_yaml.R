@@ -24,9 +24,9 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 #' update meta data
 #'
 #' @export
-update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"Repos"),db=F) {
+update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"repositories"),db=F) {
   if(db){
-    codeDir <- file.path(Sys.getenv("HOME"),"Repos")
+    codeDir <- file.path(Sys.getenv("HOME"),"repositories")
     repo_paths <- c("uol","github")
     repo_path <- repo_paths[1]
   }
@@ -60,7 +60,7 @@ update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"R
 #'
 #' @export
 build_master_list <- function(repoNames,
-                              git_directory=file.path(Sys.getenv("HOME"),"Repos"),
+                              git_directory=file.path(Sys.getenv("HOME"),"repositories"),
                               recur=FALSE,
                               htmlroot="uol",
                               html_directory=file.path("/srv","http"),
@@ -68,7 +68,7 @@ build_master_list <- function(repoNames,
 
   if(F){
     repoNames=c("public")
-    git_directory=file.path(Sys.getenv("HOME"),"Repos")
+    git_directory=file.path(Sys.getenv("HOME"),"repositories")
     recur=FALSE
     htmlroot="public"
     html_directory=file.path("/srv","http")
@@ -112,7 +112,7 @@ build_master_list <- function(repoNames,
 #'
 #' @export
 build_project_index <- function(project,
-                                git_directory=file.path(Sys.getenv("HOME"),"Repos"), 
+                                git_directory=file.path(Sys.getenv("HOME"),"repositories"), 
                                 html_directory=file.path("/srv","http"),
                                 repo="uol",
                                 coderoot=NULL,
@@ -122,7 +122,7 @@ build_project_index <- function(project,
     project <- "tutorials"
     htmlroot <- "uol"
     coderoot <- NULL
-    git_directory <- file.path(Sys.getenv("HOME"),"Repos")
+    git_directory <- file.path(Sys.getenv("HOME"),"repositories")
     html_directory <- file.path("/srv","http",htmlroot)
     repo <- "uol"
   }

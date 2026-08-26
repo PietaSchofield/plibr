@@ -27,7 +27,7 @@ sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::k
 
 # References
 
-```{r links,child=file.path(Sys.getenv("HOME"),"Repos","uol","include","links.Rmd"),eval=T}
+```{r links,child=file.path(Sys.getenv("HOME"),"repositories","uol","include","links.Rmd"),eval=T}
 ```
 
 ```{r build,eval=F,include=F}

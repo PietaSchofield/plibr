@@ -4,7 +4,7 @@
 #'
 #' @export
 rb <- function(wd=NULL,projName="plibr", pkgName="package",install=F,
-               baseDir=file.path(Sys.getenv("HOME"),"Repos")){
+               baseDir=file.path(Sys.getenv("HOME"),"repositories")){
   curd <- getwd()
   if(is.null(wd)){
     if(projName!="plibr"){

@@ -8,7 +8,7 @@
 #' @param subdir names of subdirectories that include code
 #'
 #' @export
-autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"Repos"),
+autoCommit <- function(projDir=file.path(Sys.getenv("HOME"),"repositories"),
                        commitMessage="Automated ",oncampus=F, mws=F){
   if(Sys.info()["sysname"]!="Windows"){
     mws=T

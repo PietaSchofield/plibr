@@ -20,7 +20,7 @@
 #' @examples
 #' list_html_without_rmd(
 #'   html_dir = "/srv/http/uol/project",
-#'   rmd_dir = "/home/me/Repos/uol/project"
+#'   rmd_dir = "/home/me/repositories/uol/project"
 #' )
 #'
 #' @export
@@ -32,7 +32,7 @@ html_without_rmd <- function(projName,
 
   if(dbug){
     projName <- "sprint"
-    rmd_dir <- file.path(Sys.getenv("HOME"),"Repos","uol",projName)
+    rmd_dir <- file.path(Sys.getenv("HOME"),"repositories","uol",projName)
     html_dir <- file.path("/srv","http","uol",projName)
   }
   html_files <- list.files(html_dir, pattern = "\\.html$", full.names = TRUE) |>

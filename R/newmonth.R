@@ -1,12 +1,12 @@
 #' make a new notebook for a project
 #'
 #' @export
-newNote <- function(fileName,projName,rootDir=file.path(Sys.getenv("HOME"),"Repos"),gitRepo="uol",
+newNote <- function(fileName,projName,rootDir=file.path(Sys.getenv("HOME"),"repositories"),gitRepo="uol",
                     ext="Rmd",db=F, template='notepage',package='plibr',chkidx=T,ed=F){
   if(db){
     projName <- 'notes'
     fileName <- "202411"
-    rootDir <- file.path(Sys.getenv("HOME"),"Repos")
+    rootDir <- file.path(Sys.getenv("HOME"),"repositories")
     gitRepo <- "uol"
     ext <- "Rmd"
     package <- 'plibr'
