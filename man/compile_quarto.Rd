@@ -12,7 +12,7 @@ compile_quarto(
   user = Sys.getenv("USER"),
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
   nbPath = file.path("/srv", "http"),
-  codePath = file.path(sysRoot, "Repos", gitRepo),
+  codePath = file.path(sysRoot, "repositories", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = FALSE,
   setHome = FALSE,

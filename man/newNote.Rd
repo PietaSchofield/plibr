@@ -7,7 +7,7 @@
 newNote(
   fileName,
   projName,
-  rootDir = file.path(Sys.getenv("HOME"), "Repos"),
+  rootDir = file.path(Sys.getenv("HOME"), "repositories"),
   gitRepo = "uol",
   ext = "Rmd",
   db = F,

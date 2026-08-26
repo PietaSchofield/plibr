@@ -10,7 +10,7 @@ qc(
   gitRepo = .gitRepo,
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
-  codeDir = file.path(sysRoot, "Repos", gitRepo),
+  codeDir = file.path(sysRoot, "repositories", gitRepo),
   hostname = "dh174037.liv.ac.uk",
   outRoot = file.path(sysRoot, ".tmp"),
   htmlRoot = file.path("/", "var", "www", "html"),

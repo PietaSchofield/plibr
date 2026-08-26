@@ -11,7 +11,7 @@ presentcurrent(
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
   outPath = file.path(Sys.getenv("HOME"), "Projects"),
-  codePath = file.path(sysRoot, "Repos", gitRepo),
+  codePath = file.path(sysRoot, "repositories", gitRepo),
   silent = F,
   ext = "Rmd",
   dbg = F,

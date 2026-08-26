@@ -6,7 +6,7 @@
 \usage{
 update_meta_yaml(
   repo_paths,
-  codeDir = file.path(Sys.getenv("HOME"), "Repos"),
+  codeDir = file.path(Sys.getenv("HOME"), "repositories"),
   db = F
 )
 }

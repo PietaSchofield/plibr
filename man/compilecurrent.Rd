@@ -11,7 +11,7 @@ compilecurrent(
   sysRoot = Sys.getenv("HOME"),
   user = Sys.getenv("USER"),
   nbPath = file.path("/srv", "http"),
-  codePath = file.path(sysRoot, "Repos", gitRepo),
+  codePath = file.path(sysRoot, "repositories", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = F,
   setHome = F,

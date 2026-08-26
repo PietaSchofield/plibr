@@ -5,7 +5,7 @@
 \title{Loop through Project code committing and pulling as necessary}
 \usage{
 autoCommit(
-  projDir = file.path(Sys.getenv("HOME"), "Repos"),
+  projDir = file.path(Sys.getenv("HOME"), "repositories"),
   commitMessage = "Automated ",
   oncampus = F,
   mws = F

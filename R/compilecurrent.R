@@ -68,9 +68,33 @@ compilecurrent <- function(fileName=.fileName,
   }else{
     nbFileName <- file.path(nbPath,paste0(fileName,".html"))
   }
+  # --- THE FIX: check whether /srv/http tree is usable before touching it ---
+  # Walk up from nbPath to the nearest existing ancestor, then test write access.
+  # If that ancestor isn't writable (e.g. /srv/http itself, which we can't create
+  # subdirs under), fall back to local-only rendering instead of erroring out.
+  .srv_usable <- function(path){
+      p <- path
+      while(!dir.exists(p)){
+        parent <- dirname(p)
+        if(parent == p) break   # reached filesystem root, stop safely
+        p <- parent
+      }
+      dir.exists(p) && file.access(p, 2) == 0   # mode 2 = write permission
+  }
 
-  dir.create(nbPath,showW=F,recur=T)
-  dir.create(outPath,showW=F,recur=T)
+  if(!.srv_usable(nbPath)){
+      if(!silent){
+        message("compilecurrent: '", nbPath,
+                 "' is not available/writable; skipping /srv/http output, rendering locally only.")
+      }
+      htmlUP <- FALSE   # force local-only path, don't try to serve via /srv/http
+    } else {
+      dir.create(nbPath, showWarnings = FALSE, recursive = TRUE)
+  }
+  # --------------------------------------------------------------------------------
+
+  dir.create(outPath, showWarnings = FALSE, recursive = TRUE)
+    
 
   if(toHTML){
     if(htmlUP){

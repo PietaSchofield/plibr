@@ -36,7 +36,7 @@ have a matching \code{.Rmd} (same base name) in the code directory.
 \examples{
 list_html_without_rmd(
   html_dir = "/srv/http/uol/project",
-  rmd_dir = "/home/me/Repos/uol/project"
+  rmd_dir = "/home/me/repositories/uol/project"
 )
 
 }

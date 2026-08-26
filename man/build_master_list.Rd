@@ -6,7 +6,7 @@
 \usage{
 build_master_list(
   repoNames,
-  git_directory = file.path(Sys.getenv("HOME"), "Repos"),
+  git_directory = file.path(Sys.getenv("HOME"), "repositories"),
   recur = FALSE,
   htmlroot = "uol",
   html_directory = file.path("/srv", "http"),

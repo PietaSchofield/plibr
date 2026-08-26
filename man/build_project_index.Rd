@@ -6,7 +6,7 @@
 \usage{
 build_project_index(
   project,
-  git_directory = file.path(Sys.getenv("HOME"), "Repos"),
+  git_directory = file.path(Sys.getenv("HOME"), "repositories"),
   html_directory = file.path("/srv", "http"),
   repo = "uol",
   coderoot = NULL,

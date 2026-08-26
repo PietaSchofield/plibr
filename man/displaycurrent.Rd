@@ -14,7 +14,7 @@ displaycurrent(
   quartoPath = NULL,
   nbPath = file.path("/srv", "http"),
   default_browser = "nyxt",
-  codePath = file.path(sysRoot, "Repos", gitRepo),
+  codePath = file.path(sysRoot, "repositories", gitRepo),
   docPath = file.path(sysRoot, "Projects"),
   silent = F,
   setHome = F,
