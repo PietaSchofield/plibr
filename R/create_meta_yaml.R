@@ -63,8 +63,7 @@ build_master_list <- function(repoNames,
                               git_directory=file.path(Sys.getenv("HOME"),"repositories"),
                               recur=FALSE,
                               htmlroot="uol",
-                              html_directory=file.path("/srv","http"),
-                              pub=F) {
+                              html_directory=file.path("/srv","http")) {
 
   if(F){
     repoNames=c("public")
@@ -72,7 +71,6 @@ build_master_list <- function(repoNames,
     recur=FALSE
     htmlroot="public"
     html_directory=file.path("/srv","http")
-    pub=T
   }
 
   master_lists <- lapply(repoNames, function(repoName){
@@ -89,13 +87,8 @@ build_master_list <- function(repoNames,
         html_exists <- fs::file_exists(index_file)
         if (html_exists) {
           metadata$web_status <- "exists"
-          if(pub){
             metadata$name <- sprintf('<a href="%s">%s</a>',
-                  file.path("./",basename(dirn),"index.html"),project_name)
-          }else{
-            metadata$name <- sprintf('<a href="%s">%s</a>',
-                  file.path("http://localhost/",htmlroot,basename(dirn),"index.html"),project_name)
-          }
+                  file.path(basename(dirn),"index.html"),project_name)
         } else {
           metadata$web_status <- "missing"
           metadata$name <- project_name
@@ -116,8 +109,7 @@ build_project_index <- function(project,
                                 html_directory=file.path("/srv","http"),
                                 repo="uol",
                                 coderoot=NULL,
-                                htmlroot="uol",
-                                pub=F) {
+                                htmlroot="uol") {
   if(F){
     project <- "tutorials"
     htmlroot <- "uol"
@@ -156,13 +148,8 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-        if(pub){
-          sprintf('<a href="%s">%s</a>',
-             file.path("./",basename(html_file)),base_name)
-        }else{
-          sprintf('<a href="%s">%s</a>',
-             file.path("http://localhost/",htmlroot,project,basename(html_file)),base_name)
-        }
+        sprintf('<a href="%s">%s</a>',
+             file.path(basename(html_file)),base_name)
       } else {
         base_name
       },
