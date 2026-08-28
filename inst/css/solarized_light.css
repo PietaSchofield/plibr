@@ -482,3 +482,10 @@ pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
 .book .book-body .page-inner h5, .book .book-body .page-inner h6 {
   color: var(--heading) !important;
 }
+
+.site-banner {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}
