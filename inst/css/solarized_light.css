@@ -1,8 +1,160 @@
 /* Solarized Light (ish) base colours  rather than a relative path */
-/* Quicksand font import */
+/* Quicksand font import 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Recursive:CASL,CRSV,MONO,slnt,wght@1,1,0,0,500&display=swap');
 
+ Quicksand */
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/quicksand-v37-latin_latin-ext-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/quicksand-v37-latin_latin-ext-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/quicksand-v37-latin_latin-ext-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/quicksand-v37-latin_latin-ext-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Quicksand';
+  src: url('fonts/quicksand-v37-latin_latin-ext-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Recursive */
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Recursive';
+  src: url('fonts/recursive-v44-latin_latin-ext-900.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Lexend Exa */
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-100.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-200.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lexend Exa';
+  src: url('fonts/lexend-exa-v35-latin_latin-ext-900.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
 /* Solarized Light base colours */
 :root {
   --bs-body-bg:#f5edda;
@@ -489,3 +641,12 @@ pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
   max-height: 300px;
   object-fit: cover;
 }
+
+span.hl-yellow {
+  color: yellow !important;
+}
+
+span.hl-red {
+  color: red !important;
+}
+
