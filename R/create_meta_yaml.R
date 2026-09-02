@@ -37,7 +37,7 @@ update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"r
     }else{
       project_dirs <- list.dirs(path = repo_dir, full=T, recursive = F)
     }
-    project_dirs <- list.dirs(path = file.path(codeDir,repo_path), full=T,recursive = F)
+
     ret <- lapply(project_dirs, function(dirn) {
       meta_file <- file.path(dirn, "meta.yaml")
       if(file.exists(meta_file)){
