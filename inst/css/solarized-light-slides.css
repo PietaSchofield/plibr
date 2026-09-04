@@ -1,5 +1,4 @@
-/* Solarized Dark — works for both remark.js/xaringan and slidy_presentation */
-
+/* Solarized Light — works for both remark.js/xaringan and slidy_presentation */
 
 /* Quicksand */
 @font-face {
@@ -156,18 +155,17 @@
 /* Solarized Light 
 /* ---- Body and Slide Background ---- */
 
-/* ---- Body and Slide Background ---- */
 body,
 .remark-slide-content,
 .slide {
-  background-color: #002b36;
-  color: #839496;
+  background-color: #fdf6e3;
+  color: #657b83;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* ---- Headings ---- */
 h1, h2, h3, h4, h5, h6 {
-  color: #93a1a1;
+  color: #586e75;
 }
 
 /* ---- Links ---- */
@@ -175,12 +173,12 @@ a { color: #268bd2; }
 a:hover { color: #2aa198; }
 
 /* ---- Horizontal Rules ---- */
-hr { border: 1px solid #586e75; }
+hr { border: 1px solid #93a1a1; }
 
 /* ---- Code Blocks ---- */
 pre, code {
-  background-color: #073642;
-  color: #839496;
+  background-color: #eee8d5;
+  color: #657b83;
   font-family: "Fira Code", monospace;
   font-size: 0.9em;
   padding: 4px 6px;
@@ -189,7 +187,7 @@ pre, code {
 
 /* ---- Inline Code ---- */
 p code, li code, h1 code, h2 code, h3 code {
-  background-color: #073642;
+  background-color: #eee8d5;
   color: #b58900;
   padding: 2px 4px;
   border-radius: 3px;
@@ -197,25 +195,25 @@ p code, li code, h1 code, h2 code, h3 code {
 
 /* ---- Blockquotes ---- */
 blockquote {
-  border-left: 4px solid #586e75;
-  color: #93a1a1;
+  border-left: 4px solid #93a1a1;
+  color: #586e75;
   padding-left: 10px;
   margin-left: 0;
 }
 
 /* ---- Lists ---- */
-ul, ol { color: #839496; }
+ul, ol { color: #657b83; }
 
 /* ---- Tables ---- */
 table { border-collapse: collapse; margin: 1em 0; }
-table, th, td { border: 1px solid #586e75; }
-th { background-color: #073642; color: #93a1a1; }
-td { background-color: #002b36; color: #839496; padding: 4px 8px; }
+table, th, td { border: 1px solid #93a1a1; }
+th { background-color: #eee8d5; color: #586e75; }
+td { background-color: #fdf6e3; color: #657b83; padding: 4px 8px; }
 
 /* ---- Speaker Notes ---- */
 .remark-notes {
-  background-color: #073642 !important;
-  color: #93a1a1 !important;
+  background-color: #eee8d5 !important;
+  color: #586e75 !important;
 }
 
 /* ---- Transitions ---- */
@@ -223,3 +221,4 @@ td { background-color: #002b36; color: #839496; padding: 4px 8px; }
 .slide {
   transition: background-color 0.3s, color 0.3s;
 }
+
