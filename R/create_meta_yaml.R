@@ -27,33 +27,50 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"repositories"),db=F) {
   if(db){
     codeDir <- file.path(Sys.getenv("HOME"),"repositories")
-    repo_paths <- c("uol","github")
+    repo_paths <- c("uol","sprint-analysis")
     repo_path <- repo_paths[1]
   }
   lapply(repo_paths,function(repo_path){
-  project_dirs <- list.dirs(path = file.path(codeDir,repo_path), full=T,recursive = F)
-  ret <- lapply(project_dirs, function(dirn) {
-    meta_file <- file.path(dirn, "meta.yaml")
-    if(file.exists(meta_file)){
-  
-      meta <- yaml::yaml.load_file(meta_file)
-      prev_updated <- meta$last_updated
-
-      project_files <- list.files(dirn, pattern=".*md",recursive = F, full.names = TRUE)
-      if (length(project_files) > 0) {
-        last_modified <- max(file.info(project_files[grepl(".*md$",project_files)])$mtime)
-        meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
-      }
-
-      # 5. Save the updated metadata back to meta.yaml
-      if(prev_updated!=meta$last_updated){
-        writeLines(yaml::as.yaml(meta), meta_file)
-      }
+    repo_dir <- file.path(codeDir,repo_path)
+    if(file.exists(file.path(repo_dir,"meta.yaml"))){
+      project_dirs <- repo_dir
     }else{
-      cat(paste0('Missing meta.yaml: ',meta_file,'\n'))
+      project_dirs <- list.dirs(path = repo_dir, full=T, recursive = F)
     }
+
+    ret <- lapply(project_dirs, function(dirn) {
+      meta_file <- file.path(dirn, "meta.yaml")
+      if(file.exists(meta_file)){
+    
+        meta <- yaml::yaml.load_file(meta_file)
+        prev_updated <- meta$last_updated
+
+        project_files <- list.files(dirn, pattern=".*md",recursive = F, full.names = TRUE)
+        if (length(project_files) > 0) {
+          last_modified <- max(file.info(project_files[grepl(".*md$",project_files)])$mtime)
+          meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
+        }
+
+        # 5. Save the updated metadata back to meta.yaml
+        if(prev_updated!=meta$last_updated){
+          writeLines(yaml::as.yaml(meta), meta_file)
+        }
+      }else{
+        cat(paste0('Missing meta.yaml: ',meta_file,'\n'))
+      }
+    })
   })
-  })
+}
+
+#' discover top-level repos/projects automatically
+#'
+#' @param exclude character vector of folder names to skip (case-insensitive)
+#' @export
+discover_repos <- function(git_directory = file.path(Sys.getenv("HOME"), "repositories"),
+        exclude = c(".git", ".Rproj.user", 
+                    "pers", "archive","protocols","public","public_pages","dotfiles")) {
+  top_dirs <- list.dirs(git_directory, recursive = FALSE, full.names = FALSE)
+  top_dirs[!tolower(top_dirs) %in% tolower(exclude)]
 }
 
 #' build master list
@@ -63,39 +80,30 @@ build_master_list <- function(repoNames,
                               git_directory=file.path(Sys.getenv("HOME"),"repositories"),
                               recur=FALSE,
                               htmlroot="uol",
-                              html_directory=file.path("/srv","http"),
-                              pub=F) {
-
-  if(F){
-    repoNames=c("public")
-    git_directory=file.path(Sys.getenv("HOME"),"repositories")
-    recur=FALSE
-    htmlroot="public"
-    html_directory=file.path("/srv","http")
-    pub=T
-  }
+                              html_directory=file.path("/srv","http")) {
 
   master_lists <- lapply(repoNames, function(repoName){
     repo_path <- file.path(git_directory,repoName)
-    project_dirs <- list.dirs(path = repo_path, recursive = recur)
+
+    # NEW: is this repo itself a project (meta.yaml at its own root)?
+    if(file.exists(file.path(repo_path,"meta.yaml"))){
+      project_dirs <- repo_path
+    }else{
+      project_dirs <- list.dirs(path = repo_path, recursive = recur)
+    }
+
     master_list <- lapply(project_dirs, function(dirn) {
       yaml_file <- file.path(dirn, "meta.yaml")
       if (file.exists(yaml_file)) {
         metadata <- yaml::yaml.load_file(yaml_file)
         metadata$directory <- dirn
-        # 4. Check for the index.html file on the website
         project_name <- toupper(basename(dirn))
         index_file <- file.path(html_directory,htmlroot,basename(dirn),"index.html")
         html_exists <- fs::file_exists(index_file)
         if (html_exists) {
           metadata$web_status <- "exists"
-          if(pub){
-            metadata$name <- sprintf('<a href="%s">%s</a>',
-                  file.path("./",basename(dirn),"index.html"),project_name)
-          }else{
-            metadata$name <- sprintf('<a href="%s">%s</a>',
-                  file.path("http://localhost/",htmlroot,basename(dirn),"index.html"),project_name)
-          }
+          metadata$name <- sprintf('<a href="%s">%s</a>',
+                file.path(basename(dirn),"index.html"),project_name)
         } else {
           metadata$web_status <- "missing"
           metadata$name <- project_name
@@ -105,7 +113,7 @@ build_master_list <- function(repoNames,
     }) |> bind_rows()
   })
 
-  master_lists %>% bind_rows()  # Combine all metadata into a single data frame
+  master_lists %>% bind_rows()
 }
 
 #' build project index
@@ -116,8 +124,7 @@ build_project_index <- function(project,
                                 html_directory=file.path("/srv","http"),
                                 repo="uol",
                                 coderoot=NULL,
-                                htmlroot="uol",
-                                pub=F) {
+                                htmlroot="uol") {
   if(F){
     project <- "tutorials"
     htmlroot <- "uol"
@@ -156,13 +163,8 @@ build_project_index <- function(project,
     # Build a row for the index
     list(
       Name = if (html_exists) {
-        if(pub){
-          sprintf('<a href="%s">%s</a>',
-             file.path("./",basename(html_file)),base_name)
-        }else{
-          sprintf('<a href="%s">%s</a>',
-             file.path("http://localhost/",htmlroot,project,basename(html_file)),base_name)
-        }
+        sprintf('<a href="%s">%s</a>',
+             file.path(basename(html_file)),base_name)
       } else {
         base_name
       },
