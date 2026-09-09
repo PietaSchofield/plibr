@@ -289,3 +289,86 @@ worklog_report <- function(path,
 
   invisible(list(days = day_tbl, weekly = weekly))
 }
+#' Export parsed worklog data to CSV or Excel
+#'
+#' Writes the day-level and/or weekly-summary tibbles produced by
+#' \code{worklog_report()} out to disk, for use outside R (payroll,
+#' HR, personal record-keeping).
+#'
+#' @param log List. Output of \code{worklog_report()} (containing
+#'   \code{days} and \code{weekly}). Optional if \code{days}/\code{weekly}
+#'   supplied directly instead.
+#' @param path Character. Output file path. Extension chosen decides
+#'   format:
+#'   \itemize{
+#'     \item \code{.csv} — writes \code{days} to \code{path}, and (if
+#'       present) \code{weekly} to a sibling file with \code{_weekly}
+#'       appended before the extension.
+#'     \item \code{.xlsx} — writes both tibbles as separate sheets
+#'       (\code{"days"}, \code{"weekly"}) in one file. Requires the
+#'       \pkg{openxlsx} package.
+#'   }
+#' @param days,weekly Optional tibbles, used instead of \code{log} if
+#'   supplied directly (e.g. if you want to filter first).
+#'
+#' @return Invisibly, the path(s) written to.
+#'
+#' @examples
+#' \dontrun{
+#' res <- worklog_report("~/repositories/uol/notes/", quiet = TRUE)
+#' worklog_export(res, "~/Desktop/worklog_202609.csv")
+#' worklog_export(res, "~/Desktop/worklog_202609.xlsx")
+#' }
+#'
+#' @export
+worklog_export <- function(log = NULL, path, days = NULL, weekly = NULL) {
+
+  if (!is.null(log)) {
+    if (is.null(days))   days   <- log$days
+    if (is.null(weekly)) weekly <- log$weekly
+  }
+
+  if (is.null(days) || nrow(days) == 0) {
+    stop("No day-level data to export (log$days or `days` is empty/NULL).")
+  }
+
+  ext <- tolower(tools::file_ext(path))
+
+  if (ext == "xlsx") {
+
+    if (!requireNamespace("openxlsx", quietly = TRUE)) {
+      stop("Package 'openxlsx' is needed for .xlsx export.\n",
+           "Install with install.packages(\"openxlsx\"), or export as .csv instead.")
+    }
+
+    wb <- openxlsx::createWorkbook()
+    openxlsx::addWorksheet(wb, "days")
+    openxlsx::writeData(wb, "days", days)
+
+    if (!is.null(weekly) && nrow(weekly) > 0) {
+      openxlsx::addWorksheet(wb, "weekly")
+      openxlsx::writeData(wb, "weekly", weekly)
+    }
+
+    openxlsx::saveWorkbook(wb, path, overwrite = TRUE)
+    message("Written: ", path)
+    return(invisible(path))
+
+  } else if (ext == "csv") {
+
+    readr::write_csv(days, path)
+    written <- path
+
+    if (!is.null(weekly) && nrow(weekly) > 0) {
+      weekly_path <- sub("\\.csv$", "_weekly.csv", path, ignore.case = TRUE)
+      readr::write_csv(weekly, weekly_path)
+      written <- c(written, weekly_path)
+    }
+
+    message("Written: ", paste(written, collapse = ", "))
+    return(invisible(written))
+
+  } else {
+    stop("Unrecognised file extension '.", ext, "' \u2014 use .csv or .xlsx.")
+  }
+}
