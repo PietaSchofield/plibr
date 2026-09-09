@@ -2,71 +2,65 @@
 % Please edit documentation in R/worklog.R
 \name{worklog_report}
 \alias{worklog_report}
-\title{Report worked hours vs target across one or more monthly notes}
+\title{Report worked hours vs nominal daily target across one or more monthly notes}
 \usage{
 worklog_report(
   path,
   pattern = "^[0-9]{6}.*\\\\.Rmd$",
-  weekly_target = 26.25,
-  day_unit = 6.5625,
+  min_yyyymm = "202608",
+  nominal_day = 5.25,
   dock_sick = TRUE,
   start_from = NULL,
   quiet = FALSE
 )
 }
 \arguments{
-\item{path}{Character vector. Either:
-\itemize{
-\item a single file path to one monthly notes \code{.Rmd}, or
-\item a directory containing several monthly notes files, or
-\item a vector of explicit file paths.
-}
-If a directory is given, files matching \code{pattern} are found
-and parsed in date order, so the running balance persists across
-months.}
+\item{path}{Character vector. Single file, directory, or vector of paths.}
 
 \item{pattern}{Character. Regex used to find monthly note files when
-\code{path} is a directory. Default matches plibr's
-\code{YYYYMM..._notes.Rmd}-style naming: \code{"^[0-9]{6}.*\\.Rmd$"}.}
+\code{path} is a directory. Default \code{"^[0-9]{6}.*\\.Rmd$"}.}
 
-\item{weekly_target}{Numeric. Standard weekly target hours.
-Default \code{26.25}.}
+\item{min_yyyymm}{Character. Earliest \code{YYYYMM} to include when
+scanning a directory. Default \code{"202608"} (the tagging convention's
+start). Set to \code{NULL} to disable filtering.}
 
-\item{day_unit}{Numeric. Hours docked per leave/bh/sick day.
-Default \code{6.5625}.}
+\item{nominal_day}{Numeric. Nominal hours owed per weekday. Default
+\code{5.25}.}
 
-\item{dock_sick}{Logical. Should sick days reduce the target?
+\item{dock_sick}{Logical. Should sick days satisfy the daily nominal?
 Default \code{TRUE}.}
 
-\item{start_from}{Date or character (\code{"YYYY-MM-DD"}). Optional.
-If supplied, all day-records before this date are dropped before
-weekly scoring — so the running balance ledger begins cleanly at
-this point (e.g. the start of the academic year) rather than at
-the first date found in the files, or from an arbitrary calendar}
+\item{start_from}{Date or character (\code{"YYYY-MM-DD"}). Optional -
+drop all day-records before this date before the ledger is built, so
+the running total begins cleanly at this point.}
 
-\item{quiet}{Logical. If \code{TRUE}, suppress console output and
-just return the data. Default \code{FALSE}.}
+\item{quiet}{Logical. Suppress console output? Default \code{FALSE}.}
 }
 \value{
-(Invisibly) a list with elements \code{days} (day-level tibble)
-and \code{weekly} (weekly summary tibble), for further use if needed.
+(Invisibly) a list with elements \code{days} (raw parsed day
+tibble), \code{ledger} (daily running ledger), and \code{monthly}
+(monthly roll-up).
 }
 \description{
-Parses plibr-style monthly worklog notes for day-header hour tags,
-builds a weekly balance table against a 26.25hr (4 x 6.5625) target,
-and prints a running cumulative balance so overwork is visible
-immediately rather than being hidden by a weekly reset. Any day
-whose header can't be confidently classified is listed separately
-for manual review rather than silently guessed.
+Parses plibr-style monthly worklog notes for day-header status/hour tags
+and builds a day-level running ledger against a flat \code{nominal_day}
+(default \code{5.25}hrs) applied to every weekday - correct for
+flexible/flexi-time working, since there's no fixed "working week
+pattern" to compare against. Leave/sick/bank-holiday days satisfy that
+day's nominal; flexi days off do not (shortfall carries forward). A
+monthly roll-up is also produced. Any day whose header can't be
+confidently classified is excluded from totals and listed separately for
+manual review rather than silently guessed.
+}
+\details{
+Only files from \code{min_yyyymm} onward are parsed by default - notes
+predating the current tagging convention are simply not compatible with
+it, and are skipped rather than surfaced as false review items.
 }
 \examples{
 \dontrun{
-# Single month
-worklog_report("~/repositories/uol/notes/202609_notes.Rmd")
-
-# Whole notes directory — running balance across all months found
 worklog_report("~/repositories/uol/notes/")
+res <- worklog_report("~/repositories/uol/notes/", quiet = TRUE)
 }
-
 
 }

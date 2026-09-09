@@ -4,40 +4,31 @@
 \alias{worklog_export}
 \title{Export parsed worklog data to CSV or Excel}
 \usage{
-worklog_export(log = NULL, path, days = NULL, weekly = NULL)
+worklog_export(log = NULL, path, days = NULL, ledger = NULL, monthly = NULL)
 }
 \arguments{
 \item{log}{List. Output of \code{worklog_report()} (containing
-\code{days} and \code{weekly}). Optional if \code{days}/\code{weekly}
-supplied directly instead.}
+\code{days}, \code{ledger}, \code{monthly}). Optional if those tibbles
+are supplied directly instead.}
 
-\item{path}{Character. Output file path. Extension chosen decides
-format:
-\itemize{
-\item \code{.csv} — writes \code{days} to \code{path}, and (if
-present) \code{weekly} to a sibling file with \code{_weekly}
-appended before the extension.
-\item \code{.xlsx} — writes both tibbles as separate sheets
-(\code{"days"}, \code{"weekly"}) in one file. Requires the
-\pkg{openxlsx} package.
-}}
+\item{path}{Character. Output file path. \code{.csv} writes \code{ledger}
+to \code{path} and \code{monthly} to a sibling \code{_monthly.csv}.
+\code{.xlsx} writes \code{days}/\code{ledger}/\code{monthly} as three
+sheets in one file (requires \pkg{openxlsx}).}
 
-\item{days, weekly}{Optional tibbles, used instead of \code{log} if
-supplied directly (e.g. if you want to filter first).}
+\item{days, ledger, monthly}{Optional tibbles, used instead of \code{log}.}
 }
 \value{
 Invisibly, the path(s) written to.
 }
 \description{
-Writes the day-level and/or weekly-summary tibbles produced by
-\code{worklog_report()} out to disk, for use outside R (payroll,
-HR, personal record-keeping).
+Writes the tibbles produced by \code{worklog_report()} out to disk.
 }
 \examples{
 \dontrun{
 res <- worklog_report("~/repositories/uol/notes/", quiet = TRUE)
-worklog_export(res, "~/Desktop/worklog_202609.csv")
-worklog_export(res, "~/Desktop/worklog_202609.xlsx")
+worklog_export(res, "~/Desktop/worklog.csv")
+worklog_export(res, "~/Desktop/worklog.xlsx")
 }
 
 }

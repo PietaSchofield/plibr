@@ -16,10 +16,13 @@ A tibble with one row per detected day header, columns:
 }
 \description{
 Scans a plibr-style monthly notes \code{.Rmd} file for day-header lines
-(\verb{# Weekday Nth _(Xhrs)_}) and extracts a tidy day-level record.
-Only the canonical \verb{_(Xhrs)_} tag, or one of the recognised off-day
-keywords (weekend/not working/off/leave/bank holiday/sick), is trusted
-for automatic counting. Anything else is flagged for manual review
-rather than guessed.
+(\verb{# Weekday Nth _(status Xhrs)_}) and extracts a tidy day-level
+record. Every day header must carry an explicit status tag - nothing is
+inferred from surrounding prose. Recognised statuses are \code{work},
+\code{we} (weekend, not worked), \code{we-work} (weekend, worked),
+\code{leave}, \code{sick}, \code{bh} (bank holiday), and \code{off}
+(flexi day, not worked). Anything else - missing tag, unrecognised
+status word, or a stated weekday that doesn't match the calendar - is
+flagged for manual review rather than guessed.
 }
 \keyword{internal}
