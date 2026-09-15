@@ -5,6 +5,10 @@ Authors@R:
     person("Pieta", "Schofield", , "pieta.schofield@me.com", role = c("aut", "cre"))
 Description: My library of function to make working with R Rmarkdown reticulate duckdb etc easier
 License: MIT + file LICENSE
+SystemRequirements: Fonts 'Playpen Sans' and 'Comic Mono' must be installed
+    locally for CSS in plibr to render as intended (single-story 'a').
+    See vignette or README for install instructions. Falls back to system
+    sans-serif/monospace if absent.
 Depends:
     R (>= 4.1.0)
 Imports:

@@ -1,158 +1,10 @@
 /* Solarized Light — works for both remark.js/xaringan and slidy_presentation */
 
-/* Quicksand */
-@font-face {
-  font-family: 'Quicksand';
-  src: url('fonts/quicksand-v37-latin_latin-ext-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Quicksand';
-  src: url('fonts/quicksand-v37-latin_latin-ext-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Quicksand';
-  src: url('fonts/quicksand-v37-latin_latin-ext-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Quicksand';
-  src: url('fonts/quicksand-v37-latin_latin-ext-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Quicksand';
-  src: url('fonts/quicksand-v37-latin_latin-ext-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
+/* Playpen Sans and Comic Mono are LOCAL SYSTEM FONTS (fc-list confirmed
+   installed) — no @font-face needed, browser finds them by name.
+   If this deck is ever shared/viewed on another machine, this stops
+   working and webfont hosting would be needed again. */
 
-/* Recursive */
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-800.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Recursive';
-  src: url('fonts/recursive-v44-latin_latin-ext-900.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Lexend Exa */
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-100.woff2') format('woff2');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-200.woff2') format('woff2');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-300.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-500.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-600.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-700.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-800.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Lexend Exa';
-  src: url('fonts/lexend-exa-v35-latin_latin-ext-900.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-/* Solarized Light 
 /* ---- Body and Slide Background ---- */
 
 body,
@@ -160,12 +12,13 @@ body,
 .slide {
   background-color: #fdf6e3;
   color: #657b83;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Playpen Sans', sans-serif;
 }
 
 /* ---- Headings ---- */
 h1, h2, h3, h4, h5, h6 {
   color: #586e75;
+  font-family: 'Playpen Sans', sans-serif;
 }
 
 /* ---- Links ---- */
@@ -179,7 +32,7 @@ hr { border: 1px solid #93a1a1; }
 pre, code {
   background-color: #eee8d5;
   color: #657b83;
-  font-family: "Fira Code", monospace;
+  font-family: 'Comic Mono', monospace;
   font-size: 0.9em;
   padding: 4px 6px;
   border-radius: 4px;
@@ -189,6 +42,7 @@ pre, code {
 p code, li code, h1 code, h2 code, h3 code {
   background-color: #eee8d5;
   color: #b58900;
+  font-family: 'Comic Mono', monospace;
   padding: 2px 4px;
   border-radius: 3px;
 }
@@ -207,8 +61,8 @@ ul, ol { color: #657b83; }
 /* ---- Tables ---- */
 table { border-collapse: collapse; margin: 1em 0; }
 table, th, td { border: 1px solid #93a1a1; }
-th { background-color: #eee8d5; color: #586e75; }
-td { background-color: #fdf6e3; color: #657b83; padding: 4px 8px; }
+th { background-color: #eee8d5; color: #586e75; font-family: 'Playpen Sans', sans-serif; }
+td { background-color: #fdf6e3; color: #657b83; padding: 4px 8px; font-family: 'Playpen Sans', sans-serif; }
 
 /* ---- Speaker Notes ---- */
 .remark-notes {
@@ -221,4 +75,3 @@ td { background-color: #fdf6e3; color: #657b83; padding: 4px 8px; }
 .slide {
   transition: background-color 0.3s, color 0.3s;
 }
-
