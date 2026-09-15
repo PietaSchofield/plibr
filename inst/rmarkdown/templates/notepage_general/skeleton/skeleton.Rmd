@@ -1,0 +1,50 @@
+---
+title: "TITLE"
+author: "Pieta Schofield"
+output:
+  bookdown::html_document2:
+    code_folding: hide
+    keep_md: no
+    number_sections: no
+    fig_caption: yes
+    includes:
+      before_body: !expr system.file('pkg-html','before_body_page.html',package='plibr')
+    toc: yes
+    toc_depth: 2
+    css: !expr system.file('css','solarized_dark.css',package='plibr')
+bibliography: ../../../Zotero/zoterofull.bib
+description: "not set yet"
+---
+
+```{r setup,echo=FALSE, include=F}
+.gitRepo <- "uol"
+.projName <- "PN"
+.fileName <- "FN"
+sys.source(system.file('scripts','packages.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','paths.R',package='plibr'), envir=knitr::knit_global())
+sys.source(system.file('scripts','knitr_opts.R',package='plibr'), envir=knitr::knit_global())
+```
+
+---
+
+
+
+
+---
+
+```{r logs,child=file.path(Sys.getenv("HOME"),"repositories","uol","include","balance.Rmd"),eval=T}
+```
+
+---
+
+# References
+
+```{r links,child=file.path(Sys.getenv("HOME"),"repositories","uol","include","links.Rmd"),eval=T}
+```
+
+```{r build,eval=F,include=F}
+plibr::compilecurrent(fileName="FN",projName="PN",gitRepo="uol")
+```
+`
+
+

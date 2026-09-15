@@ -1,0 +1,9 @@
+name: Notepage with Worklog and Migraine Diary
+description: >
+  General worklog notepage variant that auto-includes the RUNNING BALANCE
+  (worklog_report) and MIGRAINE DIARY sections as a shared child document.
+  Use for personal monthly 'notes' project only — project-specific notes
+  (arc, dart, sprint, valprogm) should keep using the 'notepage_project'
+  template.
+create_dir: false
+
