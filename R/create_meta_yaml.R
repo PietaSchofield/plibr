@@ -41,18 +41,25 @@ update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"r
     ret <- lapply(project_dirs, function(dirn) {
       meta_file <- file.path(dirn, "meta.yaml")
       if(file.exists(meta_file)){
-    
+
         meta <- yaml::yaml.load_file(meta_file)
         prev_updated <- meta$last_updated
 
-        project_files <- list.files(dirn, pattern=".*md",recursive = F, full.names = TRUE)
+        # get ALL files, not just .md — a change to .R/.csv/.png etc still counts
+        project_files <- list.files(dirn, recursive = FALSE, full.names = TRUE)
+
+        # exclude index.html / index.Rmd (case-insensitive), regardless of extension case
+        project_files <- project_files[
+          !tolower(basename(project_files)) %in% c("index.html", "index.rmd")
+        ]
+
         if (length(project_files) > 0) {
-          last_modified <- max(file.info(project_files[grepl(".*md$",project_files)])$mtime)
+          last_modified <- max(file.info(project_files)$mtime, na.rm = TRUE)
           meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
         }
 
-        # 5. Save the updated metadata back to meta.yaml
-        if(prev_updated!=meta$last_updated){
+        # Save the updated metadata back to meta.yaml
+        if(is.null(prev_updated) || prev_updated!=meta$last_updated){
           writeLines(yaml::as.yaml(meta), meta_file)
         }
       }else{

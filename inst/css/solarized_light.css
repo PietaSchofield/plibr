@@ -419,7 +419,7 @@ pre.rawmono, pre.rawmono code, pre.rawmono code.hljs {
 }
 
 span.hl-yellow {
-  color: yellow !important;
+  color: orange !important;
 }
 span.hl-red {
   color: red !important;
