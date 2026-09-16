@@ -7,8 +7,18 @@
 update_meta_yaml(
   repo_paths,
   codeDir = file.path(Sys.getenv("HOME"), "repositories"),
-  db = F
+  htmlBaseDir = "/srv/http",
+  db = F,
+  dry_run = TRUE,
+  silent = TRUE,
+  strict_html = TRUE
 )
+}
+\arguments{
+\item{htmlBaseDir}{root of the rendered html tree, mirroring codeDir's structure}
+
+\item{strict_html}{if TRUE, only use rendered html mtimes (no Rmd fallback);
+if FALSE, fall back to Rmd mtimes in dirn when no html dir/files found}
 }
 \description{
 update meta data

@@ -23,47 +23,76 @@ create_meta_yaml <- function(projDir,projName,projDesc,owner,contact,overwrite=F
 
 #' update meta data
 #'
+#' @param htmlBaseDir root of the rendered html tree, mirroring codeDir's structure
+#' @param strict_html if TRUE, only use rendered html mtimes (no Rmd fallback);
+#'   if FALSE, fall back to Rmd mtimes in dirn when no html dir/files found
 #' @export
-update_meta_yaml <- function(repo_paths, codeDir=file.path(Sys.getenv("HOME"),"repositories"),db=F) {
-  if(db){
-    codeDir <- file.path(Sys.getenv("HOME"),"repositories")
-    repo_paths <- c("uol","sprint-analysis")
-    repo_path <- repo_paths[1]
+update_meta_yaml <- function(repo_paths,
+                              codeDir = file.path(Sys.getenv("HOME"), "repositories"),
+                              htmlBaseDir = "/srv/http",
+                              db = F, dry_run = TRUE, silent = TRUE, strict_html = TRUE) {
+  if (db) {
+    codeDir <- file.path(Sys.getenv("HOME"), "repositories")
+    htmlBaseDir <- "/srv/http"
+    repo_paths <- c("uol", "sprint-analysis")
+    dry_run <- TRUE; silent <- FALSE; strict_html <- TRUE
   }
-  lapply(repo_paths,function(repo_path){
-    repo_dir <- file.path(codeDir,repo_path)
-    if(file.exists(file.path(repo_dir,"meta.yaml"))){
-      project_dirs <- repo_dir
-    }else{
-      project_dirs <- list.dirs(path = repo_dir, full=T, recursive = F)
-    }
 
-    ret <- lapply(project_dirs, function(dirn) {
+  say <- function(...) if (!silent) cat(...)
+
+  lapply(repo_paths, function(repo_path){
+    repo_dir <- file.path(codeDir, repo_path)
+    project_dirs <- if (file.exists(file.path(repo_dir,"meta.yaml"))) repo_dir else
+      list.dirs(repo_dir, full=T, recursive=F)
+
+    lapply(project_dirs, function(dirn) {
       meta_file <- file.path(dirn, "meta.yaml")
-      if(file.exists(meta_file)){
+      if (!file.exists(meta_file)) { say(paste0('Missing meta.yaml: ',meta_file,'\n')); return(NULL) }
 
-        meta <- yaml::yaml.load_file(meta_file)
-        prev_updated <- meta$last_updated
+      meta <- yaml::yaml.load_file(meta_file)
+      prev_updated <- meta$last_updated
 
-        # get ALL files, not just .md — a change to .R/.csv/.png etc still counts
-        project_files <- list.files(dirn, recursive = FALSE, full.names = TRUE)
+      # map the source dir onto the equivalent html dir
+      rel_path <- sub(paste0("^", normalizePath(codeDir), "/?"), "", normalizePath(dirn))
+      html_dir <- file.path(htmlBaseDir, rel_path)
 
-        # exclude index.html / index.Rmd (case-insensitive), regardless of extension case
-        project_files <- project_files[
-          !tolower(basename(project_files)) %in% c("index.html", "index.rmd")
-        ]
+      new_updated <- prev_updated  # default: leave untouched
+      used_source <- "none"
 
-        if (length(project_files) > 0) {
-          last_modified <- max(file.info(project_files)$mtime, na.rm = TRUE)
-          meta$last_updated <- format(last_modified,"%Y-%m-%d %H:%M:%S")
+      if (dir.exists(html_dir)) {
+        html_files <- list.files(html_dir, pattern="\\.html$", ignore.case=TRUE, full.names=TRUE)
+        html_files <- html_files[tolower(basename(html_files)) != "index.html"]
+
+        if (length(html_files) > 0) {
+          new_updated <- format(max(file.info(html_files)$mtime, na.rm=TRUE), "%Y-%m-%d %H:%M:%S")
+          used_source <- "html"
         }
+      }
 
-        # Save the updated metadata back to meta.yaml
-        if(is.null(prev_updated) || prev_updated!=meta$last_updated){
-          writeLines(yaml::as.yaml(meta), meta_file)
+      if (used_source == "none" && !strict_html) {
+        rmd_files <- list.files(dirn, pattern="\\.rmd$", ignore.case=TRUE, full.names=TRUE)
+        rmd_files <- rmd_files[tolower(basename(rmd_files)) != "index.rmd"]
+        if (length(rmd_files) > 0) {
+          new_updated <- format(max(file.info(rmd_files)$mtime, na.rm=TRUE), "%Y-%m-%d %H:%M:%S")
+          used_source <- "rmd_fallback"
         }
-      }else{
-        cat(paste0('Missing meta.yaml: ',meta_file,'\n'))
+      }
+
+      if (used_source == "none") {
+        say(sprintf("  [%s] no html dir/files found (html_dir=%s), leaving unchanged\n",
+                    basename(dirn), html_dir))
+      }
+
+      changed <- is.null(prev_updated) || prev_updated != new_updated
+
+      if (dry_run) {
+        say(sprintf("[%s] %s -> %s [%s] %s\n", basename(dirn),
+                     ifelse(is.null(prev_updated),"NA",prev_updated), new_updated, used_source,
+                     ifelse(changed,"(WOULD CHANGE)","(no change)")))
+      } else if (changed) {
+        meta$last_updated <- new_updated
+        writeLines(yaml::as.yaml(meta), meta_file)
+        say(sprintf("[%s] updated -> %s [%s]\n", basename(dirn), new_updated, used_source))
       }
     })
   })
