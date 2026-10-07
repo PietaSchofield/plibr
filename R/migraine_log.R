@@ -140,6 +140,9 @@ migraine_diary <- function(entries, range_start = NULL, range_end = NULL) {
   }))
   daily <- daily[order(daily$date), ]
   daily$month <- format(daily$date, "%Y-%m")
+  if (!is.null(range_start) && !is.null(range_end)) {
+    daily <- daily[daily$date >= as.Date(range_start) & daily$date <= as.Date(range_end), ]
+  }
 
   monthly <- as.data.frame(table(
     month = daily$month,
